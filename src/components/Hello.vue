@@ -181,6 +181,12 @@ export default {
       var copyTextarea = document.querySelector('#copy-text-area');
       copyTextarea.select();
       document.execCommand('copy')
+
+      this.$notify({
+        message: 'Code has been copied!',
+        type: 'success',
+      });
+
     },
     updateCode(){
       let code = document.getElementById("canvas-code");

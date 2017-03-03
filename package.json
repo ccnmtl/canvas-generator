@@ -11,6 +11,7 @@
   "dependencies": {
     "element-ui": "^1.2.3",
     "keen-ui": "^1.0.0",
+    "quill": "^1.2.2",
     "vue": "^2.1.10",
     "vue-material": "^0.7.1",
     "vue-quill": "^0.1.5",
