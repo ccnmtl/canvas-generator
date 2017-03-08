@@ -2,7 +2,8 @@
   <div id="app">
     <div class="center routers">
       <router-link class="router" to="/">Go to Home</router-link>
-      <router-link class="router" to="/weekly">Go to Weekly</router-link>
+      <router-link class="router" to="/weekly">Go to Weekly Activity Page</router-link>
+      <router-link class="router" to="/weeklylist">Go to Weekly Activity List</router-link>
     </div>
 
     <keep-alive>
@@ -43,5 +44,3 @@ html {
   margin-bottom: 20px;
 }
 </style>
-
-<style src="./assets/css/keen-ui.css"></style>

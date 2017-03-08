@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from 'components/Hello'
-import Hello2 from 'components/Hello2'
+import Home from 'components/Home'
 import Weekly from 'components/Weekly'
+import WeeklyList from 'components/WeeklyList'
 
 Vue.use(Router)
 
@@ -10,13 +10,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'Home',
+      component: Home
     },
     {
       path: '/weekly',
       name: 'Weekly Activities',
-      component: Hello2
+      component: Weekly
+    },
+    {
+      path: '/weeklylist',
+      name: 'Weekly Activities List',
+      component: WeeklyList
     }
   ]
 })
