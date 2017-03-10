@@ -1,0 +1,34 @@
+<template lang="html">
+  <transition name="fade">
+    <li>
+    <div class="ig-row ig-published">
+    <div class="ig-row__layout">
+    <div class="ig-type-icon" aria-hidden="true"><i class="icon-discussion"></i></div>
+    <div class="ig-info"><a class="ig-title" href="https://courseworks2.columbia.edu/courses/35006/discussion_topics/78803" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/35006/discussion_topics/78803" data-api-returntype="Discussion"> Discussion 1</a>
+    <div class="ig-details">
+    <div class="ig-details__item"><strong>Due</strong> {{data.due}}</div>
+    <div class="ig-details__item"><strong>Available</strong> {{data.available}}</div>
+    <div class="ig-details__item">{{data.points}} pts</div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </li>
+  </transition>
+</template>
+
+<script>
+import store from '../../store'
+
+export default {
+  data() {
+    return {
+      url: store.courseUrl
+    }
+  },
+  props: ['data', 'index']
+}
+</script>
+
+<style lang="css">
+</style>

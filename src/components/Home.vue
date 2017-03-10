@@ -48,7 +48,7 @@
       <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
 
       <div class="pad-box-mega GFbanner">
-      <p>{{userInput.title}}</p>
+      <p>{{userInput.title.toUpperCase()}}</p>
       <p class="semesterSubtitle">{{userInput.semester}}</p>
       </div>
       <div class="content-box">
@@ -63,7 +63,7 @@
       </div>
       <div class="col-xs-6">
       <div class="styleguide-section__grid-demo-element">
-      <div class="welcome">WELCOME TO {{userInput.title}}</div>
+      <div class="welcome">WELCOME TO {{userInput.title.toUpperCase()}}</div>
       <p class="html" v-html="userInput.description"></p>
       <p><a class="Button" style="text-decoration: none;" href="https://courseworks2.columbia.edu/courses/35006/files/916242/download?wrap=1" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/35006/files/916242" data-api-returntype="File">Spring 2017 Schedule</a></p>
       </div>
@@ -105,6 +105,7 @@
 
 <script>
 import CanvasCode from './CanvasCode.vue'
+import store from '../store'
 import { quillEditor } from 'vue-quill-editor';
 
 var toolbarOptions = [
@@ -119,7 +120,7 @@ export default {
   data () {
     return {
       userInput: {
-        title: "GLOBAL FOOD SYSTEMS",
+        title: store.title ,
         semester: "U6411 // SPRING 2017",
         professor: "Glenn Denning",
         pEmail: "gd2147@sipa.columbia.edu",

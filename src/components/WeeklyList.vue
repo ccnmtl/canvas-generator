@@ -4,11 +4,20 @@
   <div class="code-container">
 
     <div class="textbox-container">
-      <button type="button" class="add-weekly center" name="button" @click="AddActivity">Add New Weekly Activity</button>
-      <br>
+      <div class="code-input center">
+        Number of Weeks to Add: <textarea v-model="userInput.toAdd" class="code-input" rows="1" cols="4"></textarea>
+      </div>
+      <button type="button" class="add-weekly center" name="button" @click="populateActivities(userInput.toAdd)">Add New Weekly Activities</button>
+      <button type="button" class="add-weekly center"  name="button" @click="weeklyActivites.splice(0, weeklyActivites.length - 1)">Clear</button>
+      <hr>
       <div class="code-input center">
         Edit Week: <textarea v-model="userInput.weekNumber" class="code-input" rows="1" cols="4"></textarea>
       </div>
+
+      <select v-model="userInput.weekNumber">
+        <option v-for="n in weeklyActivites.length" :value="n">Week {{n}}</option>
+      </select>
+
       <div class="code-input center" id='textbox1'>
         <p style="font-weight: bold">Title</p>
         <textarea v-model="weeklyActivites[userInput.weekNumber - 1].title" id="text-area" rows="3" cols="30"></textarea> <br>
@@ -44,7 +53,7 @@
       </div>
       </div>
       </div>
-      <weekly-list-item v-for="(activity, index) in weeklyActivites" :data="activity" :index="index"> </weekly-list-item>
+      <weekly-list-item v-for="(activity, index) in weeklyActivites" :data="activity" :index="index+1"> </weekly-list-item>
     </div>
 
   </div>
@@ -59,6 +68,7 @@
 
 <script>
 import CanvasCode from './CanvasCode.vue'
+import store from '../store'
 import { quillEditor } from 'vue-quill-editor';
 import WeeklyListItem from './weekly/WeeklyListItem'
 
@@ -74,21 +84,12 @@ export default {
   data () {
     return {
       userInput: {
-        title:"Global Food Systems",
-        weekNumber: 1
+        title: store.title,
+        weekNumber: 1,
+        toAdd: 1,
       },
-      weeklyActivites: [
-        {
-          title: "Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
-          description: "Class: Tuesday, January 17th",
-          imgSrc: "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
-        },
-        {
-          title: "Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
-          description: "Class: Tuesday, January 17th",
-          imgSrc: "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
-        }
-      ],
+      weeklyActivites: [],
+      numActivities: 13,
       editorOption:{
         modules: {
           toolbar: toolbarOptions
@@ -119,10 +120,21 @@ export default {
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
     },
     AddActivity(){
-      this.weeklyActivites.push(this.weeklyActivites[0])
+      let tempActivity = {
+        title: "Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
+        description: "Class: Tuesday, January 17th",
+        imgSrc: "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
+      }
+
+      this.weeklyActivites.push(tempActivity);
+    },
+
+    populateActivities(num){
+      for (let i = 0; i < num; i++ ) this.AddActivity();
     }
   },
   mounted(){
+    this.populateActivities(1)
     this.updateCode();
     setInterval( () => {
       this.updateCode();
@@ -153,7 +165,7 @@ textarea {
 
 .add-weekly {
 
-  margin-bottom: 20px;
+  margin: 10px
 }
 
 .textbox-container {

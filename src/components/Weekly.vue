@@ -1,144 +1,144 @@
-<template>
-  <div class="hello">
-    <div class="textbox-container center">
+<template lang="html">
+  <div id="weeklylist">
+  <hr>
+  <div class="code-container">
 
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="Course Info" name="1" class="center">
-          <textarea v-model="userInput.title" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.semester" class="code-input" rows="1" cols="20"></textarea> <br>
-        </el-tab-pane>
+    <div class="textbox-container">
+      <button type="button" name="button" class="show-editor center" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
+      <transition name="fade">
+      <div v-show="showEditor">
+        <div class="quill">
+          <quill-editor ref="myTextEditor"
+                        v-model="userInput.description"
+                        :config="editorOption">
+          </quill-editor>
+        </div>
+        <div class="quill">
+          <quill-editor ref="myTextEditor"
+                        v-model="userInput.required"
+                        :config="editorOption">
+          </quill-editor>
+        </div>
+      </div>
+      </transition>
+      <hr>
+      <weekly-code-module
+        class="code-module"
+        :content="videos"
+        :fn="addVideo"
+        :inputs="['title','description', 'videoSrc']"
+        @clearArr="videos = []">
+        Video
+      </weekly-code-module>
 
-        <el-tab-pane label="Description" class="center" name="3" >
-          <div class="quill">
-            <quill-editor ref="myTextEditor"
-                          v-model="userInput.description"
-                          :config="editorOption">
-            </quill-editor>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="Professor" class="center" name="4">
-          <textarea v-model="userInput.professor" class="code-input" rows="1" cols="20"></textarea>
-          <textarea v-model="userInput.pEmail" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.office" class="code-input" rows="1" cols="50"></textarea>
-        </el-tab-pane>
-        <el-tab-pane label="TA" class="center" name="5">
-          <textarea v-model="userInput.ta" class="code-input" rows="1" cols="20"></textarea>
-          <textarea v-model="userInput.tEmail" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.tOffice" class="code-input" rows="1" cols="50"></textarea>
-        </el-tab-pane>
+      <weekly-code-module
+        class="code-module"
+        :content="discussions"
+        :fn="addDiscussion"
+        :inputs="['link','due', 'available', 'points']"
+        @clearArr="discussions = []">
+        Discussion
+      </weekly-code-module>
 
-        <el-tab-pane label="Meeting Times" class="center" name="6">
-          <textarea v-model="userInput.meetings" class="code-input" rows="1" cols="50"></textarea>
-          <textarea v-model="userInput.discussions" class="code-input" rows="1" cols="50"></textarea>
-        </el-tab-pane>
+      <weekly-code-module
+        class="code-module"
+        :content="assignments"
+        :fn="addAssignment"
+        :inputs="['link','due', 'available', 'points']"
+        @clearArr="assignments = []">
+        Assignment
+      </weekly-code-module>
 
-        <el-tab-pane label="Media Link" class="center" name="7">
-          <button type="button" name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
-          <textarea v-show="this.userInput.isVideo" v-model="userInput.video" class="code-input" rows="1" cols="50"></textarea>
-          <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input" rows="1" cols="50"></textarea>
-        </el-tab-pane>
 
-      </el-tabs>
 
     </div>
 
-    <hr>
-    <br>
-    <div class="code-container">
-      <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
-
-      <div class="pad-box-mega GFbanner">
-      <p>{{userInput.title}}</p>
-      <p class="semesterSubtitle">{{userInput.semester}}</p>
+    <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
+      <div class="GFslimbanner">
+        <p>{{userInput.title.toUpperCase()}}</p>
       </div>
-      <div class="content-box">
       <div class="grid-row">
-      <div class="col-xs-6">
-      <div class="styleguide-section__grid-demo-element">
-      <div v-if="!this.userInput.isVideo" >
-        <img :src="this.userInput.image" alt=""> </img>
-      </div>
-      <div v-if="this.userInput.isVideo" class="embed-container"><iframe :src="'https://player.vimeo.com/video/' + this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
-      </div>
-      </div>
-      <div class="col-xs-6">
-      <div class="styleguide-section__grid-demo-element">
-      <div class="welcome">WELCOME TO {{userInput.title}}</div>
-      <p class="html" v-html="userInput.description"></p>
-      <p><a class="Button" style="text-decoration: none;" href="https://courseworks2.columbia.edu/courses/35006/files/916242/download?wrap=1" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/35006/files/916242" data-api-returntype="File">Spring 2017 Schedule</a></p>
-      </div>
-      </div>
-      </div>
-      </div>
-      <div class="content-box">
-      <div class="grid-row">
-      <div class="col-xs-6">
-      <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
-      <p>Instructor:</p>
-      <p>Professor {{userInput.professor}} (<a :href="'mailto:' + userInput.pEmail">{{userInput.pEmail}}</a>) <br /> {{userInput.office}}</p>
-      </div>
-      </div>
-      <div class="col-xs-6">
-      <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
-      <p>TA:</p>
-      <p> {{userInput.ta}} (<a :href="'mailto:' + userInput.tEmail">{{userInput.tEmail}}</a>) <br /> {{userInput.tOffice}}</p>
-      </div>
-      </div>
-      </div>
-      </div>
-      <div class="content-box pad-box-mini border border-b">
-      <p><strong>MEETING DATES / TIMES:</strong> {{userInput.meetings}}</p>
-      <p><strong>SPECIAL DISCUSSION FORUMS:</strong> {{userInput.discussions}}</p>
-      </div>
+        <div class="col-xs-12 col-lg-12">
+        <div class="ic-image-text-combo">
+        <div class="ic-image-text-combo__text">
+        <div class="pad-box-mini">
+        <h3 style="margin-bottom: 5px;"><i class="icon-clock"></i> WEEK 1: Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective</h3>
+        </div>
+        <div class="pad-box-mini border border-b border-t">
+        <p>We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss &ldquo;The Big Picture,&rdquo; starting with the historical context of the current global food system, including the &ldquo;Green Revolution.&rdquo; Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.</p>
+        <div class="pad-box-mini">
+        <span v-html="userInput.required" >
+        </span>
+        </ul>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
       </div>
 
-      <div class="footer">
-        <p style="font-weight: bold" class="center">Code Output</p>
-        <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea> <br> <br>
-      </div>
+      <weekly-video  v-for="(video, index) in videos" :data="video" :index="index+1"> </weekly-video>
 
+      <div class="item-group-container" style="padding-bottom: 0;" v-if="assignments.length > 0 || discussions.length > 0">
+        <div class="item-group-condensed">
+          <ul id="cond_group_1" class="ig-list">
+          <weekly-discussion  v-for="(disc, index) in discussions" :data="disc" :index="index+1"> </weekly-discussion>
+          <weekly-assignment  v-for="(assign, index) in assignments" :data="assign" :index="index+1"> </weekly-assignment>
+          </ul>
+        </div>
+      </div>
 
     </div>
 
   </div>
+
+  <p style="font-weight: bold" class="center">Code Output</p>
+
+  <div class="footer">
+    <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea> <br> <br>
+  </div>
+
+</div>
 </template>
 
 <script>
-import CanvasCode from './CanvasCode.vue'
+import store from '../store'
 import { quillEditor } from 'vue-quill-editor';
+import WeeklyCodeModule from './weekly/WeeklyCodeModule'
+import WeeklyVideo from './weekly/WeeklyVideo'
+import WeeklyDiscussion from './weekly/WeeklyDiscussion'
+import WeeklyAssignment from './weekly/WeeklyAssignment'
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline'],
-  ['blockquote',{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  [{ 'header': [1, 2, 3, 4, 5, 6, false] },'clean'],
-  ['link']
+  ['blockquote', {
+    'list': 'ordered'
+  }, {
+    'list': 'bullet'
+  }],
+  [{ 'indent': '-1'}, { 'indent': '+1' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],
+  ['link', 'clean']
 ];
 
 export default {
-  name: 'hello',
-  data () {
+  name: "weeklylist",
+  data() {
     return {
       userInput: {
-        title: "GLOBAL FOOD SYSTEMS",
-        semester: "U6411 // SPRING 2017",
-        professor: "Glenn Denning",
-        pEmail: "gd2147@sipa.columbia.edu",
-        ta: "Chandani Punia",
-        tEmail:"cp2868@columbia.edu",
-        office: "Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
-        tOffice: "Tuesday 1:00-2:30 pm (Publique, IAB 6th floor)",
-        meetings: "Tuesday 9:00-10:50 am (IAB Room 411)",
-        discussions: "Thursday 9:00-10:50 am (IAB Room 411)",
-        video:"https://vimeo.com/199382848/1dd8fc0f31",
-        image:"http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg",
-        isVideo: true,
-        mediaSwitchText: "Click to input Image",
-        taInfo:"Instructor: \nProfessor Glenn Denning (gd2147@sipa.columbia.edu) Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
-        description: "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
+        title: store.title,
+        videoNumber: 1,
+        description: "We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss “The Big Picture,” starting with the historical context of the current global food system, including the “Green Revolution.” Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.",
+        required: '<span> <p><strong>Lecture Slides:</strong></p><p><strong>Download PDF:&nbsp;</strong><a href="https://courseworks2.columbia.edu/courses/29191/files/1032282/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">GFS Week 6 Africa (February 21, 2017) Final.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></p><p><strong>Required Readings / Viewings:</strong></p><ul><li>Sanchez, P.A. (2002) Soil fertility and hunger in Africa.&nbsp;<em>Science&nbsp;</em><strong>295</strong>: 2019-2020.</li><li>Download PDF:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/929036/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">Soil_Fertility_and_Hunger_in_Africa_2002.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li><li><strong>Familiarize yourself with the work of the Alliance for an African Green Revolution (AGRA):&nbsp;</strong><a href="http://www.agra.org/" target="_blank" style="color: rgb(0, 142, 226);">http://www.agra.org/&nbsp;(Links to an external site.)</a><br><li>T.S. Jayne &amp; Shahidur Rashid (2013) Input subsidy programs in sub-Saharan Africa: a synthesis of recent evidence.&nbsp;<em>Agricultural Economics&nbsp;</em>44 (2013) 547–562. Read the Abstract and the Conclusions.</li><li>Download PDF:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/929035/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">Input_Subsidy_Programs_in_Sub-Saharan_Africa_2013.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li><li><em>Required Videos (posted under the videos section below)One Season (15 minutes)</em>&nbsp;&nbsp;</li><li><em>Three Seasons</em>(14 minutes)&nbsp;</li><li>AGRA: View this upbeat video on the transformation of African agriculture. (10 minutes)</li></ul><p><strong>Supplementary Resources</strong></p><ul><li>Listen: --“African Land Fertile Ground for Crops and Investors.” NPR. June 15, 2012.&nbsp;<a href="http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors" target="_blank" style="color: rgb(0, 142, 226);">http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors&nbsp;(Links to an external site.)</a></li><li>&nbsp;Download mp3:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/1009373/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">20120615_atc_06.mp3<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li><li><strong>Haggblade, S. &amp; P.R. Hazell (2010) Successes in African Agriculture: Lessons for the Future.&nbsp;</strong><em>IFPRI</em>, Issue Brief 63.&nbsp;Download PDF:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/929044/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">Successes_in_African_agriculture_IFPRI_Issue_Brief.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li></ul><p><br></p></span>',
+        toAdd: 1,
       },
-      activeName: '1',
-      outputCode: "",
-      editorOption:{
+      videoEditable: false,
+      showEditor: false,
+      videos: [],
+      discussions: [],
+      assignments: [],
+      numVideo: 13,
+      editorOption: {
         modules: {
           toolbar: toolbarOptions
         }
@@ -147,106 +147,155 @@ export default {
   },
   components: {
     quillEditor,
-    CanvasCode
+    WeeklyVideo,
+    WeeklyCodeModule,
+    WeeklyDiscussion,
+    WeeklyAssignment
   },
-  computed: {
-    videoLink(){
-      let link = this.userInput.video;
-      console.log(link);
-      var parts = link.split('/');
-      return parts[3];
-    }
-  },
+  computed: {},
   methods: {
     copyText() {
       var copyTextarea = document.querySelector('#copy-text-area');
       copyTextarea.select();
-      console.log(this.videoLink)
       document.execCommand('copy')
+
       this.$notify({
         message: 'Code has been copied!',
       });
+
     },
-    updateCode(){
+    updateCode() {
       let code = document.getElementById("canvas-code");
-      this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
+      this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
     },
-    mediaSwitch(){
-      this.userInput.isVideo = !this.userInput.isVideo;
-      this.userInput.mediaSwitchText = this.userInput.isVideo ? "Click to input Image" : "Click to input Video"
+    addVideo() {
+      let tempVideo = {
+        title: "All that Glitters is not Gold (18 minutes)",
+        description: "‘All that Glitters is not Gold’ features various communities’ representatives concern about the introduction of genetically engineered ‘Golden’ rice in the Philippines.",
+        videoSrc: "https://www.youtube.com/embed/GxSGKD50ioE"
+      }
+
+      this.videos.push(tempVideo);
+    },
+    addDiscussion() {
+      let tempDisc = {
+        due: "Feb 4, 2017",
+        available: "Jan 1",
+        link: "https://www.youtube.com/embed/GxSGKD50ioE",
+        points: 10
+      }
+
+      this.discussions.push(tempDisc);
+    },
+    addAssignment() {
+      let tempAssign = {
+        due: "Feb 4, 2017",
+        available: "Jan 1",
+        link: "https://www.youtube.com/embed/GxSGKD50ioE",
+        points: 10
+      }
+
+      this.assignments.push(tempAssign);
     }
+
   },
-  mounted(){
+  mounted() {
+    console.log(this.videos.length > 1);
     this.updateCode();
-    setInterval( () => {
+    setInterval(() => {
       this.updateCode();
     }, 1000);
   },
-  beforeUpdate(){
+  beforeUpdate() {
     this.updateCode();
   }
+
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
 
-ul {
-  list-style-type: none;
-  padding: 0;
+
+<style scoped>
+h1,
+h2 {
+  font-weight: normal;
 }
 
 textarea {
   width: auto;
 }
 
-.quill{
-  width: 700px;
-
+.code-module {
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
-el-tab-pane {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: 'blue';
+.show-editor {
+  height: 40px;
+  margin-bottom: 10px;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 .textbox-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  width: 40%;
+  margin: auto;
+  align-self: flex-start;
+  margin-top: 20px
 }
 
-.textbox{
-  margin-left: 40px;
+.code-input {
+  margin: 10px;
+}
+
+.quill {
+  width: 90%;
+  margin-bottom: 50px;
+  margin-right: 50px;
+  margin-left: 50px;
 }
 
 #canvas-code {
-  width: 1000px;
+  width: 1015px;
   margin: auto;
+  align-self: flex-start;
 }
 
 .code-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.5s ease
 }
 
 .footer {
-  margin-right: 30px;
-  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #copy-text-area {
-  width: 100%;
+  width: 80%;
+  height: 200px
 }
 
 .GFbanner {
   height: 190px;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active in <2.1.8 */
+
+{
+  opacity: 0
+}
 </style>
