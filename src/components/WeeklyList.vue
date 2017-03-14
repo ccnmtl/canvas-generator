@@ -8,7 +8,7 @@
         Number of Weeks to Add: <textarea v-model="userInput.toAdd" class="code-input" rows="1" cols="4"></textarea>
       </div>
       <button type="button" class="add-weekly center" name="button" @click="populateActivities(userInput.toAdd)">Add New Weekly Activities</button>
-      <button type="button" class="add-weekly center"  name="button" @click="weeklyActivites.splice(0, weeklyActivites.length - 1)">Clear</button>
+      <button type="button" class="add-weekly center"  name="button" @click="weeklyActivites.splice(1, weeklyActivites.length - 1)">Clear</button>
       <hr>
       <div class="code-input center">
         Edit Week: <textarea v-model="userInput.weekNumber" class="code-input" rows="1" cols="4"></textarea>
@@ -120,10 +120,14 @@ export default {
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
     },
     AddActivity(){
+      let index = this.weeklyActivites.length + 1
+
+      if (index > 13) index = 13;
+
       let tempActivity = {
         title: "Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
         description: "Class: Tuesday, January 17th",
-        imgSrc: "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
+        imgSrc: 'static/img/week' + index + '.png' // "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
       }
 
       this.weeklyActivites.push(tempActivity);
