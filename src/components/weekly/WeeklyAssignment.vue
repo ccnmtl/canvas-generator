@@ -4,7 +4,7 @@
     <div class="ig-row ig-published">
     <div class="ig-row__layout">
     <div class="ig-type-icon" aria-hidden="true"><i class="icon-assignment"></i></div>
-    <div class="ig-info"><a class="ig-title" href="https://courseworks2.columbia.edu/courses/35006/assignments/55408" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/35006/assignments/55408" data-api-returntype="Assignment"> Assignment 1</a>
+    <div class="ig-info"><a class="ig-title" :href="data.link" :data-api-endpoint="data.link" data-api-returntype="Assignment"> Assignment 1</a>
     <div class="ig-details">
     <div class="ig-details__item"><strong>Due</strong> {{data.due}}</div>
     <div class="ig-details__item"><strong>Available</strong> {{data.available}}</div>

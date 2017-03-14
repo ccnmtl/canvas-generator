@@ -26,7 +26,7 @@
         class="code-module"
         :content="videos"
         :fn="addVideo"
-        :inputs="['title','description', 'videoSrc']"
+        :inputs="['title','description', 'source']"
         @clearArr="videos = []">
         Video
       </weekly-code-module>
@@ -77,13 +77,13 @@
         </div>
       </div>
 
-      <weekly-video  v-for="(video, index) in videos" :data="video" :index="index+1"> </weekly-video>
+      <weekly-video  v-for="(video, index) in videos" :data="video" :index="index+1" :key="video.source"> </weekly-video>
 
       <div class="item-group-container" style="padding-bottom: 0;" v-if="assignments.length > 0 || discussions.length > 0">
         <div class="item-group-condensed">
           <ul id="cond_group_1" class="ig-list">
-          <weekly-discussion  v-for="(disc, index) in discussions" :data="disc" :index="index+1"> </weekly-discussion>
-          <weekly-assignment  v-for="(assign, index) in assignments" :data="assign" :index="index+1"> </weekly-assignment>
+          <weekly-discussion  v-for="(disc, index) in discussions" :data="disc" :index="index+1" :key="disc.link"> </weekly-discussion>
+          <weekly-assignment  v-for="(assign, index) in assignments" :data="assign" :index="index+1" :key="assign.link"> </weekly-assignment>
           </ul>
         </div>
       </div>
@@ -172,7 +172,7 @@ export default {
       let tempVideo = {
         title: "All that Glitters is not Gold (18 minutes)",
         description: "‘All that Glitters is not Gold’ features various communities’ representatives concern about the introduction of genetically engineered ‘Golden’ rice in the Philippines.",
-        videoSrc: "https://www.youtube.com/embed/GxSGKD50ioE"
+        source: "https://www.youtube.com/embed/GxSGKD50ioE"
       }
 
       this.videos.push(tempVideo);
@@ -181,7 +181,7 @@ export default {
       let tempDisc = {
         due: "Feb 4, 2017",
         available: "Jan 1",
-        link: "https://www.youtube.com/embed/GxSGKD50ioE",
+        link: store.courseUrl + 'discussion_topics/',
         points: 10
       }
 
@@ -191,7 +191,7 @@ export default {
       let tempAssign = {
         due: "Feb 4, 2017",
         available: "Jan 1",
-        link: "https://www.youtube.com/embed/GxSGKD50ioE",
+        link: store.courseUrl + 'assignments/',
         points: 10
       }
 

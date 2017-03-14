@@ -4,7 +4,7 @@
   <div class="grid-row top-xs">
   <div class="col-xs-4">
   <div class="styleguide-section__grid-demo-element">
-  <div class="embed-container"><iframe :src="data.videoSrc" width="300" height="150" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
+  <div class="embed-container"><iframe :src="data.source" width="300" height="150" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
   </div>
   </div>
   <div class="col-xs-8">

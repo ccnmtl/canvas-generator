@@ -53,7 +53,7 @@
       </div>
       </div>
       </div>
-      <weekly-list-item v-for="(activity, index) in weeklyActivites" :data="activity" :index="index+1"> </weekly-list-item>
+      <weekly-list-item v-for="(activity, index) in weeklyActivites" :data="activity" :index="index+1" > </weekly-list-item>
     </div>
 
   </div>
