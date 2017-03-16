@@ -5,7 +5,8 @@
       <el-tabs v-model="activeName">
         <el-tab-pane label="Course Info" name="1" class="center">
           <textarea v-model="userInput.title" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.semester" class="code-input" rows="1" cols="20"></textarea> <br>
+          <textarea v-model="userInput.semester" class="code-input" rows="1" cols="20"></textarea>
+          <textarea v-model="userInput.url" class="code-input" rows="1" cols="45"></textarea> <br>
         </el-tab-pane>
 
         <el-tab-pane label="Description" class="center" name="3" >
@@ -63,7 +64,7 @@
       </div>
       <div class="col-xs-6">
       <div class="styleguide-section__grid-demo-element">
-      <div class="welcome">WELCOME TO {{userInput.title.toUpperCase()}}</div>
+      <div class="welcome">WELCOME TO {{newTitle.toUpperCase()}}</div>
       <p class="html" v-html="userInput.description"></p>
       <p><a class="Button" style="text-decoration: none;" href="https://courseworks2.columbia.edu/courses/35006/files/916242/download?wrap=1" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/35006/files/916242" data-api-returntype="File">Spring 2017 Schedule</a></p>
       </div>
@@ -120,7 +121,8 @@ export default {
   data () {
     return {
       userInput: {
-        title: store.title ,
+        title: store.title,
+        url: store.courseUrl,
         semester: "U6411 // SPRING 2017",
         professor: "Glenn Denning",
         pEmail: "gd2147@sipa.columbia.edu",
@@ -156,6 +158,14 @@ export default {
       console.log(link);
       var parts = link.split('/');
       return parts[3];
+    },
+    newTitle(){
+      let title = this.userInput.title
+      let url = this.userInput.url
+      console.log('updating store...')
+      store.title = title
+      store.courseUrl = url.replace(/\/?(\?|#|$)/, '/$1')
+      return title
     }
   },
   methods: {
@@ -171,6 +181,8 @@ export default {
     updateCode(){
       let code = document.getElementById("canvas-code");
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
+      store.title = this.userInput.title
+      store.courseUrl = this.userInput.url
     },
     mediaSwitch(){
       this.userInput.isVideo = !this.userInput.isVideo;

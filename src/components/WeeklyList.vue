@@ -18,20 +18,20 @@
         <option v-for="n in weeklyActivites.length" :value="n">Week {{n}}</option>
       </select>
 
-      <div class="code-input center" id='textbox1'>
-        <p style="font-weight: bold">Title</p>
-        <textarea v-model="weeklyActivites[userInput.weekNumber - 1].title" id="text-area" rows="3" cols="30"></textarea> <br>
+      <div v-if="weeklyActivites.length > 0">
+        <div class="code-input center" id='textbox1'>
+          <p style="font-weight: bold">Title</p>
+          <textarea v-model="weeklyActivites[userInput.weekNumber - 1].title" id="text-area" rows="3" cols="30"></textarea> <br>
+        </div>
+        <div class="code-input center" id='textbox1'>
+          <p style="font-weight: bold">Description</p>
+          <textarea v-model="weeklyActivites[userInput.weekNumber - 1].description" id="text-area" rows="3" cols="30"></textarea> <br>
+        </div>
+        <div class="code-input center" id='textbox1'>
+          <p style="font-weight: bold">Image</p>
+          <textarea v-model="weeklyActivites[userInput.weekNumber - 1].imgSrc" id="text-area" rows="3" cols="30"></textarea> <br>
+        </div>
       </div>
-      <div class="code-input center" id='textbox1'>
-        <p style="font-weight: bold">Description</p>
-        <textarea v-model="weeklyActivites[userInput.weekNumber - 1].description" id="text-area" rows="3" cols="30"></textarea> <br>
-      </div>
-      <div class="code-input center" id='textbox1'>
-        <p style="font-weight: bold">Image</p>
-        <textarea v-model="weeklyActivites[userInput.weekNumber - 1].imgSrc" id="text-area" rows="3" cols="30"></textarea> <br>
-      </div>
-
-
 
     </div>
 
@@ -53,7 +53,8 @@
       </div>
       </div>
       </div>
-      <weekly-list-item v-for="(activity, index) in weeklyActivites" :data="activity" :index="index+1" > </weekly-list-item>
+
+      <weekly-list-item v-if="weeklyActivites.length > 0" v-for="(activity, index) in weeklyActivites" :data="activity" :index="index+1" > </weekly-list-item>
     </div>
 
   </div>
@@ -71,6 +72,7 @@ import CanvasCode from './CanvasCode.vue'
 import store from '../store'
 import { quillEditor } from 'vue-quill-editor';
 import WeeklyListItem from './weekly/WeeklyListItem'
+import Home from './Home'
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline'],
@@ -90,6 +92,7 @@ export default {
       },
       weeklyActivites: [],
       numActivities: 13,
+      outputCode: '',
       editorOption:{
         modules: {
           toolbar: toolbarOptions
@@ -118,6 +121,7 @@ export default {
     updateCode(){
       let code = document.getElementById("canvas-code");
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
+      this.userInput.title = store.title // Home.data().userInput.title
     },
     AddActivity(){
       let index = this.weeklyActivites.length + 1
@@ -127,7 +131,7 @@ export default {
       let tempActivity = {
         title: "Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
         description: "Class: Tuesday, January 17th",
-        imgSrc: 'static/img/week' + index + '.png' // "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
+        imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/temp/week' + index + '.png' // "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
       }
 
       this.weeklyActivites.push(tempActivity);
@@ -138,7 +142,7 @@ export default {
     }
   },
   mounted(){
-    this.populateActivities(1)
+    this.populateActivities(12)
     this.updateCode();
     setInterval( () => {
       this.updateCode();

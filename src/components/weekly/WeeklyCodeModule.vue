@@ -13,12 +13,13 @@
           <option v-for="n in content.length" :value="n"><slot></slot> {{n}}</option>
         </select>
         <button type="button" name="button" @click="editable = !editable">{{ editable ? "Save" : "Edit" }}</button>
+        <button v-show="editable" type="button" class="center" name="button" @click="remove"> Delete</button>
       </div>
 
       <div v-show="editable">
         <div class="code-input center" v-for = "input in inputs">
           <p style="font-weight: bold">{{capitalize(input)}}</p>
-          <textarea v-model="currentItem[input]" id="text-area" rows="2" cols="50"></textarea> <br>
+          <textarea v-model.lazy="currentItem[input]" id="text-area" rows="2" cols="50"></textarea> <br>
         </div>
 
       </div>
@@ -52,7 +53,10 @@ export default {
     },
     capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-}
+  },
+    remove(){
+      this.content.splice(this.index - 1, 1);
+    }
   },
   props: ['content', 'fn', 'inputs']
 }

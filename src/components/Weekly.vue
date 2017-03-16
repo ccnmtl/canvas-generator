@@ -79,6 +79,7 @@
 
       <weekly-video  v-for="(video, index) in videos" :data="video" :index="index+1" :key="video.source"> </weekly-video>
 
+      <transition name="fade">
       <div class="item-group-container" style="padding-bottom: 0;" v-if="assignments.length > 0 || discussions.length > 0">
         <div class="item-group-condensed">
           <ul id="cond_group_1" class="ig-list">
@@ -87,6 +88,7 @@
           </ul>
         </div>
       </div>
+    </transition>
 
     </div>
 
@@ -108,6 +110,7 @@ import WeeklyCodeModule from './weekly/WeeklyCodeModule'
 import WeeklyVideo from './weekly/WeeklyVideo'
 import WeeklyDiscussion from './weekly/WeeklyDiscussion'
 import WeeklyAssignment from './weekly/WeeklyAssignment'
+import Home from './Home'
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline'],
@@ -138,6 +141,7 @@ export default {
       discussions: [],
       assignments: [],
       numVideo: 13,
+      outputCode: '',
       editorOption: {
         modules: {
           toolbar: toolbarOptions
@@ -167,6 +171,7 @@ export default {
     updateCode() {
       let code = document.getElementById("canvas-code");
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
+      this.userInput.title = store.title // Home.data().userInput.title
     },
     addVideo() {
       let tempVideo = {
@@ -200,7 +205,6 @@ export default {
 
   },
   mounted() {
-    console.log(this.videos.length > 1);
     this.updateCode();
     setInterval(() => {
       this.updateCode();
