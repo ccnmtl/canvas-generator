@@ -3,7 +3,7 @@
   <div class="grid-row top-xs">
   <div class="col-xs-4">
   <div class="styleguide-section__grid-demo-element"><a :title="'Week ' + index" :href='url + "pages/week-" + index' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
-    <img class="crop" :src="data.imgSrc" alt=""  /> </a></div>
+    <img class="crop" :src="resizeUrl(data.imgSrc)" alt=""  /> </a></div>
   </div>
   <div class="col-xs-8">
   <div class="styleguide-section__grid-demo-element">
@@ -26,6 +26,14 @@ export default {
       url: store.courseUrl
     }
   },
+  methods: {
+    resizeUrl(url) {
+      let parts = url.split('/')
+      parts[2] += '.rsz.io'
+      parts[parts.length - 1] += '?width=350&height=150&mode=crop'
+      return parts.join('/')
+    }
+  },
   props: ['data', 'index'],
   mounted(){
     setInterval( () => {
@@ -37,8 +45,8 @@ export default {
 
 <style lang="css">
   .crop {
-    width: 350px;
+    /*width: 350px;
     height: 150px;
-    object-fit: cover;
+    object-fit: cover;*/
   }
 </style>

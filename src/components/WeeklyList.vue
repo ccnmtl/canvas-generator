@@ -47,7 +47,7 @@
       <h3 style="margin-bottom: 5px;"><i class="icon-clock"></i> WEEKLY ACTIVITIES</h3>
       </div>
       <div class="pad-box-mini border border-b border-t">
-      <p>Welcome to the Weekly Activities page! Below you'll find an overview of all twelve lectures, each covering a distinct topic in the field of {{userInput.title}}. Clicking on a week will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
+      <p>Welcome to the Weekly Activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{userInput.title}}. Clicking on a week will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
       </div>
       </div>
       </div>
@@ -106,6 +106,22 @@ export default {
     WeeklyListItem
   },
   computed: {
+    numWeeks(){
+      let num = this.weeklyActivites.length
+
+      var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+      var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+
+      if ((num = num.toString()).length > 9) return 'overflow';
+      let n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+      if (!n) return; var str = '';
+      str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+      str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+      str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+      str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+      str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
+      return str;
+    }
   },
   methods: {
     copyText() {
@@ -126,7 +142,7 @@ export default {
     AddActivity(){
       let index = this.weeklyActivites.length + 1
 
-      if (index > 13) index = 13;
+      if (index > 15) index = 15;
 
       let tempActivity = {
         title: "Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
@@ -172,7 +188,6 @@ textarea {
 }
 
 .add-weekly {
-
   margin: 10px
 }
 
@@ -194,7 +209,6 @@ textarea {
   width: 75%;
 
 }
-
 
 #canvas-code {
   width: 1015px;

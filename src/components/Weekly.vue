@@ -65,7 +65,7 @@
         <h3 style="margin-bottom: 5px;"><i class="icon-clock"></i> WEEK 1: Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective</h3>
         </div>
         <div class="pad-box-mini border border-b border-t">
-        <p>We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss &ldquo;The Big Picture,&rdquo; starting with the historical context of the current global food system, including the &ldquo;Green Revolution.&rdquo; Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.</p>
+        <p v-html="userInput.description"></p>
         <div class="pad-box-mini">
         <span v-html="userInput.required" >
         </span>

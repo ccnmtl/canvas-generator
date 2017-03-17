@@ -155,7 +155,6 @@ export default {
   computed: {
     videoLink(){
       let link = this.userInput.video;
-      console.log(link);
       var parts = link.split('/');
       return parts[3];
     },
