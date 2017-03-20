@@ -54,7 +54,7 @@
       </div>
       </div>
 
-      <weekly-list-item v-if="weeklyActivites.length > 0" v-for="(activity, index) in weeklyActivites" :data="activity" :index="index+1" > </weekly-list-item>
+      <weekly-list-item v-if="weeklyActivites.length > 0" v-for="(activity, index) in weeklyActivites" :data="activity" :index="index+1" :key="activity.title" > </weekly-list-item>
     </div>
 
   </div>
@@ -147,7 +147,7 @@ export default {
       let tempActivity = {
         title: "Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
         description: "Class: Tuesday, January 17th",
-        imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/temp/week' + index + '.png' // "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
+        imgSrc: 'http://s3.us-east-2.amazonaws.com/sipa-canvas/temp/week' + index + '.png' // "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
       }
 
       this.weeklyActivites.push(tempActivity);
