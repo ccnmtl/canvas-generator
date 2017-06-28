@@ -18,7 +18,8 @@
     "vue-quill": "^0.1.5",
     "vue-quill-editor": "^1.1.1",
     "vue-router": "^2.2.0",
-    "vue2-editor": "^1.1.12"
+    "vue2-editor": "^1.1.12",
+    "vuejs-datepicker": "^0.8.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

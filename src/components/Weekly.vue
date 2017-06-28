@@ -4,8 +4,10 @@
   <div class="code-container">
 
     <div class="textbox-container">
+      <textarea v-model="userInput.weekTitle" class="code-input" rows="2" cols="60"></textarea>
       <button type="button" name="button" class="show-editor center" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
-      <transition name="fade">
+      <transition name="fade"></transition>
+
       <div v-show="showEditor">
         <div class="quill">
           <quill-editor ref="myTextEditor"
@@ -62,7 +64,7 @@
         <div class="ic-image-text-combo">
         <div class="ic-image-text-combo__text">
         <div class="pad-box-mini">
-        <h3 style="margin-bottom: 5px;"><i class="icon-clock"></i> WEEK 1: Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective</h3>
+        <h3 style="margin-bottom: 5px;"><i class="icon-clock"></i> {{userInput.weekTitle}}</h3>
         </div>
         <div class="pad-box-mini border border-b border-t">
         <p v-html="userInput.description"></p>
@@ -106,6 +108,7 @@
 <script>
 import store from '../store'
 import { quillEditor } from 'vue-quill-editor';
+import Datepicker from 'vuejs-datepicker';
 import WeeklyCodeModule from './weekly/WeeklyCodeModule'
 import WeeklyVideo from './weekly/WeeklyVideo'
 import WeeklyDiscussion from './weekly/WeeklyDiscussion'
@@ -131,6 +134,7 @@ export default {
       userInput: {
         title: store.title,
         videoNumber: 1,
+        weekTitle: 'WEEK 1: Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective',
         description: "We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss “The Big Picture,” starting with the historical context of the current global food system, including the “Green Revolution.” Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.",
         required:'<span ><p><strong>Lecture Slides:</strong></p><p><strong>Download PDF:&nbsp;</strong><a href="https://courseworks2.columbia.edu/courses/29191/files/1032282/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">GFS Week 6 Africa (February 21, 2017) Final.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></p><p><strong>Required Readings / Viewings:</strong></p><ul><li>Sanchez, P.A. (2002) Soil fertility and hunger in Africa.&nbsp;<em>Science&nbsp;</em><strong>295</strong>: 2019-2020.</li><li>Download PDF:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/929036/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">Soil_Fertility_and_Hunger_in_Africa_2002.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li><li><strong>Familiarize yourself with the work of the Alliance for an African Green Revolution (AGRA):&nbsp;</strong><a href="http://www.agra.org/" target="_blank" style="color: rgb(0, 142, 226);">http://www.agra.org/&nbsp;(Links to an external site.)</a></li></ul><p><strong>Supplementary Resources</strong></p><ul><li>Listen: --“African Land Fertile Ground for Crops and Investors.” NPR. June 15, 2012.&nbsp;<a href="http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors" target="_blank" style="color: rgb(0, 142, 226);">http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors&nbsp;(Links to an external site.)</a></li><li>Download mp3:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/1009373/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">20120615_atc_06.mp3<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li></ul></span>',
         toAdd: 1,
@@ -151,6 +155,7 @@ export default {
   },
   components: {
     quillEditor,
+    Datepicker,
     WeeklyVideo,
     WeeklyCodeModule,
     WeeklyDiscussion,
@@ -177,7 +182,7 @@ export default {
       let tempVideo = {
         title: "All that Glitters is not Gold (18 minutes)",
         description: "‘All that Glitters is not Gold’ features various communities’ representatives concern about the introduction of genetically engineered ‘Golden’ rice in the Philippines.",
-        source: "https://www.youtube.com/embed/GxSGKD50ioE"
+        source: "https://www.youtube.com/watch?v=GxSGKD50ioE"
       }
 
       this.videos.push(tempVideo);

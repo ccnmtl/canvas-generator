@@ -23,7 +23,7 @@ import store from '../../store'
 export default {
   data(){
     return{
-      url: store.courseUrl
+      url: store.courseUrl.replace(/\/?(\?|#|$)/, '/$1')
     }
   },
   methods: {
@@ -37,7 +37,7 @@ export default {
   props: ['data', 'index'],
   mounted(){
     setInterval( () => {
-      this.url = store.courseUrl
+      this.url = store.courseUrl.replace(/\/?(\?|#|$)/, '/$1')
     }, 1000);
   }
 }

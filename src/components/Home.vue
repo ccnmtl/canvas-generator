@@ -59,7 +59,7 @@
       <div v-if="!this.userInput.isVideo" >
         <img :src="this.userInput.image" alt=""> </img>
       </div>
-      <div v-if="this.userInput.isVideo" class="embed-container"><iframe :src="'https://player.vimeo.com/video/' + this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
+      <div v-if="this.userInput.isVideo" class="embed-container"><iframe :src="this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
       </div>
       </div>
       <div class="col-xs-6">
@@ -154,9 +154,20 @@ export default {
   },
   computed: {
     videoLink(){
+      let output;
       let link = this.userInput.video;
-      var parts = link.split('/');
-      return parts[3];
+      let parts = link.split('/');
+      if (parts[2].includes('vimeo.com')){
+        output = 'https://player.vimeo.com/video/' + parts[3]
+      }
+      else if (parts[2].includes('youtube')){
+        let split = link.split('=')
+        output = 'https://www.youtube.com/embed/' + split[1]
+      }
+      else {
+        output = link;
+      }
+      return output;
     },
     newTitle(){
       let title = this.userInput.title
