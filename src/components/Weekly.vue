@@ -108,7 +108,6 @@
 <script>
 import store from '../store'
 import { quillEditor } from 'vue-quill-editor';
-import Datepicker from 'vuejs-datepicker';
 import WeeklyCodeModule from './weekly/WeeklyCodeModule'
 import WeeklyVideo from './weekly/WeeklyVideo'
 import WeeklyDiscussion from './weekly/WeeklyDiscussion'
@@ -155,7 +154,6 @@ export default {
   },
   components: {
     quillEditor,
-    Datepicker,
     WeeklyVideo,
     WeeklyCodeModule,
     WeeklyDiscussion,

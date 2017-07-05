@@ -3,7 +3,7 @@
   <div class="grid-row top-xs">
   <div class="col-xs-4">
   <div class="styleguide-section__grid-demo-element"><a :title="'Week ' + index" :href='url + "pages/week-" + index' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
-    <img class="crop" :src="resizeUrl(data.imgSrc)" alt=""  /> </a></div>
+    <img class="crop" :src="data.imgSrc" alt=""  /> </a></div>
   </div>
   <div class="col-xs-8">
   <div class="styleguide-section__grid-demo-element">
@@ -28,10 +28,15 @@ export default {
   },
   methods: {
     resizeUrl(url) {
+
+      // If using, put :src="resizeUrl(data.imgSrc)" above
+      
       let parts = url.split('/')
-      parts[2] += '.rsz.io'
-      parts[parts.length - 1] += '?width=350&height=150&mode=crop'
-      return parts.join('/')
+      return 'https://i.scaley.io/350x160/' + parts.slice(2).join('/');
+      // let parts = url.split('/')
+      // parts[2] += '.rsz.io'
+      // parts[parts.length - 1] += '?width=350&height=150&mode=crop'
+      // return parts.join('/')
     }
   },
   props: ['data', 'index'],

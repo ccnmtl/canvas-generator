@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
+import VueResource from 'vue-resource'
+
+Vue.use(VueResource);
 
 Vue.use(ElementUI, { locale })
 

@@ -4,6 +4,8 @@
       <router-link class="router" to="/">Go to Home</router-link>
       <router-link class="router" to="/weekly">Go to Weekly Activity Page</router-link>
       <router-link class="router" to="/weeklylist">Go to Weekly Activity List</router-link>
+      <router-link class="router" to="/imagetest">Image Test</router-link>
+
     </div>
 
     <keep-alive>
