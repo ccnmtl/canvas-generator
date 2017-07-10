@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Home from 'components/Home'
 import Weekly from 'components/Weekly'
 import WeeklyList from 'components/WeeklyList'
-import ImageTest from 'components/ImageTest'
 
 Vue.use(Router)
 
@@ -24,10 +23,6 @@ export default new Router({
       name: 'Weekly Activities List',
       component: WeeklyList
     },
-    {
-      path: '/imagetest',
-      name: 'Image Test',
-      component: ImageTest
-    }
+
   ]
 })

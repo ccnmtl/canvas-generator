@@ -1,5 +1,9 @@
 <template>
   <div class="hello">
+
+    <!-- This Div contains all of the information inputs -->
+    <!-- Currently it uses a component from the Element UI library for the tabs -->
+
     <div class="textbox-container center">
 
       <el-tabs v-model="activeName">
@@ -45,9 +49,16 @@
 
     <hr>
     <br>
-    <div class="code-container">
-      <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
 
+
+    <!-- Right now the code display and output are displayed in a flexbox in the code-container class-->
+    <!-- Statements with {{}} or inside tags like :src or v-if mean that it is pulling content from the data or methods of local Vue component -->
+
+    <div class="code-container">
+
+      <!-- This Div contains the displayed code which will be parsed for the code output-->
+
+      <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
       <div class="pad-box-mega GFbanner">
       <p>{{userInput.title.toUpperCase()}}</p>
       <p class="semesterSubtitle">{{userInput.semester}}</p>
@@ -93,11 +104,12 @@
       </div>
       </div>
 
+      <!-- The Code Output -->
+
       <div class="footer">
         <p style="font-weight: bold" class="center">Code Output</p>
         <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea> <br> <br>
       </div>
-
 
     </div>
 
@@ -105,7 +117,6 @@
 </template>
 
 <script>
-import CanvasCode from './CanvasCode.vue'
 import store from '../store'
 import { quillEditor } from 'vue-quill-editor';
 
@@ -149,10 +160,10 @@ export default {
     }
   },
   components: {
-    quillEditor,
-    CanvasCode
+    quillEditor
   },
   computed: {
+    // Parses an inputted video link to output the correct embed link for the source
     videoLink(){
       let output;
       let link = this.userInput.video;
@@ -169,6 +180,7 @@ export default {
       }
       return output;
     },
+    // Updates the user inputted title and course url into the store
     newTitle(){
       let title = this.userInput.title
       let url = this.userInput.url
@@ -179,6 +191,7 @@ export default {
     }
   },
   methods: {
+    // Copies the text when user selects the code output area
     copyText() {
       var copyTextarea = document.querySelector('#copy-text-area');
       copyTextarea.select();
@@ -188,18 +201,21 @@ export default {
         message: 'Code has been copied!',
       });
     },
+    // Parses the code from the canvas-code div and puts it in the output
     updateCode(){
       let code = document.getElementById("canvas-code");
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
       store.title = this.userInput.title
       store.courseUrl = this.userInput.url
     },
+    // Toggles button to insert video or image
     mediaSwitch(){
       this.userInput.isVideo = !this.userInput.isVideo;
       this.userInput.mediaSwitchText = this.userInput.isVideo ? "Click to input Image" : "Click to input Video"
     }
   },
   mounted(){
+    // Once the component is loaded, start updating the code every second
     this.updateCode();
     setInterval( () => {
       this.updateCode();

@@ -6,8 +6,9 @@
     <div class="textbox-container">
       <textarea v-model="userInput.weekTitle" class="code-input" rows="2" cols="60"></textarea>
       <button type="button" name="button" class="show-editor center" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
-      <transition name="fade"></transition>
 
+      <!-- This transition is defined as a css animations in the style section -->
+      <transition name="fade"></transition>
       <div v-show="showEditor">
         <div class="quill">
           <quill-editor ref="myTextEditor"
@@ -23,7 +24,10 @@
         </div>
       </div>
       </transition>
+
       <hr>
+
+      <!-- This is a seperate component to handle adding new Acitivity Page elements abstractly. For more information check the WeeklyCodeModule.vue file. -->
       <weekly-code-module
         class="code-module"
         :content="videos"
@@ -51,10 +55,9 @@
         Assignment
       </weekly-code-module>
 
-
-
     </div>
 
+    <!-- Where the canvas code is stored -->
     <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
       <div class="GFslimbanner">
         <p>{{userInput.title.toUpperCase()}}</p>
@@ -79,6 +82,8 @@
         </div>
       </div>
 
+      <!-- The videos, discussions, and assignments are all built into their own smaller components to keep it more organized
+      They are WeeklyDiscussion.vue, WeeklyAssignment.vue, and WeeklyVideo.vue respectively. -->
       <weekly-video  v-for="(video, index) in videos" :data="video" :index="index+1" :key="video.source"> </weekly-video>
 
       <transition name="fade">
