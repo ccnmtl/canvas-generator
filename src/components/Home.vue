@@ -44,6 +44,8 @@
         </el-tab-pane>
 
       </el-tabs>
+      <br> <br>
+      <button type="button" name="button" @click="setToDefault">Reset to Default</button>
 
     </div>
 
@@ -118,6 +120,7 @@
 
 <script>
 import store from '../store'
+import saveState from 'vue-save-state';
 import { quillEditor } from 'vue-quill-editor';
 
 var toolbarOptions = [
@@ -128,7 +131,7 @@ var toolbarOptions = [
 ];
 
 export default {
-  name: 'hello',
+  name: 'Home',
   data () {
     return {
       userInput: {
@@ -162,6 +165,7 @@ export default {
   components: {
     quillEditor
   },
+  mixins: [saveState],
   computed: {
     // Parses an inputted video link to output the correct embed link for the source
     videoLink(){
@@ -212,6 +216,15 @@ export default {
     mediaSwitch(){
       this.userInput.isVideo = !this.userInput.isVideo;
       this.userInput.mediaSwitchText = this.userInput.isVideo ? "Click to input Image" : "Click to input Video"
+    },
+    setToDefault(){
+      console.log('resetting data...')
+      this.userInput = { ...store.homeDefault };
+    },
+    getSaveStateConfig() {
+      return {
+          'cacheKey': 'Home',
+      };
     }
   },
   mounted(){

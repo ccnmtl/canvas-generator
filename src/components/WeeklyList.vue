@@ -97,6 +97,7 @@
 <script>
 import store from '../store'
 import { quillEditor } from 'vue-quill-editor';
+import saveState from 'vue-save-state';
 import WeeklyListItem from './weekly/WeeklyListItem'
 import Home from './Home'
 
@@ -118,6 +119,7 @@ export default {
         isFile: true,
         uploadSwitchText: "Click to Upload Image from Url",
       },
+      needsInit: true,
       weeklyActivites: [],
       numActivities: 13,
       outputCode: '',
@@ -132,6 +134,7 @@ export default {
     quillEditor,
     WeeklyListItem
   },
+  mixins: [saveState],
   computed: {
     // Changes the description wording so that it matches the current number of weeks on the page
     numWeeks(){
@@ -219,11 +222,19 @@ export default {
         console.log(response)
       });
 
+    },
+    getSaveStateConfig() {
+      return {
+          'cacheKey': 'Weeklylist',
+      };
     }
-
   },
   mounted(){
-    this.populateActivities(12)
+    if (this.needsInit) {
+      console.log('populating...')
+      this.populateActivities(12)
+      this.needsInit = false;
+    }
     this.updateCode();
     setInterval( () => {
       this.updateCode();

@@ -4,9 +4,10 @@
   <div class="code-container">
 
     <div class="textbox-container">
-      <textarea v-model="userInput.weekTitle" class="code-input" rows="2" cols="60"></textarea>
-      <button type="button" name="button" class="show-editor center" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
 
+      <textarea v-model="userInput.weekTitle" class="code-input" rows="2" cols="60"></textarea>
+      <button type="button" name="button" @click="setToDefault">Reset to Default</button>
+      <button type="button" name="button" class="show-editor center" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
       <!-- This transition is defined as a css animations in the style section -->
       <transition name="fade"></transition>
       <div v-show="showEditor">
@@ -54,6 +55,7 @@
         @clearArr="assignments = []">
         Assignment
       </weekly-code-module>
+
 
     </div>
 
@@ -117,6 +119,7 @@ import WeeklyCodeModule from './weekly/WeeklyCodeModule'
 import WeeklyVideo from './weekly/WeeklyVideo'
 import WeeklyDiscussion from './weekly/WeeklyDiscussion'
 import WeeklyAssignment from './weekly/WeeklyAssignment'
+import saveState from 'vue-save-state';
 import Home from './Home'
 
 var toolbarOptions = [
@@ -132,7 +135,7 @@ var toolbarOptions = [
 ];
 
 export default {
-  name: "weeklylist",
+  name: "weekly",
   data() {
     return {
       userInput: {
@@ -148,7 +151,6 @@ export default {
       videos: [],
       discussions: [],
       assignments: [],
-      numVideo: 13,
       outputCode: '',
       editorOption: {
         modules: {
@@ -164,6 +166,7 @@ export default {
     WeeklyDiscussion,
     WeeklyAssignment
   },
+  mixins: [saveState],
   computed: {},
   methods: {
     copyText() {
@@ -209,8 +212,18 @@ export default {
       }
 
       this.assignments.push(tempAssign);
+    },
+    setToDefault(){
+      console.log('resetting data...')
+      this.userInput = { ...store.weeklyDefault };
+      this.userInput.title = store.title;
+      this.videos = this.assignments = this.discussions = [];
+    },
+    getSaveStateConfig() {
+      return {
+          'cacheKey': 'Weekly',
+      };
     }
-
   },
   mounted() {
     this.updateCode();
