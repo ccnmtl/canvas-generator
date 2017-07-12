@@ -7,6 +7,14 @@
 
     </div>
 
+    <div class="export-container">
+      <form v-on:submit.prevent="onFormSubmit()">
+        <input name="import" id="import-file" type="file">
+        <input type="submit" value="Submit!">
+      </form>
+      <button type="button" name="button" @click="exportJSON()"> Export</button>
+    </div>
+
     <keep-alive>
     <router-view></router-view>
     </keep-alive>
@@ -15,8 +23,27 @@
 </template>
 
 <script>
+import { EventBus } from './bus'
+
 export default {
-  name: 'app'
+  name: 'app',
+  methods: {
+    onFormSubmit(){
+      let importData = document.querySelector('#import-file')
+      let parsedData = JSON.parse(importData.files[0])
+      EventBus.$emit('import-data', parsedData)
+    },
+    exportJSON(){
+      EventBus.$emit('export-data')
+
+      // wait for home, weekly, and weekly list events through async?
+
+      // assmble each part into one larger object with the keys home: home, weekly: weekly, etc
+
+      // export to JSON and save as file
+      
+    }
+  }
 }
 </script>
 
@@ -30,6 +57,11 @@ export default {
 
 html {
     font-size: 100%;
+}
+
+.export-container{
+  height: 20px;
+  margin: 10px;
 }
 
 .center{

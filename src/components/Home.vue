@@ -120,6 +120,7 @@
 
 <script>
 import store from '../store'
+import { EventBus } from '../bus'
 import saveState from 'vue-save-state';
 import { quillEditor } from 'vue-quill-editor';
 
@@ -220,6 +221,7 @@ export default {
     setToDefault(){
       console.log('resetting data...')
       this.userInput = { ...store.homeDefault };
+      EventBus.$emit('set-default', 'setting all to default...');
     },
     getSaveStateConfig() {
       return {
@@ -233,6 +235,16 @@ export default {
     setInterval( () => {
       this.updateCode();
     }, 1000);
+
+    EventBus.$on('import-data', data => {
+      this.userInput = { ...data.home.userInput}
+      console.log('importing data to home...')
+    })
+
+    EventBus.$on('export-data', () => {
+      let home = this.$data
+      EventBus.$emit('home-data', home)
+    })
   },
   beforeUpdate(){
     this.updateCode();

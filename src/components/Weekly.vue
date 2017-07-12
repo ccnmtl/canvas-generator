@@ -114,6 +114,7 @@
 
 <script>
 import store from '../store'
+import { EventBus } from '../bus'
 import { quillEditor } from 'vue-quill-editor';
 import WeeklyCodeModule from './weekly/WeeklyCodeModule'
 import WeeklyVideo from './weekly/WeeklyVideo'
@@ -230,6 +231,31 @@ export default {
     setInterval(() => {
       this.updateCode();
     }, 1000);
+
+    EventBus.$on('set-default', response => {
+      this.setToDefault()
+      console.log(response)
+    })
+
+    EventBus.$on('import-data', data => {
+      this.userInput = { ...data.weekly.userInput}
+      this.videos = data.weekly.videos
+      this.assignments = data.weekly.assignments
+      this.discussions = data.weekly.discussions
+      console.log('importing data to weekly...')
+    })
+
+    EventBus.$on('export-data', () => {
+      let weeklyList;
+      weeklyList.weeklyActivites = this.weeklyActivites
+      EventBus.$emit('list-data', weeklyList)
+    })
+
+    EventBus.$on('export-data', () => {
+      let weekly = this.$data
+      EventBus.$emit('weekly-data', weekly)
+    })
+
   },
   beforeUpdate() {
     this.updateCode();

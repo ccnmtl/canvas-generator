@@ -96,6 +96,7 @@
 
 <script>
 import store from '../store'
+import { EventBus } from '../bus'
 import { quillEditor } from 'vue-quill-editor';
 import saveState from 'vue-save-state';
 import WeeklyListItem from './weekly/WeeklyListItem'
@@ -121,7 +122,6 @@ export default {
       },
       needsInit: true,
       weeklyActivites: [],
-      numActivities: 13,
       outputCode: '',
       editorOption:{
         modules: {
@@ -239,6 +239,16 @@ export default {
     setInterval( () => {
       this.updateCode();
     }, 1000);
+
+    EventBus.$on('import-data', data => {
+      this.weeklyActivites = data.weeklyList.weeklyActivites
+      console.log('importing data to weekly list...')
+    })
+
+    EventBus.$on('export-data', () => {
+      let weeklyList = this.$data
+      EventBus.$emit('list-data', weeklyList)
+    })
   },
   beforeUpdate(){
     this.updateCode();
