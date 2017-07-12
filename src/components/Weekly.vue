@@ -246,16 +246,14 @@ export default {
     })
 
     EventBus.$on('export-data', () => {
-      let weeklyList;
-      weeklyList.weeklyActivites = this.weeklyActivites
-      EventBus.$emit('list-data', weeklyList)
-    })
+      // let weeklyList = {
+      //   weeklyActivites: this.weeklyActivites
+      // }
+      // EventBus.$emit('list-data', weeklyList)
 
-    EventBus.$on('export-data', () => {
       let weekly = this.$data
       EventBus.$emit('weekly-data', weekly)
     })
-
   },
   beforeUpdate() {
     this.updateCode();
