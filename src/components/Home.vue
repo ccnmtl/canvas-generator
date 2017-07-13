@@ -79,7 +79,7 @@
       <div class="styleguide-section__grid-demo-element">
       <div class="welcome">WELCOME TO {{newTitle.toUpperCase()}}</div>
       <p class="html" v-html="userInput.description"></p>
-      <p><a class="Button" style="text-decoration: none;" href="https://courseworks2.columbia.edu/courses/35006/files/916242/download?wrap=1" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/35006/files/916242" data-api-returntype="File">Spring 2017 Schedule</a></p>
+      <p><a class="Button" style="text-decoration: none;" :href="userInput.url + 'assignments/syllabus'" >Course Syllabus</a></p>
       </div>
       </div>
       </div>
@@ -191,7 +191,7 @@ export default {
       let url = this.userInput.url
       console.log('updating store...')
       store.title = title
-      store.courseUrl = url.replace(/\/?(\?|#|$)/, '/$1')
+      store.courseUrl = this.userInput.url = url.replace(/\/?(\?|#|$)/, '/$1')
       return title
     }
   },
