@@ -235,7 +235,8 @@ export default {
     setInterval( () => {
       this.updateCode();
     }, 1000);
-
+  },
+  beforeCreate(){
     EventBus.$on('import-data', data => {
       this.userInput = { ...data.home.userInput}
       console.log('importing data to home...')
@@ -243,6 +244,7 @@ export default {
 
     EventBus.$on('export-data', () => {
       let home = this.$data
+      console.log('sending home')
       EventBus.$emit('home-data', home)
     })
   },

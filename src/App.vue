@@ -14,7 +14,8 @@
         File read successfully! Click here to confirm import.
       </button>
 
-      <button type="button" name="button" @click="exportJSON">Export</button>
+      <button style="display:inline;" type="button" name="button" @click="exportJSON">Export</button>
+       <input style="display:inline;" type="checkbox" id="rough-export"> <p style="display:inline;">Rough Export</p>
     </div>
 
     <keep-alive>
@@ -32,26 +33,25 @@ export default {
   name: 'app',
   data () {
     return {
-      hasImportData: false
+      hasImportData: false,
+      exportData: {}
     }
   },
   mounted () {
-    this.exportData = {}
-    EventBus.$on('export-data', () => {
-      this.exportData = {} // refresh exportData and wait for below events to fill it
-    })
-
     EventBus.$on('home-data', data => {
       this.exportData.home = data
-      this.exportDataIfPossbile()
+      console.log('got home')
+      this.exportDataIfPossible()
     })
     EventBus.$on('weekly-data', data => {
       this.exportData.weekly = data
-      this.exportDataIfPossbile()
+      console.log('got weekly')
+      this.exportDataIfPossible()
     })
     EventBus.$on('list-data', data => {
       this.exportData.weeklyList = data
-      this.exportDataIfPossbile()
+      console.log('got list')
+      this.exportDataIfPossible()
     })
   },
   methods: {
@@ -73,16 +73,32 @@ export default {
       EventBus.$emit('import-data', this.importData)
     },
     exportJSON () {
+      this.exportData = {}
       EventBus.$emit('export-data')
     },
     exportDataIfPossible () {
       // export to JSON once all data has arrived
       let valid = this.exportData.home && this.exportData.weekly && this.exportData.weeklyList
+
+      let waitTime = 0;
+
+      // if rough export is selected wait a short amount of time for all data to come in
+      if (document.getElementById("rough-export").checked){
+        console.log('waiting..')
+        valid = true;
+        waitTime = 300;
+      }
+
+      console.log ('exporting..')
+      console.log(this.exportData)
       if (valid) {
-        saveFile({
-          name: 'picker-export.json'
-          data: JSON.stringify(this.exportData)
-        })
+        setTimeout( () => {
+          console.log('export valid')
+          saveFile({
+            name: 'picker-export.json',
+            data: JSON.stringify(this.exportData)
+          })
+        }, waitTime)
       }
     }
   }
@@ -102,7 +118,7 @@ html {
 }
 
 .export-container{
-  height: 20px;
+  height: 80px;
   margin: 10px;
 }
 

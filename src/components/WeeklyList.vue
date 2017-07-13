@@ -10,7 +10,8 @@
       </div>
 
       <button type="button" class="add-weekly center" name="button" @click="populateActivities(userInput.toAdd)">Add New Weekly Activities</button>
-      <button type="button" class="add-weekly center"  name="button" @click="weeklyActivites.splice(1, weeklyActivites.length - 1)">Clear</button>
+      <!-- to preserve first week weeklyActivites.splice(1, weeklyActivites.length - 1 -->
+      <button type="button" class="add-weekly center"  name="button" @click="weeklyActivites = []">Clear</button>
       <hr>
 
       <div class="code-input center">
@@ -239,7 +240,8 @@ export default {
     setInterval( () => {
       this.updateCode();
     }, 1000);
-
+  },
+  beforeCreate(){
     EventBus.$on('import-data', data => {
       this.weeklyActivites = data.weeklyList.weeklyActivites
       console.log('importing data to weekly list...')
@@ -248,6 +250,7 @@ export default {
     EventBus.$on('export-data', () => {
       let weeklyList = this.$data
       EventBus.$emit('list-data', weeklyList)
+      console.log('sending list')
     })
   },
   beforeUpdate(){

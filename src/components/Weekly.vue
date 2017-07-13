@@ -231,7 +231,8 @@ export default {
     setInterval(() => {
       this.updateCode();
     }, 1000);
-
+  },
+  beforeCreate(){
     EventBus.$on('set-default', response => {
       this.setToDefault()
       console.log(response)
@@ -246,12 +247,14 @@ export default {
     })
 
     EventBus.$on('export-data', () => {
+
       // let weeklyList = {
       //   weeklyActivites: this.weeklyActivites
       // }
       // EventBus.$emit('list-data', weeklyList)
 
       let weekly = this.$data
+      console.log('sending weekly')
       EventBus.$emit('weekly-data', weekly)
     })
   },
