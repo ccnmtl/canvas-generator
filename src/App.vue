@@ -15,7 +15,10 @@
       </button>
 
       <button style="display:inline;" type="button" name="button" @click="exportJSON">Export</button>
-       <input style="display:inline;" type="checkbox" id="rough-export"> <p style="display:inline;">Rough Export</p>
+
+      <!-- Previously used for rough export option -->
+       <!-- <input style="display:inline;" type="checkbox" id="rough-export"> <p style="display:inline;">Rough Export</p> -->
+
     </div>
 
     <keep-alive>
@@ -85,25 +88,31 @@ export default {
       EventBus.$emit('export-data')
     },
     exportDataIfPossible () {
-      // export to JSON once all data has arrived
+      // only export if all data to arrived
       let valid = this.exportData.home && this.exportData.weekly && this.exportData.weeklyList
 
       let waitTime = 0;
 
       // if rough export is selected wait a short amount of time for all data to come in
-      if (document.getElementById("rough-export").checked){
-        console.log('waiting..')
-        valid = true;
-        waitTime = 300;
-      }
+      // currently not used as all routes are cycled when app is mounted
 
-      console.log ('exporting..')
-      console.log(this.exportData)
+      // if (document.getElementById("rough-export").checked){
+      //   console.log('waiting..')
+      //   valid = true;
+      //   waitTime = 300;
+      // }
+
+      let today = new Date();
+      let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      let time = today.getHours() + "-" + today.getMinutes();
+      let dateTime = date+' '+time;
+
+      // save file as json
       if (valid) {
+        console.log ('exporting..')
         setTimeout( () => {
-          console.log('export valid')
           saveFile({
-            name: 'picker-export.json',
+            name: dateTime + '_export.json',
             data: JSON.stringify(this.exportData)
           })
         }, waitTime)
