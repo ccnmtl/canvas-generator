@@ -61,49 +61,56 @@
       <!-- This Div contains the displayed code which will be parsed for the code output-->
 
       <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
-      <div class="pad-box-mega GFbanner">
-      <p>{{userInput.title.toUpperCase()}}</p>
-      <p class="semesterSubtitle">{{userInput.semester}}</p>
-      </div>
-      <div class="content-box">
-      <div class="grid-row">
-      <div class="col-xs-6">
-      <div class="styleguide-section__grid-demo-element">
-      <div v-if="!this.userInput.isVideo" >
-        <img :src="this.userInput.image" alt=""> </img>
-      </div>
-      <div v-if="this.userInput.isVideo" class="embed-container"><iframe :src="this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
-      </div>
-      </div>
-      <div class="col-xs-6">
-      <div class="styleguide-section__grid-demo-element">
-      <div class="welcome">WELCOME TO {{newTitle.toUpperCase()}}</div>
-      <p class="html" v-html="userInput.description"></p>
-      <p><a class="Button" style="text-decoration: none;" :href="userInput.url + 'assignments/syllabus'" >Course Syllabus</a></p>
-      </div>
-      </div>
-      </div>
-      </div>
-      <div class="content-box">
-      <div class="grid-row">
-      <div class="col-xs-6">
-      <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
-      <p>Instructor:</p>
-      <p>Professor {{userInput.professor}} (<a :href="'mailto:' + userInput.pEmail">{{userInput.pEmail}}</a>) <br /> {{userInput.office}}</p>
-      </div>
-      </div>
-      <div class="col-xs-6">
-      <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
-      <p>TA:</p>
-      <p> {{userInput.ta}} (<a :href="'mailto:' + userInput.tEmail">{{userInput.tEmail}}</a>) <br /> {{userInput.tOffice}}</p>
-      </div>
-      </div>
-      </div>
-      </div>
-      <div class="content-box pad-box-mini border border-b">
-      <p><strong>MEETING DATES / TIMES:</strong> {{userInput.meetings}}</p>
-      <p><strong>SPECIAL DISCUSSION FORUMS:</strong> {{userInput.discussions}}</p>
-      </div>
+        <div class="pad-box-mega STV1_Banner">
+        	<img src="https://courseworks2.columbia.edu/files/1334373/download?verifier=60abnNG7Y92ct1lt4Vkf1PkCPxnO4uGcCXhWkLFv&amp;wrap=1"/>
+        	<p>{{userInput.title.toUpperCase()}}</p>
+        	<p class="STV1_CourseCode">{{userInput.semester}}</p>
+        </div>
+        <div class="content-box">
+        	<div class="grid-row">
+        		<div class="col-xs-6">
+        			<div class="styleguide-section__grid-demo-element">
+        				<div v-if="!this.userInput.isVideo" >
+        					<img :src="this.userInput.image" alt=""> </img>
+        				</div>
+        				<div v-if="this.userInput.isVideo" class="embed-container">
+        					<iframe :src="this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen"
+        					webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe>
+        				</div>
+        			</div>
+        		</div>
+        		<div class="col-xs-6">
+        			<div class="styleguide-section__grid-demo-element">
+        				<div class="STV1_Welcome">WELCOME TO {{newTitle.toUpperCase()}}</div>
+                <p class="html" v-html="userInput.description"></p>
+        				<p>&nbsp;</p>
+        				<p>
+        					<a class="Button" style="text-decoration: none;" :href="userInput.url + 'assignments/syllabus'" >Course Syllabus</a>
+        				</p>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+        <div class="content-box">
+        	<div class="grid-row">
+        		<div class="col-xs-6">
+        			<div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
+        				<p>Instructor:</p>
+        				<p>Professor {{userInput.professor}} (<a :href="'mailto:' + userInput.pEmail">{{userInput.pEmail}}</a>) <br /> {{userInput.office}}</p>
+        			</div>
+        		</div>
+        		<div class="col-xs-6">
+        			<div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
+        				<p>TA:</p>
+        				<p> {{userInput.ta}} (<a :href="'mailto:' + userInput.tEmail">{{userInput.tEmail}}</a>) <br /> {{userInput.tOffice}}</p>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+        <div class="content-box pad-box-mini border border-b">
+        	<p><strong>MEETING DATES / TIMES:</strong> {{userInput.meetings}}</p>
+        	<p><strong>SPECIAL DISCUSSION FORUMS:</strong> {{userInput.discussions}}</p>
+        </div>
       </div>
 
       <!-- The Code Output -->
@@ -312,6 +319,10 @@ el-tab-pane {
 }
 
 .GFbanner {
+  height: 190px;
+}
+
+.STV1_Banner {
   height: 190px;
 }
 

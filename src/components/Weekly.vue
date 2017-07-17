@@ -61,26 +61,26 @@
 
     <!-- Where the canvas code is stored -->
     <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
-      <div class="GFslimbanner">
+      <div class="STV1_SlimBanner">
         <p>{{userInput.title.toUpperCase()}}</p>
       </div>
       <div class="grid-row">
         <div class="col-xs-12 col-lg-12">
-        <div class="ic-image-text-combo">
-        <div class="ic-image-text-combo__text">
-        <div class="pad-box-mini">
-        <h3 style="margin-bottom: 5px;"><i class="icon-clock"></i> {{userInput.weekTitle}}</h3>
-        </div>
-        <div class="pad-box-mini border border-b border-t">
-        <p v-html="userInput.description"></p>
-        <div class="pad-box-mini">
-        <span v-html="userInput.required" >
-        </span>
-        </ul>
-        </div>
-        </div>
-        </div>
-        </div>
+          <div class="ic-image-text-combo">
+            <div class="ic-image-text-combo__text">
+              <div class="pad-box-mini">
+                <h3 style="margin-bottom: 5px;">
+                  <i class="icon-clock"></i> {{userInput.weekTitle}}</h3>
+                </div>
+                <div class="pad-box-mini border border-b border-t">
+                  <p v-html="userInput.description"></p>
+                  <div class="pad-box-mini">
+                    <span v-html="userInput.required" >
+                    </span>
+                  </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

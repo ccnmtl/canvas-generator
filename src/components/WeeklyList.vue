@@ -54,23 +54,23 @@
 
     <!-- This div contains the canvas code to be displayed -->
     <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
-      <div class="GFslimbanner">
-      <p>{{userInput.title.toUpperCase()}}</p>
+      <div class="STV1_SlimBanner">
+        <p>{{userInput.title.toUpperCase()}}</p>
       </div>
-
       <div class="grid-row">
-      <div class="col-xs-12 col-lg-12">
-      <div class="ic-image-text-combo">
-      <div class="ic-image-text-combo__text">
-      <div class="pad-box-mini">
-      <h3 style="margin-bottom: 5px;"><i class="icon-clock"></i> WEEKLY ACTIVITIES</h3>
-      </div>
-      <div class="pad-box-mini border border-b border-t">
-      <p>Welcome to the Weekly Activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{userInput.title}}. Clicking on a week will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
-      </div>
-      </div>
-      </div>
-      </div>
+        <div class="col-xs-12 col-lg-12">
+          <div class="ic-image-text-combo">
+            <div class="ic-image-text-combo__text">
+              <div class="pad-box-mini">
+                <h3 style="margin-bottom: 5px;">
+                  <i class="icon-clock"></i> WEEKLY ACTIVITIES</h3>
+              </div>
+              <div class="pad-box-mini border border-b border-t">
+                <p>Welcome to the Weekly Activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{userInput.title}}. Clicking on a week will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Generates a weekly list html element for each activity in the weeklyAcitivites array in the vue data.
@@ -211,8 +211,8 @@ export default {
       }
 
       // More api headers to tell the server the dimensions to crop
-      formData.append('imageWidth', 350)
-      formData.append('imageHeight', 160)
+      formData.append('imageWidth', 360)
+      formData.append('imageHeight', 150)
 
       // Send post request to Amazon server using vue-resource with form data
       this.$http.post('http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image',formData).then( response => {

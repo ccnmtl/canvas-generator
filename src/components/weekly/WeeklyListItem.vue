@@ -1,19 +1,22 @@
 <template lang="html">
   <div class="content-box">
-  <div class="grid-row top-xs">
-  <div class="col-xs-4">
-  <div class="styleguide-section__grid-demo-element"><a :title="'Week ' + index" :href='url + "pages/week-" + index' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
-    <img class="crop" :src="data.imgSrc" alt=""  /> </a></div>
-  </div>
-  <div class="col-xs-8">
-  <div class="styleguide-section__grid-demo-element">
-  <a :title="'Week ' + index" :href='url + "pages/week-" + index' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
-  <div class="welcome">Week {{index}}: {{data.title}} </div>
-  </a>
-  <p>{{data.description}}</p>
-  </div>
-  </div>
-  </div>
+    <div class="grid-row top-xs">
+      <div class="col-xs-4">
+        <div class="styleguide-section__grid-demo-element">
+          <a :title="'Week ' + index" :href='url + "pages/week-" + index' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
+            <img class="crop STV1_WeeklyIconIMG" :src="data.imgSrc" alt=""  />
+          </a>
+        </div>
+      </div>
+      <div class="col-xs-8">
+        <div class="styleguide-section__grid-demo-element">
+          <a :title="'Week ' + index" :href='url + "pages/week-" + index' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
+            <div class="STV1_Welcome">Week {{index}}: {{data.title}} </div>
+          </a>
+          <p>{{data.description}}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -30,7 +33,7 @@ export default {
     resizeUrl(url) {
 
       // If using, put :src="resizeUrl(data.imgSrc)" above
-      
+
       let parts = url.split('/')
       return 'https://i.scaley.io/350x160/' + parts.slice(2).join('/');
       // let parts = url.split('/')
