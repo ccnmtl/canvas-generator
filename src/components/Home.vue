@@ -62,7 +62,7 @@
 
       <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
         <div class="pad-box-mega STV1_Banner">
-        	<img src="https://courseworks2.columbia.edu/files/1334373/download?verifier=60abnNG7Y92ct1lt4Vkf1PkCPxnO4uGcCXhWkLFv&amp;wrap=1"/>
+        	<img src="https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/SipaLogo2.png"/>
         	<p>{{userInput.title.toUpperCase()}}</p>
         	<p class="STV1_CourseCode">{{userInput.semester}}</p>
         </div>
@@ -71,7 +71,7 @@
         		<div class="col-xs-6">
         			<div class="styleguide-section__grid-demo-element">
         				<div v-if="!this.userInput.isVideo" >
-        					<img :src="this.userInput.image" alt=""> </img>
+        					<img :src="this.userInput.image" class="STV1_WeeklyIconIMG" alt=""> </img>
         				</div>
         				<div v-if="this.userInput.isVideo" class="embed-container">
         					<iframe :src="this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen"
@@ -324,6 +324,12 @@ el-tab-pane {
 
 .STV1_Banner {
   height: 190px;
+}
+
+.crop {
+  width: 450px;
+  height: 250px;
+  object-fit: cover;
 }
 
 </style>
