@@ -3,6 +3,151 @@
 
     <!-- This Div contains all of the information inputs -->
     <!-- Currently it uses a component from the Element UI library for the tabs -->
+    <div class="clearfix"></div>
+
+    <div>
+    	<ul class="uk-tab uk-flex-center" data-uk-tab="{connect:'#tab-content'}">
+        <li class="uk-active"><a href="#">Course Info</a></li>
+        <li><a href="#">Description</a></li>
+    		<li><a href="#">Professor</a></li>
+    		<li><a href="#">TA</a></li>
+    		<li><a href="#">Meeting Times</a></li>
+    		<li><a href="#">Media Link</a></li>
+    	</ul>
+    	<ul id="tab-content" class="uk-switcher uk-margin">
+    		<li class="uk-active uk-text-center">
+          <textarea v-model="userInput.title" class="code-input" rows="1" cols="25"></textarea>
+          <textarea v-model="userInput.semester" class="code-input" rows="1" cols="20"></textarea>
+          <textarea v-model="userInput.url" class="code-input" rows="1" cols="45"></textarea> <br>
+        </li>
+    		<li class="uk-text-center">
+          <div class='quill'>
+            <quill-editor ref="myTextEditor"
+                          v-model="userInput.description"
+                          :config="editorOption">
+            </quill-editor>
+          </div>
+    		</li>
+    		<li class="uk-text-center">
+          <textarea v-model="userInput.professor" class="code-input" rows="1" cols="20"></textarea>
+          <textarea v-model="userInput.pEmail" class="code-input" rows="1" cols="25"></textarea>
+          <textarea v-model="userInput.office" class="code-input" rows="1" cols="50"></textarea>
+        </li>
+    		<li class="uk-text-center">
+          <textarea v-model="userInput.ta" class="code-input" rows="1" cols="20"></textarea>
+          <textarea v-model="userInput.tEmail" class="code-input" rows="1" cols="25"></textarea>
+          <textarea v-model="userInput.tOffice" class="code-input" rows="1" cols="50"></textarea>
+    		</li>
+    		<li class="uk-text-center">
+          <textarea v-model="userInput.meetings" class="code-input" rows="1" cols="50"></textarea>
+          <textarea v-model="userInput.discussions" class="code-input" rows="1" cols="50"></textarea>
+    		</li>
+    		<li class="uk-text-center">
+          <button type="button" name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
+          <textarea v-show="this.userInput.isVideo" v-model="userInput.video" class="code-input" rows="1" cols="50"></textarea>
+          <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input" rows="1" cols="50"></textarea>
+    		</li>
+    	</ul>
+    </div>
+
+    <hr class="uk-margin-large-top" />
+
+    <div class="clearfix"></div>
+
+    <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
+      <div class="">
+        <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
+          <div class="pad-box-mega STV1_Banner">
+            <img src="https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/SipaLogo2.png"/>
+            <p>{{userInput.title.toUpperCase()}}</p>
+            <p class="STV1_CourseCode">{{userInput.semester}}</p>
+          </div>
+          <div class="content-box">
+            <div class="grid-row">
+              <div class="col-xs-6">
+                <div class="styleguide-section__grid-demo-element">
+                  <div v-if="!this.userInput.isVideo" >
+                    <img :src="this.userInput.image" class="STV1_WeeklyIconIMG" alt=""> </img>
+                  </div>
+                  <div v-if="this.userInput.isVideo" class="embed-container">
+                    <iframe :src="this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen"
+                    webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-6">
+                <div class="styleguide-section__grid-demo-element">
+                  <div class="STV1_Welcome">WELCOME TO {{newTitle.toUpperCase()}}</div>
+                  <p class="html" v-html="userInput.description"></p>
+                  <p>&nbsp;</p>
+                  <p>
+                    <a class="Button" style="text-decoration: none;" :href="userInput.url + 'assignments/syllabus'" >Course Syllabus</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-box">
+            <div class="grid-row">
+              <div class="col-xs-6">
+                <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
+                  <p>Instructor:</p>
+                  <p>Professor {{userInput.professor}} (<a :href="'mailto:' + userInput.pEmail">{{userInput.pEmail}}</a>) <br /> {{userInput.office}}</p>
+                </div>
+              </div>
+              <div class="col-xs-6">
+                <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
+                  <p>TA:</p>
+                  <p> {{userInput.ta}} (<a :href="'mailto:' + userInput.tEmail">{{userInput.tEmail}}</a>) <br /> {{userInput.tOffice}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-box pad-box-mini border border-b">
+            <p><strong>MEETING DATES / TIMES:</strong> {{userInput.meetings}}</p>
+            <p><strong>SPECIAL DISCUSSION FORUMS:</strong> {{userInput.discussions}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="uk-float-right">
+    	<a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a> <button class="uk-button uk-button-primary" @click="copyText">Copy the Code</button>
+    </div>
+
+    <div id="modal-overflow" uk-modal>
+        <div class="uk-modal-dialog">
+
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Canvas Code</h2>
+            </div>
+
+            <div class="uk-modal-body" uk-overflow-auto>
+              <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Close</button>
+                <button class="uk-button uk-button-primary" type="button" @click="copyText">Copy Code</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
+        <div class="uk-background-muted uk-padding">
+    		<p>Copyright © Columbia University. All rights reserved.</p>
+       	</div>
+    </div>
+
+    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center uk-height-large" uk-grid>
+        <div class="uk-background-muted uk-padding">
+      		<p class="uk-padding uk-text-center uk-width-1-2 uk-margin-auto-left uk-margin-auto-right">OLD CODE SECTION</p>
+       	</div>
+    </div>
 
     <div class="textbox-container center">
 
@@ -114,11 +259,6 @@
       </div>
 
       <!-- The Code Output -->
-
-      <div class="footer">
-        <p style="font-weight: bold" class="center">Code Output</p>
-        <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea> <br> <br>
-      </div>
 
     </div>
 
@@ -278,7 +418,7 @@ textarea {
 
 .quill{
   width: 700px;
-
+  margin: auto;
 }
 
 el-tab-pane {
