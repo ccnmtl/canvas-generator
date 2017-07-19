@@ -31,16 +31,16 @@
     		<li class="uk-text-center">
           <textarea v-model="userInput.professor" class="code-input" rows="1" cols="20"></textarea>
           <textarea v-model="userInput.pEmail" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.office" class="code-input" rows="1" cols="50"></textarea>
+          <textarea v-model="userInput.office" class="code-input" rows="1" cols="50"></textarea> <br>
         </li>
     		<li class="uk-text-center">
           <textarea v-model="userInput.ta" class="code-input" rows="1" cols="20"></textarea>
           <textarea v-model="userInput.tEmail" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.tOffice" class="code-input" rows="1" cols="50"></textarea>
+          <textarea v-model="userInput.tOffice" class="code-input" rows="1" cols="50"></textarea> <br>
     		</li>
     		<li class="uk-text-center">
           <textarea v-model="userInput.meetings" class="code-input" rows="1" cols="50"></textarea>
-          <textarea v-model="userInput.discussions" class="code-input" rows="1" cols="50"></textarea>
+          <textarea v-model="userInput.discussions" class="code-input" rows="1" cols="50"></textarea> <br>
     		</li>
     		<li class="uk-text-center">
           <button type="button" name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>

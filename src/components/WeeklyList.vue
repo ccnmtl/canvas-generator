@@ -87,10 +87,41 @@
 
   </div>
 
-  <p style="font-weight: bold" class="center">Code Output</p>
+  <div class="uk-float-right">
+    <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a> <button class="uk-button uk-button-primary" @click="copyText">Copy the Code</button>
+  </div>
+
+  <div id="modal-overflow" uk-modal>
+      <div class="uk-modal-dialog">
+
+          <button class="uk-modal-close-default" type="button" uk-close></button>
+
+          <div class="uk-modal-header">
+              <h2 class="uk-modal-title">Canvas Code</h2>
+          </div>
+
+          <div class="uk-modal-body" uk-overflow-auto>
+            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea>
+          </div>
+
+          <div class="uk-modal-footer uk-text-right">
+              <button class="uk-button uk-button-default uk-modal-close" type="button">Close</button>
+              <button class="uk-button uk-button-primary" type="button" @click="copyText">Copy Code</button>
+          </div>
+
+      </div>
+  </div>
+
+  <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
+      <div class="uk-background-muted uk-padding">
+      <p>Copyright © Columbia University. All rights reserved.</p>
+      </div>
+  </div>
+
+  <!-- <p style="font-weight: bold" class="center">Code Output</p>
   <div class="footer">
     <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea> <br> <br>
-  </div>
+  </div> -->
 
 </div>
 </template>

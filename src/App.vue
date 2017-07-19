@@ -13,7 +13,7 @@
           <li><router-link class="router" to="/weeklylist">Weekly List Page Template</router-link></li>
           <li><router-link class="router" to="/export">Export/Import Data</router-link></li>
     			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
-    			<li><router-link class="router" to="/">Code Generator Home</router-link></li>
+    			<li><router-link to="/">Code Generator Home</router-link></li>
     			<li><a href="#">Canvas Website</a></li>
     			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
     		</ul>
