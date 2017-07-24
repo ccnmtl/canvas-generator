@@ -5,9 +5,9 @@
 
     <div class="textbox-container">
 
-      <textarea v-model="userInput.weekTitle" class="code-input" rows="2" cols="60"></textarea>
-      <button type="button" name="button" @click="setToDefault">Reset to Default</button>
-      <button type="button" name="button" class="show-editor center" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
+      <textarea v-model="userInput.weekTitle" class="code-input uk-textarea" rows="4" cols="60"></textarea>
+      <!-- <button type="button" name="button" class="uk-button uk-button-primary" @click="setToDefault">Reset to Default</button> -->
+      <button type="button" name="button" class="show-editor center uk-button uk-button-primary" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
       <!-- This transition is defined as a css animations in the style section -->
       <transition name="fade"></transition>
       <div v-show="showEditor">
@@ -104,7 +104,7 @@
   </div>
 
   <div class="uk-float-right">
-    <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a> <button class="uk-button uk-button-primary" @click="copyText">Copy the Code</button>
+    <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a> <button class="uk-button uk-button-primary" @click="copyText">Copy the Code</button> <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
   </div>
 
   <div id="modal-overflow" uk-modal>

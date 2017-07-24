@@ -6,45 +6,44 @@
     <!-- The user inputs are located in this div -->
     <div class="textbox-container">
       <div class="code-input center">
-        Number of Weeks to Add: <textarea v-model="userInput.toAdd" class="code-input" rows="1" cols="4"></textarea>
+        Number of Weeks to Add: <textarea v-model="userInput.toAdd" class="code-input uk-input" rows="1" cols="4"></textarea>
       </div>
 
-      <button type="button" class="add-weekly center" name="button" @click="populateActivities(userInput.toAdd)">Add New Weekly Activities</button>
+      <button type="button" class="add-weekly center uk-button uk-button-primary" name="button" @click="populateActivities(userInput.toAdd)">Add New Weekly Activities</button>
       <!-- to preserve first week weeklyActivites.splice(1, weeklyActivites.length - 1 -->
-      <button type="button" class="add-weekly center"  name="button" @click="weeklyActivites = []">Clear</button>
+      <button type="button" class="add-weekly center uk-button uk-button-danger uk-width-1-1"  name="button" @click="weeklyActivites = []"> Clear </button>
       <hr>
 
       <div class="code-input center">
-        Edit Week: <textarea v-model="userInput.weekNumber" class="code-input" rows="1" cols="4"></textarea>
+        Edit Week: <textarea v-model="userInput.weekNumber" class="code-input uk-input" rows="1" cols="4"></textarea>
       </div>
 
-      <select v-model="userInput.weekNumber">
+      <select v-model="userInput.weekNumber" class="uk-select">
         <option v-for="n in weeklyActivites.length" :value="n">Week {{n}}</option>
       </select>
 
       <div v-if="weeklyActivites.length > 0">
-        <div class="code-input center">
-          <p style="font-weight: bold">Title</p>
-          <textarea v-model="weeklyActivites[userInput.weekNumber - 1].title" id="text-area" rows="3" cols="30"></textarea> <br>
+        <div class="code-input center uk-margin-medium-top">
+          <label for="text-area">Title</label>
+          <textarea v-model="weeklyActivites[userInput.weekNumber - 1].title" id="text-area" rows="3" cols="30" class="uk-textarea"></textarea> <br>
         </div>
 
-        <div class="code-input center">
-          <p style="font-weight: bold">Description</p>
-          <textarea v-model="weeklyActivites[userInput.weekNumber - 1].description" id="text-area" rows="3" cols="30"></textarea> <br>
+        <div class="code-input center uk-margin-small-top">
+          <label for="text-area">Description</label>
+          <textarea v-model="weeklyActivites[userInput.weekNumber - 1].description" id="text-area" rows="3" cols="30" class="uk-textarea"></textarea> <br>
         </div>
 
-        <div class="code-input center">
-          <p style="font-weight: bold">Image</p>
-          <button type="button" name="button" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
+        <div class="code-input center uk-margin-medium-top">
+          <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
           <form v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
-            <input name="image" id="image-file" type="file">
-            <input type="submit" value="Submit!">
+            <input name="image" id="image-file" type="file"> <br> <br>
+            <input type="submit" class="uk-button uk-button-primary" value="Submit!">
           </form>
           <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url')">
-            <input name="imageUrl" id="image-url" type="text"> <br>
-            <input type="submit" value="Submit!">
+            <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
+            <input type="submit" class="uk-button uk-button-primary" value="Submit!">
           </form>
 
           <!-- OLD TEXTBOX INPUT <textarea v-model="weeklyActivites[userInput.weekNumber - 1].imgSrc" id="text-area" rows="3" cols="30"></textarea> <br> -->
@@ -88,7 +87,7 @@
   </div>
 
   <div class="uk-float-right">
-    <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a> <button class="uk-button uk-button-primary" @click="copyText">Copy the Code</button>
+    <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a> <button class="uk-button uk-button-primary" @click="copyText">Copy the Code</button> <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
   </div>
 
   <div id="modal-overflow" uk-modal>

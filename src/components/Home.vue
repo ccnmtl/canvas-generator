@@ -3,6 +3,7 @@
 
     <!-- This Div contains all of the information inputs -->
     <!-- Currently it uses a component from the Element UI library for the tabs -->
+
     <div class="clearfix"></div>
 
     <div>
@@ -16,9 +17,9 @@
     	</ul>
     	<ul id="tab-content" class="uk-switcher uk-margin">
     		<li class="uk-active uk-text-center">
-          <textarea v-model="userInput.title" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.semester" class="code-input" rows="1" cols="20"></textarea>
-          <textarea v-model="userInput.url" class="code-input" rows="1" cols="45"></textarea> <br>
+          <textarea v-model="userInput.title" class="code-input uk-input" rows="1" cols="25"></textarea>
+          <textarea v-model="userInput.semester" class="code-input uk-input" rows="1" cols="20"></textarea>
+          <textarea v-model="userInput.url" class="code-input uk-input" rows="1" cols="45"></textarea> <br>
         </li>
     		<li class="uk-text-center">
           <div class='quill'>
@@ -29,28 +30,28 @@
           </div>
     		</li>
     		<li class="uk-text-center">
-          <textarea v-model="userInput.professor" class="code-input" rows="1" cols="20"></textarea>
-          <textarea v-model="userInput.pEmail" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.office" class="code-input" rows="1" cols="50"></textarea> <br>
+          <textarea v-model="userInput.professor" class="code-input uk-input" rows="1" cols="20"></textarea>
+          <textarea v-model="userInput.pEmail" class="code-input uk-input" rows="1" cols="25"></textarea>
+          <textarea v-model="userInput.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
         </li>
     		<li class="uk-text-center">
-          <textarea v-model="userInput.ta" class="code-input" rows="1" cols="20"></textarea>
-          <textarea v-model="userInput.tEmail" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.tOffice" class="code-input" rows="1" cols="50"></textarea> <br>
+          <textarea v-model="userInput.ta" class="code-input uk-input" rows="1" cols="20"></textarea>
+          <textarea v-model="userInput.tEmail" class="code-input uk-input" rows="1" cols="25"></textarea>
+          <textarea v-model="userInput.tOffice" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
     		</li>
     		<li class="uk-text-center">
-          <textarea v-model="userInput.meetings" class="code-input" rows="1" cols="50"></textarea>
-          <textarea v-model="userInput.discussions" class="code-input" rows="1" cols="50"></textarea> <br>
+          <textarea v-model="userInput.meetings" class="code-input uk-input" rows="1" cols="50"></textarea>
+          <textarea v-model="userInput.discussions" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
     		</li>
     		<li class="uk-text-center">
-          <button type="button" name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
-          <textarea v-show="this.userInput.isVideo" v-model="userInput.video" class="code-input" rows="1" cols="50"></textarea>
-          <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input" rows="1" cols="50"></textarea>
+          <button type="button" class="uk-button uk-button-primary " name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
+          <textarea v-show="this.userInput.isVideo" v-model="userInput.video" class="code-input uk-input" rows="1" cols="50"></textarea>
+          <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input uk-input" rows="1" cols="50"></textarea>
     		</li>
     	</ul>
     </div>
 
-    <hr class="uk-margin-large-top" />
+    <hr />
 
     <div class="clearfix"></div>
 
@@ -113,7 +114,7 @@
     </div>
 
     <div class="uk-float-right">
-    	<a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a> <button class="uk-button uk-button-primary" @click="copyText">Copy the Code</button>
+    	<a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a> <button class="uk-button uk-button-primary" @click="copyText">Copy the Code</button> <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
     </div>
 
     <div id="modal-overflow" uk-modal>
@@ -141,125 +142,6 @@
         <div class="uk-background-muted uk-padding">
     		<p>Copyright © Columbia University. All rights reserved.</p>
        	</div>
-    </div>
-
-    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center uk-height-large" uk-grid>
-        <div class="uk-background-muted uk-padding">
-      		<p class="uk-padding uk-text-center uk-width-1-2 uk-margin-auto-left uk-margin-auto-right">OLD CODE SECTION</p>
-       	</div>
-    </div>
-
-    <div class="textbox-container center">
-
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="Course Info" name="1" class="center">
-          <textarea v-model="userInput.title" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.semester" class="code-input" rows="1" cols="20"></textarea>
-          <textarea v-model="userInput.url" class="code-input" rows="1" cols="45"></textarea> <br>
-        </el-tab-pane>
-
-        <el-tab-pane label="Description" class="center" name="3" >
-          <div class="quill">
-            <quill-editor ref="myTextEditor"
-                          v-model="userInput.description"
-                          :config="editorOption">
-            </quill-editor>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="Professor" class="center" name="4">
-          <textarea v-model="userInput.professor" class="code-input" rows="1" cols="20"></textarea>
-          <textarea v-model="userInput.pEmail" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.office" class="code-input" rows="1" cols="50"></textarea>
-        </el-tab-pane>
-        <el-tab-pane label="TA" class="center" name="5">
-          <textarea v-model="userInput.ta" class="code-input" rows="1" cols="20"></textarea>
-          <textarea v-model="userInput.tEmail" class="code-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.tOffice" class="code-input" rows="1" cols="50"></textarea>
-        </el-tab-pane>
-
-        <el-tab-pane label="Meeting Times" class="center" name="6">
-          <textarea v-model="userInput.meetings" class="code-input" rows="1" cols="50"></textarea>
-          <textarea v-model="userInput.discussions" class="code-input" rows="1" cols="50"></textarea>
-        </el-tab-pane>
-
-        <el-tab-pane label="Media Link" class="center" name="7">
-          <button type="button" name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
-          <textarea v-show="this.userInput.isVideo" v-model="userInput.video" class="code-input" rows="1" cols="50"></textarea>
-          <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input" rows="1" cols="50"></textarea>
-        </el-tab-pane>
-
-      </el-tabs>
-      <br> <br>
-      <button type="button" name="button" @click="setToDefault">Reset to Default</button>
-
-    </div>
-
-    <hr>
-    <br>
-
-
-    <!-- Right now the code display and output are displayed in a flexbox in the code-container class-->
-    <!-- Statements with {{}} or inside tags like :src or v-if mean that it is pulling content from the data or methods of local Vue component -->
-
-    <div class="code-container">
-
-      <!-- This Div contains the displayed code which will be parsed for the code output-->
-
-      <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
-        <div class="pad-box-mega STV1_Banner">
-        	<img src="https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/SipaLogo2.png"/>
-        	<p>{{userInput.title.toUpperCase()}}</p>
-        	<p class="STV1_CourseCode">{{userInput.semester}}</p>
-        </div>
-        <div class="content-box">
-        	<div class="grid-row">
-        		<div class="col-xs-6">
-        			<div class="styleguide-section__grid-demo-element">
-        				<div v-if="!this.userInput.isVideo" >
-        					<img :src="this.userInput.image" class="STV1_WeeklyIconIMG" alt=""> </img>
-        				</div>
-        				<div v-if="this.userInput.isVideo" class="embed-container">
-        					<iframe :src="this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen"
-        					webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe>
-        				</div>
-        			</div>
-        		</div>
-        		<div class="col-xs-6">
-        			<div class="styleguide-section__grid-demo-element">
-        				<div class="STV1_Welcome">WELCOME TO {{newTitle.toUpperCase()}}</div>
-                <p class="html" v-html="userInput.description"></p>
-        				<p>&nbsp;</p>
-        				<p>
-        					<a class="Button" style="text-decoration: none;" :href="userInput.url + 'assignments/syllabus'" >Course Syllabus</a>
-        				</p>
-        			</div>
-        		</div>
-        	</div>
-        </div>
-        <div class="content-box">
-        	<div class="grid-row">
-        		<div class="col-xs-6">
-        			<div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
-        				<p>Instructor:</p>
-        				<p>Professor {{userInput.professor}} (<a :href="'mailto:' + userInput.pEmail">{{userInput.pEmail}}</a>) <br /> {{userInput.office}}</p>
-        			</div>
-        		</div>
-        		<div class="col-xs-6">
-        			<div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
-        				<p>TA:</p>
-        				<p> {{userInput.ta}} (<a :href="'mailto:' + userInput.tEmail">{{userInput.tEmail}}</a>) <br /> {{userInput.tOffice}}</p>
-        			</div>
-        		</div>
-        	</div>
-        </div>
-        <div class="content-box pad-box-mini border border-b">
-        	<p><strong>MEETING DATES / TIMES:</strong> {{userInput.meetings}}</p>
-        	<p><strong>SPECIAL DISCUSSION FORUMS:</strong> {{userInput.discussions}}</p>
-        </div>
-      </div>
-
-      <!-- The Code Output -->
-
     </div>
 
   </div>

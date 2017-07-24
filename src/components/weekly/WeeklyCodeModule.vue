@@ -1,27 +1,26 @@
 <template lang="html">
   <div>
     <div class="center">
-      <button type="button" class="add-weekly" name="button" @click="fn">Add New <slot></slot></button>
-      <button type="button" class="add-weekly"  name="button" @click="clear">Clear</button>
+      <button type="button" class="add-weekly uk-button uk-button-primary" name="button" @click="fn">Add New <slot></slot></button>
+      <button type="button" class="add-weekly uk-button uk-button-danger"  name="button" @click="clear">Clear</button>
     </div>
     <hr>
     <transition name="fade">
     <div v-if="content.length > 0" >
 
       <div class="center drop-down">
-        <select v-model="index">
+        <select v-model="index" class="uk-select uk-form-width-small">
           <option v-for="n in content.length" :value="n"><slot></slot> {{n}}</option>
         </select>
-        <button type="button" name="button" @click="editable = !editable">{{ editable ? "Save" : "Edit" }}</button>
-        <button v-show="editable" type="button" class="center" name="button" @click="remove"> Delete</button>
+        <button type="button" name="button" class="uk-button-small uk-button-primary" @click="editable = !editable">{{ editable ? "Save" : "Edit" }}</button>
+        <button v-show="editable" type="button" class="uk-button-small uk-button-danger center" name="button" @click="remove"> Delete</button>
       </div>
 
       <div v-show="editable">
-        <div class="code-input center" v-for = "input in inputs">
-          <p style="font-weight: bold">{{capitalize(input)}}</p>
-          <textarea v-model.lazy="currentItem[input]" id="text-area" rows="2" cols="50"></textarea> <br>
+        <div class="code-input center uk-margin-medium-top" v-for = "input in inputs">
+          <label for="text-area">{{capitalize(input)}}</label>
+          <textarea v-model.lazy="currentItem[input]" id="text-area" class="uk-textarea" rows="2" cols="50"></textarea> <br>
         </div>
-
       </div>
 
     </div>

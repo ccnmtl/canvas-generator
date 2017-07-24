@@ -1,20 +1,35 @@
 <template>
   <div id="app">
 
-    <div class="export-container">
-      <h3>Select a ".json" file from a previous data export</h3>
-      <input style="display:inline-block; " type="file" accept=".json" name="import-file" @change="onImportFileChange" />
-      <br>
-      <button v-if="hasImportData" @click="performImport">
-        File read successfully! Click here to confirm import.
-      </button>
-      <br> <br>
-      <button class="export-button" type="button" name="button" @click="exportJSON">Export</button>
+  <div class="uk-child-width-1-1@s uk-light" uk-grid>
+      <div>
+          <div class="uk-background-primary uk-height-large uk-panel uk-text-center"">
+             <p>&nbsp;</p>
+             <p>&nbsp;</p>
 
-      <!-- Previously used for rough export option -->
-       <!-- <input style="display:inline;" type="checkbox" id="rough-export"> <p style="display:inline;">Rough Export</p> -->
+             <form>
+               <h3>Select a ".json" file from a previous data export</h3>
+               <button class="uk-button uk-button-default" v-if="hasImportData" @click="performImport">
+                 File read successfully! Click here to confirm import.
+               </button>
+               <div class="uk-margin" uk-margin>
+                  <input style="display:inline-block;" class="uk-padding" type="file" accept=".json" name="import-file" @change="onImportFileChange" />
+                  <br> <br>
+                  <button class="uk-button-large uk-button-default" type="button" name="button" @click="exportJSON">Export</button>
+               </div>
+             </form>
 
-    </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
+      <div class="uk-background-muted uk-padding">
+  		<p>Copyright © Columbia University. All rights reserved.</p>
+     	</div>
+  </div>
 
   </div>
 </template>
