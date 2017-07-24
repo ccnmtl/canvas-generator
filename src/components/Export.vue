@@ -3,7 +3,7 @@
 
   <div class="uk-child-width-1-1@s uk-light" uk-grid>
       <div>
-          <div class="uk-background-primary uk-height-large uk-panel uk-text-center"">
+          <div class="uk-background-primary uk-height-large uk-panel uk-text-center">
              <p>&nbsp;</p>
              <p>&nbsp;</p>
 

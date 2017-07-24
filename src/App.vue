@@ -4,6 +4,10 @@
 
     <!-- <a href="#offcanvas-slide" uk-toggle>Open</a> -->
 
+    <div class="uk-float-right uk-padding-small">
+      <h6><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1"></span> CANVAS CODE GENERATOR</h6>
+    </div>
+
     <div id="offcanvas-slide" uk-offcanvas>
         <div class="uk-offcanvas-bar uk-background">
     		<ul class="uk-nav uk-nav-default">
@@ -21,13 +25,15 @@
         </div>
     </div>
 
-    <div class="center routers">
+    <div class="clearfix"></div>
+
+    <!-- <div class="center routers">
       <router-link class="router" to="/home">Home Page Template </router-link>
       <router-link class="router" to="/weekly">Weekly Activity Template</router-link>
       <router-link class="router" to="/weeklylist">Weekly List Template</router-link>
       <router-link class="router" to="/export">Export/Import Data</router-link>
 
-    </div>
+    </div> -->
 
     <!-- If Export Should be Top Level Insert Code Here -->
 
@@ -74,8 +80,8 @@ html {
 }
 
 .router {
-  margin: 30px;
-  font-size: 20px;
+  /*margin: 30px;
+  font-size: 20px;*/
 }
 
 .routers {

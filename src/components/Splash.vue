@@ -98,7 +98,17 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    // If it should load all pages on the splash, run the code below
+
+    // let initialPath = this.$route.path
+    // let paths = ['/', '/weekly', '/weeklylist'].filter(p => p !== initialPath).concat([initialPath])
+    // paths.forEach((path, i) => {
+    //   setTimeout(() => this.$router.replace(path), i * 30)
+    // })
   }
+
 }
 </script>
 

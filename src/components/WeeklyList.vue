@@ -87,7 +87,9 @@
   </div>
 
   <div class="uk-float-right">
-    <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a> <button class="uk-button uk-button-primary" @click="copyText">Copy the Code</button> <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
+    <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a>
+    <button class="uk-button uk-button-primary" @click="copyText">Copy the Code</button>
+    <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
   </div>
 
   <div id="modal-overflow" uk-modal>
@@ -188,13 +190,15 @@ export default {
   methods: {
     copyText() {
       var copyTextarea = document.querySelector('#copy-text-area');
-      copyTextarea.select();
-      document.execCommand('copy')
+      var aux = document.createElement("input");
+      aux.setAttribute("value", copyTextarea.value);
+      document.body.appendChild(aux);
+      aux.select();
 
+      document.execCommand('copy')
       this.$notify({
         message: 'Code has been copied!',
       });
-
     },
     updateCode(){
       let code = document.getElementById("canvas-code");

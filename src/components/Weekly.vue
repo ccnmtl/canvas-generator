@@ -203,13 +203,15 @@ export default {
   methods: {
     copyText() {
       var copyTextarea = document.querySelector('#copy-text-area');
-      copyTextarea.select();
-      document.execCommand('copy')
+      var aux = document.createElement("input");
+      aux.setAttribute("value", copyTextarea.value);
+      document.body.appendChild(aux);
+      aux.select();
 
+      document.execCommand('copy')
       this.$notify({
         message: 'Code has been copied!',
       });
-
     },
     updateCode() {
       let code = document.getElementById("canvas-code");

@@ -228,8 +228,13 @@ export default {
     // Copies the text when user selects the code output area
     copyText() {
       var copyTextarea = document.querySelector('#copy-text-area');
-      copyTextarea.select();
-      console.log(this.videoLink)
+      var aux = document.createElement("input");
+      aux.setAttribute("value", copyTextarea.value);
+      document.body.appendChild(aux);
+      aux.select();
+
+      // copyTextarea.select();
+
       document.execCommand('copy')
       this.$notify({
         message: 'Code has been copied!',
