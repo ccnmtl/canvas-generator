@@ -5,7 +5,7 @@
 
     <div class="textbox-container">
 
-      <textarea v-model="userInput.weekTitle" class="code-input uk-textarea" rows="4" cols="60"></textarea>
+      <textarea v-model="userInput.weekTitle" class="code-input uk-textarea" rows="2" cols="60"></textarea>
       <!-- <button type="button" name="button" class="uk-button uk-button-primary" @click="setToDefault">Reset to Default</button> -->
       <button type="button" name="button" class="show-editor center uk-button uk-button-primary" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
       <!-- This transition is defined as a css animations in the style section -->

@@ -13,7 +13,7 @@
     		<li><a href="#">Professor</a></li>
     		<li><a href="#">TA</a></li>
     		<li><a href="#">Meeting Times</a></li>
-    		<li><a href="#">Media Link</a></li>
+    		<li><a href="#">Media Input</a></li>
     	</ul>
     	<ul id="tab-content" class="uk-switcher uk-margin">
     		<li class="uk-active uk-text-center">
@@ -46,7 +46,11 @@
     		<li class="uk-text-center">
           <button type="button" class="uk-button uk-button-primary " name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
           <textarea v-show="this.userInput.isVideo" v-model="userInput.video" class="code-input uk-input" rows="1" cols="50"></textarea>
-          <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input uk-input" rows="1" cols="50"></textarea>
+          <form  style="display: inline-block;"v-show="!this.userInput.isVideo" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
+            <input style="display: inline-block;" name="image" id="image-file" type="file">
+            <input style="display: inline-block;" type="submit" class="uk-button uk-button-primary" value="Submit!">
+          </form>
+          <!-- <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input uk-input" rows="1" cols="50"></textarea> -->
     		</li>
     	</ul>
     </div>
@@ -178,8 +182,8 @@ export default {
         discussions: "Thursday 9:00-10:50 am (IAB Room 411)",
         video:"https://vimeo.com/199382848/1dd8fc0f31",
         image:"http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg",
-        isVideo: true,
-        mediaSwitchText: "Click to input Image",
+        isVideo: false,
+        mediaSwitchText: "Toggle to input Video",
         taInfo:"Instructor: \nProfessor Glenn Denning (gd2147@sipa.columbia.edu) Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
         description: "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
       },
@@ -233,8 +237,6 @@ export default {
       document.body.appendChild(aux);
       aux.select();
 
-      // copyTextarea.select();
-
       document.execCommand('copy')
       this.$notify({
         message: 'Code has been copied!',
@@ -250,12 +252,39 @@ export default {
     // Toggles button to insert video or image
     mediaSwitch(){
       this.userInput.isVideo = !this.userInput.isVideo;
-      this.userInput.mediaSwitchText = this.userInput.isVideo ? "Click to input Image" : "Click to input Video"
+      this.userInput.mediaSwitchText = this.userInput.isVideo ? "Toggle to input Image" : "Toggle to input Video"
     },
     setToDefault(){
       console.log('resetting data...')
       this.userInput = { ...store.homeDefault };
       EventBus.$emit('set-default', 'setting all to default...');
+    },
+    onFormSubmit (type, ev){
+      var formData = new FormData();
+
+      if (type == 'url'){
+        console.log('uploading url...')
+        var imageurl = document.querySelector('#image-url'); // Gets form data in html
+        formData.append("imageUrl", imageurl.value);  // Adds api header to tell server that it is a url
+      }
+      else {
+        console.log('uploading file...')
+        var imagefile = document.querySelector('#image-file');
+        formData.append("image", imagefile.files[0]); // Adds api header to tell server that it is a file
+      }
+
+      // More api headers to tell the server the dimensions to crop
+      formData.append('imageWidth', 450)
+      formData.append('imageHeight', 250)
+
+      // Send post request to Amazon server using vue-resource with form data
+      this.$http.post('http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image',formData).then( response => {
+        console.log('success')
+        let imageData = JSON.parse(response.bodyText);
+        this.weeklyActivites[this.userInput.weekNumber - 1].imgSrc = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
+      }, response => {
+        console.log(response)
+      });
     },
     getSaveStateConfig() {
       return {

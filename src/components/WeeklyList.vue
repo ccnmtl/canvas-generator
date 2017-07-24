@@ -227,6 +227,10 @@ export default {
     populateActivities(num){
       for (let i = 0; i < num; i++ ) this.AddActivity();
     },
+    setToDefault(){
+      this.weeklyActivites = [];
+      this.populateActivities(12);
+    },
     // Handles uploading the file or url to Amazon EC2 via POST request, which subsequently uploads the image to S3
     // and sends back the new url as a JSON in the Api response
 

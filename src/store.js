@@ -18,8 +18,8 @@ export default new Vue({
         discussions: "Thursday 9:00-10:50 am (IAB Room 411)",
         video:"https://vimeo.com/199382848/1dd8fc0f31",
         image:"http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg",
-        isVideo: true,
-        mediaSwitchText: "Click to input Image",
+        isVideo: false,
+        mediaSwitchText: "Toggle to input Video",
         taInfo:"Instructor: \nProfessor Glenn Denning (gd2147@sipa.columbia.edu) Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
         description: "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
     },

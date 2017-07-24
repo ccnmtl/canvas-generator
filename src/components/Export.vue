@@ -50,7 +50,7 @@ export default {
     // casually go to each route for a minimal amount of time on load to ensure export works
     // paths is list of all routes with the current route as the last item, so we cycle to where we are
     let initialPath = this.$route.path
-    let paths = ['/', '/weekly', '/weeklylist'].filter(p => p !== initialPath).concat([initialPath])
+    let paths = ['/home', '/weekly', '/weeklylist'].filter(p => p !== initialPath).concat([initialPath])
     paths.forEach((path, i) => {
       setTimeout(() => this.$router.replace(path), i * 30)
     })
@@ -118,7 +118,7 @@ export default {
         console.log ('exporting..')
         setTimeout( () => {
           saveFile({
-            name: dateTime + '_export.json',
+            name: dateTime + '-CourseB-Export.json',
             data: JSON.stringify(this.exportData)
           })
         }, waitTime)

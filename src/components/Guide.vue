@@ -6,7 +6,7 @@
                <p>&nbsp;</p>
                <p>&nbsp;</p>
                <img src="static/images/sipalogo_trans.png" />
-               <h1 class="uk-heading"><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 2.5"></span> CANVAS COURSE BUILDER</h1>
+               <h1 class="uk-heading"><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 2.5"></span> Guide</h1>
             </div>
         </div>
     </div>
@@ -65,17 +65,7 @@ export default {
   data () {
     return {
     }
-  },
-  mounted () {
-    // If it should load all pages on the splash, run the code below
-
-    // let initialPath = this.$route.path
-    // let paths = ['/home', '/weekly', '/weeklylist'].filter(p => p !== initialPath).concat([initialPath])
-    // paths.forEach((path, i) => {
-    //   setTimeout(() => this.$router.replace(path), i * 30)
-    // })
   }
-
 }
 </script>
 

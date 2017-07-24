@@ -5,6 +5,8 @@ import Home from 'components/Home'
 import Weekly from 'components/Weekly'
 import WeeklyList from 'components/WeeklyList'
 import Export from 'components/Export'
+import Guide from 'components/Guide'
+import Credits from 'components/Credits'
 
 Vue.use(Router)
 
@@ -34,6 +36,16 @@ export default new Router({
       path: '/export',
       name: 'Export',
       component: Export
+    },
+    {
+      path: '/guide',
+      name: 'Guide',
+      component: Guide
+    },
+    {
+      path: '/credits',
+      name: 'Credits',
+      component: Credits
     }
   ]
 })
