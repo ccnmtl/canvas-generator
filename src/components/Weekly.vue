@@ -104,7 +104,9 @@
   </div>
 
   <div class="uk-float-right">
-    <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a> <button class="uk-button uk-button-primary" @click="copyText">Copy the Code</button> <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
+    <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a>
+    <button class="uk-button uk-button-primary" @click="copyText('aux')">Copy the Code</button>
+    <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
   </div>
 
   <div id="modal-overflow" uk-modal>
@@ -201,19 +203,26 @@ export default {
   mixins: [saveState],
   computed: {},
   methods: {
-    copyText() {
+    copyText(option) {
       var copyTextarea = document.querySelector('#copy-text-area');
-      var aux = document.createElement("input");
-      aux.setAttribute("value", copyTextarea.value);
-      document.body.appendChild(aux);
-      aux.select();
+
+      if (option == 'aux'){
+        var aux = document.createElement("input");
+        aux.setAttribute("value", copyTextarea.value);
+        document.body.appendChild(aux);
+        aux.select();
+        console.log('creating aux element..')
+      }
+      else {
+        copyTextarea.select();
+      }
 
       document.execCommand('copy')
       this.$notify({
         message: 'Code has been copied!',
       });
-      document.body.removeChild(aux)
 
+      if (option == 'aux') document.body.removeChild(aux);
     },
     updateCode() {
       let code = document.getElementById("canvas-code");
