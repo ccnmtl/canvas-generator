@@ -12,6 +12,7 @@
         <div class="uk-offcanvas-bar uk-background">
     		<ul class="uk-nav uk-nav-default">
           <li class="uk-nav-header"><router-link class="router" to="/guide">USER GUIDE</router-link></li>
+          <li class="uk-nav-header uk-margin-remove"><router-link class="router" to="/home">GET STARTED</router-link></li>
     			<li class="uk-nav-header">TEMPLATES</li>
     			<li><router-link class="router" to="/home">Home Page Template</router-link></li>
           <li><router-link class="router" to="/weekly">Weekly Activity Page Template</router-link></li>
@@ -19,11 +20,11 @@
           <li class="uk-nav-header"><router-link class="router" to="/export">Export/Import Data</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/credits">CREDITS</router-link></li>
     			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
-    			<li><router-link to="/">Code Generator Home</router-link></li>
-    			<li><a href="#">Canvas Website</a></li>
+    			<li><router-link to="/">Course Builder Home</router-link></li>
+    			<li><a href="https://courseworks2.columbia.edu/" target="_blank">Canvas Website</a></li>
     			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
     		</ul>
-       		<button class="uk-button uk-button-primary uk-margin-large-top">download the guide</button>
+       		<!-- <button class="uk-button uk-button-primary uk-margin-large-top">download the guide</button> -->
         </div>
     </div>
 

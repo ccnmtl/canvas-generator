@@ -11,16 +11,6 @@
         </div>
     </div>
 
-    <!--
-    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center uk-height-large" uk-grid>
-        <div class="uk-background-primary uk-padding uk-light">
-        	<h4>HOW TO USE THIS TOOL</h4>
-      		<p class="uk-width-1-2 uk-margin-auto-left uk-margin-auto-right">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      		<button class="uk-button uk-button-default">download the guide</button>
-       	</div>
-    </div>
-    -->
-
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
         <div>
             <div class="uk-background-primary uk-padding uk-light uk-height-medium">
@@ -40,7 +30,7 @@
             <div class="uk-background-primary uk-padding uk-light uk-height-medium">
             	<h1>3</h1>
             	<h5>INSERT INTO CANVAS</h5>
-            	<p>And insert it into the canvas Page! See user guide for details.</p>
+            	<p>And insert it into the canvas Page! See <router-link class="router" to="/guide">user guide</router-link> for details.</p>
             </div>
         </div>
     </div>

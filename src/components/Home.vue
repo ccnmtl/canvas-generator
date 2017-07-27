@@ -241,6 +241,8 @@ export default {
       this.$notify({
         message: 'Code has been copied!',
       });
+
+      document.body.removeChild(aux)
     },
     // Parses the code from the canvas-code div and puts it in the output
     updateCode(){

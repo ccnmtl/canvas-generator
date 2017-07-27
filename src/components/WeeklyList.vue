@@ -199,6 +199,8 @@ export default {
       this.$notify({
         message: 'Code has been copied!',
       });
+
+      document.body.removeChild(aux)
     },
     updateCode(){
       let code = document.getElementById("canvas-code");
