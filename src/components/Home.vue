@@ -50,6 +50,9 @@
             <input style="display: inline-block;" name="image" id="image-file" type="file">
             <input style="display: inline-block;" type="submit" class="uk-button uk-button-primary" value="Submit!">
           </form>
+          <select style="display: inline-block; width:150px" v-model="userInput.banner" name="Choose Banner" class="uk-select">
+            <option v-for="banner in userInput.bannerClasses" :value="banner">{{banner}}</option>
+          </select>
           <!-- <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input uk-input" rows="1" cols="50"></textarea> -->
     		</li>
     	</ul>
@@ -62,7 +65,7 @@
     <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
       <div class="">
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
-          <div class="pad-box-mega STV1_Banner">
+          <div :class="['pad-box-mega', userInput.banner]">
             <img src="https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/SipaLogo2.png"/>
             <p>{{userInput.title.toUpperCase()}}</p>
             <p class="STV1_CourseCode">{{userInput.semester}}</p>
@@ -154,6 +157,9 @@
 </template>
 
 <script>
+// For testing we remove localstorage -- take line out for build
+localStorage.clear();
+
 import store from '../store'
 import { EventBus } from '../bus'
 import saveState from 'vue-save-state';
@@ -173,6 +179,8 @@ export default {
       userInput: {
         title: store.title,
         url: store.courseUrl,
+        banner: 'STV1_Banner',
+        bannerClasses: ['STV1_Banner','STV1_CC_Banner01','STV1_CC_Banner02','STV1_CC_Banner03'],
         semester: "U6411 // SPRING 2017",
         professor: "Glenn Denning",
         pEmail: "gd2147@sipa.columbia.edu",

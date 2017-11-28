@@ -7,6 +7,8 @@ export default new Vue({
     homeDefault: {
         title: "Global Food Systems",
         url: "https://courseworks2.columbia.edu/courses/35006/",
+        banner: 'STV1_Banner',
+        bannerClasses: ['STV1_Banner','STV1_CC_Banner01','STV1_CC_Banner02','STV1_CC_Banner03'],
         semester: "U6411 // SPRING 2017",
         professor: "Glenn Denning",
         pEmail: "gd2147@sipa.columbia.edu",
