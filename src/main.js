@@ -3,18 +3,19 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import ElementUI from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
+// import ElementUI from 'element-ui'
+// import locale from 'element-ui/lib/locale/lang/en'
+// Vue.use(ElementUI, { locale })
 import VueResource from 'vue-resource'
+import store from './store/store'
 
 Vue.use(VueResource);
-
-Vue.use(ElementUI, { locale })
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

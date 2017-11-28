@@ -255,8 +255,12 @@ export default {
       }
 
       document.execCommand('copy')
-      this.$notify({
-        message: 'Code has been copied!',
+
+      UIkit.notification({
+          message: 'Code has been copied',
+          pos: 'bottom-center',
+          status: 'success',
+          timeout: 3000
       });
 
       if (option == 'aux') document.body.removeChild(aux);
