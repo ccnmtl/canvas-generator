@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { env } from './defaults'
 
 Vue.use(Vuex);
 
@@ -16,12 +17,6 @@ export default new Vuex.Store({
   getters: {},
   mutations: {},
   modules: {
-    // env: GLOBAL_ENVIRONMENT
+    env
   }
 })
-
-const GLOBAL_ENVIRONMENT = {
-  state: {
-    imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/"
-  }
-}
