@@ -3,6 +3,11 @@
 
     <!-- This Div contains all of the information inputs -->
     <!-- Currently it uses a component from the Element UI library for the tabs -->
+    <div class="uk-float-right">
+    	<a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a>
+      <button class="uk-button uk-button-primary" @click="copyText('aux')">Copy the Code</button>
+      <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
+    </div>
 
     <div class="clearfix"></div>
 
@@ -14,6 +19,7 @@
     		<li><a href="#">TA</a></li>
     		<li><a href="#">Meeting Times</a></li>
     		<li><a href="#">Media Input</a></li>
+        <li><a href="#">Banner</a></li>
     	</ul>
     	<ul id="tab-content" class="uk-switcher uk-margin">
     		<li class="uk-active uk-text-center">
@@ -50,9 +56,24 @@
             <input style="display: inline-block;" name="image" id="image-file" type="file">
             <input style="display: inline-block;" type="submit" class="uk-button uk-button-primary" value="Submit!">
           </form>
-          <select style="display: inline-block; width:150px" v-model="userInput.banner" name="Choose Banner" class="uk-select">
-            <option v-for="banner in userInput.bannerClasses" :value="banner">{{banner}}</option>
-          </select>
+        </li>
+        <li class="uk-text-center">
+          <label>
+            Banner Image:
+            <select style="display: inline-block; width:150px" v-model="userInput.banner" name="Choose Banner" class="uk-select">
+              <option selected disabled>Choose Banner</option>
+              <option v-for="banner in userInput.bannerClasses" :value="banner">{{banner.text}}</option>
+            </select>
+          </label>
+          <label>
+            Logo Image:
+            <select style="display: inline-block; width:150px" v-model="userInput.banner.logo" name="Choose Logo" class="uk-select">
+              <option selected disabled>Choose Logo</option>
+              <option :value="this.$store.state.imageServer + 'SipaLogo2.png'">SIPA</option>
+              <option :value="this.$store.state.imageServer + 'SSW_logo.png'">SSW</option>
+              <option :value="this.$store.state.imageServer + 'Mailman_logo.png'">Mailman</option>
+            </select>
+          </label>
           <!-- <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input uk-input" rows="1" cols="50"></textarea> -->
     		</li>
     	</ul>
@@ -62,11 +83,12 @@
 
     <div class="clearfix"></div>
 
+
     <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
       <div class="">
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
-          <div :class="['pad-box-mega', userInput.banner]">
-            <img src="https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/SipaLogo2.png"/>
+          <div :class="['pad-box-mega','Global_Banner', userInput.banner.class]">
+            <img :src="this.userInput.banner.logo"/>
             <p>{{userInput.title.toUpperCase()}}</p>
             <p class="STV1_CourseCode">{{userInput.semester}}</p>
           </div>
@@ -118,12 +140,6 @@
         </div>
       </div>
 
-    </div>
-
-    <div class="uk-float-right">
-    	<a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a>
-      <button class="uk-button uk-button-primary" @click="copyText('aux')">Copy the Code</button>
-      <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
     </div>
 
     <div id="modal-overflow" uk-modal>
@@ -179,8 +195,12 @@ export default {
       userInput: {
         title: store.title,
         url: store.courseUrl,
-        banner: 'STV1_Banner',
-        bannerClasses: ['STV1_Banner','STV1_Banner02','STV1_Banner03','STV1_Banner04'],
+        banner: { text: "Default", class: 'STV1_Banner', logo: this.$store.state.imageServer + "SipaLogo2.png" } ,
+        bannerClasses: [
+          { text: "Default", class: 'STV1_Banner', logo: this.$store.state.imageServer + "SipaLogo2.png" },
+          { text: "SIPA", class: 'STV1_BannerSIPA', logo: this.$store.state.imageServer + "SipaLogo2.png" },
+          { text: "Social Work", class: 'STV1_BannerSSW STV1_Banner SSW', logo: this.$store.state.imageServer + "SSW_logo.png" },
+        ],
         semester: "U6411 // SPRING 2017",
         professor: "Glenn Denning",
         pEmail: "gd2147@sipa.columbia.edu",
@@ -256,12 +276,14 @@ export default {
 
       document.execCommand('copy')
 
-      UIkit.notification({
-          message: 'Code has been copied',
-          pos: 'bottom-center',
-          status: 'success',
-          timeout: 3000
-      });
+      // UIkit.notification({
+      //     message: 'Code has been copied',
+      //     pos: 'bottom-center',
+      //     status: 'success',
+      //     timeout: 3000
+      // });
+
+      this.$snotify.success('Code has been copied', {showProgressBar: false});
 
       if (option == 'aux') document.body.removeChild(aux);
     },
@@ -401,7 +423,7 @@ el-tab-pane {
   height: 190px;
 }
 
-.STV1_Banner {
+.Global_Banner {
   height: 190px;
 }
 

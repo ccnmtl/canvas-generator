@@ -8,8 +8,11 @@ import router from './router'
 // Vue.use(ElementUI, { locale })
 import VueResource from 'vue-resource'
 import store from './store/store'
+import Snotify from 'vue-snotify';
+import 'vue-snotify/styles/material.css';
 
 Vue.use(VueResource);
+Vue.use(Snotify);
 
 /* eslint-disable no-new */
 new Vue({

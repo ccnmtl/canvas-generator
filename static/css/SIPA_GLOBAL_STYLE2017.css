@@ -6,6 +6,18 @@
 		height: 110px;
 	}
 
+	.STV1_BannerSIPA{
+		background: url('http://dexpr.com/sipa/STV1_Banner.jpg') no-repeat center center;
+		background-color: #008ee2;
+		height: 110px;
+	}
+
+	.STV1_BannerSSW {
+		background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/STV1_BannerSSW.jpg') no-repeat center center;
+		background-color: #008ee2;
+		height: 110px;
+	}
+
   .STV1_Banner02 {
 		background: url('http://dexpr.com/sipa/STV1_Banner02.jpg') no-repeat center center;
 		background-color: #008ee2;
@@ -24,7 +36,7 @@
 		height: 110px;
 	}
 
-	.STV1_Banner p{
+	.Global_Banner p{
 		font-size: 21px;
 		font-weight: 200;
 		color: #FFFFFF;
@@ -33,7 +45,7 @@
 		margin: 0;
 	}
 
-	.STV1_Banner p.STV1_CourseCode {
+	.Global_Banner p.STV1_CourseCode {
 		font-size: 18px;
 		font-weight: 200px;
 		padding: 0 0 0 32px;
@@ -47,6 +59,12 @@
 		background-color: #008ee2;
 		height: 60px;
 
+	}
+
+	.STV1_SlimBannerSSW {
+		background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/STV1_SlimBannerSSW.jpg') no-repeat center center;
+		background-color: #008ee2;
+		height: 60px;
 	}
 
 	.STV1_SlimBanner p{

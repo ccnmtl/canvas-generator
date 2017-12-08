@@ -1,6 +1,9 @@
 <template lang="html">
+
   <div id="weeklylist">
+
   <hr>
+
   <div class="code-container">
 
     <div class="textbox-container">
@@ -217,10 +220,15 @@ export default {
         copyTextarea.select();
       }
 
-      document.execCommand('copy')
-      this.$notify({
-        message: 'Code has been copied!',
-      });
+      // UIkit.notification({
+      //     message: 'Code has been copied',
+      //     pos: 'bottom-center',
+      //     status: 'success',
+      //     timeout: 3000
+      // });
+
+      this.$snotify.success('Code has been copied', {showProgressBar: false});
+
 
       if (option == 'aux') document.body.removeChild(aux);
     },

@@ -1,5 +1,6 @@
 <template lang="html">
   <div id="weeklylist">
+
   <hr>
   <div class="code-container">
 
@@ -203,9 +204,8 @@ export default {
       }
 
       document.execCommand('copy')
-      this.$notify({
-        message: 'Code has been copied!',
-      });
+
+      this.$snotify.success('Code has been copied', {showProgressBar: false});
 
       if (option == 'aux') document.body.removeChild(aux);
     },

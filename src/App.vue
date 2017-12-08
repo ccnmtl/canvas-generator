@@ -8,6 +8,8 @@
       <h6><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1"></span> CANVAS CODE GENERATOR</h6>
     </div>
 
+    <vue-snotify></vue-snotify>
+
     <div id="offcanvas-slide" uk-offcanvas>
         <div class="uk-offcanvas-bar uk-background">
     		<ul class="uk-nav uk-nav-default">
@@ -43,7 +45,6 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-
   </div>
 </template>
 
