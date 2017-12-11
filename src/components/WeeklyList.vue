@@ -10,7 +10,8 @@
         Number of Weeks: <textarea v-model="userInput.toAdd" class="code-input uk-input" rows="1" cols="4"></textarea>
       </div>
 
-      <button type="button" class="add-weekly center uk-button uk-button-primary" name="button" @click="populateActivities(userInput.toAdd)">Edit # of Weekly Activities</button>
+      <button type="button" class="add-weekly center uk-button uk-button-primary"
+      name="button" @click="populateActivities(userInput.toAdd)">Edit # of Activities</button>
       <!-- to preserve first week weeklyActivites.splice(1, weeklyActivites.length - 1 -->
       <!-- <button type="button" class="add-weekly center uk-button uk-button-danger uk-width-1-1"  name="button" @click="weeklyActivites = []"> Clear </button> -->
       <hr>
