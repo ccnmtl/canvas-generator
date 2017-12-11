@@ -174,7 +174,7 @@
 
 <script>
 // For testing we remove localstorage -- take line out for build
-localStorage.clear();
+// localStorage.clear();
 
 import store from '../store'
 import { EventBus } from '../bus'

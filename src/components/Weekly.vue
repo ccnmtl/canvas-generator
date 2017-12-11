@@ -220,15 +220,9 @@ export default {
         copyTextarea.select();
       }
 
-      // UIkit.notification({
-      //     message: 'Code has been copied',
-      //     pos: 'bottom-center',
-      //     status: 'success',
-      //     timeout: 3000
-      // });
+      document.execCommand('copy')
 
       this.$snotify.success('Code has been copied', {showProgressBar: false});
-
 
       if (option == 'aux') document.body.removeChild(aux);
     },
