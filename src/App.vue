@@ -74,6 +74,11 @@ html {
     font-size: 100%;
 }
 
+/*.uk-button, .uk-button-small {
+  font-size: 13px;
+  font-weight: bold;
+}*/
+
 .export-container{
   height: 80px;
   margin: 10px;
@@ -86,7 +91,10 @@ html {
 .router {
   /*margin: 30px;
   font-size: 20px;*/
+
 }
+
+
 
 .routers {
   margin-bottom: 20px;

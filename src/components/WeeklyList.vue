@@ -7,12 +7,12 @@
     <!-- The user inputs are located in this div -->
     <div class="textbox-container">
       <div class="code-input center">
-        Number of Weeks to Add: <textarea v-model="userInput.toAdd" class="code-input uk-input" rows="1" cols="4"></textarea>
+        Number of Weeks: <textarea v-model="userInput.toAdd" class="code-input uk-input" rows="1" cols="4"></textarea>
       </div>
 
-      <button type="button" class="add-weekly center uk-button uk-button-primary" name="button" @click="populateActivities(userInput.toAdd)">Add New Weekly Activities</button>
+      <button type="button" class="add-weekly center uk-button uk-button-primary" name="button" @click="populateActivities(userInput.toAdd)">Edit # of Weekly Activities</button>
       <!-- to preserve first week weeklyActivites.splice(1, weeklyActivites.length - 1 -->
-      <button type="button" class="add-weekly center uk-button uk-button-danger uk-width-1-1"  name="button" @click="weeklyActivites = []"> Clear </button>
+      <!-- <button type="button" class="add-weekly center uk-button uk-button-danger uk-width-1-1"  name="button" @click="weeklyActivites = []"> Clear </button> -->
       <hr>
 
       <div class="code-input center">
@@ -25,7 +25,7 @@
 
       <div v-if="weeklyActivites.length > 0">
         <div class="code-input center uk-margin-medium-top">
-          <label for="text-area">Title</label>
+          <label for="text-area">Title</label> <br>
           <textarea v-model="weeklyActivites[userInput.weekNumber - 1].title" id="text-area" rows="3" cols="30" class="uk-textarea"></textarea> <br>
         </div>
 
@@ -38,13 +38,13 @@
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
-          <form v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
-            <input name="image" id="image-file" type="file"> <br> <br>
-            <input type="submit" class="uk-button uk-button-primary" value="Submit!">
+          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
+            <input name="image" id="image-file" type="file">
+            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
           <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url')">
-            <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
-            <input type="submit" class="uk-button uk-button-primary" value="Submit!">
+            <input name="imageUrl" id="image-url" type="text" class="uk-input">
+            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
 
           <!-- OLD TEXTBOX INPUT <textarea v-model="weeklyActivites[userInput.weekNumber - 1].imgSrc" id="text-area" rows="3" cols="30"></textarea> <br> -->
@@ -234,7 +234,17 @@ export default {
     },
     // Adds a user inputted number of activities
     populateActivities(num){
-      for (let i = 0; i < num; i++ ) this.AddActivity();
+      let diff = num - this.weeklyActivites.length
+
+      if (diff > 0 ){
+        for (let i = 0; i < diff; i++ ) this.AddActivity();
+      }
+
+      if (diff < 0) {
+        this.userInput.weekNumber = 1;
+        this.weeklyActivites = this.weeklyActivites.slice(0, num);
+      }
+
     },
     setToDefault(){
       this.weeklyActivites = [];
