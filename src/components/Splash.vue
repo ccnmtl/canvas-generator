@@ -7,6 +7,7 @@
                <p>&nbsp;</p>
                <img src="static/images/sipalogo_trans.png" />
                <h1 class="uk-heading"><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 2.5"></span> CANVAS COURSE BUILDER</h1>
+               <button class="uk-button uk-button-primary uk-button-large" @click="getStarted">Get Started</button>
             </div>
         </div>
     </div>
@@ -54,6 +55,11 @@ export default {
   name: 'Home',
   data () {
     return {
+    }
+  },
+  methods: {
+    getStarted(){
+      this.$router.push({name: 'Home'});
     }
   },
   mounted () {

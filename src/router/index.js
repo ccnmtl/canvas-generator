@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Splash from 'components/Splash'
 import Home from 'components/Home'
+import Syllabus from 'components/Syllabus'
 import Weekly from 'components/Weekly'
 import WeeklyList from 'components/WeeklyList'
 import Export from 'components/Export'
@@ -21,6 +22,11 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/syllabus',
+      name: 'Syllabus',
+      component: Syllabus
     },
     {
       path: '/weekly',

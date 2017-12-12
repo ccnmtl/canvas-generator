@@ -16,9 +16,10 @@
           <li class="uk-nav-header"><router-link class="router" to="/guide">USER GUIDE</router-link></li>
           <li class="uk-nav-header uk-margin-remove"><router-link class="router" to="/home">GET STARTED</router-link></li>
     			<li class="uk-nav-header">TEMPLATES</li>
-    			<li><router-link class="router" to="/home">Home Page Template</router-link></li>
-          <li><router-link class="router" to="/weekly">Weekly Activity Page Template</router-link></li>
-          <li><router-link class="router" to="/weeklylist">Weekly List Page Template</router-link></li>
+    			<li><router-link class="router" to="/home">Home Page</router-link></li>
+          <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
+          <li><router-link class="router" to="/weeklylist">Weekly Activites</router-link></li>
+          <li><router-link class="router" to="/weekly">Individual Activity</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/export">Export/Import Data</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/credits">CREDITS</router-link></li>
     			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>

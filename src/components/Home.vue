@@ -3,11 +3,6 @@
 
     <!-- This Div contains all of the information inputs -->
     <!-- Currently it uses a component from the Element UI library for the tabs -->
-    <div class="uk-float-right">
-    	<a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a>
-      <button class="uk-button uk-button-primary" @click="copyText('aux')">Copy the Code</button>
-      <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
-    </div>
 
     <div class="clearfix"></div>
 
@@ -140,6 +135,12 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="uk-float-right">
+      <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a>
+      <button class="uk-button uk-button-primary" @click="copyText('aux')">Copy the Code</button>
+      <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
     </div>
 
     <div id="modal-overflow" uk-modal>
