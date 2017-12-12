@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { env } from './defaults'
+import { defaults } from './defaults'
 
 Vue.use(Vuex);
 
@@ -17,6 +17,6 @@ export default new Vuex.Store({
   getters: {},
   mutations: {},
   modules: {
-    env
+    defaults
   }
 })

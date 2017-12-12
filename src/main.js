@@ -10,15 +10,16 @@ import store from './store/store'
 // Outside frameworks/components
 import VueResource from 'vue-resource'
 import Snotify from 'vue-snotify'
-import Vuetify from 'vuetify'
-
-// Outside styles for components
-// import 'vuetify/dist/vuetify.min.css'
 import 'vue-snotify/styles/material.css'
+//import Vuetify from 'vuetify'
+//import 'vuetify/dist/vuetify.min.css'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+import locale from 'element-ui/lib/locale/lang/en'
 
 Vue.use(VueResource);
 Vue.use(Snotify);
-Vue.use(Vuetify)
+Vue.use(ElementUI, { locale })
 
 /* eslint-disable no-new */
 new Vue({
