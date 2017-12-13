@@ -40,11 +40,11 @@
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
           <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
-            <input name="image" id="image-file" type="file">
+            <input name="image" id="image-file" type="file"> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
           <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url')">
-            <input name="imageUrl" id="image-url" type="text" class="uk-input">
+            <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
 

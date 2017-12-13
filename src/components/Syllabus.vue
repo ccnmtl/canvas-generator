@@ -7,65 +7,38 @@
   <div class="code-container">
 
     <div class="textbox-container">
+      <el-upload
+        class="upload-demo"
+        ref="upload"
+        action="https://jsonplaceholder.typicode.com/posts/"
+        :auto-upload="false">
+        <el-button slot="trigger" size="small" type="primary">select file</el-button>
+        <el-button style="margin-left: 10px;" size="small" type="success" @click="onFormSubmit('image')">upload to server</el-button>
+        <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
+      </el-upload>
 
-      <textarea v-model="userInput.weekTitle" class="code-input uk-textarea" rows="2" cols="60"></textarea>
-      <!-- <button type="button" name="button" class="uk-button uk-button-primary" @click="setToDefault">Reset to Default</button> -->
-      <button type="button" name="button" class="show-editor center uk-button uk-button-primary" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
-      <!-- This transition is defined as a css animations in the style section -->
-      <transition name="fade"></transition>
-      <div v-show="showEditor">
-        <div class="quill">
-          <quill-editor ref="myTextEditor"
-                        v-model="userInput.description"
-                        :config="editorOption">
-          </quill-editor>
-        </div>
-        <div class="quill">
-          <quill-editor ref="myTextEditor"
-                        v-model="userInput.required"
-                        :config="editorOption">
-          </quill-editor>
-        </div>
+      <div class="code-input center uk-margin-medium-top">
+        <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
+
+        <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
+        <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
+          <input name="image" id="image-file" type="file">
+          <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+        </form>
+        <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url')">
+          <input name="imageUrl" id="image-url" type="text" class="uk-input">
+          <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+        </form>
+
+        <!-- OLD TEXTBOX INPUT <textarea v-model="weeklyActivites[userInput.weekNumber - 1].imgSrc" id="text-area" rows="3" cols="30"></textarea> <br> -->
       </div>
-      </transition>
-
-      <hr>
-
-      <!-- This is a seperate component to handle adding new Acitivity Page elements abstractly. For more information check the WeeklyCodeModule.vue file. -->
-      <weekly-code-module
-        class="code-module"
-        :content="videos"
-        :fn="addVideo"
-        :inputs="['title','description', 'source']"
-        @clearArr="videos = []">
-        Video
-      </weekly-code-module>
-
-      <weekly-code-module
-        class="code-module"
-        :content="discussions"
-        :fn="addDiscussion"
-        :inputs="['link','due', 'available', 'points']"
-        @clearArr="discussions = []">
-        Discussion
-      </weekly-code-module>
-
-      <weekly-code-module
-        class="code-module"
-        :content="assignments"
-        :fn="addAssignment"
-        :inputs="['link','due', 'available', 'points']"
-        @clearArr="assignments = []">
-        Assignment
-      </weekly-code-module>
-
 
     </div>
 
     <!-- Where the canvas code is stored -->
     <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
       <div class="STV1_SlimBanner">
-        <p>COURSE TITLE</p>
+        <p>{{userInput.title}}</p>
       </div>
 
       <!-- Professors & TAs -->
@@ -306,11 +279,8 @@ export default {
     return {
       userInput: {
         title: store.title,
-        videoNumber: 1,
-        weekTitle: 'WEEK 1: Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective',
-        description: "We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss “The Big Picture,” starting with the historical context of the current global food system, including the “Green Revolution.” Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.",
-        required:'<span ><p><strong>Lecture Slides:</strong></p><p><strong>Download PDF:&nbsp;</strong><a href="https://courseworks2.columbia.edu/courses/29191/files/1032282/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">GFS Week 6 Africa (February 21, 2017) Final.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></p><p><strong>Required Readings / Viewings:</strong></p><ul><li>Sanchez, P.A. (2002) Soil fertility and hunger in Africa.&nbsp;<em>Science&nbsp;</em><strong>295</strong>: 2019-2020.</li><li>Download PDF:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/929036/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">Soil_Fertility_and_Hunger_in_Africa_2002.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li><li><strong>Familiarize yourself with the work of the Alliance for an African Green Revolution (AGRA):&nbsp;</strong><a href="http://www.agra.org/" target="_blank" style="color: rgb(0, 142, 226);">http://www.agra.org/&nbsp;(Links to an external site.)</a></li></ul><p><strong>Supplementary Resources</strong></p><ul><li>Listen: --“African Land Fertile Ground for Crops and Investors.” NPR. June 15, 2012.&nbsp;<a href="http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors" target="_blank" style="color: rgb(0, 142, 226);">http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors&nbsp;(Links to an external site.)</a></li><li>Download mp3:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/1009373/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">20120615_atc_06.mp3<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li></ul></span>',
-        toAdd: 1,
+        isFile: true,
+        uploadSwitchText: "Click to Upload Image from Url",
       },
       videoEditable: false,
       showEditor: false,
@@ -360,34 +330,33 @@ export default {
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
       this.userInput.title = store.title // Home.data().userInput.title
     },
-    addVideo() {
-      let tempVideo = {
-        title: "All that Glitters is not Gold (18 minutes)",
-        description: "‘All that Glitters is not Gold’ features various communities’ representatives concern about the introduction of genetically engineered ‘Golden’ rice in the Philippines.",
-        source: "https://www.youtube.com/watch?v=GxSGKD50ioE"
+    onFormSubmit (type, ev){
+      var formData = new FormData();
+
+      if (type == 'url'){
+        console.log('uploading url...')
+        var imageurl = document.querySelector('#image-url'); // Gets form data in html
+        formData.append("imageUrl", imageurl.value);  // Adds api header to tell server that it is a url
+      }
+      else {
+        console.log('uploading file...')
+        var imagefile = document.querySelector('#image-file');
+        formData.append("image", imagefile.files[0]); // Adds api header to tell server that it is a file
       }
 
-      this.videos.push(tempVideo);
-    },
-    addDiscussion() {
-      let tempDisc = {
-        due: "Feb 4, 2017",
-        available: "Jan 1",
-        link: store.courseUrl + 'discussion_topics/',
-        points: 10
-      }
+      // More api headers to tell the server the dimensions to crop
+      formData.append('imageWidth', 350)
+      formData.append('imageHeight', 150)
 
-      this.discussions.push(tempDisc);
-    },
-    addAssignment() {
-      let tempAssign = {
-        due: "Feb 4, 2017",
-        available: "Jan 1",
-        link: store.courseUrl + 'assignments/',
-        points: 10
-      }
+      // Send post request to Amazon server using vue-resource with form data
+      this.$http.post('http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image',formData).then( response => {
+        console.log('success')
+        let imageData = JSON.parse(response.bodyText);
+        this.weeklyActivites[this.userInput.weekNumber - 1].imgSrc = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
+      }, response => {
+        console.log(response)
+      });
 
-      this.assignments.push(tempAssign);
     },
     setToDefault(){
       console.log('resetting data...')
@@ -397,7 +366,7 @@ export default {
     },
     getSaveStateConfig() {
       return {
-          'cacheKey': 'Weekly',
+          'cacheKey': 'Syllabus',
       };
     }
   },
