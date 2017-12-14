@@ -20,7 +20,7 @@
       </el-date-picker>
       <hr>
 
-      <div class=" week-card uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top" >
+      <div class="uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top" >
         <div class="code-input center">
           Edit Week: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeklyActivites.length"
             controls-position="right" size="small" label="Edit Week"></el-input-number>

@@ -7,26 +7,41 @@
   <div class="code-container">
 
     <div class="textbox-container">
-      <el-upload
-        class="upload-demo"
-        ref="upload"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :auto-upload="false">
-        <el-button slot="trigger" size="small" type="primary">select file</el-button>
-        <el-button style="margin-left: 10px;" size="small" type="success" @click="onFormSubmit('image')">upload to server</el-button>
-        <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
-      </el-upload>
 
-      <div class="code-input center uk-margin-medium-top">
+      <div class="uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top center">
+        <h3 class="uk-card-title">Professor </h3>
+        <el-input type="textarea" autosize v-model="prof.name"> </el-input>
+        <el-input type="textarea" autosize v-model="prof.email"> </el-input>
+        <el-input type="textarea" autosize v-model="prof.hours"> </el-input>
         <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
         <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
-        <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
-          <input name="image" id="image-file" type="file">
+        <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', prof)">
+          <input name="image" id="image-file" type="file"> <br>
           <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
         </form>
-        <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url')">
-          <input name="imageUrl" id="image-url" type="text" class="uk-input">
+        <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', prof)">
+          <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
+          <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+        </form>
+
+        <!-- OLD TEXTBOX INPUT <textarea v-model="weeklyActivites[userInput.weekNumber - 1].imgSrc" id="text-area" rows="3" cols="30"></textarea> <br> -->
+      </div>
+
+      <div class="uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top center">
+        <h3 class="uk-card-title">TA</h3>
+        <el-input type="textarea" autosize v-model="ta.name"> </el-input>
+        <el-input type="textarea" autosize v-model="ta.email"> </el-input>
+        <el-input type="textarea" autosize v-model="ta.hours"> </el-input>
+        <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
+
+        <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
+        <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', ta)">
+          <input name="image" id="image-file" type="file"> <br>
+          <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+        </form>
+        <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', ta)">
+          <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
           <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
         </form>
 
@@ -51,10 +66,10 @@
 
               <!-- must have weeklyIconImg class for responsiveness -->
               <!-- landscape images work best. 350x200 seems ideal -->
-              <img src="http://via.placeholder.com/350x150" class="weeklyIconImg" />
+              <img :src="prof.imgSrc" class="weeklyIconImg" />
 
               <p>Instructor:</p>
-              <p>Professor Name Here (<a href="mailto:professor@columbia.edu">professor@sipa.columbia.edu</a>) <br /> Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)</p>
+              <p>{{prof.name}} (<a :href="'mailto:'+prof.email">{{prof.email}}</a>) <br /> Office Hours: {{prof.hours}}</p>
             </div>
           </div>
           <!-- End Professor Info Box -->
@@ -65,10 +80,10 @@
 
               <!-- must have weeklyIconImg class for responsiveness -->
               <!-- landscape images work best. 350x200 seems ideal -->
-              <img src="http://via.placeholder.com/350x150" class="weeklyIconImg" />
+              <img :src="ta.imgSrc" class="weeklyIconImg" />
 
-              <p>TA:</p>
-              <p>Name Here (<a href="mailto:professor@columbia.edu">professor@columbia.edu</a>) <br /> Office Hours: Tuesday 1:00-2:30 pm (Publique, IAB 6th floor)</p>
+              <p>Teaching Assistant:</p>
+              <p>{{ta.name}} (<a :href="'mailto:'+ta.email">{{ta.email}}</a>) <br /> Office Hours: {{ta.hours}}</p>
             </div>
           </div>
           <!-- End Professor Info Box -->
@@ -277,6 +292,18 @@ export default {
         isFile: true,
         uploadSwitchText: "Click to Upload Image from Url",
       },
+      prof:{
+        name: "Professor Name",
+        email: "professor@sipa.columbia.edu",
+        hours: "Monday 3:00-6:00 pm (IAB Room 1434)",
+        imgSrc: "http://via.placeholder.com/350x150"
+      },
+      ta: {
+        name: "TA Name",
+        email: "ta@sipa.columbia.edu",
+        hours: "Tuesday 1:00-2:30 pm (Publique, IAB 6th floor)",
+        imgSrc:"http://via.placeholder.com/350x150"
+      },
       videoEditable: false,
       showEditor: false,
       videos: [],
@@ -321,7 +348,11 @@ export default {
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
       this.userInput.title = store.title // Home.data().userInput.title
     },
-    onFormSubmit (type, ev){
+    updateSwitch() {
+      this.userInput.isFile = !this.userInput.isFile;
+      this.userInput.uploadSwitchText = this.userInput.isFile ? "Click to Upload Image from URL" : "Click to Upload Image from Computer"
+    },
+    onFormSubmit (type, obj, ev){
       var formData = new FormData();
 
       if (type == 'url'){
@@ -343,7 +374,7 @@ export default {
       this.$http.post('http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image',formData).then( response => {
         console.log('success')
         let imageData = JSON.parse(response.bodyText);
-        this.weeklyActivites[this.userInput.weekNumber - 1].imgSrc = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
+        obj.imgSrc = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
       }, response => {
         console.log(response)
       });
@@ -425,7 +456,7 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 40%;
+  width: 300px;
   margin: auto;
   align-self: flex-start;
   margin-top: 20px
