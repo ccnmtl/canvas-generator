@@ -6,12 +6,18 @@
 
     <!-- The user inputs are located in this div -->
     <div class="textbox-container">
-      <el-input-number  style="margin: 10px;" v-model="userInput.toAdd" :min="1" :max="10"></el-input-number>
+      <el-input-number  style="margin: 10px;" v-model="userInput.toAdd" :min="1" :max="20"></el-input-number>
 
       <button type="button" class="add-weekly center uk-button uk-button-primary"
       name="button" @click="populateActivities(userInput.toAdd)">Edit # of Activities</button>
       <!-- to preserve first week weeklyActivites.splice(1, weeklyActivites.length - 1 -->
       <!-- <button type="button" class="add-weekly center uk-button uk-button-danger uk-width-1-1"  name="button" @click="weeklyActivites = []"> Clear </button> -->
+      <el-date-picker
+        style="margin: 10px"
+        v-model="userInput.startDate"
+        type="date"
+        placeholder="Pick start date">
+      </el-date-picker>
       <hr>
 
       <div class=" week-card uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top" >
@@ -142,6 +148,8 @@ import saveState from 'vue-save-state';
 import WeeklyListItem from './weekly/WeeklyListItem'
 import Home from './Home'
 
+var moment = require('moment');
+
 var toolbarOptions = [
   ['bold', 'italic', 'underline'],
   ['blockquote',{ 'list': 'ordered'}, { 'list': 'bullet' }],
@@ -155,6 +163,7 @@ export default {
     return {
       userInput: {
         title: store.title,
+        startDate: null,
         weekNumber: 1,
         toAdd: 1,
         isFile: true,
@@ -175,7 +184,18 @@ export default {
     WeeklyListItem
   },
   mixins: [saveState],
+  watch: {
+    "userInput.startDate": function(){
+        this.updateDates();
+    },
+  },
   computed: {
+    day() {
+      return moment(this.userInput.startDate).format("dddd, MMMM Do")
+    },
+    week() {
+      return moment(this.userInput.startDate).add(1, 'w').format("dddd, MMMM Do")
+    },
     // Changes the description wording so that it matches the current number of weeks on the page
     numWeeks(){
       let num = this.weeklyActivites.length
@@ -224,6 +244,11 @@ export default {
       this.userInput.isFile = !this.userInput.isFile;
       this.userInput.uploadSwitchText = this.userInput.isFile ? "Click to Upload Image from URL" : "Click to Upload Image from Computer"
     },
+    updateDates(){
+      this.weeklyActivites.forEach((week, index)=>{
+        week.date = "Class: " + moment(this.userInput.startDate).add(index, 'w').format("dddd, MMMM Do")
+      })
+    },
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
     AddActivity(){
       let index = this.weeklyActivites.length + 1
@@ -232,7 +257,8 @@ export default {
 
       let tempActivity = {
         title: "Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
-        description: "Class: Tuesday, January 17th",
+        date: "",
+        description: "This session will cover the foundational topics in food systems.",
         imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/week' + index + '.png' // "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
       }
 
@@ -250,6 +276,8 @@ export default {
         this.userInput.weekNumber = 1;
         this.weeklyActivites = this.weeklyActivites.slice(0, num);
       }
+
+      this.updateDates()
 
     },
     setToDefault(){

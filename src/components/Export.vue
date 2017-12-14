@@ -50,7 +50,7 @@ export default {
     // casually go to each route for a minimal amount of time on load to ensure export works
     // paths is list of all routes with the current route as the last item, so we cycle to where we are
     let initialPath = this.$route.path
-    let paths = ['/home', '/weekly', '/weeklylist'].filter(p => p !== initialPath).concat([initialPath])
+    let paths = ['/home', '/weekly', '/weeklylist','/syllabus'].filter(p => p !== initialPath).concat([initialPath])
     paths.forEach((path, i) => {
       setTimeout(() => this.$router.replace(path), i * 30)
     })
@@ -68,6 +68,11 @@ export default {
     EventBus.$on('list-data', data => {
       this.exportData.weeklyList = data
       console.log('got list')
+      this.exportDataIfPossible()
+    })
+    EventBus.$on('syllabus-data', data => {
+      this.exportData.syllabus = data
+      console.log('got syllabus')
       this.exportDataIfPossible()
     })
   },

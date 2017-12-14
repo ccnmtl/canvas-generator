@@ -16,7 +16,7 @@ import 'vue-snotify/styles/material.css'
 //import 'vuetify/dist/vuetify.min.css'
 
 import ElementUI from 'element-ui'
-// import 'element-ui/lib/theme-default/index.css' // Use this OR theme chalk in index.html
+import 'element-ui/lib/theme-default/index.css' // Use this OR theme chalk in index.html
 import locale from 'element-ui/lib/locale/lang/en'
 
 Vue.use(VueResource);

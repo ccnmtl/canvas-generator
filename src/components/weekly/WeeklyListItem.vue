@@ -14,6 +14,7 @@
             <div class="STV1_Welcome">Week {{index}}: {{data.title}} </div>
           </a>
           <p>{{data.description}}</p>
+          <p>{{data.date}}</p>
         </div>
       </div>
     </div>

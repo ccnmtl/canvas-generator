@@ -254,12 +254,7 @@
 import store from '../store'
 import { EventBus } from '../bus'
 import { quillEditor } from 'vue-quill-editor';
-import WeeklyCodeModule from './weekly/WeeklyCodeModule'
-import WeeklyVideo from './weekly/WeeklyVideo'
-import WeeklyDiscussion from './weekly/WeeklyDiscussion'
-import WeeklyAssignment from './weekly/WeeklyAssignment'
 import saveState from 'vue-save-state';
-import Home from './Home'
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline'],
@@ -297,10 +292,6 @@ export default {
   },
   components: {
     quillEditor,
-    WeeklyVideo,
-    WeeklyCodeModule,
-    WeeklyDiscussion,
-    WeeklyAssignment
   },
   mixins: [saveState],
   computed: {},
@@ -359,10 +350,7 @@ export default {
 
     },
     setToDefault(){
-      console.log('resetting data...')
-      this.userInput = { ...store.weeklyDefault };
-      this.userInput.title = store.title;
-      this.videos = this.assignments = this.discussions = [];
+
     },
     getSaveStateConfig() {
       return {
@@ -397,9 +385,9 @@ export default {
       // }
       // EventBus.$emit('list-data', weeklyList)
 
-      let weekly = this.$data
-      console.log('sending weekly')
-      EventBus.$emit('weekly-data', weekly)
+      let syllabus = this.$data
+      console.log('sending syllabus')
+      EventBus.$emit('syllabus-data', syllabus)
     })
   },
   beforeUpdate() {
