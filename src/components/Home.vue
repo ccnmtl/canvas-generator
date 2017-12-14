@@ -82,7 +82,7 @@
     <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
       <div class="">
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
-          <div :class="['pad-box-mega','Global_Banner', userInput.banner.class]">
+          <div :class="['pad-box-mega','STV1_Banner', userInput.banner.class]">
             <img :src="this.userInput.banner.logo"/>
             <p>{{userInput.title.toUpperCase()}}</p>
             <p class="STV1_CourseCode">{{userInput.semester}}</p>
@@ -196,11 +196,11 @@ export default {
       userInput: {
         title: store.title,
         url: store.courseUrl,
-        banner: { text: "Default", class: 'STV1_Banner', logo: this.$store.state.imageServer + "SipaLogo2.png" } ,
+        banner: { text: "Default", class: '', logo: this.$store.state.imageServer + "SipaLogo2.png" } ,
         bannerClasses: [
-          { text: "Default", class: 'STV1_Banner', logo: this.$store.state.imageServer + "SipaLogo2.png" },
-          { text: "SIPA", class: 'STV1_BannerSIPA', logo: this.$store.state.imageServer + "SipaLogo2.png" },
-          { text: "Social Work", class: 'STV1_BannerSSW STV1_Banner SSW', logo: this.$store.state.imageServer + "SSW_logo.png" },
+          { text: "Default", class: '', logo: this.$store.state.imageServer + "SipaLogo2.png" },
+          { text: "SIPA", class: '', logo: this.$store.state.imageServer + "SipaLogo2.png" },
+          { text: "Social Work", class: 'SSW', logo: this.$store.state.imageServer + "SSW_logo.png" },
         ],
         semester: "U6411 // SPRING 2017",
         professor: "Glenn Denning",
@@ -232,6 +232,14 @@ export default {
   },
   mixins: [saveState],
   computed: {
+    theme: {
+      get () {
+        return this.$store.getTheme()
+      },
+      set (payload) {
+        this.$store.updateTheme()
+      }
+    },
     // Parses an inputted video link to output the correct embed link for the source
     videoLink(){
       let output;
@@ -424,7 +432,7 @@ el-tab-pane {
   height: 190px;
 }
 
-.Global_Banner {
+.STV1_Banner {
   height: 190px;
 }
 
