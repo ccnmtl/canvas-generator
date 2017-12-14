@@ -6,9 +6,7 @@
 
     <!-- The user inputs are located in this div -->
     <div class="textbox-container">
-      <div class="code-input center">
-        Number of Weeks: <textarea v-model="userInput.toAdd" class="code-input uk-input" rows="1" cols="4"></textarea>
-      </div>
+      <el-input-number  style="margin: 10px;" v-model="userInput.toAdd" :min="1" :max="10"></el-input-number>
 
       <button type="button" class="add-weekly center uk-button uk-button-primary"
       name="button" @click="populateActivities(userInput.toAdd)">Edit # of Activities</button>
@@ -16,37 +14,44 @@
       <!-- <button type="button" class="add-weekly center uk-button uk-button-danger uk-width-1-1"  name="button" @click="weeklyActivites = []"> Clear </button> -->
       <hr>
 
-      <div class="code-input center">
-        Edit Week: <textarea v-model="userInput.weekNumber" class="code-input uk-input" rows="1" cols="4"></textarea>
-      </div>
-
-      <select v-model="userInput.weekNumber" class="uk-select">
-        <option v-for="n in weeklyActivites.length" :value="n">Week {{n}}</option>
-      </select>
-
-      <div v-if="weeklyActivites.length > 0">
-        <div class="code-input center uk-margin-medium-top">
-          <label for="text-area">Title</label> <br>
-          <textarea v-model="weeklyActivites[userInput.weekNumber - 1].title" id="text-area" rows="3" cols="30" class="uk-textarea"></textarea> <br>
+      <div class=" week-card uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top" >
+        <div class="code-input center">
+          Edit Week: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeklyActivites.length"
+            controls-position="right" size="small" label="Edit Week"></el-input-number>
+          <!-- <textarea v-model="userInput.weekNumber" class="code-input uk-input" rows="1" cols="4"></textarea> -->
         </div>
 
-        <div class="code-input center uk-margin-small-top">
-          <label for="text-area">Description</label>
-          <textarea v-model="weeklyActivites[userInput.weekNumber - 1].description" id="text-area" rows="3" cols="30" class="uk-textarea"></textarea> <br>
-        </div>
+        <select v-model="userInput.weekNumber" class="uk-select">
+          <option v-for="n in weeklyActivites.length" :value="n">Week {{n}}</option>
+        </select>
 
-        <div class="code-input center uk-margin-medium-top">
-          <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
+        <div v-if="weeklyActivites.length > 0">
+          <div class="code-input center uk-margin-small-top">
+            <label for="text-area">Title</label> <br>
+            <el-input type="textarea" autosize v-model="weeklyActivites[userInput.weekNumber - 1].title"> </el-input>
+            <!-- <textarea v-model="weeklyActivites[userInput.weekNumber - 1].title" id="text-area" rows="3" cols="30" class="uk-textarea"></textarea> <br> -->
+          </div>
 
-          <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
-          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
-            <input name="image" id="image-file" type="file"> <br>
-            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
-          </form>
-          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url')">
-            <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br>
-            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
-          </form>
+          <div class="code-input center uk-margin-small-top">
+            <label for="text-area">Description</label>
+            <el-input type="textarea" autosize v-model="weeklyActivites[userInput.weekNumber - 1].description"> </el-input>
+            <!-- <textarea v-model="weeklyActivites[userInput.weekNumber - 1].description" id="text-area" rows="3" cols="30" class="uk-textarea"></textarea> <br> -->
+          </div>
+
+          <div class="code-input center uk-margin-medium-top">
+            <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
+
+            <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
+            <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
+              <input name="image" id="image-file" type="file"> <br>
+              <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+            </form>
+            <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url')">
+              <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br>
+              <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+            </form>
+          </div>
+
 
           <!-- OLD TEXTBOX INPUT <textarea v-model="weeklyActivites[userInput.weekNumber - 1].imgSrc" id="text-area" rows="3" cols="30"></textarea> <br> -->
         </div>
@@ -340,12 +345,17 @@ textarea {
   margin: 10px
 }
 
+.week-card {
+  width: 400px;
+}
+
 .textbox-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 300px;
-  margin: auto;
+  width: 350px;
+  margin-left: 3%;
+  margin-right: 30px;
   align-self: flex-start;
   margin-top: 20px
 }
