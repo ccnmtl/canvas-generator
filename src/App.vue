@@ -17,7 +17,7 @@
           <li class="uk-nav-header uk-margin-remove"><router-link class="router" to="/home">GET STARTED</router-link></li>
     			<li class="uk-nav-header">TEMPLATES</li>
     			<li><router-link class="router" to="/home">Home Page</router-link></li>
-          <!-- <li><router-link class="router" to="/syllabus">Syllabus</router-link></li> -->
+          <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
           <li><router-link class="router" to="/weeklylist">Weekly Activites</router-link></li>
           <li><router-link class="router" to="/weekly">Individual Activity</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/export">Export/Import Data</router-link></li>

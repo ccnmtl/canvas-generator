@@ -57,7 +57,7 @@
             Banner Image:
             <select style="display: inline-block; width:150px" v-model="theme" name="Choose Banner" class="uk-select">
               <option selected disabled>Choose Banner</option>
-              <option v-for="theme in userInput.themeOptions" :value="theme">{{theme.option}}</option>
+              <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
             </select>
           </label>
           <label>
@@ -196,12 +196,6 @@ export default {
       userInput: {
         title: store.title,
         url: store.courseUrl,
-        banner: { text: "Default", class: '', logo: this.$store.state.imageServer + "SipaLogo2.png" } ,
-        bannerClasses: [
-          { text: "Default", class: '', logo: this.$store.state.imageServer + "SipaLogo2.png" },
-          { text: "SIPA", class: '', logo: this.$store.state.imageServer + "SipaLogo2.png" },
-          { text: "Social Work", class: 'SSW', logo: this.$store.state.imageServer + "SSW_logo.png" },
-        ],
         themeOptions: this.$store.getters.getThemeOptions,
         semester: "U6411 // SPRING 2017",
         professor: "Glenn Denning",
