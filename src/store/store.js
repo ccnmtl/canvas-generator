@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { defaults } from './defaults'
-import { graphics } from './graphics'
+import defaults from './defaults'
+import graphics from './graphics'
 
 Vue.use(Vuex);
 

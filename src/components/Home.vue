@@ -55,14 +55,14 @@
         <li class="uk-text-center">
           <label>
             Banner Image:
-            <select style="display: inline-block; width:150px" v-model="userInput.banner" name="Choose Banner" class="uk-select">
+            <select style="display: inline-block; width:150px" v-model="theme" name="Choose Banner" class="uk-select">
               <option selected disabled>Choose Banner</option>
-              <option v-for="banner in userInput.bannerClasses" :value="banner">{{banner.text}}</option>
+              <option v-for="theme in userInput.themeOptions" :value="theme">{{theme.option}}</option>
             </select>
           </label>
           <label>
             Logo Image:
-            <select style="display: inline-block; width:150px" v-model="userInput.banner.logo" name="Choose Logo" class="uk-select">
+            <select style="display: inline-block; width:150px" v-model="theme.logo" name="Choose Logo" class="uk-select">
               <option selected disabled>Choose Logo</option>
               <option :value="this.$store.state.imageServer + 'SipaLogo2.png'">SIPA</option>
               <option :value="this.$store.state.imageServer + 'SSW_logo.png'">SSW</option>
@@ -82,8 +82,8 @@
     <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
       <div class="">
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
-          <div :class="['pad-box-mega','STV1_Banner', userInput.banner.class]">
-            <img :src="this.userInput.banner.logo"/>
+          <div :class="['pad-box-mega','STV1_Banner', theme.banner]">
+            <img :src="theme.logo"/>
             <p>{{userInput.title.toUpperCase()}}</p>
             <p class="STV1_CourseCode">{{userInput.semester}}</p>
           </div>
@@ -175,7 +175,7 @@
 
 <script>
 // For testing we remove localstorage -- take line out for build
-// localStorage.clear();
+localStorage.clear();
 
 import store from '../store'
 import { EventBus } from '../bus'
@@ -202,6 +202,7 @@ export default {
           { text: "SIPA", class: '', logo: this.$store.state.imageServer + "SipaLogo2.png" },
           { text: "Social Work", class: 'SSW', logo: this.$store.state.imageServer + "SSW_logo.png" },
         ],
+        themeOptions: this.$store.getters.getThemeOptions,
         semester: "U6411 // SPRING 2017",
         professor: "Glenn Denning",
         pEmail: "gd2147@sipa.columbia.edu",
@@ -231,13 +232,14 @@ export default {
     quillEditor
   },
   mixins: [saveState],
+
   computed: {
     theme: {
       get () {
-        return this.$store.getTheme()
+        return this.$store.getters.getTheme
       },
       set (payload) {
-        this.$store.updateTheme()
+        this.$store.commit('updateTheme', payload)
       }
     },
     // Parses an inputted video link to output the correct embed link for the source

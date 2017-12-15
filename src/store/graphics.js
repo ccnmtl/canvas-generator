@@ -1,6 +1,6 @@
 const IMAGE_SERVER = "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/"
 
-export const graphics = {
+export default {
   state: {
     theme: {
       option: "Default",

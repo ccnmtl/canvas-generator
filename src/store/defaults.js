@@ -1,4 +1,4 @@
-export const defaults = {
+export default {
   state: {
   home: {
       title: "Global Food Systems",
