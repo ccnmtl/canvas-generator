@@ -67,7 +67,7 @@
     <!-- This div contains the canvas code to be displayed -->
     <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
       <div :class="['STV1_SlimBanner', this.$store.getters.getTheme.slim]">
-        <p>{{userInput.title.toUpperCase()}}</p>
+        <p>{{info.title.toUpperCase()}}</p>
       </div>
       <div class="grid-row">
         <div class="col-xs-12 col-lg-12">
@@ -78,7 +78,7 @@
                   <i class="icon-clock"></i> WEEKLY ACTIVITIES</h3>
               </div>
               <div class="pad-box-mini border border-b border-t">
-                <p>Welcome to the Weekly Activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{userInput.title}}. Clicking on a week will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
+                <p>Welcome to the Weekly Activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{info.title}}. Clicking on a week will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
               </div>
             </div>
           </div>
@@ -190,6 +190,14 @@ export default {
     },
   },
   computed: {
+    info: {
+      get () {
+        return this.$store.getters.getInfo
+      },
+      set (payload) {
+        this.$store.commit('updateInfo', payload)
+      }
+    },
     day() {
       return moment(this.userInput.startDate).format("dddd, MMMM Do")
     },
@@ -238,7 +246,6 @@ export default {
     updateCode(){
       let code = document.getElementById("canvas-code");
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
-      this.userInput.title = store.title // Home.data().userInput.title
     },
     updateSwitch(){
       this.userInput.isFile = !this.userInput.isFile;

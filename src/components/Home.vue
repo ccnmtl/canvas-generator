@@ -18,31 +18,31 @@
     	</ul>
     	<ul id="tab-content" class="uk-switcher uk-margin">
     		<li class="uk-active uk-text-center">
-          <textarea v-model="userInput.title" class="code-input uk-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.semester" class="code-input uk-input" rows="1" cols="20"></textarea>
-          <textarea v-model="userInput.url" class="code-input uk-input" rows="1" cols="45"></textarea> <br>
+          <textarea v-model="info.title" class="code-input uk-input" rows="1" cols="25"></textarea>
+          <textarea v-model="info.semester" class="code-input uk-input" rows="1" cols="20"></textarea>
+          <textarea v-model="info.url" class="code-input uk-input" rows="1" cols="45"></textarea> <br>
         </li>
     		<li class="uk-text-center">
           <div class='quill'>
             <quill-editor ref="myTextEditor"
-                          v-model="userInput.description"
+                          v-model="info.description"
                           :config="editorOption">
             </quill-editor>
           </div>
     		</li>
     		<li class="uk-text-center">
-          <textarea v-model="userInput.professor" class="code-input uk-input" rows="1" cols="20"></textarea>
-          <textarea v-model="userInput.pEmail" class="code-input uk-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+          <textarea v-model="info.prof.name" class="code-input uk-input" rows="1" cols="20"></textarea>
+          <textarea v-model="info.prof.email" class="code-input uk-input" rows="1" cols="25"></textarea>
+          <textarea v-model="info.prof.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
         </li>
     		<li class="uk-text-center">
-          <textarea v-model="userInput.ta" class="code-input uk-input" rows="1" cols="20"></textarea>
-          <textarea v-model="userInput.tEmail" class="code-input uk-input" rows="1" cols="25"></textarea>
-          <textarea v-model="userInput.tOffice" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+          <textarea v-model="info.ta.name" class="code-input uk-input" rows="1" cols="20"></textarea>
+          <textarea v-model="info.ta.email" class="code-input uk-input" rows="1" cols="25"></textarea>
+          <textarea v-model="info.ta.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
     		</li>
     		<li class="uk-text-center">
-          <textarea v-model="userInput.meetings" class="code-input uk-input" rows="1" cols="50"></textarea>
-          <textarea v-model="userInput.discussions" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+          <textarea v-model="info.meetings" class="code-input uk-input" rows="1" cols="50"></textarea>
+          <textarea v-model="info.discussions" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
     		</li>
     		<li class="uk-text-center">
           <button type="button" class="uk-button uk-button-primary " name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
@@ -60,7 +60,7 @@
               <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
             </select>
           </label>
-          <label>
+          <!-- <label>
             Logo Image:
             <select style="display: inline-block; width:150px" v-model="theme.logo" name="Choose Logo" class="uk-select">
               <option selected disabled>Choose Logo</option>
@@ -68,7 +68,7 @@
               <option :value="this.$store.state.imageServer + 'SSW_logo.png'">SSW</option>
               <option :value="this.$store.state.imageServer + 'Mailman_logo.png'">Mailman</option>
             </select>
-          </label>
+          </label> -->
           <!-- <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input uk-input" rows="1" cols="50"></textarea> -->
     		</li>
     	</ul>
@@ -84,15 +84,15 @@
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
           <div :class="['pad-box-mega','STV1_Banner', theme.banner]">
             <img :src="theme.logo"/>
-            <p>{{userInput.title.toUpperCase()}}</p>
-            <p class="STV1_CourseCode">{{userInput.semester}}</p>
+            <p>{{info.title.toUpperCase()}}</p>
+            <p class="STV1_CourseCode">{{info.semester}}</p>
           </div>
           <div class="content-box">
             <div class="grid-row">
               <div class="col-xs-6">
                 <div class="styleguide-section__grid-demo-element">
                   <div v-if="!this.userInput.isVideo" >
-                    <img :src="this.userInput.image" class="STV1_WeeklyIconIMG" alt=""> </img>
+                    <img :src="this.info.image" class="STV1_WeeklyIconIMG" alt=""> </img>
                   </div>
                   <div v-if="this.userInput.isVideo" class="embed-container">
                     <iframe :src="this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen"
@@ -102,11 +102,11 @@
               </div>
               <div class="col-xs-6">
                 <div class="styleguide-section__grid-demo-element">
-                  <div class="STV1_Welcome">WELCOME TO {{newTitle.toUpperCase()}}</div>
-                  <p class="html" v-html="userInput.description"></p>
+                  <div class="STV1_Welcome">WELCOME TO {{info.title.toUpperCase()}}</div>
+                  <p class="html" v-html="info.description"></p>
                   <p>&nbsp;</p>
                   <p>
-                    <a class="Button" style="text-decoration: none;" :href="userInput.url + 'assignments/syllabus'" >Course Syllabus</a>
+                    <a class="Button" style="text-decoration: none;" :href="info.url + 'assignments/syllabus'" >Course Syllabus</a>
                   </p>
                 </div>
               </div>
@@ -117,20 +117,20 @@
               <div class="col-xs-6">
                 <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
                   <p>Instructor:</p>
-                  <p>Professor {{userInput.professor}} (<a :href="'mailto:' + userInput.pEmail">{{userInput.pEmail}}</a>) <br /> {{userInput.office}}</p>
+                  <p>Professor {{info.prof.name}} (<a :href="'mailto:' + info.prof.email">{{info.prof.email}}</a>) <br /> {{info.prof.office}}</p>
                 </div>
               </div>
               <div class="col-xs-6">
                 <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
                   <p>TA:</p>
-                  <p> {{userInput.ta}} (<a :href="'mailto:' + userInput.tEmail">{{userInput.tEmail}}</a>) <br /> {{userInput.tOffice}}</p>
+                  <p> {{info.ta.name}} (<a :href="'mailto:' + info.ta.email">{{info.ta.email}}</a>) <br /> {{info.ta.office}}</p>
                 </div>
               </div>
             </div>
           </div>
           <div class="content-box pad-box-mini border border-b">
-            <p><strong>MEETING DATES / TIMES:</strong> {{userInput.meetings}}</p>
-            <p><strong>SPECIAL DISCUSSION FORUMS:</strong> {{userInput.discussions}}</p>
+            <p><strong>MEETING DATES / TIMES:</strong> {{info.meetings}}</p>
+            <p><strong>SPECIAL DISCUSSION FORUMS:</strong> {{info.discussions}}</p>
           </div>
         </div>
       </div>
@@ -194,12 +194,10 @@ export default {
   data () {
     return {
       userInput: {
-        title: store.title,
-        url: store.courseUrl,
         themeOptions: this.$store.getters.getThemeOptions,
         semester: "U6411 // SPRING 2017",
         professor: "Glenn Denning",
-        pEmail: "gd2147@sipa.columbia.edu",
+        pEmail: "professor@sipa.columbia.edu",
         ta: "Chandani Punia",
         tEmail:"cp2868@columbia.edu",
         office: "Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
@@ -228,6 +226,14 @@ export default {
   mixins: [saveState],
 
   computed: {
+    info: {
+      get () {
+        return this.$store.getters.getInfo
+      },
+      set (payload) {
+        this.$store.commit('updateInfo', payload)
+      }
+    },
     theme: {
       get () {
         return this.$store.getters.getTheme
@@ -253,14 +259,10 @@ export default {
       }
       return output;
     },
-    // Updates the user inputted title and course url into the store
-    newTitle(){
-      let title = this.userInput.title
-      let url = this.userInput.url
-      console.log('updating store...')
-      store.title = title
-      store.courseUrl = this.userInput.url = url.replace(/\/?(\?|#|$)/, '/$1')
-      return title
+    // Parses the URL
+    parseUrl(){
+      // info.url = info.url.replace(/\/?(\?|#|$)/, '/$1')
+      // return info.url
     }
   },
   methods: {
@@ -281,13 +283,6 @@ export default {
 
       document.execCommand('copy')
 
-      // UIkit.notification({
-      //     message: 'Code has been copied',
-      //     pos: 'bottom-center',
-      //     status: 'success',
-      //     timeout: 3000
-      // });
-
       this.$snotify.success('Code has been copied', {showProgressBar: false});
 
       if (option == 'aux') document.body.removeChild(aux);
@@ -296,8 +291,6 @@ export default {
     updateCode(){
       let code = document.getElementById("canvas-code");
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
-      store.title = this.userInput.title
-      store.courseUrl = this.userInput.url
     },
     // Toggles button to insert video or image
     mediaSwitch(){
@@ -306,8 +299,7 @@ export default {
     },
     setToDefault(){
       console.log('resetting data...')
-      this.userInput = { ...store.homeDefault };
-      EventBus.$emit('set-default', 'setting all to default...');
+      this.info = { ...this.$store.getters.dInfo };
     },
     onFormSubmit (type, ev){
       var formData = new FormData();
@@ -331,7 +323,7 @@ export default {
       this.$http.post('http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image',formData).then( response => {
         console.log('success')
         let imageData = JSON.parse(response.bodyText);
-        this.userInput.image = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
+        this.info.image = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
       }, response => {
         console.log(response)
       });

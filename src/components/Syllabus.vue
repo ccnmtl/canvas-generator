@@ -14,17 +14,17 @@
         </h3>
 
         <div v-show="pEditable">
-          <el-input type="textarea" autosize v-model="prof.name"> </el-input>
-          <el-input type="textarea" autosize v-model="prof.email"> </el-input>
-          <el-input type="textarea" autosize v-model="prof.hours"> </el-input>
+          <el-input type="textarea" autosize v-model="info.prof.name"> </el-input>
+          <el-input type="textarea" autosize v-model="info.prof.email"> </el-input>
+          <el-input type="textarea" autosize v-model="info.prof.office"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
-          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', prof)">
+          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', info.prof)">
             <input name="image" id="image-file" type="file"> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
-          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', prof)">
+          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', info.prof)">
             <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
@@ -38,17 +38,17 @@
         </h3>
 
         <div v-show="tEditable">
-          <el-input type="textarea" autosize v-model="ta.name"> </el-input>
-          <el-input type="textarea" autosize v-model="ta.email"> </el-input>
-          <el-input type="textarea" autosize v-model="ta.hours"> </el-input>
+          <el-input type="textarea" autosize v-model="info.ta.name"> </el-input>
+          <el-input type="textarea" autosize v-model="info.ta.email"> </el-input>
+          <el-input type="textarea" autosize v-model="info.ta.office"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
-          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', ta)">
+          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', info.ta)">
             <input name="image" id="image-file" type="file"> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
-          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', ta)">
+          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', info.ta)">
             <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
@@ -59,7 +59,7 @@
     <!-- Where the canvas code is stored -->
     <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
       <div class="STV1_SlimBanner">
-        <p>{{userInput.title}}</p>
+        <p>{{info.title.toUpperCase()}}</p>
       </div>
 
       <!-- Professors & TAs -->
@@ -72,10 +72,10 @@
 
               <!-- must have weeklyIconImg class for responsiveness -->
               <!-- landscape images work best. 350x200 seems ideal -->
-              <img :src="prof.imgSrc" class="weeklyIconImg" />
+              <img :src="info.prof.imgSrc" class="weeklyIconImg" />
 
               <p>Instructor:</p>
-              <p>{{prof.name}} (<a :href="'mailto:'+prof.email">{{prof.email}}</a>) <br /> Office Hours: <span v-html="profInfo"></span></p>
+              <p>{{info.prof.name}} (<a :href="'mailto:'+info.prof.email">{{info.prof.email}}</a>) <br /> Office Hours: <span v-html="profInfo"></span></p>
             </div>
           </div>
           <!-- End Professor Info Box -->
@@ -86,10 +86,10 @@
 
               <!-- must have weeklyIconImg class for responsiveness -->
               <!-- landscape images work best. 350x200 seems ideal -->
-              <img :src="ta.imgSrc" class="weeklyIconImg" />
+              <img :src="info.ta.imgSrc" class="weeklyIconImg" />
 
               <p>Teaching Assistant:</p>
-              <p>{{ta.name}} (<a :href="'mailto:'+ta.email">{{ta.email}}</a>) <br /> Office Hours: <span v-html="taInfo"></span></p>
+              <p>{{info.ta.name}} (<a :href="'mailto:'+info.ta.email">{{info.ta.email}}</a>) <br /> Office Hours: <span v-html="taInfo"></span></p>
             </div>
           </div>
           <!-- End Professor Info Box -->
@@ -325,11 +325,19 @@ export default {
   },
   mixins: [saveState],
   computed: {
+    info: {
+      get () {
+        return this.$store.getters.getInfo
+      },
+      set (payload) {
+        this.$store.commit('updateInfo', payload)
+      }
+    },
     profInfo(){
-      return this.prof.hours.replace(/\r?\n/g, '<br />')
+      return this.info.prof.office.replace(/\r?\n/g, '<br />')
     },
     taInfo(){
-      return this.ta.hours.replace(/\r?\n/g, '<br />')
+      return this.info.ta.office.replace(/\r?\n/g, '<br />')
     }
   },
   methods: {
@@ -356,7 +364,6 @@ export default {
     updateCode() {
       let code = document.getElementById("canvas-code");
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
-      this.userInput.title = store.title // Home.data().userInput.title
     },
     updateSwitch() {
       this.userInput.isFile = !this.userInput.isFile;
@@ -391,7 +398,8 @@ export default {
 
     },
     setToDefault(){
-
+      console.log('resetting data...')
+      this.info = { ...this.$store.getters.dInfo };
     },
     getSaveStateConfig() {
       return {

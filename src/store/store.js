@@ -18,7 +18,7 @@ export default new Vuex.Store({
     info: {
       // COURSE INFO
       title: "Global Food Systems",
-      courseUrl: "https://courseworks2.columbia.edu/courses/29191/",
+      url: "https://courseworks2.columbia.edu/courses/29191/",
       semester: "U6411 // SPRING 2017",
       //TIME INFO
       startDate: null,
@@ -26,14 +26,16 @@ export default new Vuex.Store({
       dateLength: "12",
       //TEACHERS
       prof: {
-        name: 'Jane Professor',
+        name: 'Professor Name',
         email: 'professor@sipa.columbia.edu',
-        office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)'
+        office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
+        imgSrc: "http://via.placeholder.com/350x150"
       },
       ta: {
-        name: 'Joe TA',
+        name: 'TA Name',
         email: 'ta@sipa.columbia.edu',
-        office: 'Office Hours: Tuesday 1:00-3:00 pm (IAB Room 1234)'
+        office: 'Office Hours: Tuesday 1:00-3:00 pm (IAB Room 1234)',
+        imgSrc: "http://via.placeholder.com/350x150"
       },
       //DISPLAY PARAMETERS
       video:"https://vimeo.com/199382848/1dd8fc0f31",
@@ -47,11 +49,15 @@ export default new Vuex.Store({
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",
   },
   getters: {
-    getInfo: state => state.info
+    getStore: state => state,
+    getInfo: state => state.info,
   },
   mutations: {
     updateInfo: (state, payload) => {
       state.info = payload
+    },
+    updateStore: (state, payload) => {
+      state = payload
     }
   },
   modules: {

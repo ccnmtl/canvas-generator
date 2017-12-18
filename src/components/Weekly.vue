@@ -65,7 +65,7 @@
     <!-- Where the canvas code is stored -->
     <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
       <div :class="['STV1_SlimBanner', this.$store.getters.getTheme.slim]">
-        <p>{{userInput.title.toUpperCase()}}</p>
+        <p>{{info.title.toUpperCase()}}</p>
       </div>
       <div class="grid-row">
         <div class="col-xs-12 col-lg-12">
@@ -203,7 +203,16 @@ export default {
     WeeklyAssignment
   },
   mixins: [saveState],
-  computed: {},
+  computed: {
+    info: {
+      get () {
+        return this.$store.getters.getInfo
+      },
+      set (payload) {
+        this.$store.commit('updateInfo', payload)
+      }
+    },
+  },
   methods: {
     copyText(option) {
       var copyTextarea = document.querySelector('#copy-text-area');
@@ -228,7 +237,6 @@ export default {
     updateCode() {
       let code = document.getElementById("canvas-code");
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
-      this.userInput.title = store.title // Home.data().userInput.title
     },
     addVideo() {
       let tempVideo = {
@@ -262,7 +270,6 @@ export default {
     setToDefault(){
       console.log('resetting data...')
       this.userInput = { ...store.weeklyDefault };
-      this.userInput.title = store.title;
       this.videos = this.assignments = this.discussions = [];
     },
     getSaveStateConfig() {
