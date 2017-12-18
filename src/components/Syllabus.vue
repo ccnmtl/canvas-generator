@@ -7,16 +7,16 @@
   <div class="code-container">
 
     <div class="textbox-container">
-      <div class="teacher uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top center">
-        <h3 class="uk-card-title center">
-        Professor Info
-        <button type="button" class="uk-button-small uk-button-primary edit-button" name="button"@click="pEditable = !pEditable">{{ pEditable ? "Save" : "Edit" }}</button>
-        </h3>
 
-        <div v-show="pEditable">
-          <el-input type="textarea" autosize v-model="info.prof.name"> </el-input>
-          <el-input type="textarea" autosize v-model="info.prof.email"> </el-input>
-          <el-input type="textarea" autosize v-model="info.prof.office"> </el-input>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span class="big-text">Professor Info</span>
+          <el-button style="float: right; padding: 3px 0" type="text"@click="pEditable = !pEditable"> {{ pEditable ? "Save" : "Edit" }}</el-button>
+        </div>
+        <div v-show="pEditable" class="center">
+          <el-input class="e-input" v-model="info.prof.name"> </el-input>
+          <el-input class="e-input"v-model="info.prof.email"> </el-input>
+          <el-input class="e-input" type="textarea" autosize v-model="info.prof.office"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
@@ -29,18 +29,17 @@
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
         </div>
-      </div>
+      </el-card>
 
-      <div class=" teacher uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top center">
-        <h3 class="uk-card-title center">
-        TA Info
-        <button type="button" class="uk-button-small uk-button-primary edit-button" name="button"@click="tEditable = !tEditable">{{ tEditable ? "Save" : "Edit" }}</button>
-        </h3>
-
-        <div v-show="tEditable">
-          <el-input type="textarea" autosize v-model="info.ta.name"> </el-input>
-          <el-input type="textarea" autosize v-model="info.ta.email"> </el-input>
-          <el-input type="textarea" autosize v-model="info.ta.office"> </el-input>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span class="big-text">TA Info</span>
+          <el-button style="float: right; padding: 3px 0" type="text"@click="tEditable = !tEditable"> {{ tEditable ? "Save" : "Edit" }}</el-button>
+        </div>
+        <div v-show="tEditable" class="center">
+          <el-input class="e-input" v-model="info.ta.name"> </el-input>
+          <el-input class="e-input"v-model="info.ta.email"> </el-input>
+          <el-input class="e-input" type="textarea" autosize v-model="info.ta.office"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
@@ -53,7 +52,8 @@
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
         </div>
-      </div>
+      </el-card>
+
     </div>
 
     <!-- Where the canvas code is stored -->
@@ -456,6 +456,28 @@ h2 {
 
 textarea {
   width: auto;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both
+}
+
+.big-text {
+  font-size: 1.2rem
+}
+
+.box-card {
+  margin: 10px;
+  width: 350px;
+}
+
+.e-input {
+  margin: 5px
 }
 
 .code-module {

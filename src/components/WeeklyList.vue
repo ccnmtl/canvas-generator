@@ -13,14 +13,16 @@
       <!-- to preserve first week weeklyActivites.splice(1, weeklyActivites.length - 1 -->
       <!-- <button type="button" class="add-weekly center uk-button uk-button-danger uk-width-1-1"  name="button" @click="weeklyActivites = []"> Clear </button> -->
       <el-date-picker
-        style="margin: 10px"
+        style="margin: 10px; margin-bottom:20px"
         v-model="userInput.startDate"
         type="date"
         placeholder="Pick start date">
       </el-date-picker>
       <hr>
 
-      <div class="uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top" >
+      <!-- <div class="uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top" > -->
+      <div>
+        <el-card>
         <div class="code-input center">
           Edit Week: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeklyActivites.length"
             controls-position="right" size="small" label="Edit Week"></el-input-number>
@@ -57,10 +59,8 @@
               <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
             </form>
           </div>
-
-
-          <!-- OLD TEXTBOX INPUT <textarea v-model="weeklyActivites[userInput.weekNumber - 1].imgSrc" id="text-area" rows="3" cols="30"></textarea> <br> -->
         </div>
+        </el-card>
       </div>
     </div>
 
