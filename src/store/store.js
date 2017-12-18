@@ -46,11 +46,14 @@ export default new Vuex.Store({
     },
 
     // UTILS
+    loading: false,
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",
   },
   getters: {
     getStore: state => state,
     getInfo: state => state.info,
+    loading: state => state.loading,
+
   },
   mutations: {
     updateInfo: (state, payload) => {
@@ -58,6 +61,9 @@ export default new Vuex.Store({
     },
     updateStore: (state, payload) => {
       state = payload
+    },
+    updateLoading: (state, payload) => {
+      state.loading = payload
     }
   },
   modules: {

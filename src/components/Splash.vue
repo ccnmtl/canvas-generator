@@ -14,8 +14,10 @@
     </div>
 
     <el-dialog title="Course Info" :visible.sync="dialogFormVisible">
-      <label for="input"> Course Title <el-input placeholder="Please input" v-model="info.title"></el-input> </label>
-      <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url"></el-input> </label>
+      <div class="center">
+        <label for="input"> Course Title <el-input placeholder="Please input" v-model="info.title"></el-input> </label>
+        <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url"></el-input> </label>
+      </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
         <el-button type="primary" @click="getStartedModal">Confirm</el-button>

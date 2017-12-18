@@ -5,7 +5,7 @@
     <!-- <a href="#offcanvas-slide" uk-toggle>Open</a> -->
 
     <div class="uk-float-right uk-padding-small">
-      <h6><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1"></span> CANVAS CODE GENERATOR</h6>
+      <h6><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1" v-loading.fullscreen.lock="loading"></span> CANVAS CODE GENERATOR</h6>
     </div>
 
     <vue-snotify></vue-snotify>
@@ -59,6 +59,11 @@ export default {
       hasImportData: false,
       exportData: {}
     }
+  },
+  computed: {
+    loading() {
+      return this.$store.getters.loading
+    },
   }
 }
 </script>

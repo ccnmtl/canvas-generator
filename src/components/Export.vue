@@ -9,11 +9,11 @@
 
              <form>
                <h3>Select a ".json" file from a previous data export</h3>
-               <button class="uk-button uk-button-default" v-if="hasImportData" @click="performImport">
+               <button class="uk-button uk-button-default" v-if="hasImportData" @click.prevent="performImport">
                  File read successfully! Click here to confirm import.
                </button>
                <div class="uk-margin" uk-margin>
-                  <input style="display:inline-block;" class="uk-padding" type="file" accept=".json" name="import-file" @change.stop="onImportFileChange" />
+                  <input style="display:inline-block;" class="uk-padding" type="file" accept=".json" name="import-file" @change="onImportFileChange" />
                   <br> <br>
                   <button class="uk-button-large uk-button-default" type="button" name="button" @click="exportJSON">Export</button>
                </div>
@@ -43,17 +43,46 @@ export default {
   data () {
     return {
       hasImportData: false,
+      fullscreenLoading: false,
       exportData: {}
     }
+  },
+  computed: {
+    loading: {
+      get () {
+        return this.$store.getters.loading
+      },
+      set (payload) {
+        this.$store.commit('updateLoading', payload)
+      }
+    },
   },
   mounted () {
     // casually go to each route for a minimal amount of time on load to ensure export works
     // paths is list of all routes with the current route as the last item, so we cycle to where we are
-    let initialPath = this.$route.path
-    let paths = ['/home', '/weekly', '/weeklylist','/syllabus'].filter(p => p !== initialPath).concat([initialPath])
-    paths.forEach((path, i) => {
-      setTimeout(() => this.$router.replace(path), i * 30)
-    })
+
+    // const loading = this.$loading({
+    //       lock: true,
+    //       text: 'Loading',
+    //       spinner: 'el-icon-loading',
+    //       background: 'rgba(0, 0, 0, 0.7)'
+    // });
+
+    this.loading = true;
+
+    setTimeout(() => {
+      let initialPath = this.$route.path
+      let paths = ['/home', '/weekly', '/weeklylist','/syllabus'].filter(p => p !== initialPath).concat([initialPath])
+      paths.forEach((path, i) => {
+        setTimeout(() => this.$router.replace(path), i * 30)
+      })
+    }, 500);
+
+
+
+    setTimeout(() => {
+      this.loading = false //loading.close();
+    }, 1500);
 
     EventBus.$on('home-data', data => {
       this.exportData.home = data
@@ -77,6 +106,12 @@ export default {
     })
   },
   methods: {
+    openFullScreen() {
+        this.fullscreenLoading = true;
+        setTimeout(() => {
+          this.fullscreenLoading = false;
+        }, 2000);
+    },
     onImportFileChange (changeEvent) {
       let file = changeEvent.target.files[0]
       if (!file) {
@@ -95,6 +130,7 @@ export default {
       this.$store.commit('updateInfo', this.importData.store.info)
       this.$store.commit('updateTheme', this.importData.store.theme)
       EventBus.$emit('import-data', this.importData)
+      this.$router.push({name: 'Home'});
     },
     exportJSON () {
       this.exportData = {}
