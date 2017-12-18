@@ -7,10 +7,20 @@
                <p>&nbsp;</p>
                <img class="columbia-logo" src="https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/columbia-logo-white.png" />
                <h1 class="uk-heading"><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 2.5"></span> CANVAS COURSE BUILDER</h1>
-               <button class="uk-button uk-button-primary uk-button-large" @click="getStarted">Get Started</button>
+               <!-- <button class="uk-button uk-button-primary uk-button-large" @click="getStarted">Get Started</button> -->
+               <button class="uk-button uk-button-primary uk-button-large" @click="dialogFormVisible = true">Get Started</button>
             </div>
         </div>
     </div>
+
+    <el-dialog title="Course Info" :visible.sync="dialogFormVisible">
+      <label for="input"> Course Title <el-input placeholder="Please input" v-model="info.title"></el-input> </label>
+      <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url"></el-input> </label>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="getStartedModal">Confirm</el-button>
+      </span>
+    </el-dialog>
 
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
         <div>
@@ -55,10 +65,25 @@ export default {
   name: 'Home',
   data () {
     return {
+      dialogFormVisible: false,
     }
+  },
+  computed: {
+    info: {
+      get () {
+        return this.$store.getters.getInfo
+      },
+      set (payload) {
+        this.$store.commit('updateInfo', payload)
+      }
+    },
   },
   methods: {
     getStarted(){
+      this.$router.push({name: 'Home'});
+    },
+    getStartedModal(){
+      this.dialogFormVisible = false
       this.$router.push({name: 'Home'});
     }
   },

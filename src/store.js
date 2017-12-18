@@ -3,10 +3,10 @@ import Vue from 'vue'
 export default new Vue({
   data: {
     title: "Global Food Systems",
-    courseUrl: "https://courseworks2.columbia.edu/courses/35006/",
+    courseUrl: "https://courseworks2.columbia.edu/courses/29191/",
     homeDefault: {
         title: "Global Food Systems",
-        url: "https://courseworks2.columbia.edu/courses/35006/",
+        url: "https://courseworks2.columbia.edu/courses/29191/",
         banner: 'STV1_Banner',
         bannerClasses: ['STV1_Banner','STV1_Banner02','STV1_Banner03','STV1_Banner04'],
         semester: "U6411 // SPRING 2017",
