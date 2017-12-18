@@ -142,6 +142,7 @@
 
 <script>
 import store from '../store'
+import { mapGetters, mapMutations } from 'vuex'
 import { EventBus } from '../bus'
 import { quillEditor } from 'vue-quill-editor';
 import saveState from 'vue-save-state';
@@ -190,12 +191,24 @@ export default {
     },
   },
   computed: {
+    ...mapGetters([
+      'getInfo', 'dWeek', 'getWeeks'
+    ]),
+
     info: {
       get () {
-        return this.$store.getters.getInfo
+        return this.getInfo
       },
       set (payload) {
         this.$store.commit('updateInfo', payload)
+      }
+    },
+    weeks: {
+      get () {
+        return this.getWeeks
+      },
+      set (payload) {
+        this.$store.commit('updateWeeks', payload)
       }
     },
     day() {
@@ -223,6 +236,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'addWeek', 'sliceWeek'
+    ]),
     copyText(option) {
       var copyTextarea = document.querySelector('#copy-text-area');
 
@@ -270,6 +286,7 @@ export default {
       }
 
       this.weeklyActivites.push(tempActivity);
+      this.addWeek(this.dWeek)
     },
     // Adds a user inputted number of activities
     populateActivities(num){
@@ -282,6 +299,7 @@ export default {
       if (diff < 0) {
         this.userInput.weekNumber = 1;
         this.weeklyActivites = this.weeklyActivites.slice(0, num);
+        this.sliceWeek(0, num)
       }
 
       this.updateDates()

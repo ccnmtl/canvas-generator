@@ -29,9 +29,9 @@ export default {
       discussions: "Thursday 9:00-10:50 am (IAB Room 411)",
       description: "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
     },
-    
+
     weekDefault: {
-      weekTitle: 'Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective',
+      title: 'Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective',
       date:"",
       description: "This session will cover the foundational topics in food systems.",
       imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/week1' + '.png',
