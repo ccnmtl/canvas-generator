@@ -6,10 +6,10 @@
 
     <!-- The user inputs are located in this div -->
     <div class="textbox-container">
-      <el-input-number  style="margin: 10px;" v-model="userInput.toAdd" :min="1" :max="20"></el-input-number>
+      <el-input-number  style="margin: 10px;" v-model="userInput.toChange" :min="1" :max="20"></el-input-number>
 
       <button type="button" class="add-weekly center uk-button uk-button-primary"
-      name="button" @click="populateActivities(userInput.toAdd)">Edit # of Activities</button>
+      name="button" @click="populateActivities(userInput.toChange)">Edit # of Activities</button>
       <!-- to preserve first week weeklyActivites.splice(1, weeklyActivites.length - 1 -->
       <!-- <button type="button" class="add-weekly center uk-button uk-button-danger uk-width-1-1"  name="button" @click="weeklyActivites = []"> Clear </button> -->
       <el-date-picker
@@ -53,7 +53,7 @@
               <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
             </form>
             <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url')">
-              <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br>
+              <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
               <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
             </form>
           </div>
@@ -165,7 +165,7 @@ export default {
         title: store.title,
         startDate: null,
         weekNumber: 1,
-        toAdd: 1,
+        toChange: 12,
         isFile: true,
         uploadSwitchText: "Click to Upload Image from Url",
       },
