@@ -7,47 +7,53 @@
   <div class="code-container">
 
     <div class="textbox-container">
+      <div class="teacher uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top center">
+        <h3 class="uk-card-title center">
+        Professor Info
+        <button type="button" class="uk-button-small uk-button-primary edit-button" name="button"@click="pEditable = !pEditable">{{ pEditable ? "Save" : "Edit" }}</button>
+        </h3>
 
-      <div class="uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top center">
-        <h3 class="uk-card-title">Professor </h3>
-        <el-input type="textarea" autosize v-model="prof.name"> </el-input>
-        <el-input type="textarea" autosize v-model="prof.email"> </el-input>
-        <el-input type="textarea" autosize v-model="prof.hours"> </el-input>
-        <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
+        <div v-show="pEditable">
+          <el-input type="textarea" autosize v-model="prof.name"> </el-input>
+          <el-input type="textarea" autosize v-model="prof.email"> </el-input>
+          <el-input type="textarea" autosize v-model="prof.hours"> </el-input>
+          <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
-        <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
-        <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', prof)">
-          <input name="image" id="image-file" type="file"> <br>
-          <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
-        </form>
-        <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', prof)">
-          <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
-          <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
-        </form>
-
-        <!-- OLD TEXTBOX INPUT <textarea v-model="weeklyActivites[userInput.weekNumber - 1].imgSrc" id="text-area" rows="3" cols="30"></textarea> <br> -->
+          <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
+          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', prof)">
+            <input name="image" id="image-file" type="file"> <br>
+            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+          </form>
+          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', prof)">
+            <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
+            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+          </form>
+        </div>
       </div>
 
-      <div class="uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top center">
-        <h3 class="uk-card-title">TA</h3>
-        <el-input type="textarea" autosize v-model="ta.name"> </el-input>
-        <el-input type="textarea" autosize v-model="ta.email"> </el-input>
-        <el-input type="textarea" autosize v-model="ta.hours"> </el-input>
-        <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
+      <div class=" teacher uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top center">
+        <h3 class="uk-card-title center">
+        TA Info
+        <button type="button" class="uk-button-small uk-button-primary edit-button" name="button"@click="tEditable = !tEditable">{{ tEditable ? "Save" : "Edit" }}</button>
+        </h3>
 
-        <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
-        <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', ta)">
-          <input name="image" id="image-file" type="file"> <br>
-          <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
-        </form>
-        <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', ta)">
-          <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
-          <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
-        </form>
+        <div v-show="tEditable">
+          <el-input type="textarea" autosize v-model="ta.name"> </el-input>
+          <el-input type="textarea" autosize v-model="ta.email"> </el-input>
+          <el-input type="textarea" autosize v-model="ta.hours"> </el-input>
+          <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
-        <!-- OLD TEXTBOX INPUT <textarea v-model="weeklyActivites[userInput.weekNumber - 1].imgSrc" id="text-area" rows="3" cols="30"></textarea> <br> -->
+          <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
+          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', ta)">
+            <input name="image" id="image-file" type="file"> <br>
+            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+          </form>
+          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', ta)">
+            <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
+            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+          </form>
+        </div>
       </div>
-
     </div>
 
     <!-- Where the canvas code is stored -->
@@ -69,7 +75,7 @@
               <img :src="prof.imgSrc" class="weeklyIconImg" />
 
               <p>Instructor:</p>
-              <p>{{prof.name}} (<a :href="'mailto:'+prof.email">{{prof.email}}</a>) <br /> Office Hours: {{prof.hours}}</p>
+              <p>{{prof.name}} (<a :href="'mailto:'+prof.email">{{prof.email}}</a>) <br /> Office Hours: <span v-html="profInfo"></span></p>
             </div>
           </div>
           <!-- End Professor Info Box -->
@@ -83,7 +89,7 @@
               <img :src="ta.imgSrc" class="weeklyIconImg" />
 
               <p>Teaching Assistant:</p>
-              <p>{{ta.name}} (<a :href="'mailto:'+ta.email">{{ta.email}}</a>) <br /> Office Hours: {{ta.hours}}</p>
+              <p>{{ta.name}} (<a :href="'mailto:'+ta.email">{{ta.email}}</a>) <br /> Office Hours: <span v-html="taInfo"></span></p>
             </div>
           </div>
           <!-- End Professor Info Box -->
@@ -304,11 +310,8 @@ export default {
         hours: "Tuesday 1:00-2:30 pm (Publique, IAB 6th floor)",
         imgSrc:"http://via.placeholder.com/350x150"
       },
-      videoEditable: false,
-      showEditor: false,
-      videos: [],
-      discussions: [],
-      assignments: [],
+      pEditable: true,
+      tEditable: true,
       outputCode: '',
       editorOption: {
         modules: {
@@ -321,7 +324,14 @@ export default {
     quillEditor,
   },
   mixins: [saveState],
-  computed: {},
+  computed: {
+    profInfo(){
+      return this.prof.hours.replace(/\r?\n/g, '<br />')
+    },
+    taInfo(){
+      return this.ta.hours.replace(/\r?\n/g, '<br />')
+    }
+  },
   methods: {
     copyText(option) {
       var copyTextarea = document.querySelector('#copy-text-area');
@@ -452,14 +462,25 @@ textarea {
   margin-right: 30%;
 }
 
+.edit-button {
+  margin-right: 10px;
+  margin-left: auto;
+  float:right;
+
+}
+
 .textbox-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 300px;
+  width: 500px;
   margin: auto;
   align-self: flex-start;
   margin-top: 20px
+}
+
+.teacher {
+  width: 350px;
 }
 
 .code-input {
