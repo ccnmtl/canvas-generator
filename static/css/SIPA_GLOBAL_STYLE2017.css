@@ -1,6 +1,182 @@
+.sipaEPMteamBanner {
+background: url('https://sc3online.com/SIPA/sipaEPMTeamBanner_2.jpg') repeat-x center center;
+}
+
+.sipaEPMbanner {
+background: url('https://sc3online.com/SIPA/sipaEPMbannerBG01.jpg') no-repeat center center;
+}
+
+.sipaEPMteamBanner2 {
+background: url('https://sc3online.com/SIPA/sipaEPMTeamBanner.png') repeat-x center center;
+}
+
+.behindScenesMPA {
+background: url('https://sc3online.com/SIPA/behindthescenes01.jpg') repeat-x center center;
+}
+
+.behindScenesQT {
+background: url('https://sc3online.com/SIPA/behindthescenes02.jpg') repeat-x center center;
+}
+
+.ui-widget {
+    font-size: 12px;
+}
+
+.behindScenesSD {
+background: url('https://sc3online.com/SIPA/behindthescenesSD.jpg') repeat-x center center;
+}
+
+.behindScenesDM {
+background: url('https://sc3online.com/SIPA/behindthescenesDM.jpg') repeat-x center center;
+}
+
+.btsSpring2016 {
+background: url('https://sc3online.com/SIPA/btsSpring2016.jpg') repeat-x center center;
+}
+
+
+
+/* 2017 Global Food Systems Styles  */
+
+.GFbanner {
+	background: url('http://dexpr.com/sipa/GlobalFoodsBanner2.jpg') no-repeat center center;
+	background-color: #f5f5f5;
+	height: 110px;
+
+}
+
+.GFbanner p{
+	font-size: 25px;
+	font-weight: 200;
+	color: #FFFFFF;
+	letter-spacing: -1px;
+}
+
+.GFbanner p.semesterSubtitle {
+	font-size: 18px;
+	font-weight: 200px;
+	padding: 0;
+	letter-spacing: -1px;
+	color: #F5F5F5;
+	margin-top: 0;
+}
+
+.GFslimbanner {
+	background: url('http://dexpr.com/sipa/GlobalFoodsSlimBanner.jpg') no-repeat center center;
+	background-color: #008ee2;
+	height: 60px;
+
+}
+
+.GFslimbanner p{
+	font-size: 18px;
+	font-weight: 200;
+	color: #FFFFFF;
+	letter-spacing: -1px;
+	padding: 17px 0 5px 20px;
+}
+
+.noTextDec {
+	text-decoration: none;
+}
+
+.embed-container {
+	position: relative;
+	padding-bottom: 56.25%;
+	height: 0;
+	overflow: hidden;
+	max-width: 100%;
+}
+
+.embed-container iframe, .embed-container object, .embed-container embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.welcome {
+    background: #f5f5f5;
+    font-size: 14px;
+    padding: 12px;
+    color: #333333;
+}
+
+.welcome a{
+    font-size: 14px;
+    color: #333333;
+	text-decoration: none;
+}
+
+
+/* ----------------- OVERRIDING CANVAS DEFAULT STYLES ------------------- */
+
+.ig-published:not(.student-view) .ig-type-icon {
+    background-color: #008EE2;
+}
+
+.ig-list .ig-row.ig-published:not(.student-view):before {
+    background-color: #008EE2;
+    border-top: 1px solid #008EE2;
+    border-bottom: 1px solid #008EE2;
+}
+
+.user_content table:not([cellpadding]) td, .mceContentBody table:not([cellpadding]) td {
+    padding: 10px;
+}
+
+
+.weeklyIconImg {
+	position: relative;
+	width: 100%; /* for IE 6 */
+}
+
+.weeklyIcon h2 {
+	position: absolute;
+	top: 100px;
+	left: 0;
+	width: 100%;
+}
+
+.weeklyIcon h2 span {
+	color: white;
+	font: bold 24px/45px Helvetica, Sans-Serif;
+	letter-spacing: -1px;
+	background: rgb(0, 142, 226); /* fallback color */
+	background: rgba(0, 142, 226, 1);
+	padding: 10px;
+}
+
+.readingList li {
+	font-size: 12px;
+	padding: 5px 0;
+}
+
+.casesBanner {
+	position: relative;
+	width: 100%; /* for IE 6 */
+	margin-bottom: 10px;
+}
+
+.casesList li {
+	list-style: none;
+}
+
+.blueBG {
+	background-color: #008EE2;
+	color: #FFFFFF;
+}
+
+.spaceTop {
+	margin-top: 10px;
+}
+
+
+
 /* ----------------- 2017 SIPA GLOBAL THEME STYLES (STV1) ------------------- */
 
-.STV1_Banner {
+	.STV1_Banner {
 		background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/STV1_Banner.jpg') no-repeat center center;
 		background-color: #008ee2;
 		height: 110px;
@@ -71,6 +247,13 @@
 		padding: 17px 0 5px 20px;
 	}
 
+	.STV1_Welcome {
+		background: #f5f5f5;
+		font-size: 14px;
+		padding: 12px;
+		color: #333333;
+	}
+
 	.STV1_Welcome a{
 		font-size: 14px;
 		color: #333333;
@@ -137,6 +320,54 @@
 		margin: 5px 5px 0 20px;
 	}
 
+	.STV1_CC_Banner01 {
+		background: url('https://courseworks2.columbia.edu/courses/44225/files/1254052/preview') no-repeat center center;
+		background-color: #000000;
+		height: 150px;
+	}
+
+	.STV1_CC_Banner02 {
+		background: url('https://courseworks2.columbia.edu/courses/44225/files/1254050/preview') no-repeat center center;
+		background-color: #000000;
+		height: 150px;
+	}
+
+	.STV1_CC_Banner03 {
+		background: url('https://courseworks2.columbia.edu/courses/44225/files/1254049/preview') no-repeat center center;
+		background-color: #000000;
+		height: 150px;
+	}
+
+	.STV1_CC_Banner04 {
+		background: url('https://courseworks2.columbia.edu/courses/44225/files/1254047/preview') no-repeat center center;
+		background-color: #000000;
+		height: 150px;
+	}
+
+	.STV1_CC_Banner05 {
+		background: url('https://courseworks2.columbia.edu/courses/44225/files/1254048/preview') no-repeat center center;
+		background-color: #000000;
+		height: 150px;
+	}
+
+	.STV1_CC_Banner06 {
+		background: url('https://courseworks2.columbia.edu/courses/44225/files/1254051/preview') no-repeat center center;
+		background-color: #000000;
+		height: 150px;
+	}
+
+	.STV1_CC_Banner07 {
+		background: url('https://courseworks2.columbia.edu/courses/46186/files/1310288/preview') no-repeat center center;
+		background-color: #000000;
+		height: 150px;
+	}
+
+	.STV1_CC_Banner08 {
+		background: url('https://courseworks2.columbia.edu/courses/46186/files/1310289/preview') no-repeat center center;
+		background-color: #000000;
+		height: 150px;
+	}
+
 	.STV1_CC_BannerTitle {
 		position: relative;
 		width: 35%;
@@ -155,38 +386,36 @@
 		padding: 0 0 5px 0;
 	}
 
-
 	/* OVERRIDING CANVAS DEFAULT STYLES */
 
-	.ig-published:not(.student-view) .ig-type-icon {
-		background-color: #008EE2;
-	}
+		.ig-published:not(.student-view) .ig-type-icon {
+			background-color: #008EE2;
+		}
 
-	.ig-list .ig-row.ig-published:not(.student-view):before {
-		background-color: #008EE2;
-		border-top: 1px solid #008EE2;
-		border-bottom: 1px solid #008EE2;
-	}
+		.ig-list .ig-row.ig-published:not(.student-view):before {
+			background-color: #008EE2;
+			border-top: 1px solid #008EE2;
+			border-bottom: 1px solid #008EE2;
+		}
 
-	.user_content table:not([cellpadding]) td, .mceContentBody table:not([cellpadding]) td {
-		padding: 10px;
-	}
-
+		.user_content table:not([cellpadding]) td, .mceContentBody table:not([cellpadding]) td {
+			padding: 10px;
+		}
 
 	/* VIDEO EMBEDDING & RESPONSIVENESS */
 
-	.embed-container {
-		position: relative;
-		padding-bottom: 56.25%;
-		height: 0;
-		overflow: hidden;
-		max-width: 100%;
-	}
+		.embed-container {
+			position: relative;
+			padding-bottom: 56.25%;
+			height: 0;
+			overflow: hidden;
+			max-width: 100%;
+		}
 
-	.embed-container iframe, .embed-container object, .embed-container embed {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-	}
+		.embed-container iframe, .embed-container object, .embed-container embed {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
