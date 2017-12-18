@@ -1,5 +1,35 @@
 export default {
   state: {
+    info: {
+      // COURSE INFO
+      title: "Global Food Systems",
+      url: "https://courseworks2.columbia.edu/courses/29191/",
+      semester: "U6411 // SPRING 2017",
+      //TIME INFO
+      startDate: null,
+      dateType: "Week",
+      dateLength: "12",
+      //TEACHERS
+      prof: {
+        name: 'Professor Name',
+        email: 'professor@sipa.columbia.edu',
+        office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
+        imgSrc: "http://via.placeholder.com/350x150"
+      },
+      ta: {
+        name: 'TA Name',
+        email: 'ta@sipa.columbia.edu',
+        office: 'Office Hours: Tuesday 1:00-3:00 pm (IAB Room 1234)',
+        imgSrc: "http://via.placeholder.com/350x150"
+      },
+      //DISPLAY PARAMETERS
+      video:"https://vimeo.com/199382848/1dd8fc0f31",
+      image:"http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg",
+      meetings: "Tuesday 9:00-10:50 am (IAB Room 411)",
+      discussions: "Thursday 9:00-10:50 am (IAB Room 411)",
+      description: "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
+    },
+    
     weekDefault: {
       weekTitle: 'Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective',
       date:"",
@@ -51,5 +81,6 @@ export default {
   getters: {
     dWeek: state => state.weekDefault,
     dVideo: state => state.videoDefault,
+    dInfo: state => state.info,
   }
 }
