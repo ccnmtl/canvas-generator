@@ -13,7 +13,7 @@
                  File read successfully! Click here to confirm import.
                </button>
                <div class="uk-margin" uk-margin>
-                  <input style="display:inline-block;" class="uk-padding" type="file" accept=".json" name="import-file" @change="onImportFileChange" />
+                  <input style="display:inline-block;" class="uk-padding" type="file" accept=".json" name="import-file" @change.stop="onImportFileChange" />
                   <br> <br>
                   <button class="uk-button-large uk-button-default" type="button" name="button" @click="exportJSON">Export</button>
                </div>
@@ -92,6 +92,8 @@ export default {
       reader.readAsText(file)
     },
     performImport () {
+      this.$store.commit('updateInfo', this.importData.store.info)
+      this.$store.commit('updateTheme', this.importData.store.theme)
       EventBus.$emit('import-data', this.importData)
     },
     exportJSON () {
@@ -100,8 +102,7 @@ export default {
     },
     exportDataIfPossible () {
       // only export if all data to arrived
-      let valid = this.exportData.home && this.exportData.weekly && this.exportData.weeklyList
-
+      let valid = this.exportData.home && this.exportData.weekly && this.exportData.weeklyList && this.exportData.syllabus
       let waitTime = 0;
 
       // if rough export is selected wait a short amount of time for all data to come in
@@ -117,6 +118,9 @@ export default {
       let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       let time = today.getHours() + "-" + today.getMinutes();
       let dateTime = date+' '+time;
+
+      // get store
+      this.exportData.store = this.$store.getters.getStore
 
       // save file as json
       if (valid) {
