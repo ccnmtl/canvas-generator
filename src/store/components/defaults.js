@@ -56,31 +56,18 @@ export default {
       link: '', //context.rootState.courseUrl + 'discussion_topics/', TODO put this in a getter?
       points: 10
     },
-    home: {
-        title: "Global Food Systems",
-        url: "https://courseworks2.columbia.edu/courses/35006/",
-        banner: 'STV1_Banner',
-        bannerClasses: ['STV1_Banner','STV1_Banner02','STV1_Banner03','STV1_Banner04'],
-        semester: "U6411 // SPRING 2017",
-        professor: "Glenn Denning",
-        pEmail: "gd2147@sipa.columbia.edu",
-        ta: "Chandani Punia",
-        tEmail:"cp2868@columbia.edu",
-        office: "Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
-        tOffice: "Tuesday 1:00-2:30 pm (Publique, IAB 6th floor)",
-        meetings: "Tuesday 9:00-10:50 am (IAB Room 411)",
-        discussions: "Thursday 9:00-10:50 am (IAB Room 411)",
-        video:"https://vimeo.com/199382848/1dd8fc0f31",
-        image:"http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg",
-        isVideo: false,
-        mediaSwitchText: "Toggle to input Video",
-        taInfo:"Instructor: \nProfessor Glenn Denning (gd2147@sipa.columbia.edu) Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
-        description: "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
-      },
+    profDefault: {
+      name: 'Placeholder Name',
+      email: 'professor@sipa.columbia.edu',
+      office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
+      imgSrc: "http://via.placeholder.com/200x200"
+    }
+
   },
   getters: {
     dWeek: state => state.weekDefault,
     dVideo: state => state.videoDefault,
     dInfo: state => state.info,
+    dProf: state => state.profDefault
   }
 }

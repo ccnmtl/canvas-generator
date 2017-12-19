@@ -77,7 +77,7 @@
               </div>
 
               <p>Instructor:</p>
-              <p>{{info.prof.name}} (<a :href="'mailto:'+info.prof.email">{{info.prof.email}}</a>) <br /> Office Hours: <span v-html="profInfo"></span></p>
+              <p>{{info.prof.name}} (<a :href="'mailto:'+info.prof.email">{{info.prof.email}}</a>) <br /> Office Hours: <span v-html="newLine(info.prof.office)"></span></p>
             </div>
           </div>
           <!-- End Professor Info Box -->
@@ -93,7 +93,7 @@
               </div>
 
               <p>Teaching Assistant:</p>
-              <p>{{info.ta.name}} (<a :href="'mailto:'+info.ta.email">{{info.ta.email}}</a>) <br /> Office Hours: <span v-html="taInfo"></span></p>
+              <p>{{info.ta.name}} (<a :href="'mailto:'+info.ta.email">{{info.ta.email}}</a>) <br /> Office Hours: <span v-html="newLine(info.ta.office)"></span></p>
             </div>
           </div>
           <!-- End Professor Info Box -->
@@ -337,14 +337,12 @@ export default {
         this.$store.commit('updateInfo', payload)
       }
     },
-    profInfo(){
-      return this.info.prof.office.replace(/\r?\n/g, '<br />')
-    },
-    taInfo(){
-      return this.info.ta.office.replace(/\r?\n/g, '<br />')
-    }
   },
   methods: {
+    newLine(val) {
+      if (!val) return ''
+      return val.replace(/\r?\n/g, '<br />')
+    },
     copyText(option) {
       var copyTextarea = document.querySelector('#copy-text-area');
 
