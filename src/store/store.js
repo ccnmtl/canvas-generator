@@ -25,17 +25,19 @@ export default new Vuex.Store({
       dateType: "Week",
       dateLength: "12",
       //TEACHERS
+      profs:[],
+      tas:[],      
       prof: {
         name: 'Professor Name',
         email: 'professor@sipa.columbia.edu',
         office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
-        imgSrc: "http://via.placeholder.com/350x150"
+        imgSrc: "http://via.placeholder.com/200x200"
       },
       ta: {
         name: 'TA Name',
         email: 'ta@sipa.columbia.edu',
         office: 'Office Hours: Tuesday 1:00-3:00 pm (IAB Room 1234)',
-        imgSrc: "http://via.placeholder.com/350x150"
+        imgSrc: "http://via.placeholder.com/200x200"
       },
       //DISPLAY PARAMETERS
       video:"https://vimeo.com/199382848/1dd8fc0f31",
