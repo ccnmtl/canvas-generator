@@ -10,8 +10,6 @@
 
       <button type="button" class="add-weekly center uk-button uk-button-primary"
       name="button" @click="populateActivities(userInput.toChange)">Edit # of Activities</button>
-      <!-- to preserve first week weeklyActivites.splice(1, weeklyActivites.length - 1 -->
-      <!-- <button type="button" class="add-weekly center uk-button uk-button-danger uk-width-1-1"  name="button" @click="weeklyActivites = []"> Clear </button> -->
       <el-date-picker
         style="margin: 10px; margin-bottom:20px"
         v-model="info.startDate"
@@ -20,13 +18,11 @@
       </el-date-picker>
       <hr>
 
-      <!-- <div class="uk-card uk-card-default uk-card-body uk-card-small  uk-card-hover uk-margin-top" > -->
       <div>
         <el-card>
         <div class="code-input center">
           Edit Week: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeklyActivites.length"
             controls-position="right" size="small" label="Edit Week"></el-input-number>
-          <!-- <textarea v-model="userInput.weekNumber" class="code-input uk-input" rows="1" cols="4"></textarea> -->
         </div>
 
         <select v-model="userInput.weekNumber" class="uk-select">
@@ -37,13 +33,11 @@
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Title</label> <br>
             <el-input type="textarea" autosize v-model="weeklyActivites[userInput.weekNumber - 1].title"> </el-input>
-            <!-- <textarea v-model="weeklyActivites[userInput.weekNumber - 1].title" id="text-area" rows="3" cols="30" class="uk-textarea"></textarea> <br> -->
           </div>
 
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Description</label>
             <el-input type="textarea" autosize v-model="weeklyActivites[userInput.weekNumber - 1].description"> </el-input>
-            <!-- <textarea v-model="weeklyActivites[userInput.weekNumber - 1].description" id="text-area" rows="3" cols="30" class="uk-textarea"></textarea> <br> -->
           </div>
 
           <div class="code-input center uk-margin-medium-top">
