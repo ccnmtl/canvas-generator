@@ -31,14 +31,14 @@
           </div>
     		</li>
     		<li class="uk-text-center">
-          <textarea v-model="info.prof.name" class="code-input uk-input" rows="1" cols="20"></textarea>
-          <textarea v-model="info.prof.email" class="code-input uk-input" rows="1" cols="25"></textarea>
-          <textarea v-model="info.prof.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+          <textarea v-model="info.profs[0].name" class="code-input uk-input" rows="1" cols="20"></textarea>
+          <textarea v-model="info.profs[0].email" class="code-input uk-input" rows="1" cols="25"></textarea>
+          <textarea v-model="info.profs[0].office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
         </li>
     		<li class="uk-text-center">
-          <textarea v-model="info.ta.name" class="code-input uk-input" rows="1" cols="20"></textarea>
-          <textarea v-model="info.ta.email" class="code-input uk-input" rows="1" cols="25"></textarea>
-          <textarea v-model="info.ta.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+          <textarea v-model="info.tas[0].name" class="code-input uk-input" rows="1" cols="20"></textarea>
+          <textarea v-model="info.tas[0].email" class="code-input uk-input" rows="1" cols="25"></textarea>
+          <textarea v-model="info.tas[0].office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
     		</li>
     		<li class="uk-text-center">
           <textarea v-model="info.meetings" class="code-input uk-input" rows="1" cols="50"></textarea>
@@ -117,13 +117,13 @@
               <div class="col-xs-6">
                 <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
                   <p>Instructor:</p>
-                  <p>Professor {{info.prof.name}} (<a :href="'mailto:' + info.prof.email">{{info.prof.email}}</a>) <br /> {{info.prof.office}}</p>
+                  <p v-for="prof in info.profs">Professor {{prof.name}} (<a :href="'mailto:' + prof.email">{{prof.email}}</a>) <br /> {{prof.office}}</p>
                 </div>
               </div>
               <div class="col-xs-6">
                 <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
                   <p>TA:</p>
-                  <p> {{info.ta.name}} (<a :href="'mailto:' + info.ta.email">{{info.ta.email}}</a>) <br /> {{info.ta.office}}</p>
+                  <p v-for="ta in info.tas"> {{ta.name}} (<a :href="'mailto:' + ta.email">{{ta.email}}</a>) <br /> {{ta.office}}</p>
                 </div>
               </div>
             </div>
