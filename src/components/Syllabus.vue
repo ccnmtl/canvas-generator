@@ -41,11 +41,13 @@
           </el-select>
 
           <el-button style="float: right; padding: 3px 0" type="text"@click="iEditable = !iEditable"> {{ iEditable ? "Save" : "Edit" }}</el-button>
-        </div>
 
+        </div>
+        <el-button style="float: right; margin-bottom: 10px;" type="danger" size="medium" @click="removeProf">Remove</el-button>
         <div v-show="iEditable" v-if="selected.list.length > 0" class="center">
-          <el-button type="danger" @click="removeProf">Remove</el-button>
-          <el-input class="e-input" v-model="selected.list[selected.index].name"> </el-input>
+
+          <el-input style="width: 200px; float:left" class="e-input" v-model="selected.list[selected.index].name"> </el-input>
+
           <el-input class="e-input"v-model="selected.list[selected.index].email"> </el-input>
           <el-input class="e-input" type="textarea" autosize v-model="selected.list[selected.index].office"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
@@ -495,7 +497,7 @@ textarea {
 }
 
 .box-card {
-  width: 350px;
+  width: 380px;
 }
 
 .card {
