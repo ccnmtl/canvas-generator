@@ -12,6 +12,7 @@ export default {
       { option: "Default", banner: '', slim: '', logo: IMAGE_SERVER + "SipaLogo2.png" },
       { option: "SIPA", banner: '', slim: '', logo: IMAGE_SERVER + "SipaLogo2.png" },
       { option: "Social Work", banner: 'SSW', slim: 'SSW_Slim', logo: IMAGE_SERVER + "SSW_logo.png" },
+      { option: "Mailman", banner: 'MM', slim: 'MM_Slim', logo: IMAGE_SERVER + "MM_logo2.png" },
     ]
   },
   getters: {
