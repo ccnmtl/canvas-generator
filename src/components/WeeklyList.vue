@@ -82,8 +82,8 @@
       <!-- Generates a weekly list html element for each activity in the weeklyAcitivites array in the vue data.
       See the WeeklyListItem.vue file in components for the html and styling. -->
 
-      <weekly-list-item v-if="weeklyActivites.length > 0"
-        v-for="(activity, index) in weeklyActivites"
+      <weekly-list-item v-if="weeks.length > 0"
+        v-for="(activity, index) in weeks"
         :data="activity"
         :index="index+1"
         :key="activity.title">
@@ -202,7 +202,7 @@ export default {
         return this.getWeeks
       },
       set (payload) {
-        this.updateWeeks
+        this.$store.commit('updateWeeks', payload)
       }
     },
     day() {
@@ -280,11 +280,15 @@ export default {
       }
 
       this.weeklyActivites.push(tempActivity);
-      this.addWeek(this.dWeek)
+
+      let tempWeek = this.dWeek
+      tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
+
+      this.addWeek(tempWeek)
     },
     // Adds a user inputted number of activities
     populateActivities(num){
-      let diff = num - this.weeklyActivites.length
+      let diff = num - this.weeks.length
 
       if (diff > 0 ){
         for (let i = 0; i < diff; i++ ) this.AddActivity();
@@ -293,7 +297,7 @@ export default {
       if (diff < 0) {
         this.userInput.weekNumber = 1;
         this.weeklyActivites = this.weeklyActivites.slice(0, num);
-        this.sliceWeek(0, num)
+        this.sliceWeek(num)
       }
 
       this.updateDates()

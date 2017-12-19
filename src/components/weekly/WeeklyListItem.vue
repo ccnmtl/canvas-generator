@@ -4,7 +4,7 @@
       <div class="col-xs-4">
         <div class="styleguide-section__grid-demo-element">
           <a :title="'Week ' + index" :href='url + "pages/week-" + index' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
-            <img class="crop STV1_WeeklyIconIMG" :src="data.imgSrc" alt=""  />
+            <img class="crop STV1_WeeklyIconIMG" :src="server + 'week' + index + '.png'" alt=""  />
           </a>
         </div>
       </div>
@@ -27,7 +27,8 @@ import store from '../../store'
 export default {
   data(){
     return{
-      url: store.courseUrl.replace(/\/?(\?|#|$)/, '/$1')
+      url: store.courseUrl.replace(/\/?(\?|#|$)/, '/$1'),
+      server: this.$store.state.imageServer
     }
   },
   methods: {
