@@ -84,6 +84,9 @@ export default new Vuex.Store({
     updateWeeks: (state, payload) => {
       state.weeks = payload
     },
+    updateWeek: (state, index, field, value) => {
+      state.weeks[index][field] = value
+    }
   },
   modules: {
     defaults,

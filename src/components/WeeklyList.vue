@@ -21,23 +21,23 @@
       <div>
         <el-card>
         <div class="code-input center">
-          Edit Week: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeklyActivites.length"
+          Edit Week: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeklyActivities.length"
             controls-position="right" size="small" label="Edit Week"></el-input-number>
         </div>
 
         <select v-model="userInput.weekNumber" class="uk-select">
-          <option v-for="n in weeklyActivites.length" :value="n">Week {{n}}</option>
+          <option v-for="n in weeklyActivities.length" :value="n">Week {{n}}</option>
         </select>
 
-        <div v-if="weeklyActivites.length > 0">
+        <div v-if="weeklyActivities.length > 0">
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Title</label> <br>
-            <el-input type="textarea" autosize v-model="weeklyActivites[userInput.weekNumber - 1].title"> </el-input>
+            <el-input type="textarea" autosize v-model="weeklyActivities[userInput.weekNumber - 1].title"> </el-input>
           </div>
 
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Description</label>
-            <el-input type="textarea" autosize v-model="weeklyActivites[userInput.weekNumber - 1].description"> </el-input>
+            <el-input type="textarea" autosize v-model="weeklyActivities[userInput.weekNumber - 1].description"> </el-input>
           </div>
 
           <div class="code-input center uk-margin-medium-top">
@@ -79,7 +79,7 @@
         </div>
       </div>
 
-      <!-- Generates a weekly list html element for each activity in the weeklyAcitivites array in the vue data.
+      <!-- Generates a weekly list html element for each activity in the weeklyActivities array in the vue data.
       See the WeeklyListItem.vue file in components for the html and styling. -->
 
       <weekly-list-item v-if="weeks.length > 0"
@@ -142,6 +142,7 @@ import { quillEditor } from 'vue-quill-editor';
 import saveState from 'vue-save-state';
 import WeeklyListItem from './weekly/WeeklyListItem'
 import Home from './Home'
+import _ from 'lodash'
 
 var moment = require('moment');
 
@@ -165,7 +166,7 @@ export default {
         uploadSwitchText: "Click to Upload Image from Url",
       },
       needsInit: true,
-      weeklyActivites: [],
+      weeklyActivities: [],
       outputCode: '',
       editorOption:{
         modules: {
@@ -183,6 +184,20 @@ export default {
     "info.startDate": function(){
         this.updateDates();
     },
+    weeklyActivities: {
+      handler: function(newValue) {
+        this.weeks = this.weeklyActivities
+        // _.debounce()(
+        //   function() {
+        //     this.weeks = this.weeklyActivities
+        //   },
+        //   100
+        // )
+      },
+      deep: true
+   }
+
+
   },
   computed: {
     ...mapGetters([
@@ -213,7 +228,7 @@ export default {
     },
     // Changes the description wording so that it matches the current number of weeks on the page
     numWeeks(){
-      let num = this.weeklyActivites.length
+      let num = this.weeklyActivities.length
 
       var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
       var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
@@ -262,13 +277,13 @@ export default {
       this.userInput.uploadSwitchText = this.userInput.isFile ? "Click to Upload Image from URL" : "Click to Upload Image from Computer"
     },
     updateDates(){
-      this.weeklyActivites.forEach((week, index)=>{
+      this.weeklyActivities.forEach((week, index)=>{
         week.date = "Class: " + moment(this.info.startDate).add(index, 'w').format("dddd, MMMM Do")
       })
     },
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
     AddActivity(){
-      let index = this.weeklyActivites.length + 1
+      let index = this.weeklyActivities.length + 1
 
       if (index > 15) index = 15;
 
@@ -279,7 +294,7 @@ export default {
         imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/week' + index + '.png' // "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
       }
 
-      this.weeklyActivites.push(tempActivity);
+      this.weeklyActivities.push(tempActivity);
 
       let tempWeek = this.dWeek
       tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
@@ -296,7 +311,7 @@ export default {
 
       if (diff < 0) {
         this.userInput.weekNumber = 1;
-        this.weeklyActivites = this.weeklyActivites.slice(0, num);
+        this.weeklyActivities = this.weeklyActivities.slice(0, num);
         this.sliceWeek(num)
       }
 
@@ -304,7 +319,8 @@ export default {
 
     },
     setToDefault(){
-      this.weeklyActivites = [];
+      this.weeklyActivities = [];
+      this.weeks = [];
       this.populateActivities(12);
     },
     // Handles uploading the file or url to Amazon EC2 via POST request, which subsequently uploads the image to S3
@@ -334,7 +350,7 @@ export default {
       this.$http.post('http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image',formData).then( response => {
         console.log('success')
         let imageData = JSON.parse(response.bodyText);
-        this.weeklyActivites[this.userInput.weekNumber - 1].imgSrc = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
+        this.weeklyActivities[this.userInput.weekNumber - 1].imgSrc = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
       }, response => {
         console.log(response)
       });
@@ -359,7 +375,7 @@ export default {
   },
   beforeCreate(){
     EventBus.$on('import-data', data => {
-      this.weeklyActivites = data.weeklyList.weeklyActivites
+      this.weeklyActivities = data.weeklyList.weeklyActivities
       console.log('importing data to weekly list...')
     })
 
