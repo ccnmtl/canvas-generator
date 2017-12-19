@@ -10,6 +10,22 @@ export default {
       dateType: "Week",
       dateLength: "12",
       //TEACHERS
+      profs:[
+        {
+          name: 'Professor Name',
+          email: 'professor@sipa.columbia.edu',
+          office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
+          imgSrc: "http://via.placeholder.com/200x200"
+        },
+      ],
+      tas:[
+        {
+          name: 'TA Name',
+          email: 'professor@sipa.columbia.edu',
+          office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
+          imgSrc: "http://via.placeholder.com/200x200"
+        },
+      ],
       prof: {
         name: 'Professor Name',
         email: 'professor@sipa.columbia.edu',
@@ -57,9 +73,15 @@ export default {
       points: 10
     },
     profDefault: {
-      name: 'Placeholder Name',
+      name: 'Professor Name',
       email: 'professor@sipa.columbia.edu',
       office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
+      imgSrc: "http://via.placeholder.com/200x200"
+    },
+    taDefault: {
+      name: 'TA Name',
+      email: 'TA@sipa.columbia.edu',
+      office: 'Office Hours: Tuesday 1:00-3:00 pm (IAB Room 1234)',
       imgSrc: "http://via.placeholder.com/200x200"
     }
 
@@ -68,6 +90,7 @@ export default {
     dWeek: state => state.weekDefault,
     dVideo: state => state.videoDefault,
     dInfo: state => state.info,
-    dProf: state => state.profDefault
+    dProf: state => state.profDefault,
+    dTA: state => state.taDefault,
   }
 }

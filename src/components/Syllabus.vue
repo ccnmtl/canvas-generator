@@ -7,8 +7,73 @@
   <div class="code-container">
 
     <div class="textbox-container">
+      <el-card class="card">
+          <el-button type="primary" @click="addProf">Add Professor</el-button>
+          <el-button type="primary" @click="addTA">Add TA</el-button>
+          <el-button type="danger" @click="clearProfs">Clear</el-button>
+      </el-card>
 
-      <el-card class="box-card">
+      <el-card class="card box-card" v-if="selected.list">
+        <div slot="header" class="clearfix">
+          <span class="big-text">Edit Info</span>
+
+          <!-- <el-select v-model="selected2" placeholder="Select" value-key="key" style="width: 180px">
+
+            <el-option
+              v-for="(prof, index) in info.profs"
+              :key="prof.name"
+              :label="prof.name"
+              :value="{key: prof.name, index, list:info.profs}">
+            </el-option>
+
+          </el-select> -->
+
+        <el-select v-model="selected" placeholder="Select" value-key="key" style="width: 180px; margin-left: 10px">
+          <el-option-group
+            key="profs"
+            label="Professors">
+            <el-option
+              v-for="(prof, index) in info.profs"
+              :key="prof.name"
+              :label="prof.name"
+              :value="{index, list: info.profs, key: prof.name}">
+            </el-option>
+          </el-option-group>
+          <el-option-group
+            key="tas"
+            label="TAs">
+            <el-option
+              v-for="(ta, index) in info.tas"
+              :key="ta.name"
+              :label="ta.name"
+              :value="{index, list: info.tas, key: ta.name}">
+            </el-option>
+          </el-option-group>
+        </el-select>
+
+          <el-button style="float: right; padding: 3px 0" type="text"@click="iEditable = !iEditable"> {{ iEditable ? "Save" : "Edit" }}</el-button>
+        </div>
+        <div v-show="iEditable" v-if="selected.list.length > 0" class="center">
+          <el-button type="danger" @click="removeProf">Remove</el-button>
+          <el-input class="e-input" v-model="selected.list[selected.index].name"> </el-input>
+          <el-input class="e-input"v-model="selected.list[selected.index].email"> </el-input>
+          <el-input class="e-input" type="textarea" autosize v-model="selected.list[selected.index].office"> </el-input>
+          <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
+
+          <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
+          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', selected.list[selected.index])">
+            <input name="image" id="image-file" type="file"> <br>
+            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+          </form>
+          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', selected.list[selected.index])">
+            <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
+            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+          </form>
+        </div>
+
+      </el-card>
+
+      <el-card class="card box-card">
         <div slot="header" class="clearfix">
           <span class="big-text">Professor Info</span>
           <el-button style="float: right; padding: 3px 0" type="text"@click="pEditable = !pEditable"> {{ pEditable ? "Save" : "Edit" }}</el-button>
@@ -31,7 +96,7 @@
         </div>
       </el-card>
 
-      <el-card class="box-card">
+      <el-card class="card box-card">
         <div slot="header" class="clearfix">
           <span class="big-text">TA Info</span>
           <el-button style="float: right; padding: 3px 0" type="text"@click="tEditable = !tEditable"> {{ tEditable ? "Save" : "Edit" }}</el-button>
@@ -67,11 +132,40 @@
         <div class="grid-row">
 
           <!-- Professor Info Box -->
-          <div class="col-xs-6 col-md-6">
+          <div class="col-xs-6 col-md-6" v-for="listProf in info.profs">
             <div class="styleguide-section__grid-demo-element pad-box-mini border border-tl">
 
               <!-- must have weeklyIconImg class for responsiveness -->
               <!-- landscape images work best. 350x200 seems ideal -->
+              <div class="STV1_BlueBG">
+                <img :src="listProf.imgSrc" class="STV1_SyllabusPhoto" />
+              </div>
+
+              <p>Instructor:</p>
+              <p>{{listProf.name}} (<a :href="'mailto:'+listProf.email">{{listProf.email}}</a>) <br /> Office Hours: <span v-html="newLine(listProf.office)"></span></p>
+            </div>
+          </div>
+          <!-- End Professor Info Box -->
+
+          <!-- Professor Info Box -->
+          <div class="col-xs-6 col-md-6" v-for="listTA in info.tas">
+            <div class="styleguide-section__grid-demo-element pad-box-mini border border-tl">
+
+              <!-- must have weeklyIconImg class for responsiveness -->
+              <!-- landscape images work best. 350x200 seems ideal -->
+              <div class="STV1_BlueBG">
+                <img :src="listTA.imgSrc" class="STV1_SyllabusPhoto" />
+              </div>
+
+              <p>Instructor:</p>
+              <p>{{listTA.name}} (<a :href="'mailto:'+listTA.email">{{listTA.email}}</a>) <br /> Office Hours: <span v-html="newLine(listTA.office)"></span></p>
+            </div>
+          </div>
+          <!-- End Professor Info Box -->
+
+          <!-- <div class="col-xs-6 col-md-6">
+            <div class="styleguide-section__grid-demo-element pad-box-mini border border-tl">
+
               <div class="STV1_BlueBG">
                 <img :src="info.prof.imgSrc" class="STV1_SyllabusPhoto" />
               </div>
@@ -80,14 +174,10 @@
               <p>{{info.prof.name}} (<a :href="'mailto:'+info.prof.email">{{info.prof.email}}</a>) <br /> Office Hours: <span v-html="newLine(info.prof.office)"></span></p>
             </div>
           </div>
-          <!-- End Professor Info Box -->
 
-          <!-- Professor Info Box -->
           <div class="col-xs-6 col-md-6">
             <div class="styleguide-section__grid-demo-element pad-box-mini border border-tl">
 
-              <!-- must have weeklyIconImg class for responsiveness -->
-              <!-- landscape images work best. 350x200 seems ideal -->
               <div class="STV1_BlueBG">
                 <img :src="info.ta.imgSrc" class="STV1_SyllabusPhoto" />
               </div>
@@ -95,8 +185,7 @@
               <p>Teaching Assistant:</p>
               <p>{{info.ta.name}} (<a :href="'mailto:'+info.ta.email">{{info.ta.email}}</a>) <br /> Office Hours: <span v-html="newLine(info.ta.office)"></span></p>
             </div>
-          </div>
-          <!-- End Professor Info Box -->
+          </div> -->
 
         </div>
       </div>
@@ -277,6 +366,7 @@
 
 <script>
 import store from '../store'
+import { mapGetters, mapMutations } from 'vuex'
 import { EventBus } from '../bus'
 import { quillEditor } from 'vue-quill-editor';
 import saveState from 'vue-save-state';
@@ -314,9 +404,12 @@ export default {
         hours: "Tuesday 1:00-2:30 pm (Publique, IAB 6th floor)",
         imgSrc:"http://via.placeholder.com/200x200"
       },
-      pEditable: true,
-      tEditable: true,
+      pEditable: false,
+      tEditable: false,
+      iEditable: false,
       outputCode: '',
+      selected: {index: 0, list: this.$store.getters.getInfo.profs},
+      selected2: null,
       editorOption: {
         modules: {
           toolbar: toolbarOptions
@@ -329,6 +422,10 @@ export default {
   },
   mixins: [saveState],
   computed: {
+    ...mapGetters([
+      'getInfo', 'dProf', 'dTA'
+    ]),
+
     info: {
       get () {
         return this.$store.getters.getInfo
@@ -399,6 +496,23 @@ export default {
       });
 
     },
+    addProf(){
+      this.info.profs.push(this.dProf)
+    },
+    addTA(){
+      this.info.tas.push(this.dTA)
+    },
+    removeProf(){
+      let {list, index} = this.selected;
+      console.log(list)
+      console.log(index)
+      list.splice(index, 1);
+      this.selected = {index: 0, list}
+    },
+    clearProfs(){
+      this.info.profs = [this.dProf]
+      this.info.tas = [this.dTA]
+    },
     setToDefault(){
       console.log('resetting data...')
       this.info = { ...this.$store.getters.dInfo };
@@ -414,6 +528,7 @@ export default {
     setInterval(() => {
       this.updateCode();
     }, 1000);
+
   },
   beforeCreate(){
     EventBus.$on('set-default', response => {
@@ -474,8 +589,11 @@ textarea {
 }
 
 .box-card {
-  margin: 10px;
   width: 350px;
+}
+
+.card {
+  margin: 10px;
 }
 
 .e-input {
