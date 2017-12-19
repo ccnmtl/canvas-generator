@@ -24,6 +24,7 @@ export default new Vuex.Store({
       startDate: null,
       dateType: "Week",
       dateLength: "12",
+
       //TEACHERS
       profs:[
         {
@@ -41,6 +42,7 @@ export default new Vuex.Store({
           imgSrc: "http://via.placeholder.com/200x200"
         },
       ],
+
       //DISPLAY PARAMETERS
       video:"https://vimeo.com/199382848/1dd8fc0f31",
       image:"http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg",

@@ -14,7 +14,7 @@
       <!-- <button type="button" class="add-weekly center uk-button uk-button-danger uk-width-1-1"  name="button" @click="weeklyActivites = []"> Clear </button> -->
       <el-date-picker
         style="margin: 10px; margin-bottom:20px"
-        v-model="userInput.startDate"
+        v-model="info.startDate"
         type="date"
         placeholder="Pick start date">
       </el-date-picker>
@@ -186,7 +186,7 @@ export default {
   },
   mixins: [saveState],
   watch: {
-    "userInput.startDate": function(){
+    "info.startDate": function(){
         this.updateDates();
     },
   },
@@ -200,7 +200,7 @@ export default {
         return this.getInfo
       },
       set (payload) {
-        this.$store.commit('updateInfo', payload)
+        this.updateInfo
       }
     },
     weeks: {
@@ -208,14 +208,14 @@ export default {
         return this.getWeeks
       },
       set (payload) {
-        this.$store.commit('updateWeeks', payload)
+        this.updateWeeks
       }
     },
     day() {
-      return moment(this.userInput.startDate).format("dddd, MMMM Do")
+      return moment(this.info.startDate).format("dddd, MMMM Do")
     },
     week() {
-      return moment(this.userInput.startDate).add(1, 'w').format("dddd, MMMM Do")
+      return moment(this.info.startDate).add(1, 'w').format("dddd, MMMM Do")
     },
     // Changes the description wording so that it matches the current number of weeks on the page
     numWeeks(){
@@ -237,7 +237,7 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'addWeek', 'sliceWeek'
+      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
     ]),
     copyText(option) {
       var copyTextarea = document.querySelector('#copy-text-area');
@@ -269,7 +269,7 @@ export default {
     },
     updateDates(){
       this.weeklyActivites.forEach((week, index)=>{
-        week.date = "Class: " + moment(this.userInput.startDate).add(index, 'w').format("dddd, MMMM Do")
+        week.date = "Class: " + moment(this.info.startDate).add(index, 'w').format("dddd, MMMM Do")
       })
     },
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
