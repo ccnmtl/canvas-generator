@@ -76,13 +76,13 @@ export default {
       name: 'Professor Name',
       email: 'professor@sipa.columbia.edu',
       office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
-      imgSrc: "http://via.placeholder.com/200x200"
+      imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
     },
     taDefault: {
       name: 'TA Name',
       email: 'TA@sipa.columbia.edu',
       office: 'Office Hours: Tuesday 1:00-3:00 pm (IAB Room 1234)',
-      imgSrc: "http://via.placeholder.com/200x200"
+      imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
     }
 
   },

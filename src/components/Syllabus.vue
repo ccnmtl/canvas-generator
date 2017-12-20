@@ -68,7 +68,7 @@
 
     <!-- Where the canvas code is stored -->
     <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
-      <div class="STV1_SlimBanner">
+      <div :class="['STV1_SlimBanner', this.$store.getters.getTheme.slim]">
         <p>{{info.title.toUpperCase()}}</p>
       </div>
 
@@ -382,11 +382,13 @@ export default {
       if (type == 'url'){
         console.log('uploading url...')
         var imageurl = document.querySelector(id); // Gets form data in html
+        if (imageurl.value == "") return;
         formData.append("imageUrl", imageurl.value);  // Adds api header to tell server that it is a url
       }
       else {
         console.log('uploading file...')
         var imagefile = document.querySelector(id);
+        if (imagefile.files.length == 0) return;
         formData.append("image", imagefile.files[0]); // Adds api header to tell server that it is a file
       }
 
