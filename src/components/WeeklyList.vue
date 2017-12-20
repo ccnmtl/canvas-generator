@@ -287,6 +287,9 @@ export default {
 
       if (index > 15) index = 15;
 
+      let tempWeek = _.cloneDeep(this.dWeek)
+      tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
+
       let tempActivity = {
         title: "Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
         date: "",
@@ -294,16 +297,16 @@ export default {
         imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/week' + index + '.png' // "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
       }
 
-      this.weeklyActivities.push(tempActivity);
+      this.weeklyActivities.push(tempWeek);
 
-      let tempWeek = this.dWeek
-      tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
-
-      this.addWeek(tempWeek)
+      // let tempWeek = this.dWeek
+      // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
+      //
+      // this.addWeek(tempWeek)
     },
     // Adds a user inputted number of activities
     populateActivities(num){
-      let diff = num - this.weeks.length
+      let diff = num - this.weeklyActivities.length
 
       if (diff > 0 ){
         for (let i = 0; i < diff; i++ ) this.AddActivity();
@@ -312,7 +315,7 @@ export default {
       if (diff < 0) {
         this.userInput.weekNumber = 1;
         this.weeklyActivities = this.weeklyActivities.slice(0, num);
-        this.sliceWeek(num)
+        //this.sliceWeek(num)
       }
 
       this.updateDates()
