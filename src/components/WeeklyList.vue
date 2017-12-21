@@ -278,7 +278,7 @@ export default {
     },
     updateDates(){
       this.weeklyActivities.forEach((week, index)=>{
-        week.date = "Class: " + moment(this.info.startDate).add(index, 'w').format("dddd, MMMM Do")
+        week.date = moment(this.info.startDate).add(index, 'w').format("dddd, MMMM Do")
       })
     },
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.

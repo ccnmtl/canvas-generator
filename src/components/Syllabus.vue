@@ -146,6 +146,34 @@
         <h2>Weekly Schedule</h2>
       </div>
 
+        <table class="ic-Table ic-Table--hover-row">
+          <thead>
+            <tr>
+
+              <!-- Column Labels -->
+              <!-- If you add a label here for an additional column, that column must be added to all rows as well -->
+              <th>Week</th>
+              <th>Theme</th>
+              <th>Date</th>
+              <th>Topic</th>
+              <th>Instructor</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            
+             <tr v-for="(week, index) in weeks">
+               <td>{{index}}</td>
+               <td>{{index}}</td>
+               <td>{{formatDate(week.date)}}</td>
+               <td>{{week.title}}</td>
+               <td>{{info.prof}}</td>
+            </tr>
+          </tbody>           
+
+        </table>
+
+
           <table class="ic-Table ic-Table--hover-row">
             <thead>
               <tr>
@@ -286,22 +314,28 @@
 </template>
 
 <script>
-import store from '../store'
-import { mapGetters, mapMutations } from 'vuex'
-import { EventBus } from '../bus'
-import { quillEditor } from 'vue-quill-editor';
-import saveState from 'vue-save-state';
+import store from "../store";
+import { mapGetters, mapMutations } from "vuex";
+import { EventBus } from "../bus";
+import { quillEditor } from "vue-quill-editor";
+import saveState from "vue-save-state";
+
+var moment = require('moment');
 
 var toolbarOptions = [
-  ['bold', 'italic', 'underline'],
-  ['blockquote', {
-    'list': 'ordered'
-  }, {
-    'list': 'bullet'
-  }],
-  [{ 'indent': '-1'}, { 'indent': '+1' }],
-  [{ 'script': 'sub'}, { 'script': 'super' }],
-  ['link', 'clean']
+  ["bold", "italic", "underline"],
+  [
+    "blockquote",
+    {
+      list: "ordered"
+    },
+    {
+      list: "bullet"
+    }
+  ],
+  [{ indent: "-1" }, { indent: "+1" }],
+  [{ script: "sub" }, { script: "super" }],
+  ["link", "clean"]
 ];
 
 export default {
@@ -311,125 +345,146 @@ export default {
       userInput: {
         title: store.title,
         isFile: true,
-        uploadSwitchText: "Click to Upload Image from Url",
+        uploadSwitchText: "Click to Upload Image from Url"
       },
       pEditable: false,
       tEditable: false,
       iEditable: false,
-      outputCode: '',
-      selected: {index: 0, list: this.$store.getters.getInfo.profs},
+      outputCode: "",
+      selected: { index: 0, list: this.$store.getters.getInfo.profs },
       editorOption: {
         modules: {
           toolbar: toolbarOptions
         }
       }
-    }
+    };
   },
   components: {
-    quillEditor,
+    quillEditor
   },
   mixins: [saveState],
   computed: {
-    ...mapGetters([
-      'getInfo', 'dProf', 'dTA'
-    ]),
+    ...mapGetters(["getInfo", "dProf", "dTA", 'getWeeks']),
 
     info: {
-      get () {
-        return this.$store.getters.getInfo
+      get() {
+        return this.$store.getters.getInfo;
       },
-      set (payload) {
-        this.$store.commit('updateInfo', payload)
+      set(payload) {
+        this.$store.commit("updateInfo", payload);
       }
     },
+    weeks: {
+      get() {
+        return this.getWeeks;
+      },
+      set(payload) {
+        this.$store.commit("updateWeeks", payload);
+      }
+    }
   },
   methods: {
+    formatDate(date){
+      return moment(date, "dddd, MMMM Do").format("MMMM Do")
+    },
     newLine(val) {
-      if (!val) return ''
-      return val.replace(/\r?\n/g, '<br />')
+      if (!val) return "";
+      return val.replace(/\r?\n/g, "<br />");
     },
     copyText(option) {
-      var copyTextarea = document.querySelector('#copy-text-area');
+      var copyTextarea = document.querySelector("#copy-text-area");
 
-      if (option == 'aux'){
+      if (option == "aux") {
         var aux = document.createElement("input");
         aux.setAttribute("value", copyTextarea.value);
         document.body.appendChild(aux);
         aux.select();
-        console.log('creating aux element..')
-      }
-      else {
+        console.log("creating aux element..");
+      } else {
         copyTextarea.select();
       }
 
-      document.execCommand('copy')
+      document.execCommand("copy");
 
-      this.$snotify.success('Code has been copied', {showProgressBar: false});
+      this.$snotify.success("Code has been copied", { showProgressBar: false });
 
-      if (option == 'aux') document.body.removeChild(aux);
+      if (option == "aux") document.body.removeChild(aux);
     },
     updateCode() {
       let code = document.getElementById("canvas-code");
-      this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
+      this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/gi, "");
     },
     updateSwitch() {
       this.userInput.isFile = !this.userInput.isFile;
-      this.userInput.uploadSwitchText = this.userInput.isFile ? "Click to Upload Image from URL" : "Click to Upload Image from Computer"
+      this.userInput.uploadSwitchText = this.userInput.isFile
+        ? "Click to Upload Image from URL"
+        : "Click to Upload Image from Computer";
     },
-    onFormSubmit (type, obj, id = (type == 'url') ? '#image-url' : '#image-file', ev){
+    onFormSubmit(
+      type,
+      obj,
+      id = type == "url" ? "#image-url" : "#image-file",
+      ev
+    ) {
       var formData = new FormData();
 
-      if (type == 'url'){
-        console.log('uploading url...')
+      if (type == "url") {
+        console.log("uploading url...");
         var imageurl = document.querySelector(id); // Gets form data in html
         if (imageurl.value == "") return;
-        formData.append("imageUrl", imageurl.value);  // Adds api header to tell server that it is a url
-      }
-      else {
-        console.log('uploading file...')
+        formData.append("imageUrl", imageurl.value); // Adds api header to tell server that it is a url
+      } else {
+        console.log("uploading file...");
         var imagefile = document.querySelector(id);
         if (imagefile.files.length == 0) return;
         formData.append("image", imagefile.files[0]); // Adds api header to tell server that it is a file
       }
 
       // More api headers to tell the server the dimensions to crop
-      formData.append('imageWidth', 200)
-      formData.append('imageHeight', 200)
+      formData.append("imageWidth", 200);
+      formData.append("imageHeight", 200);
 
       // Send post request to Amazon server using vue-resource with form data
-      this.$http.post('http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image',formData).then( response => {
-        console.log('success')
-        let imageData = JSON.parse(response.bodyText);
-        obj.imgSrc = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
-      }, response => {
-        console.log(response)
-      });
-
+      this.$http
+        .post(
+          "http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image",
+          formData
+        )
+        .then(
+          response => {
+            console.log("success");
+            let imageData = JSON.parse(response.bodyText);
+            obj.imgSrc = imageData.imageUrls[0]; // Change requisite weekly activity image src to the hosted file
+          },
+          response => {
+            console.log(response);
+          }
+        );
     },
-    addProf(){
-      this.info.profs.push(this.dProf)
+    addProf() {
+      this.info.profs.push(this.dProf);
     },
-    addTA(){
-      this.info.tas.push(this.dTA)
+    addTA() {
+      this.info.tas.push(this.dTA);
     },
-    removeProf(){
-      let {list, index} = this.selected;
-      console.log(list)
-      console.log(index)
+    removeProf() {
+      let { list, index } = this.selected;
+      console.log(list);
+      console.log(index);
       list.splice(index, 1);
-      this.selected = {index: 0, list}
+      this.selected = { index: 0, list };
     },
-    clearProfs(){
-      this.info.profs = [this.dProf]
-      this.info.tas = [this.dTA]
+    clearProfs() {
+      this.info.profs = [this.dProf];
+      this.info.tas = [this.dTA];
     },
-    setToDefault(){
-      console.log('resetting data...')
+    setToDefault() {
+      console.log("resetting data...");
       this.info = { ...this.$store.getters.dInfo };
     },
     getSaveStateConfig() {
       return {
-          'cacheKey': 'Syllabus',
+        cacheKey: "Syllabus"
       };
     }
   },
@@ -438,39 +493,36 @@ export default {
     setInterval(() => {
       this.updateCode();
     }, 1000);
-
   },
-  beforeCreate(){
-    EventBus.$on('set-default', response => {
-      this.setToDefault()
-      console.log(response)
-    })
+  beforeCreate() {
+    EventBus.$on("set-default", response => {
+      this.setToDefault();
+      console.log(response);
+    });
 
-    EventBus.$on('import-data', data => {
-      this.userInput = { ...data.weekly.userInput}
-      this.videos = data.weekly.videos
-      this.assignments = data.weekly.assignments
-      this.discussions = data.weekly.discussions
-      console.log('importing data to weekly...')
-    })
+    EventBus.$on("import-data", data => {
+      this.userInput = { ...data.weekly.userInput };
+      this.videos = data.weekly.videos;
+      this.assignments = data.weekly.assignments;
+      this.discussions = data.weekly.discussions;
+      console.log("importing data to weekly...");
+    });
 
-    EventBus.$on('export-data', () => {
-
+    EventBus.$on("export-data", () => {
       // let weeklyList = {
       //   weeklyActivites: this.weeklyActivites
       // }
       // EventBus.$emit('list-data', weeklyList)
 
-      let syllabus = this.$data
-      console.log('sending syllabus')
-      EventBus.$emit('syllabus-data', syllabus)
-    })
+      let syllabus = this.$data;
+      console.log("sending syllabus");
+      EventBus.$emit("syllabus-data", syllabus);
+    });
   },
   beforeUpdate() {
     this.updateCode();
   }
-
-}
+};
 </script>
 
 
@@ -491,11 +543,11 @@ textarea {
   content: "";
 }
 .clearfix:after {
-  clear: both
+  clear: both;
 }
 
 .big-text {
-  font-size: 1.2rem
+  font-size: 1.2rem;
 }
 
 .box-card {
@@ -507,7 +559,7 @@ textarea {
 }
 
 .e-input {
-  margin: 5px
+  margin: 5px;
 }
 
 .code-module {
@@ -525,8 +577,7 @@ textarea {
 .edit-button {
   margin-right: 10px;
   margin-left: auto;
-  float:right;
-
+  float: right;
 }
 
 .textbox-container {
@@ -536,7 +587,7 @@ textarea {
   width: 500px;
   margin: auto;
   align-self: flex-start;
-  margin-top: 20px
+  margin-top: 20px;
 }
 
 .teacher {
@@ -565,7 +616,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.5s ease
+  transition: all 0.5s ease;
 }
 
 .footer {
@@ -576,7 +627,7 @@ textarea {
 
 #copy-text-area {
   width: 80%;
-  height: 200px
+  height: 200px;
 }
 
 .GFbanner {
@@ -585,14 +636,11 @@ textarea {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity .5s
+  transition: opacity 0.5s;
 }
 
 .fade-enter,
-.fade-leave-to
-/* .fade-leave-active in <2.1.8 */
-
-{
-  opacity: 0
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
