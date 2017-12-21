@@ -22,12 +22,10 @@
 </template>
 
 <script>
-import store from '../../store'
 
 export default {
   data() {
     return {
-      url: store.courseUrl
     }
   },
   props: ['data', 'index'],

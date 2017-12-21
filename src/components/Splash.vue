@@ -58,7 +58,6 @@
 </template>
 
 <script>
-import store from '../store'
 import { EventBus } from '../bus'
 import saveState from 'vue-save-state';
 import { quillEditor } from 'vue-quill-editor';
@@ -82,11 +81,11 @@ export default {
   },
   methods: {
     getStarted(){
-      this.$router.push({name: 'Home'});
+      this.$router.push({path: '/home'});
     },
     getStartedModal(){
       this.dialogFormVisible = false
-      this.$router.push({name: 'Home'});
+      this.$router.push({path: '/home'});
     }
   },
   mounted () {

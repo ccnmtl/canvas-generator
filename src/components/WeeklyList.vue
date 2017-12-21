@@ -85,8 +85,7 @@
       <weekly-list-item v-if="weeks.length > 0"
         v-for="(activity, index) in weeks"
         :data="activity"
-        :index="index+1"
-        :key="activity.title">
+        :index="index+1">
       </weekly-list-item>
 
     </div>
@@ -135,7 +134,6 @@
 </template>
 
 <script>
-import store from '../store'
 import { mapGetters, mapMutations } from 'vuex'
 import { EventBus } from '../bus'
 import { quillEditor } from 'vue-quill-editor';
@@ -158,7 +156,6 @@ export default {
   data () {
     return {
       userInput: {
-        title: store.title,
         startDate: null,
         weekNumber: 1,
         toChange: 12,
@@ -278,7 +275,7 @@ export default {
     },
     updateDates(){
       this.weeklyActivities.forEach((week, index)=>{
-        week.date = moment(this.info.startDate).add(index, 'w').format("dddd, MMMM Do")
+        week.date = moment(this.info.startDate).add(index, 'w')
       })
     },
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.

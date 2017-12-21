@@ -25,12 +25,11 @@
 </template>
 
 <script>
-import store from '../../store'
 
 export default {
   data() {
     return {
-      url: store.courseUrl
+      url: this.$store.state.info.url
     }
   },
   props: ['data', 'index']

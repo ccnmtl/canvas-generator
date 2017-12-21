@@ -153,21 +153,16 @@
               <!-- Column Labels -->
               <!-- If you add a label here for an additional column, that column must be added to all rows as well -->
               <th>Week</th>
-              <th>Theme</th>
               <th>Date</th>
               <th>Topic</th>
-              <th>Instructor</th>
-
             </tr>
           </thead>
           <tbody>
             
              <tr v-for="(week, index) in weeks">
-               <td>{{index}}</td>
-               <td>{{index}}</td>
-               <td>{{formatDate(week.date)}}</td>
-               <td>{{week.title}}</td>
-               <td>{{info.prof}}</td>
+              <td>{{index}}</td>
+              <td>{{formatDate(week.date)}}</td>              
+              <td>{{week.title}}</td>
             </tr>
           </tbody>           
 
@@ -314,7 +309,6 @@
 </template>
 
 <script>
-import store from "../store";
 import { mapGetters, mapMutations } from "vuex";
 import { EventBus } from "../bus";
 import { quillEditor } from "vue-quill-editor";
@@ -343,7 +337,6 @@ export default {
   data() {
     return {
       userInput: {
-        title: store.title,
         isFile: true,
         uploadSwitchText: "Click to Upload Image from Url"
       },

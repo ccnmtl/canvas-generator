@@ -186,7 +186,6 @@
 // For testing we remove localstorage -- take line out for build
 localStorage.clear();
 
-import store from '../store'
 import { EventBus } from '../bus'
 import saveState from 'vue-save-state';
 import { quillEditor } from 'vue-quill-editor';

@@ -149,7 +149,6 @@
 </template>
 
 <script>
-import store from '../store'
 import { EventBus } from '../bus'
 import { quillEditor } from 'vue-quill-editor';
 import WeeklyCodeModule from './weekly/WeeklyCodeModule'
@@ -176,7 +175,6 @@ export default {
   data() {
     return {
       userInput: {
-        title: store.title,
         videoNumber: 1,
         weekTitle: 'WEEK 1: Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective',
         description: "We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss “The Big Picture,” starting with the historical context of the current global food system, including the “Green Revolution.” Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.",
@@ -251,7 +249,7 @@ export default {
       let tempDisc = {
         due: "Feb 4, 2017",
         available: "Jan 1",
-        link: store.courseUrl + 'discussion_topics/',
+        link: this.info.url + 'discussion_topics/',
         points: 10
       }
 
@@ -261,7 +259,7 @@ export default {
       let tempAssign = {
         due: "Feb 4, 2017",
         available: "Jan 1",
-        link: store.courseUrl + 'assignments/',
+        link: this.info.url + 'assignments/',
         points: 10
       }
 
@@ -269,7 +267,7 @@ export default {
     },
     setToDefault(){
       console.log('resetting data...')
-      this.userInput = { ...store.weeklyDefault };
+      this.userInput = { ...this.$store.getters.dWeekly};
       this.videos = this.assignments = this.discussions = [];
     },
     getSaveStateConfig() {

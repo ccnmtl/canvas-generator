@@ -14,7 +14,7 @@
             <div class="STV1_Welcome">Week {{index}}: {{data.title}} </div>
           </a>
           <p>{{data.description}}</p>
-          <p>Class: {{data.date}}</p>
+          <p>Class: {{formatWeek(data.date)}}</p>
         </div>
       </div>
     </div>
@@ -22,14 +22,17 @@
 </template>
 
 <script>
-import store from '../../store'
+var moment = require('moment');
 
 export default {
   data(){
     return{
-      url: store.courseUrl.replace(/\/?(\?|#|$)/, '/$1'),
+      url: this.$store.state.info.url.replace(/\/?(\?|#|$)/, '/$1'),
       server: this.$store.state.imageServer
     }
+  },
+  computed: {
+
   },
   methods: {
     resizeUrl(url) {
@@ -42,12 +45,15 @@ export default {
       // parts[2] += '.rsz.io'
       // parts[parts.length - 1] += '?width=350&height=150&mode=crop'
       // return parts.join('/')
-    }
+    },
+    formatWeek(date){
+      return moment(date).format("dddd, MMMM Do")
+    },
   },
   props: ['data', 'index'],
   mounted(){
     setInterval( () => {
-      this.url = store.courseUrl.replace(/\/?(\?|#|$)/, '/$1')
+      this.url = this.$store.state.info.url.replace(/\/?(\?|#|$)/, '/$1')
     }, 1000);
   }
 }

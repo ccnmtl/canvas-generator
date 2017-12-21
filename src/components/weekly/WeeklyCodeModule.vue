@@ -30,12 +30,10 @@
 </template>
 
 <script>
-import store from '../../store'
 
 export default {
   data() {
     return {
-      url: store.courseUrl,
       index: 1,
       editable: false
     }
