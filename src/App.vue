@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <a href="#offcanvas-slide" class="uk-button uk-button-default noBorder" uk-toggle><span uk-icon="icon: table"></span> &nbsp;Menu</a>
 
-    <!-- <a href="#offcanvas-slide" uk-toggle>Open</a> -->
+      <a href="#offcanvas-slide" class="uk-button uk-button-default noBorder" uk-toggle><span uk-icon="icon: table"></span> &nbsp;Menu</a>
 
-    <div class="uk-float-right uk-padding-small">
-      <h6><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1" v-loading.fullscreen.lock="loading"></span> CANVAS CODE GENERATOR</h6>
-    </div>
+      <!-- <a href="#offcanvas-slide" uk-toggle>Open</a> -->
+
+      <div class="uk-float-right uk-padding-small">
+        <h6><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1" v-loading.fullscreen.lock="loading"></span> CANVAS CODE GENERATOR</h6>
+      </div>
 
     <vue-snotify></vue-snotify>
 
@@ -34,10 +35,13 @@
     <div class="clearfix"></div>
 
     <!-- <div class="center routers">
-      <router-link class="router" to="/home">Home Page Template </router-link>
-      <router-link class="router" to="/weekly">Weekly Activity Template</router-link>
-      <router-link class="router" to="/weeklylist">Weekly List Template</router-link>
-      <router-link class="router" to="/export">Export/Import Data</router-link>
+      <router-link :to="this.$store.state.prevPage">
+      <el-button type="primary" class="nav-button"><i class="el-icon-arrow-left el-icon-left"></i>Previous Page</el-button>
+      </router-link>
+      <span class="nav-text">{{this.$route.name}}</span>
+      <router-link :to="this.$store.state.nextPage">
+      <el-button type="primary" class="nav-button">Next Page<i class="el-icon-arrow-right el-icon-right"></i></el-button>
+      </router-link>
 
     </div> -->
 
@@ -50,34 +54,33 @@
 </template>
 
 <script>
-import { EventBus } from './bus'
+import { EventBus } from "./bus";
 
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
       hasImportData: false,
       exportData: {}
-    }
+    };
   },
   computed: {
     loading() {
-      return this.$store.getters.loading
-    },
+      return this.$store.getters.loading;
+    }
   }
-}
+};
 </script>
 
 <style>
-
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: 100%;
+  font-size: 100%;
 }
 
 /*.uk-button, .uk-button-small {
@@ -85,24 +88,30 @@ html {
   font-weight: bold;
 }*/
 
-.export-container{
+.export-container {
   height: 80px;
   margin: 10px;
 }
 
-.center{
+.center {
   text-align: center;
 }
 
 .router {
   /*margin: 30px;
   font-size: 20px;*/
-
 }
 
-
+.nav-text {
+  font-size: 25px;
+  margin: 25px;
+}
 
 .routers {
   margin-bottom: 20px;
+}
+
+.nav-button {
+  display:inline-block;
 }
 </style>
