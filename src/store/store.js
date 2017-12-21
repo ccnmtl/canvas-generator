@@ -58,8 +58,8 @@ export default new Vuex.Store({
 
     // UTILS
     loading: false,
-    prevPage: null,
-    nextPage: null,
+    prevPage: "/home",
+    nextPage: "/weekly",
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",
   },
   getters: {

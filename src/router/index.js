@@ -15,17 +15,16 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Splash',
       component: Splash
     },
     {
       path: '/home',
-      name: 'Home',
+      name: 'Home Template',
       component: Home
     },
     {
       path: '/syllabus',
-      name: 'Syllabus',
+      name: 'Syllabus Template',
       component: Syllabus
     },
     {

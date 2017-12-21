@@ -3,6 +3,15 @@
 
     <!-- This Div contains all of the information inputs -->
     <!-- Currently it uses a component from the Element UI library for the tabs -->
+    <div class="center routers">
+      <router-link to="/">
+      <el-button type="primary" class="nav-button"><i class="el-icon-arrow-left el-icon-left"></i>Previous Page</el-button>
+      </router-link>
+      <span class="nav-text">Home Template</span>
+      <router-link to="/syllabus">
+      <el-button type="primary" class="nav-button">Next Page<i class="el-icon-arrow-right el-icon-right"></i></el-button>
+      </router-link>
+    </div>
 
     <div class="clearfix"></div>
 
