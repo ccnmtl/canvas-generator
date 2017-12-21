@@ -20,6 +20,8 @@ export default new Vuex.Store({
       title: "Global Food Systems",
       url: "https://courseworks2.columbia.edu/courses/29191/",
       semester: "U6411 // SPRING 2017",
+      classType: "default", // options are "default", "blended", "execEd",
+
       //TIME INFO
       startDate: null,
       dateType: "Week",
@@ -56,6 +58,8 @@ export default new Vuex.Store({
 
     // UTILS
     loading: false,
+    prevPage: null,
+    nextPage: null,
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",
   },
   getters: {
