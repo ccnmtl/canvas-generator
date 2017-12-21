@@ -55,6 +55,7 @@
 
 <script>
 import { EventBus } from "./bus";
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: "app",
@@ -64,10 +65,27 @@ export default {
       exportData: {}
     };
   },
+  methods: {
+    ...mapMutations([
+      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
+    ]),
+  },
   computed: {
     loading() {
       return this.$store.getters.loading;
     }
+  },
+  mounted() {
+    let weeklyActivities = [];
+
+    for (let i = 1; i <= 13; i++ ){
+      let tempWeek = _.cloneDeep(this.$store.getters.dWeek)
+      tempWeek.imgSrc = this.$store.state.imageServer + 'week' + i + '.png'
+
+      weeklyActivities.push(tempWeek);
+    }
+
+    this.updateWeeks(weeklyActivities)
   }
 };
 </script>

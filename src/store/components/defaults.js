@@ -1,3 +1,5 @@
+let moment = require ('moment')
+
 export default {
   state: {
     info: {
@@ -48,7 +50,7 @@ export default {
 
     weekDefault: {
       title: 'Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective',
-      date:"",
+      date: moment(),
       description: "This session will cover the foundational topics in food systems.",
       imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/week1' + '.png',
       body: "We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss “The Big Picture,” starting with the historical context of the current global food system, including the “Green Revolution.” Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.",

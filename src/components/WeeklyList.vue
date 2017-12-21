@@ -21,23 +21,23 @@
       <div>
         <el-card>
         <div class="code-input center">
-          Edit Week: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeklyActivities.length"
+          Edit Week: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
             controls-position="right" size="small" label="Edit Week"></el-input-number>
         </div>
 
         <select v-model="userInput.weekNumber" class="uk-select">
-          <option v-for="n in weeklyActivities.length" :value="n">Week {{n}}</option>
+          <option v-for="n in weeks.length" :value="n">Week {{n}}</option>
         </select>
 
-        <div v-if="weeklyActivities.length > 0">
+        <div v-if="weeks.length > 0">
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Title</label> <br>
-            <el-input type="textarea" autosize v-model="weeklyActivities[userInput.weekNumber - 1].title"> </el-input>
+            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"> </el-input>
           </div>
 
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Description</label>
-            <el-input type="textarea" autosize v-model="weeklyActivities[userInput.weekNumber - 1].description"> </el-input>
+            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].description"> </el-input>
           </div>
 
           <div class="code-input center uk-margin-medium-top">
@@ -274,13 +274,13 @@ export default {
       this.userInput.uploadSwitchText = this.userInput.isFile ? "Click to Upload Image from URL" : "Click to Upload Image from Computer"
     },
     updateDates(){
-      this.weeklyActivities.forEach((week, index)=>{
+      this.weeks.forEach((week, index)=>{
         week.date = moment(this.info.startDate).add(index, 'w')
       })
     },
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
     AddActivity(){
-      let index = this.weeklyActivities.length + 1
+      let index = this.weeks.length + 1
 
       if (index > 15) index = 15;
 
@@ -299,7 +299,7 @@ export default {
       // let tempWeek = this.dWeek
       // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
       //
-      // this.addWeek(tempWeek)
+      this.addWeek(tempWeek)
     },
     // Adds a user inputted number of activities
     populateActivities(num){
@@ -312,7 +312,7 @@ export default {
       if (diff < 0) {
         this.userInput.weekNumber = 1;
         this.weeklyActivities = this.weeklyActivities.slice(0, num);
-        //this.sliceWeek(num)
+        this.sliceWeek(num)
       }
 
       this.updateDates()
@@ -365,7 +365,7 @@ export default {
   mounted(){
     if (this.needsInit) {
       console.log('populating...')
-      this.populateActivities(12)
+      // this.populateActivities(12)
       this.needsInit = false;
     }
     this.updateCode();
