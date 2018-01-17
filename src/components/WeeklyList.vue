@@ -55,6 +55,15 @@
           </div>
         </div>
         </el-card>
+        <div class="center add-weekly">
+          Weekly Links
+          <el-switch
+            v-model="userInput.isLinked"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+        </div>
+
       </div>
     </div>
 
@@ -85,6 +94,7 @@
       <weekly-list-item v-if="weeks.length > 0"
         v-for="(activity, index) in weeks"
         :data="activity"
+        :linked="userInput.isLinked"
         :index="index+1">
       </weekly-list-item>
 
@@ -160,6 +170,7 @@ export default {
         weekNumber: 1,
         toChange: 12,
         isFile: true,
+        isLinked: true,
         uploadSwitchText: "Click to Upload Image from Url",
       },
       needsInit: true,

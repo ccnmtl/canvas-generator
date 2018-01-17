@@ -3,14 +3,14 @@
     <div class="grid-row top-xs">
       <div class="col-xs-4">
         <div class="styleguide-section__grid-demo-element">
-          <a :title="'Week ' + index" :href='url + "pages/week-" + index' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
+          <a :title="'Week ' + index" :href=' linked ? url + "pages/week-" + index : null' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
             <img class="crop STV1_WeeklyIconIMG" :src="data.imgSrc" alt=""  />
           </a>
         </div>
       </div>
       <div class="col-xs-8">
         <div class="styleguide-section__grid-demo-element">
-          <a :title="'Week ' + index" :href='url + "pages/week-" + index' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
+          <a :title="'Week ' + index" :href=' linked ? url + "pages/week-" + index : null' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
             <div class="STV1_Welcome">Week {{index}}: {{data.title}} </div>
           </a>
           <p>{{data.description}}</p>
@@ -50,7 +50,7 @@ export default {
       return moment(date).format("dddd, MMMM Do")
     },
   },
-  props: ['data', 'index'],
+  props: ['data', 'index', 'linked'],
   mounted(){
     setInterval( () => {
       this.url = this.$store.state.info.url.replace(/\/?(\?|#|$)/, '/$1')
