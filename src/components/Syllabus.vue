@@ -458,7 +458,8 @@ export default {
       this.info.profs.push(this.dProf);
     },
     addTA() {
-      this.info.tas.push(this.dTA);
+      let tempTA = _.cloneDeep(this.dTA)
+      this.info.tas.push(tempTA);
     },
     removeProf() {
       let { list, index } = this.selected;

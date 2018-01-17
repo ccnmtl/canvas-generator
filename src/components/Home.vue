@@ -40,14 +40,18 @@
           </div>
     		</li>
     		<li class="uk-text-center">
-          <textarea v-model="info.profs[0].name" class="code-input uk-input" rows="1" cols="20"></textarea>
-          <textarea v-model="info.profs[0].email" class="code-input uk-input" rows="1" cols="25"></textarea>
-          <textarea v-model="info.profs[0].office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+          <div v-for="prof in info.profs">
+          <textarea v-model="prof.name" class="code-input uk-input" rows="1" cols="20"></textarea>
+          <textarea v-model="prof.email" class="code-input uk-input" rows="1" cols="25"></textarea>
+          <textarea v-model="prof.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+          </div>
         </li>
     		<li class="uk-text-center" v-if="info.tas.length > 0">
-          <textarea v-model="info.tas[0].name" class="code-input uk-input" rows="1" cols="20"></textarea>
-          <textarea v-model="info.tas[0].email" class="code-input uk-input" rows="1" cols="25"></textarea>
-          <textarea v-model="info.tas[0].office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+          <div v-for="ta in info.tas">
+          <textarea v-model="ta.name" class="code-input uk-input" rows="1" cols="20"></textarea>
+          <textarea v-model="ta.email" class="code-input uk-input" rows="1" cols="25"></textarea>
+          <textarea v-model="ta.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+          </div>
     		</li>
     		<li class="uk-text-center">
           <textarea v-model="info.meetings" class="code-input uk-input" rows="1" cols="50"></textarea>
