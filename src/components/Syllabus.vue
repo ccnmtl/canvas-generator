@@ -158,13 +158,13 @@
             </tr>
           </thead>
           <tbody>
-            
+
              <tr v-for="(week, index) in weeks">
               <td>{{index}}</td>
-              <td>{{formatDate(week.date)}}</td>              
+              <td>{{formatDate(week.date)}}</td>
               <td>{{week.title}}</td>
             </tr>
-          </tbody>           
+          </tbody>
 
         </table>
 
@@ -342,7 +342,7 @@ export default {
       },
       pEditable: false,
       tEditable: false,
-      iEditable: false,
+      iEditable: true,
       outputCode: "",
       selected: { index: 0, list: this.$store.getters.getInfo.profs },
       editorOption: {

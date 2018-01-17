@@ -20,7 +20,7 @@
         <li class="uk-active"><a href="#">Course Info</a></li>
         <li><a href="#">Description</a></li>
     		<li><a href="#">Professor</a></li>
-    		<li><a href="#">TA</a></li>
+    		<li v-if="info.tas.length > 0"><a href="#">TA</a></li>
     		<li><a href="#">Meeting Times</a></li>
     		<li><a href="#">Media Input</a></li>
         <li><a href="#">Banner</a></li>
@@ -44,7 +44,7 @@
           <textarea v-model="info.profs[0].email" class="code-input uk-input" rows="1" cols="25"></textarea>
           <textarea v-model="info.profs[0].office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
         </li>
-    		<li class="uk-text-center">
+    		<li class="uk-text-center" v-if="info.tas.length > 0">
           <textarea v-model="info.tas[0].name" class="code-input uk-input" rows="1" cols="20"></textarea>
           <textarea v-model="info.tas[0].email" class="code-input uk-input" rows="1" cols="25"></textarea>
           <textarea v-model="info.tas[0].office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
@@ -129,7 +129,7 @@
                   <p v-for="prof in info.profs">Professor {{prof.name}} (<a :href="'mailto:' + prof.email">{{prof.email}}</a>) <br /> {{prof.office}}</p>
                 </div>
               </div>
-              <div class="col-xs-6">
+              <div class="col-xs-6" v-if="info.tas.length > 0">
                 <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
                   <p>TA:</p>
                   <p v-for="ta in info.tas"> {{ta.name}} (<a :href="'mailto:' + ta.email">{{ta.email}}</a>) <br /> {{ta.office}}</p>
