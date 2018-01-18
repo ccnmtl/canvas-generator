@@ -21,12 +21,12 @@
       <div>
         <el-card>
         <div class="code-input center">
-          Edit {{info.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
-            controls-position="right" size="small" :label="'Edit ' + info.dateType"></el-input-number>
+          Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
+            controls-position="right" size="small" :label="'Edit ' + info.classType.dateType"></el-input-number>
         </div>
 
         <select v-model="userInput.weekNumber" class="uk-select">
-          <option v-for="n in weeks.length" :value="n">{{info.dateType}} {{n}}</option>
+          <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
         </select>
 
         <div v-if="weeks.length > 0">
@@ -81,7 +81,7 @@
                   <i class="icon-clock"></i> {{activitiesTitle.toUpperCase()}} ACTIVITIES</h3>
               </div>
               <div class="pad-box-mini border border-b border-t">
-                <p>Welcome to the {{activitiesTitle}} Activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{info.title}}. Clicking on a {{info.dateType.toLowerCase()}} will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
+                <p>Welcome to the {{activitiesTitle}} Activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{info.title}}. Clicking on a {{info.classType.dateType.toLowerCase()}} will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
               </div>
             </div>
           </div>
@@ -220,7 +220,7 @@ export default {
       return moment(this.info.startDate).add(1, 'w').format("dddd, MMMM Do")
     },
     activitiesTitle() {
-      return this.info.dateType == "Week" ? "Weekly" : "Daily"
+      return this.info.classType.dateType == "Week" ? "Weekly" : "Daily"
     },
     // Changes the description wording so that it matches the current number of weeks on the page
     numWeeks(){
@@ -274,7 +274,7 @@ export default {
     },
     updateDates(){
       this.weeks.forEach((week, index)=>{
-        let interval = this.info.dateType == "Week" ? 'w' : 'd'
+        let interval = this.info.classType.dateType == "Week" ? 'w' : 'd'
         week.date = moment(this.info.startDate).add(index, interval)
       })
     },
@@ -285,7 +285,7 @@ export default {
       if (index > 15) index = 15;
 
       let tempWeek = _.cloneDeep(this.dWeek)
-      tempWeek.imgSrc = this.$store.state.imageServer + this.info.dateType.toLowerCase() + index + '.png'
+      tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + '.png'
 
       // let tempWeek = this.dWeek
       // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'

@@ -27,12 +27,18 @@ var moment = require('moment');
 export default {
   data(){
     return{
-      dateType: this.$store.state.info.dateType,
-      url: this.$store.state.info.url.replace(/\/?(\?|#|$)/, '/$1'),
-      server: this.$store.state.imageServer
     }
   },
   computed: {
+    dateType(){
+      return this.$store.state.info.classType.dateType
+    },
+    url(){
+      return this.$store.state.info.url.replace(/\/?(\?|#|$)/, '/$1')
+    },
+    server(){
+      return this.$store.state.imageServer
+    }
 
   },
   methods: {

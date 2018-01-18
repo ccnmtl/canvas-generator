@@ -11,7 +11,7 @@
         <el-option
           v-for="(week, index) in weeks"
           :key="week.date"
-          :label="info.dateType + ' ' + (index + 1)"
+          :label="info.classType.dateType + ' ' + (index + 1)"
           :value="index">
         </el-option>
       </el-select>
@@ -80,7 +80,7 @@
             <div class="ic-image-text-combo__text">
               <div class="pad-box-mini">
                 <h3 style="margin-bottom: 5px;">
-                  <i class="icon-clock"></i> {{info.dateType}} {{selected + 1}}: {{weeks[selected].title}}</h3>
+                  <i class="icon-clock"></i> {{info.classType.dateType}} {{selected + 1}}: {{weeks[selected].title}}</h3>
                 </div>
                 <div class="pad-box-mini border border-b border-t">
                   <p v-html="weeks[selected].body"></p>

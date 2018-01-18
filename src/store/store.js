@@ -24,7 +24,7 @@ export default new Vuex.Store({
 
       //TIME INFO
       startDate: null,
-      dateType: "Week",
+      dateType: "Day",
       dateLength: "12",
 
       classType: { option: "Weekly Course", dateType: "Week" },
@@ -65,6 +65,7 @@ export default new Vuex.Store({
 
     // UTILS
     loading: false,
+    infoFormVisible: false,
     prevPage: "/home",
     nextPage: "/weekly",
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",

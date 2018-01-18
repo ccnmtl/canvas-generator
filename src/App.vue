@@ -45,7 +45,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="getStartedModal">Confirm</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
       </span>
     </el-dialog>
 
@@ -88,11 +88,7 @@ export default {
   methods: {
     ...mapMutations([
       'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
-    ]),
-    getStartedModal(){
-      this.dialogFormVisible = false
-      this.$router.push({path: '/home'});
-    }
+    ])
   },
   computed: {
     loading() {
@@ -112,7 +108,7 @@ export default {
 
     for (let i = 1; i <= 13; i++ ){
       let tempWeek = _.cloneDeep(this.$store.getters.dWeek)
-      tempWeek.imgSrc = this.$store.state.imageServer + this.$store.state.info.dateType.toLowerCase() + i + '.png'
+      tempWeek.imgSrc = this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + '.png'
 
       weeklyActivities.push(tempWeek);
     }
