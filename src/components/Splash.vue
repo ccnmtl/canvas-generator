@@ -8,7 +8,12 @@
                <img class="columbia-logo" src="https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/columbia-logo-white.png" />
                <h1 class="uk-heading"><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 2.5"></span> CANVAS COURSE BUILDER</h1>
                <!-- <button class="uk-button uk-button-primary uk-button-large" @click="getStarted">Get Started</button> -->
+
+               <router-link class="router" to="/guide">
+               <button class="uk-button uk-button-secondary uk-button-large"> View Guide</button>
+               </router-link>
                <button class="uk-button uk-button-primary uk-button-large" @click="dialogFormVisible = true">Get Started</button>
+
             </div>
         </div>
     </div>
@@ -17,6 +22,12 @@
       <div class="center">
         <label for="input"> Course Title <el-input placeholder="Please input" v-model="info.title"></el-input> </label>
         <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url"></el-input> </label>
+        <label for="select">Class Type <br>
+          <select style="display: inline-block; width:150px" v-model="info.classType" name="Choose Banner" class="uk-select">
+            <option selected disabled>Choose Banner</option>
+            <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
+          </select>
+        </label>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>

@@ -6,7 +6,7 @@
       <!-- <a href="#offcanvas-slide" uk-toggle>Open</a> -->
 
       <div class="uk-float-right uk-padding-small">
-        <h6><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1" v-loading.fullscreen.lock="loading"></span> CANVAS CODE GENERATOR</h6>
+        <h6>Course Info: <span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true"></span> CANVAS CODE GENERATOR</h6>
       </div>
 
     <vue-snotify></vue-snotify>
@@ -31,6 +31,23 @@
        		<!-- <button class="uk-button uk-button-primary uk-margin-large-top">download the guide</button> -->
         </div>
     </div>
+
+    <el-dialog title="Course Info" :visible.sync="dialogFormVisible">
+      <div class="center">
+        <label for="input"> Course Title <el-input placeholder="Please input" v-model="info.title"></el-input> </label>
+        <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url"></el-input> </label>
+        <label for="select">Class Type <br>
+          <select style="display: inline-block; width:150px" v-model="info.classType" name="Choose Banner" class="uk-select">
+            <option selected disabled>Choose Banner</option>
+            <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
+          </select>
+        </label>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="getStartedModal">Confirm</el-button>
+      </span>
+    </el-dialog>
 
     <div class="clearfix"></div>
 
@@ -64,6 +81,7 @@ export default {
   data() {
     return {
       hasImportData: false,
+      dialogFormVisible: false,
       exportData: {}
     };
   },
@@ -71,11 +89,23 @@ export default {
     ...mapMutations([
       'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
     ]),
+    getStartedModal(){
+      this.dialogFormVisible = false
+      this.$router.push({path: '/home'});
+    }
   },
   computed: {
     loading() {
       return this.$store.getters.loading;
-    }
+    },
+    info: {
+      get () {
+        return this.$store.getters.getInfo
+      },
+      set (payload) {
+        this.$store.commit('updateInfo', payload)
+      }
+    },
   },
   mounted() {
     let weeklyActivities = [];
