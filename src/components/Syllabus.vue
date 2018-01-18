@@ -160,7 +160,7 @@
           <tbody>
 
              <tr v-for="(week, index) in weeks">
-              <td>{{index}}</td>
+              <td>{{index + 1}}</td>
               <td>{{formatDate(week.date)}}</td>
               <td>{{week.title}}</td>
             </tr>

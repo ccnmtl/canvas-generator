@@ -57,6 +57,8 @@
 import { EventBus } from "./bus";
 import { mapGetters, mapMutations } from 'vuex'
 
+var moment = require('moment');
+
 export default {
   name: "app",
   data() {
@@ -84,6 +86,10 @@ export default {
 
       weeklyActivities.push(tempWeek);
     }
+
+    weeklyActivities.forEach((week, index)=>{
+      week.date = moment().add(index, 'w')
+    })
 
     this.updateWeeks(weeklyActivities)
   }
