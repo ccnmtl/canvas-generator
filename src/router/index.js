@@ -4,6 +4,7 @@ import Splash from 'components/Splash'
 import Home from 'components/Home'
 import Syllabus from 'components/Syllabus'
 import Weekly from 'components/Weekly'
+import WeeklyBlended from 'components/WeeklyBlended'
 import WeeklyList from 'components/WeeklyList'
 import Export from 'components/Export'
 import Guide from 'components/Guide'
@@ -29,8 +30,13 @@ export default new Router({
     },
     {
       path: '/weekly',
-      name: 'Weekly Activities',
+      name: 'Weekly Activity',
       component: Weekly
+    },
+    {
+      path: '/weeklyblended',
+      name: 'Blended Weekly Activity',
+      component: WeeklyBlended
     },
     {
       path: '/weeklylist',

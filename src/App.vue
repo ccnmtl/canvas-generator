@@ -20,7 +20,8 @@
     			<li><router-link class="router" to="/home">Home Page</router-link></li>
           <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
           <li><router-link class="router" to="/weeklylist">Weekly Activites</router-link></li>
-          <li><router-link class="router" to="/weekly">Individual Activity</router-link></li>
+          <li v-show="info.classType.option !== 'Blended'"><router-link class="router" to="/weekly">Individual Activity</router-link></li>
+          <li v-show="info.classType.option == 'Blended'"><router-link class="router" to="/weeklyblended">Individual Activity</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/export">Export/Import Data</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/credits">CREDITS</router-link></li>
     			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
