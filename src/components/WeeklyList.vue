@@ -174,7 +174,6 @@ export default {
         uploadSwitchText: "Click to Upload Image from Url",
       },
       needsInit: true,
-      weeklyActivities: [],
       outputCode: '',
       editorOption:{
         modules: {
@@ -192,20 +191,6 @@ export default {
     "info.startDate": function(){
         this.updateDates();
     },
-    weeklyActivities: {
-      handler: function(newValue) {
-        this.weeks = this.weeklyActivities
-        // _.debounce()(
-        //   function() {
-        //     this.weeks = this.weeklyActivities
-        //   },
-        //   100
-        // )
-      },
-      deep: true
-   }
-
-
   },
   computed: {
     ...mapGetters([
@@ -236,7 +221,7 @@ export default {
     },
     // Changes the description wording so that it matches the current number of weeks on the page
     numWeeks(){
-      let num = this.weeklyActivities.length
+      let num = this.weeks.length
 
       var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
       var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
@@ -305,8 +290,6 @@ export default {
         imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/week' + index + '.png' // "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
       }
 
-      this.weeklyActivities.push(tempWeek);
-
       // let tempWeek = this.dWeek
       // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
       //
@@ -314,7 +297,9 @@ export default {
     },
     // Adds a user inputted number of activities
     populateActivities(num){
-      let diff = num - this.weeklyActivities.length
+      let diff = num - this.weeks.length
+
+      console.log(diff)
 
       if (diff > 0 ){
         for (let i = 0; i < diff; i++ ) this.AddActivity();
@@ -322,15 +307,13 @@ export default {
 
       if (diff < 0) {
         this.userInput.weekNumber = 1;
-        this.weeklyActivities = this.weeklyActivities.slice(0, num);
-        this.sliceWeek(num)
+        this.weeks = this.weeks.slice(0, num);
       }
 
       this.updateDates()
 
     },
     setToDefault(){
-      this.weeklyActivities = [];
       this.weeks = [];
       this.populateActivities(12);
     },
@@ -361,7 +344,7 @@ export default {
       this.$http.post('http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image',formData).then( response => {
         console.log('success')
         let imageData = JSON.parse(response.bodyText);
-        this.weeklyActivities[this.userInput.weekNumber - 1].imgSrc = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
+        this.weeks[this.userInput.weekNumber - 1].imgSrc = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
       }, response => {
         console.log(response)
       });
@@ -386,7 +369,7 @@ export default {
   },
   beforeCreate(){
     EventBus.$on('import-data', data => {
-      this.weeklyActivities = data.weeklyList.weeklyActivities
+      this.weeks = data.weeklyList.weeks
       console.log('importing data to weekly list...')
     })
 
