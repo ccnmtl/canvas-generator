@@ -41,10 +41,10 @@
       <!-- This is a seperate component to handle adding new Acitivity Page elements abstractly. For more information check the WeeklyCodeModule.vue file. -->
       <weekly-code-module
         class="code-module"
-        :content="videos"
+        :content="weeks[selected].videos"
         :fn="addVideo"
         :inputs="['title','description', 'source']"
-        @clearArr="videos = []">
+        @clearArr="weeks[selected].videos = []">
         Video
       </weekly-code-module>
 
@@ -96,7 +96,7 @@
 
       <!-- The videos, discussions, and assignments are all built into their own smaller components to keep it more organized
       They are WeeklyDiscussion.vue, WeeklyAssignment.vue, and WeeklyVideo.vue respectively. -->
-      <weekly-video  v-for="(video, index) in videos" :data="video" :index="index+1" :key="video.source"> </weekly-video>
+      <weekly-video  v-for="(video, index) in weeks[selected].videos" :data="video" :index="index+1" :key="video.source"> </weekly-video>
 
       <transition name="fade">
       <div class="item-group-container" style="padding-bottom: 0;" v-if="weeks[selected].assignments.length > 0 || weeks[selected].discussions.length > 0">
@@ -264,7 +264,7 @@ export default {
         source: "https://www.youtube.com/watch?v=GxSGKD50ioE"
       }
 
-      this.videos.push(tempVideo);
+      this.weeks[this.selected].videos.push(tempVideo);
     },
     addDiscussion() {
       let tempDisc = {
@@ -289,7 +289,7 @@ export default {
     setToDefault(){
       console.log('resetting data...')
       this.userInput = { ...this.$store.getters.dWeekly};
-      this.videos = this.weeks[selected].assignments = this.weeks[selected].discussions = [];
+      this.weeks[this.selected].videos = this.weeks[this.selected].assignments = this.weeks[this.selected].discussions = [];
     },
     getSaveStateConfig() {
       return {
@@ -311,9 +311,9 @@ export default {
 
     EventBus.$on('import-data', data => {
       this.userInput = { ...data.weekly.userInput}
-      this.videos = data.weekly.videos
-      this.assignments = data.weekly.assignments
-      this.discussions = data.weekly.discussions
+      this.weeks[selected].videos = data.weekly.videos
+      this.weeks[selected].assignments = data.weekly.assignments
+      this.weeks[selected].discussions = data.weekly.discussions
       console.log('importing data to weekly...')
     })
 
