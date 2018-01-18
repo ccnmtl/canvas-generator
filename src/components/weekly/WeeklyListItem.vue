@@ -3,15 +3,15 @@
     <div class="grid-row top-xs">
       <div class="col-xs-4">
         <div class="styleguide-section__grid-demo-element">
-          <a :title="'Week ' + index" :href=' linked ? url + "pages/week-" + index : null' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
+          <a :title="dateType + ' ' + index" :href=' linked ? url + "pages/" + dateType.toLowerCase() + "-" + index : null'>
             <img class="crop STV1_WeeklyIconIMG" :src="data.imgSrc" alt=""  />
           </a>
         </div>
       </div>
       <div class="col-xs-8">
         <div class="styleguide-section__grid-demo-element">
-          <a :title="'Week ' + index" :href=' linked ? url + "pages/week-" + index : null' :data-api-endpoint='url + "pages/week-" + index' data-api-returntype="Page">
-            <div class="STV1_Welcome">Week {{index}}: {{data.title}} </div>
+          <a :title="dateType + ' ' + index" :href=' linked ? url + "pages/" + dateType.toLowerCase() + "-"  + index : null'>
+            <div class="STV1_Welcome">{{dateType}} {{index}}: {{data.title}} </div>
           </a>
           <p>{{data.description}}</p>
           <p>Class: {{formatWeek(data.date)}}</p>
@@ -27,6 +27,7 @@ var moment = require('moment');
 export default {
   data(){
     return{
+      dateType: this.$store.state.info.dateType,
       url: this.$store.state.info.url.replace(/\/?(\?|#|$)/, '/$1'),
       server: this.$store.state.imageServer
     }

@@ -7,11 +7,11 @@
   <div class="code-container">
 
     <div class="textbox-container">
-      <el-select v-model="selected" placeholder="Select" style="margin-right: 30px; margin-left:30px; margin-bottom:10px">
+      <el-select v-model="selected" placeholder="Select" style="margin-right: 100px; margin-left:100px; margin-bottom:10px; width: 150px;">
         <el-option
           v-for="(week, index) in weeks"
           :key="week.date"
-          :label="'Week ' + (index + 1)"
+          :label="info.dateType + ' ' + (index + 1)"
           :value="index">
         </el-option>
       </el-select>
@@ -80,7 +80,7 @@
             <div class="ic-image-text-combo__text">
               <div class="pad-box-mini">
                 <h3 style="margin-bottom: 5px;">
-                  <i class="icon-clock"></i> Week {{selected + 1}}: {{weeks[selected].title}}</h3>
+                  <i class="icon-clock"></i> {{info.dateType}} {{selected + 1}}: {{weeks[selected].title}}</h3>
                 </div>
                 <div class="pad-box-mini border border-b border-t">
                   <p v-html="weeks[selected].body"></p>

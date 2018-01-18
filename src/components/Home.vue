@@ -27,9 +27,9 @@
     	</ul>
     	<ul id="tab-content" class="uk-switcher uk-margin">
     		<li class="uk-active uk-text-center">
-          <textarea v-model="info.title" class="code-input uk-input" rows="1" cols="25"></textarea>
-          <textarea v-model="info.semester" class="code-input uk-input" rows="1" cols="20"></textarea>
-          <textarea v-model="info.url" class="code-input uk-input" rows="1" cols="45"></textarea> <br>
+          <el-input style="width: 200px;" v-model="info.title"></el-input>
+          <el-input style="width: 200px;" v-model="info.semester"></el-input>
+          <el-input style="width: 400px;" v-model="info.url"></el-input>
         </li>
     		<li class="uk-text-center">
           <div class='quill'>

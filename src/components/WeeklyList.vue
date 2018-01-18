@@ -21,12 +21,12 @@
       <div>
         <el-card>
         <div class="code-input center">
-          Edit Week: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
-            controls-position="right" size="small" label="Edit Week"></el-input-number>
+          Edit {{info.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
+            controls-position="right" size="small" :label="'Edit ' + info.dateType"></el-input-number>
         </div>
 
         <select v-model="userInput.weekNumber" class="uk-select">
-          <option v-for="n in weeks.length" :value="n">Week {{n}}</option>
+          <option v-for="n in weeks.length" :value="n">{{info.dateType}} {{n}}</option>
         </select>
 
         <div v-if="weeks.length > 0">
@@ -56,7 +56,7 @@
         </div>
         </el-card>
         <div class="center add-weekly">
-          Weekly Links
+          {{activitiesTitle}} Links
           <el-switch
             v-model="userInput.isLinked"
             active-color="#13ce66"
@@ -78,10 +78,10 @@
             <div class="ic-image-text-combo__text">
               <div class="pad-box-mini">
                 <h3 style="margin-bottom: 5px;">
-                  <i class="icon-clock"></i> WEEKLY ACTIVITIES</h3>
+                  <i class="icon-clock"></i> {{activitiesTitle.toUpperCase()}} ACTIVITIES</h3>
               </div>
               <div class="pad-box-mini border border-b border-t">
-                <p>Welcome to the Weekly Activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{info.title}}. Clicking on a week will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
+                <p>Welcome to the {{activitiesTitle}} Activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{info.title}}. Clicking on a {{info.dateType.toLowerCase()}} will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
               </div>
             </div>
           </div>
@@ -219,6 +219,9 @@ export default {
     week() {
       return moment(this.info.startDate).add(1, 'w').format("dddd, MMMM Do")
     },
+    activitiesTitle() {
+      return this.info.dateType == "Week" ? "Weekly" : "Daily"
+    },
     // Changes the description wording so that it matches the current number of weeks on the page
     numWeeks(){
       let num = this.weeks.length
@@ -271,7 +274,8 @@ export default {
     },
     updateDates(){
       this.weeks.forEach((week, index)=>{
-        week.date = moment(this.info.startDate).add(index, 'w')
+        let interval = this.info.dateType == "Week" ? 'w' : 'd'
+        week.date = moment(this.info.startDate).add(index, interval)
       })
     },
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
@@ -281,14 +285,7 @@ export default {
       if (index > 15) index = 15;
 
       let tempWeek = _.cloneDeep(this.dWeek)
-      tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
-
-      let tempActivity = {
-        title: "Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
-        date: "",
-        description: "This session will cover the foundational topics in food systems.",
-        imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/week' + index + '.png' // "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg"
-      }
+      tempWeek.imgSrc = this.$store.state.imageServer + this.info.dateType.toLowerCase() + index + '.png'
 
       // let tempWeek = this.dWeek
       // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
