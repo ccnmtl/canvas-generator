@@ -7,8 +7,15 @@
   <div class="code-container">
 
     <div class="textbox-container">
-
-      <textarea v-model="userInput.weekTitle" class="code-input uk-textarea" rows="2" cols="60"></textarea>
+      <el-select v-model="selected" placeholder="Select" style="margin-right: 30px; margin-left:30px; margin-bottom:10px">
+        <el-option
+          v-for="(week, index) in weeks"
+          :key="week.date"
+          :label="'Week ' + (index + 1)"
+          :value="index">
+        </el-option>
+      </el-select>
+      <textarea v-model="weeks[selected].title" class="code-input uk-textarea" rows="2" cols="60"></textarea>
       <!-- <button type="button" name="button" class="uk-button uk-button-primary" @click="setToDefault">Reset to Default</button> -->
       <button type="button" name="button" class="show-editor center uk-button uk-button-primary" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
       <!-- This transition is defined as a css animations in the style section -->
@@ -16,13 +23,13 @@
       <div v-show="showEditor">
         <div class="quill">
           <quill-editor ref="myTextEditor"
-                        v-model="userInput.description"
+                        v-model="weeks[selected].body"
                         :config="editorOption">
           </quill-editor>
         </div>
         <div class="quill">
           <quill-editor ref="myTextEditor"
-                        v-model="userInput.required"
+                        v-model="weeks[selected].required"
                         :config="editorOption">
           </quill-editor>
         </div>
@@ -43,19 +50,19 @@
 
       <weekly-code-module
         class="code-module"
-        :content="discussions"
+        :content="weeks[selected].discussions"
         :fn="addDiscussion"
         :inputs="['link','due', 'available', 'points']"
-        @clearArr="discussions = []">
+        @clearArr="weeks[selected].discussions = []">
         Discussion
       </weekly-code-module>
 
       <weekly-code-module
         class="code-module"
-        :content="assignments"
+        :content="weeks[selected].assignments"
         :fn="addAssignment"
         :inputs="['link','due', 'available', 'points']"
-        @clearArr="assignments = []">
+        @clearArr="weeks[selected].assignments = []">
         Assignment
       </weekly-code-module>
 
@@ -73,12 +80,12 @@
             <div class="ic-image-text-combo__text">
               <div class="pad-box-mini">
                 <h3 style="margin-bottom: 5px;">
-                  <i class="icon-clock"></i> {{userInput.weekTitle}}</h3>
+                  <i class="icon-clock"></i> Week {{selected + 1}}: {{weeks[selected].title}}</h3>
                 </div>
                 <div class="pad-box-mini border border-b border-t">
-                  <p v-html="userInput.description"></p>
+                  <p v-html="weeks[selected].body"></p>
                   <div class="pad-box-mini">
-                    <span v-html="userInput.required" >
+                    <span v-html="weeks[selected].required" >
                     </span>
                   </div>
               </div>
@@ -92,11 +99,11 @@
       <weekly-video  v-for="(video, index) in videos" :data="video" :index="index+1" :key="video.source"> </weekly-video>
 
       <transition name="fade">
-      <div class="item-group-container" style="padding-bottom: 0;" v-if="assignments.length > 0 || discussions.length > 0">
+      <div class="item-group-container" style="padding-bottom: 0;" v-if="weeks[selected].assignments.length > 0 || weeks[selected].discussions.length > 0">
         <div class="item-group-condensed">
           <ul id="cond_group_1" class="ig-list">
-          <weekly-discussion  v-for="(disc, index) in discussions" :data="disc" :index="index+1" :key="disc.link"> </weekly-discussion>
-          <weekly-assignment  v-for="(assign, index) in assignments" :data="assign" :index="index+1" :key="assign.link"> </weekly-assignment>
+          <weekly-discussion  v-for="(disc, index) in weeks[selected].discussions" :data="disc" :index="index+1" :key="disc.link"> </weekly-discussion>
+          <weekly-assignment  v-for="(assign, index) in weeks[selected].assignments" :data="assign" :index="index+1" :key="assign.link"> </weekly-assignment>
           </ul>
         </div>
       </div>
@@ -149,6 +156,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 import { EventBus } from '../bus'
 import { quillEditor } from 'vue-quill-editor';
 import WeeklyCodeModule from './weekly/WeeklyCodeModule'
@@ -180,6 +188,7 @@ export default {
         description: "We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss “The Big Picture,” starting with the historical context of the current global food system, including the “Green Revolution.” Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.",
         required:'<span ><p><strong>Lecture Slides:</strong></p><p><strong>Download PDF:&nbsp;</strong><a href="https://courseworks2.columbia.edu/courses/29191/files/1032282/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">GFS Week 6 Africa (February 21, 2017) Final.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></p><p><strong>Required Readings / Viewings:</strong></p><ul><li>Sanchez, P.A. (2002) Soil fertility and hunger in Africa.&nbsp;<em>Science&nbsp;</em><strong>295</strong>: 2019-2020.</li><li>Download PDF:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/929036/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">Soil_Fertility_and_Hunger_in_Africa_2002.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li><li><strong>Familiarize yourself with the work of the Alliance for an African Green Revolution (AGRA):&nbsp;</strong><a href="http://www.agra.org/" target="_blank" style="color: rgb(0, 142, 226);">http://www.agra.org/&nbsp;(Links to an external site.)</a></li></ul><p><strong>Supplementary Resources</strong></p><ul><li>Listen: --“African Land Fertile Ground for Crops and Investors.” NPR. June 15, 2012.&nbsp;<a href="http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors" target="_blank" style="color: rgb(0, 142, 226);">http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors&nbsp;(Links to an external site.)</a></li><li>Download mp3:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/1009373/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">20120615_atc_06.mp3<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li></ul></span>',
       },
+      selected: 0,
       videoEditable: false,
       showEditor: false,
       videos: [],
@@ -202,14 +211,26 @@ export default {
   },
   mixins: [saveState],
   computed: {
+    ...mapGetters([
+      'getInfo', 'dWeek', 'getWeeks'
+    ]),
+
     info: {
       get () {
-        return this.$store.getters.getInfo
+        return this.getInfo
       },
       set (payload) {
-        this.$store.commit('updateInfo', payload)
+        this.updateInfo
       }
     },
+    weeks: {
+      get () {
+        return this.getWeeks
+      },
+      set (payload) {
+        this.$store.commit('updateWeeks', payload)
+      }
+    }
   },
   methods: {
     copyText(option) {
@@ -253,7 +274,7 @@ export default {
         points: 10
       }
 
-      this.discussions.push(tempDisc);
+      this.weeks[this.selected].discussions.push(tempDisc);
     },
     addAssignment() {
       let tempAssign = {
@@ -263,12 +284,12 @@ export default {
         points: 10
       }
 
-      this.assignments.push(tempAssign);
+      this.weeks[this.selected].assignments.push(tempAssign);
     },
     setToDefault(){
       console.log('resetting data...')
       this.userInput = { ...this.$store.getters.dWeekly};
-      this.videos = this.assignments = this.discussions = [];
+      this.videos = this.weeks[selected].assignments = this.weeks[selected].discussions = [];
     },
     getSaveStateConfig() {
       return {
