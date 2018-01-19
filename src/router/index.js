@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Splash from 'components/Splash'
 import Home from 'components/Home'
 import Syllabus from 'components/Syllabus'
+import Program from 'components/ProgramOverview'
 import Weekly from 'components/Weekly'
 import WeeklyBlended from 'components/WeeklyBlended'
 import WeeklyList from 'components/WeeklyList'
@@ -37,6 +38,11 @@ export default new Router({
       path: '/weeklyblended',
       name: 'Blended Weekly Activity',
       component: WeeklyBlended
+    },
+    {
+      path: '/program',
+      name: 'Program Overview',
+      component: Program
     },
     {
       path: '/weeklylist',

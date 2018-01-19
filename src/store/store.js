@@ -52,6 +52,11 @@ export default new Vuex.Store({
         },
       ],
 
+      // Usage Options
+      useDates: true,
+      useWeeklyImages: true,
+      useLinks: true,
+
       //DISPLAY PARAMETERS
       video:"https://vimeo.com/199382848/1dd8fc0f31",
       image:"http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg",

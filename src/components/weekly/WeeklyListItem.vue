@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="content-box">
     <div class="grid-row top-xs">
-      <div class="col-xs-4">
+      <div v-if="info.useWeeklyImages" class="col-xs-4">
         <div class="styleguide-section__grid-demo-element">
           <a :title="dateType + ' ' + index" :href=' linked ? url + "pages/" + dateType.toLowerCase() + "-" + index : null'>
             <img class="crop STV1_WeeklyIconIMG" :src="data.imgSrc" alt=""  />
@@ -14,7 +14,7 @@
             <div class="STV1_Welcome">{{dateType}} {{index}}: {{data.title}} </div>
           </a>
           <p>{{data.description}}</p>
-          <p>Class: {{formatWeek(data.date)}}</p>
+          <p v-if="info.useDates">Class: {{formatWeek(data.date)}}</p>
         </div>
       </div>
     </div>
@@ -30,11 +30,19 @@ export default {
     }
   },
   computed: {
+    info: {
+      get () {
+        return this.$store.getters.getInfo
+      },
+      set (payload) {
+        this.$store.commit('updateInfo', payload)
+      }
+    },
     dateType(){
-      return this.$store.state.info.classType.dateType
+      return this.info.classType.dateType
     },
     url(){
-      return this.$store.state.info.url.replace(/\/?(\?|#|$)/, '/$1')
+      return this.info.url.replace(/\/?(\?|#|$)/, '/$1')
     },
     server(){
       return this.$store.state.imageServer
@@ -60,7 +68,7 @@ export default {
   props: ['data', 'index', 'linked'],
   mounted(){
     setInterval( () => {
-      this.url = this.$store.state.info.url.replace(/\/?(\?|#|$)/, '/$1')
+      // this.url = this.$store.state.info.url.replace(/\/?(\?|#|$)/, '/$1')
     }, 1000);
   }
 }

@@ -19,6 +19,7 @@
     			<li class="uk-nav-header">TEMPLATES</li>
     			<li><router-link class="router" to="/home">Home Page</router-link></li>
           <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
+          <li v-show="info.classType.option == 'Executive Training'"><router-link class="router" to="/program">Program Overview</router-link></li>
           <li><router-link class="router" to="/weeklylist">Weekly Activites</router-link></li>
           <li v-show="info.classType.option !== 'Blended'"><router-link class="router" to="/weekly">Individual Activity</router-link></li>
           <li v-show="info.classType.option == 'Blended'"><router-link class="router" to="/weeklyblended">Individual Activity</router-link></li>
@@ -107,7 +108,7 @@ export default {
   mounted() {
     let weeklyActivities = [];
 
-    for (let i = 1; i <= 13; i++ ){
+    for (let i = 1; i <= 12; i++ ){
       let tempWeek = _.cloneDeep(this.$store.getters.dWeek)
       tempWeek.imgSrc = this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + '.png'
 

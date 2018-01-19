@@ -56,9 +56,24 @@
         </div>
         </el-card>
         <div class="center add-weekly">
-          {{activitiesTitle}} Links
+          Links
           <el-switch
-            v-model="userInput.isLinked"
+            v-model="info.useLinks"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+          
+          Dates
+          <el-switch
+            v-model="info.useDates"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+        </div>
+        <div class="center add-weekly">
+          Images
+          <el-switch
+            v-model="info.useWeeklyImages"
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
@@ -94,7 +109,7 @@
       <weekly-list-item v-if="weeks.length > 0"
         v-for="(activity, index) in weeks"
         :data="activity"
-        :linked="userInput.isLinked"
+        :linked="info.useLinks"
         :index="index+1">
       </weekly-list-item>
 
