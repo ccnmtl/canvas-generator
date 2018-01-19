@@ -49,7 +49,7 @@ export default {
     },
 
     weekDefault: {
-      title: 'Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective',
+      title: 'Sustainable Agriculture and Food Systems',
       date: moment(),
       description: "This session will cover the foundational topics in food systems.",
       imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/week1' + '.png',

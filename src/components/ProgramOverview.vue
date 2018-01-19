@@ -8,60 +8,8 @@
 
     <div class="textbox-container">
       <el-card class="card">
-          <el-button type="primary" @click="addProf">Add Professor</el-button>
-          <el-button type="primary" @click="addTA">Add TA</el-button>
-          <el-button type="danger" @click="clearProfs">Clear</el-button>
-      </el-card>
-
-      <el-card class="card box-card" v-if="selected.list">
-        <div slot="header" class="clearfix">
-          <span class="big-text">Edit Info</span>
-
-          <el-select v-model="selected" placeholder="Select" value-key="key" style="width: 180px; margin-left: 10px">
-            <el-option-group
-              key="profs"
-              label="Professors">
-              <el-option
-                v-for="(prof, index) in info.profs"
-                :key="prof.name"
-                :label="prof.name"
-                :value="{index, list: info.profs, key: prof.name}">
-              </el-option>
-            </el-option-group>
-            <el-option-group
-              key="tas"
-              label="TAs">
-              <el-option
-                v-for="(ta, index) in info.tas"
-                :key="ta.name"
-                :label="ta.name"
-                :value="{index, list: info.tas, key: ta.name}">
-              </el-option>
-            </el-option-group>
-          </el-select>
-
-          <el-button style="float: right; padding: 3px 0" type="text"@click="iEditable = !iEditable"> {{ iEditable ? "Save" : "Edit" }}</el-button>
-
-        </div>
-        <el-button style="float: right; margin-bottom: 10px;" type="danger" size="medium" @click="removeProf">Remove</el-button>
-        <div v-show="iEditable" v-if="selected.list.length > 0" class="center">
-
-          <el-input style="width: 200px; float:left" class="e-input" v-model="selected.list[selected.index].name"> </el-input>
-
-          <el-input class="e-input"v-model="selected.list[selected.index].email"> </el-input>
-          <el-input class="e-input" type="textarea" autosize v-model="selected.list[selected.index].office"> </el-input>
-          <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
-
-          <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
-          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', selected.list[selected.index])">
-            <input name="image" id="image-file" type="file"> <br>
-            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
-          </form>
-          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', selected.list[selected.index])">
-            <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
-            <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
-          </form>
-        </div>
+        How Many Weeks: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeeks" :min="1" :max="4"></el-input-number> <br>
+        How Many Days per Week: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeekLength" :min="1" :max="7"></el-input-number>
       </el-card>
 
     </div>
@@ -81,147 +29,57 @@
           </div>
         </div>
       </div>
-      <div class="content-box">
-        <div class="STV1_CC_Banner07">
-          <p class="STV1_CC_BannerTitle">SCHEDULE // WEEK 1</p>
+      <div v-for="week in info.execWeeks">
+        <div class="content-box">
+          <div :class="'STV1_CC_Banner0' + (week + 2)">
+            <p class="STV1_CC_BannerTitle">SCHEDULE // WEEK {{week}}</p>
+          </div>
         </div>
-      </div>
-      <div class="content-box">
-        <div class="grid-row top-xs">
-          <div class="col-xs-12">
-            <div class="styleguide-section__grid-demo-element">
-              <table class="ic-Table ic-Table--hover-row" style="height: 58px;" width="431">
-                <thead>
-                  <tr>
-                    <th style="width: 90px;">&nbsp;</th>
-                    <th style="width: 68px;">Monday 10</th>
-                    <th style="width: 71px;">Tuesday 11</th>
-                    <th style="width: 91px;">Wednesday 12</th>
-                    <th style="width: 77px;">Thursday 13</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style="width: 88px;">9:30 am - 12:00 pm</td>
-                    <td style="width: 66px;">
-                      <p><em>(Overview of Program)</em></p>
-                      <p><strong>Leadership and PPP</strong></p>
-                      <p>Bill Eimicke</p>
-                    </td>
-                    <td style="width: 69px;">
-                      <p><strong>&nbsp;Non Public Ethics</strong></p>
-                      <p>Paulo Lagunes</p>
-                    </td>
-                    <td style="width: 89px;">
-                      <p><strong>Site Visit: </strong></p>
-                      <p>NYPI</p>
-                    </td>
-                    <td style="width: 75px;">
-                      <p><strong>Communications in Organizations</strong></p>
-                      <p>Joanne Baney</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width: 88px;"><strong>Lunch Break</strong></td>
-                    <td style="width: 66px;"></td>
-                    <td style="width: 69px;"></td>
-                    <td style="width: 89px;"></td>
-                    <td style="width: 75px;"></td>
-                  </tr>
-                  <tr>
-                    <td style="width: 88px;">1:30 pm - &nbsp;4:00 pm</td>
-                    <td style="width: 66px;">
-                      <p><strong>Site Visit:</strong></p>
-                      <p>311</p>
-                    </td>
-                    <td style="width: 69px;">
-                      <p><strong>Site Visit:</strong></p>
-                      <p>Brazil Cham</p>
-                    </td>
-                    <td style="width: 89px;">
-                      <p><strong>Negotiation and Conflict Resolution</strong></p>
-                      <p>Zach Metz</p>
-                    </td>
-                    <td style="width: 75px;">
-                      <p><strong>Communications in Organizations II</strong></p>
-                      <p>Joanne Baney</p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="content-box">
-                <div class="STV1_CC_Banner08">
-                  <p class="STV1_CC_BannerTitle">SCHEDULE // WEEK 2</p>
-                </div>
+
+        <div class="content-box">
+          <div class="grid-row top-xs">
+            <div class="col-xs-12">
+              <div class="styleguide-section__grid-demo-element">
+                <table class="ic-Table ic-Table--hover-row" style="height: 58px;" width="431">
+                  <thead>
+                    <tr>
+                      <th style="width: 90px;">&nbsp;</th>
+                      <th style="width: 75px;" v-for="day in info.execWeekLength"> {{incrementDate(info.startDate, week - 1, day - 1)}}</th>
+
+
+                      <!-- This line grab dates of first four days, then next four days, etc.. would work if I implemented a seperate start day for each week (possibly better)
+                      <th style="width: 75px;" v-for="i in info.execWeekLength"> {{formatDate(weeks[(day - 1) + (week - 1) * info.execWeekLength].date)}}</th> -->
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="width: 88px;">9:30 am - 12:00 pm</td>
+                      <td style="width: 74x;" v-for="day in info.execWeekLength">
+                        <p v-if="day == 1 && week == 1"><em>(Overview of Program)</em></p>
+                        <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title}}</strong></p>
+                        <p>{{info.profs[0].name}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 88px;"><strong>Lunch Break</strong></td>
+                      <td v-for="day in info.execWeekLength"></td>
+                    </tr>
+                    <tr>
+                      <td style="width: 88px;">1:30 pm - &nbsp;4:00 pm</td>
+                      <td style="width: 74x;" v-for="day in info.execWeekLength">
+                        <p v-if="day == 1 && week == 1"><em>(Overview of Program)</em></p>
+                        <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title + " II" }}</strong></p>
+                        <p>{{info.profs[0].name}}</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <table class="ic-Table ic-Table--hover-row" style="height: 58px;" width="431">
-                <thead>
-                  <tr>
-                    <th style="width: 90px;">&nbsp;</th>
-                    <th style="width: 68px;">Monday 17</th>
-                    <th style="width: 71px;">Tuesday 18</th>
-                    <th style="width: 91px;">Wednesday 19</th>
-                    <th style="width: 77px;">Thursday 20</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style="width: 88px;">9:30 am - 12:00 pm</td>
-                    <td style="width: 66px;">
-                      <p><strong>Technology Trends in Government</strong></p>
-                      <p>Claudia Gerola</p>
-                    </td>
-                    <td style="width: 69px;">
-                      <p><strong>&nbsp;Zoning Manhattan</strong></p>
-                      <p>Elliot Sclar</p>
-                    </td>
-                    <td style="width: 89px;">
-                      <p><strong>Health and Cities</strong></p>
-                      <p>Eduardo Leite</p>
-                    </td>
-                    <td style="width: 75px;">
-                      <p><strong>Global Social Policy and Innovation</strong></p>
-                      <p>Yumi Shimabukuro</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width: 88px;">Lunch Break</td>
-                    <td style="width: 66px;"></td>
-                    <td style="width: 69px;"></td>
-                    <td style="width: 89px;"></td>
-                    <td style="width: 75px;"></td>
-                  </tr>
-                  <tr>
-                    <td style="width: 88px;">1:30 pm - &nbsp;4:00 pm</td>
-                    <td style="width: 66px;">
-                      <p><strong>Site Visit:</strong></p>
-                      <p>FDNY</p>
-                    </td>
-                    <td style="width: 69px;">
-                      <p><strong>Site Visit:</strong></p>
-                      <p>Prof. Sclar's Project</p>
-                    </td>
-                    <td style="width: 89px;">
-                      <p><strong>Site Visit:</strong></p>
-                      <p>(RED)</p>
-                    </td>
-                    <td style="width: 75px;">
-                      <p><strong>Competitiveness in Cities</strong></p>
-                      <p>Thomas J. Trebat</p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>
       </div>
-
-
-
-
-
-
     </div>
 
   </div>
@@ -338,7 +196,10 @@ export default {
   },
   methods: {
     formatDate(date){
-      return moment(date, "dddd, MMMM Do").format("MMMM Do")
+      return moment(date, "dddd, MMMM Do").format("dddd Do")
+    },
+    incrementDate(date, weeks, days){
+      return moment(date).add(weeks, 'w').add(days, 'd').format("dddd Do")
     },
     newLine(val) {
       if (!val) return "";

@@ -5,6 +5,7 @@ import createPersistedState from 'vuex-persistedstate'
 import defaults from './components/defaults'
 import theme from './components/theme'
 
+
 Vue.use(Vuex);
 
 var moment = require('moment');
@@ -23,9 +24,12 @@ export default new Vuex.Store({
       classType: "default", // options are "default", "blended", "execEd",
 
       //TIME INFO
-      startDate: null,
+      startDate: moment(),
       dateType: "Day",
       dateLength: "12",
+      execWeeks: "2",
+      execWeekLength: "4",
+
 
       classType: { option: "Weekly Course", dateType: "Week" },
       classOptions:[
