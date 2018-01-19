@@ -22,35 +22,24 @@
           placeholder="Pick start date">
         </el-date-picker>
       </el-card>
-    </div>
 
+      <el-card>
+      <div class="code-input center">
+        Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
+          controls-position="right" size="small" :label="'Edit ' + info.classType.dateType"></el-input-number>
+      </div>
 
-      <hr>
+      <select v-model="userInput.weekNumber" class="uk-select">
+        <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
+      </select>
 
-      <div>
-        <!-- <el-card>
-        <div class="code-input center">
-          Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
-            controls-position="right" size="small" :label="'Edit ' + info.classType.dateType"></el-input-number>
+      <div v-if="weeks.length > 0">
+        <div class="code-input center uk-margin-small-top">
+          <label for="text-area">Title</label> <br>
+          <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"> </el-input>
         </div>
-
-        <select v-model="userInput.weekNumber" class="uk-select">
-          <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
-        </select>
-
-        <div v-if="weeks.length > 0">
-          <div class="code-input center uk-margin-small-top">
-            <label for="text-area">Title</label> <br>
-            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"> </el-input>
-          </div>
-
-          <div class="code-input center uk-margin-small-top">
-            <label for="text-area">Description</label>
-            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].description"> </el-input>
-          </div>
-        </div>
-        </el-card> -->
-
+      </div>
+      </el-card>
     </div>
 
     <!-- Where the canvas code is stored -->
@@ -109,7 +98,6 @@
                     <tr>
                       <td style="width: 88px;">1:30 pm - &nbsp;4:00 pm</td>
                       <td style="width: 74x;" v-for="day in info.execWeekLength">
-                        <p v-if="day == 1 && week == 1"><em>(Overview of Program)</em></p>
                         <div v-if="(day - 1) + (week - 1) * info.execWeekLength < weeks.length">
                           <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title + " II"}}</strong></p>
                           <p>{{info.profs[0].name}}</p>
