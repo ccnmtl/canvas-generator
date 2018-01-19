@@ -68,50 +68,50 @@ export default {
     //       background: 'rgba(0, 0, 0, 0.7)'
     // });
 
-    this.loading = true;
+    // this.loading = true;
+    //
+    // setTimeout(() => {
+    //   let initialPath = this.$route.path
+    //   let paths = ['/home', '/weekly', '/weeklylist','/syllabus'].filter(p => p !== initialPath).concat([initialPath])
+    //   paths.forEach((path, i) => {
+    //     setTimeout(() => this.$router.replace(path), i * 30)
+    //   })
+    // }, 500);
 
-    setTimeout(() => {
-      let initialPath = this.$route.path
-      let paths = ['/home', '/weekly', '/weeklylist','/syllabus'].filter(p => p !== initialPath).concat([initialPath])
-      paths.forEach((path, i) => {
-        setTimeout(() => this.$router.replace(path), i * 30)
-      })
-    }, 500);
 
+    // setTimeout(() => {
+    //   this.loading = false //loading.close();
+    // }, 1500);
+    //
+    // EventBus.$on('home-data', data => {
+    //   this.exportData.home = data
+    //   console.log('got home')
+    //   this.exportDataIfPossible()
+    // })
+    // EventBus.$on('weekly-data', data => {
+    //   this.exportData.weekly = data
+    //   console.log('got weekly')
+    //   this.exportDataIfPossible()
+    // })
+    // EventBus.$on('list-data', data => {
+    //   this.exportData.weeklyList = data
+    //   console.log('got list')
+    //   this.exportDataIfPossible()
+    // })
+    // EventBus.$on('syllabus-data', data => {
+    //   this.exportData.syllabus = data
+    //   console.log('got syllabus')
+    //   this.exportDataIfPossible()
+    // })
 
-
-    setTimeout(() => {
-      this.loading = false //loading.close();
-    }, 1500);
-
-    EventBus.$on('home-data', data => {
-      this.exportData.home = data
-      console.log('got home')
-      this.exportDataIfPossible()
-    })
-    EventBus.$on('weekly-data', data => {
-      this.exportData.weekly = data
-      console.log('got weekly')
-      this.exportDataIfPossible()
-    })
-    EventBus.$on('list-data', data => {
-      this.exportData.weeklyList = data
-      console.log('got list')
-      this.exportDataIfPossible()
-    })
-    EventBus.$on('syllabus-data', data => {
-      this.exportData.syllabus = data
-      console.log('got syllabus')
-      this.exportDataIfPossible()
-    })
   },
   methods: {
-    openFullScreen() {
-        this.fullscreenLoading = true;
-        setTimeout(() => {
-          this.fullscreenLoading = false;
-        }, 2000);
-    },
+    // openFullScreen() {
+    //     this.fullscreenLoading = true;
+    //     setTimeout(() => {
+    //       this.fullscreenLoading = false;
+    //     }, 2000);
+    // },
     onImportFileChange (changeEvent) {
       let file = changeEvent.target.files[0]
       if (!file) {
@@ -129,16 +129,18 @@ export default {
     performImport () {
       this.$store.commit('updateInfo', this.importData.store.info)
       this.$store.commit('updateTheme', this.importData.store.theme)
-      EventBus.$emit('import-data', this.importData)
-      this.$router.push({name: 'Home'});
+      this.$store.commit('updateWeeks', this.importData.store.weeks)
+      this.$router.push({path: '/home'});
     },
     exportJSON () {
       this.exportData = {}
-      EventBus.$emit('export-data')
+      // EventBus.$emit('export-data')
+      this.exportDataIfPossible()
     },
     exportDataIfPossible () {
+      console.log("here")
       // only export if all data to arrived
-      let valid = this.exportData.home && this.exportData.weekly && this.exportData.weeklyList && this.exportData.syllabus
+      // let valid = this.exportData.home && this.exportData.weekly && this.exportData.weeklyList && this.exportData.syllabus
       let waitTime = 0;
 
       // if rough export is selected wait a short amount of time for all data to come in
@@ -159,15 +161,13 @@ export default {
       this.exportData.store = this.$store.getters.getStore
 
       // save file as json
-      if (valid) {
-        console.log ('exporting..')
-        setTimeout( () => {
-          saveFile({
-            name: dateTime + '-CourseB-Export.json',
-            data: JSON.stringify(this.exportData)
-          })
-        }, waitTime)
-      }
+      console.log ('exporting..')
+      setTimeout( () => {
+        saveFile({
+          name: this.$store.state.info.title + " " + dateTime + '.json',
+          data: JSON.stringify(this.exportData)
+        })
+      }, waitTime)
     }
   }
 }
