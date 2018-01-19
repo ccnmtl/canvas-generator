@@ -62,7 +62,7 @@
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
-          
+
           Dates
           <el-switch
             v-model="info.useDates"
@@ -206,6 +206,10 @@ export default {
     "info.startDate": function(){
         this.updateDates();
     },
+    "info.classType": function(){
+        this.updateDates();
+        this.updateImages()
+    },
   },
   computed: {
     ...mapGetters([
@@ -291,6 +295,11 @@ export default {
       this.weeks.forEach((week, index)=>{
         let interval = this.info.classType.dateType == "Week" ? 'w' : 'd'
         week.date = moment(this.info.startDate).add(index, interval)
+      })
+    },
+    updateImages(){
+      this.weeks.forEach((week, index)=>{
+        week.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
       })
     },
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
