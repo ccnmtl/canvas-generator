@@ -188,7 +188,7 @@
 
 <script>
 // For testing we remove localstorage -- take line out for build
-localStorage.clear();
+// localStorage.clear();
 
 import { EventBus } from '../bus'
 import saveState from 'vue-save-state';

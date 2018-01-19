@@ -333,7 +333,7 @@ var toolbarOptions = [
 ];
 
 export default {
-  name: "weekly",
+  name: "Syllabus",
   data() {
     return {
       userInput: {

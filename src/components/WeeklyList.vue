@@ -177,7 +177,7 @@ var toolbarOptions = [
 ];
 
 export default {
-  name:"weeklylist",
+  name:"Weekly List",
   data () {
     return {
       userInput: {
@@ -299,6 +299,7 @@ export default {
     },
     updateImages(){
       this.weeks.forEach((week, index)=>{
+        if (index > 14 && this.info.classType.dateType == "Week") index = 14;
         week.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
       })
     },
@@ -306,7 +307,7 @@ export default {
     AddActivity(){
       let index = this.weeks.length + 1
 
-      if (index > 15) index = 15;
+      if (index > 15 && this.info.classType.dateType == "Week") index = 15;
 
       let tempWeek = _.cloneDeep(this.dWeek)
       tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + '.png'

@@ -39,7 +39,7 @@ import { EventBus } from '../bus'
 import saveFile from '../util/save-file'
 
 export default {
-  name: 'app',
+  name: 'Export',
   data () {
     return {
       hasImportData: false,

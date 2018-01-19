@@ -10,7 +10,46 @@
       <el-card class="card">
         How Many Weeks: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeeks" :min="1" :max="4"></el-input-number> <br>
         How Many Days per Week: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeekLength" :min="1" :max="7"></el-input-number>
+        <br>
+        <button type="button" class="add-weekly center uk-button uk-button-primary"
+        name="button" @click="populateActivities(info.execWeeks*info.execWeekLength)">Edit # of Sessions</button>
+
+        <br> <br> Start Date <br>
+        <el-date-picker
+          style="margin: 10px; margin-bottom:20px"
+          v-model="info.startDate"
+          type="date"
+          placeholder="Pick start date">
+        </el-date-picker>
       </el-card>
+    </div>
+
+
+      <hr>
+
+      <div>
+        <!-- <el-card>
+        <div class="code-input center">
+          Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
+            controls-position="right" size="small" :label="'Edit ' + info.classType.dateType"></el-input-number>
+        </div>
+
+        <select v-model="userInput.weekNumber" class="uk-select">
+          <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
+        </select>
+
+        <div v-if="weeks.length > 0">
+          <div class="code-input center uk-margin-small-top">
+            <label for="text-area">Title</label> <br>
+            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"> </el-input>
+          </div>
+
+          <div class="code-input center uk-margin-small-top">
+            <label for="text-area">Description</label>
+            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].description"> </el-input>
+          </div>
+        </div>
+        </el-card> -->
 
     </div>
 
@@ -57,8 +96,10 @@
                       <td style="width: 88px;">9:30 am - 12:00 pm</td>
                       <td style="width: 74x;" v-for="day in info.execWeekLength">
                         <p v-if="day == 1 && week == 1"><em>(Overview of Program)</em></p>
-                        <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title}}</strong></p>
-                        <p>{{info.profs[0].name}}</p>
+                        <div v-if="(day - 1) + (week - 1) * info.execWeekLength < weeks.length">
+                          <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title}}</strong></p>
+                          <p>{{info.profs[0].name}}</p>
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -69,8 +110,10 @@
                       <td style="width: 88px;">1:30 pm - &nbsp;4:00 pm</td>
                       <td style="width: 74x;" v-for="day in info.execWeekLength">
                         <p v-if="day == 1 && week == 1"><em>(Overview of Program)</em></p>
-                        <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title + " II" }}</strong></p>
-                        <p>{{info.profs[0].name}}</p>
+                        <div v-if="(day - 1) + (week - 1) * info.execWeekLength < weeks.length">
+                          <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title + " II"}}</strong></p>
+                          <p>{{info.profs[0].name}}</p>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -156,6 +199,7 @@ export default {
     return {
       userInput: {
         isFile: true,
+        weekNumber: 0,
         uploadSwitchText: "Click to Upload Image from Url"
       },
       pEditable: false,
@@ -175,7 +219,7 @@ export default {
   },
   mixins: [saveState],
   computed: {
-    ...mapGetters(["getInfo", "dProf", "dTA", 'getWeeks']),
+    ...mapGetters(["getInfo", "dWeek", 'getWeeks']),
 
     info: {
       get() {
@@ -195,6 +239,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
+    ]),
     formatDate(date){
       return moment(date, "dddd, MMMM Do").format("dddd Do")
     },
@@ -233,6 +280,37 @@ export default {
       this.userInput.uploadSwitchText = this.userInput.isFile
         ? "Click to Upload Image from URL"
         : "Click to Upload Image from Computer";
+    },
+    AddActivity(){
+      let index = this.weeks.length + 1
+
+      if (index > 15 && this.info.classType.dateType == "Week") index = 15;
+
+      let tempWeek = _.cloneDeep(this.dWeek)
+      tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + '.png'
+
+      // let tempWeek = this.dWeek
+      // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
+      //
+      this.addWeek(tempWeek)
+    },
+    // Adds a user inputted number of activities
+    populateActivities(num){
+      let diff = num - this.weeks.length
+
+      console.log(diff)
+
+      if (diff > 0 ){
+        for (let i = 0; i < diff; i++ ) this.AddActivity();
+      }
+
+      if (diff < 0) {
+        this.userInput.weekNumber = 1;
+        this.weeks = this.weeks.slice(0, num);
+      }
+
+      this.updateDates()
+
     },
     onFormSubmit(
       type,
@@ -275,23 +353,17 @@ export default {
           }
         );
     },
-    addProf() {
-      this.info.profs.push(this.dProf);
+    updateDates(){
+      this.weeks.forEach((week, index)=>{
+        let interval = this.info.classType.dateType == "Week" ? 'w' : 'd'
+        week.date = moment(this.info.startDate).add(index, interval)
+      })
     },
-    addTA() {
-      let tempTA = _.cloneDeep(this.dTA)
-      this.info.tas.push(tempTA);
-    },
-    removeProf() {
-      let { list, index } = this.selected;
-      console.log(list);
-      console.log(index);
-      list.splice(index, 1);
-      this.selected = { index: 0, list };
-    },
-    clearProfs() {
-      this.info.profs = [this.dProf];
-      this.info.tas = [this.dTA];
+    updateImages(){
+      this.weeks.forEach((week, index)=>{
+        if (index > 14 && this.info.classType.dateType == "Week") index = 14;
+        week.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
+      })
     },
     setToDefault() {
       console.log("resetting data...");
@@ -308,6 +380,9 @@ export default {
     setInterval(() => {
       this.updateCode();
     }, 1000);
+
+    updateDates()
+    updateImages()
   },
   beforeCreate() {
     EventBus.$on("set-default", response => {
