@@ -22,7 +22,7 @@ export default new Vuex.Store({
       url: "https://courseworks2.columbia.edu/courses/29191/",
       semester: "U6411 // SPRING 2017",
       classType: "default", // options are "default", "blended", "execEd",
-
+      isBlended: "false",
       //TIME INFO
       startDate: moment(),
       dateType: "Day",
@@ -34,7 +34,7 @@ export default new Vuex.Store({
       classType: { option: "Weekly Course", dateType: "Week" },
       classOptions:[
         { option: "Weekly Course", dateType: "Week" },
-        { option: "Executive Training", dateType: "Day" },
+        { option: "Executive Training", dateType: "Session" },
         { option: "Blended", dateType: "Week" },
       ],
 

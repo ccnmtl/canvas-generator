@@ -239,6 +239,7 @@ export default {
       return moment(this.info.startDate).add(1, 'w').format("dddd, MMMM Do")
     },
     activitiesTitle() {
+      if (this.info.classType.dateType == "Session") return "Session"
       return this.info.classType.dateType == "Week" ? "Weekly" : "Daily"
     },
     // Changes the description wording so that it matches the current number of weeks on the page

@@ -11,7 +11,6 @@ import store from './store/store'
 import VueResource from 'vue-resource'
 import Snotify from 'vue-snotify'
 import 'vue-snotify/styles/material.css'
-import VeeValidate from 'vee-validate';
 
 //import Vuetify from 'vuetify'
 //import 'vuetify/dist/vuetify.min.css'
@@ -22,7 +21,6 @@ import locale from 'element-ui/lib/locale/lang/en'
 
 Vue.use(VueResource);
 Vue.use(Snotify);
-Vue.use(VeeValidate);
 Vue.use(ElementUI, { locale })
 
 /* eslint-disable no-new */

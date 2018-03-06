@@ -71,6 +71,96 @@
 
     <!-- Where the canvas code is stored -->
     <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
+
+      <!-- STV1_SlimBanner is default. Change banner with additional class declarations (SB02, SB03, SB04) -->
+      <div class="STV1_SlimBanner">
+        <p>EFFECTIVE MANAGEMENT IN PUBLIC SERVICE</p>
+      </div>
+      <div style="width: 100%; padding: 0;">
+        <h2 style="background-color: #ffffff; padding: 5px 10px 0 10px; font-weight: bold; color: #666666; margin: 10px 0 10px 0;"><img src="https://courseworks2.columbia.edu/courses/3969/files/246999/preview" alt="weekly_icon.png" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/files/246999" data-api-returntype="File" /> Week 1: Introduction: Managing Toward 2019</h2>
+        <div style="width: 95%; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; margin: 0 5px 15px 5px; padding: 10px; color: #666666;">Below you'll find links to a variety of news articles and supplemental readings that the professor has selected to accompany the lecture. Please read them, and watch the video lecture, which has been divided into four parts. Complete the quiz after
+          watching all segments, and respond to the discussion prompt after watching Part Three.</div>
+      </div>
+      <div style="width: 100%; padding: 10px 0 15px 0;">
+
+        <div style="float: left; display: inline; width: 40%; margin: 0 20px 10px 0; padding: 10px;">
+          <h5>READINGS</h5>
+          <ul>
+            <li><a class="instructure_file_link instructure_scribd_file " title="6auftrag94+_1_+copy.pdf" href="https://courseworks2.columbia.edu/courses/3969/files/246317/download?wrap=1" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/files/246317"
+                data-api-returntype="File">Auftragstaktik</a></li>
+            <li><a href="http://www.businessweek.com/stories/2005-11-27/the-man-who-invented-management">Drucker and Management </a></li>
+            <li><a class=" instructure_scribd_file instructure_file_link" title="Memo+Resource+Action+Verbs-1.docx" href="https://courseworks2.columbia.edu/courses/3969/files/246315/download?wrap=1" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/files/246315"
+                data-api-returntype="File">Action Verb List</a></li>
+            <li><a id="" class=" instructure_scribd_file instructure_file_link" title="Memo Resource Instructions Spring 2016_.docx" href="https://courseworks2.columbia.edu/courses/3969/files/350608/download?wrap=1" target="" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/files/350608"
+                data-api-returntype="File">Memo Guide</a></li>
+          </ul>
+        </div>
+
+        <div style="float: left; display: inline; width: 40%; padding: 10px;">
+          <h5>LECTURE PRESENTATION</h5>
+          <ul>
+            <li><a class="instructure_file_link " title="Lecture_01_EPM_FALL 2014(IntroManaging).pptx" href="https://courseworks2.columbia.edu/courses/3969/files/246335/download?wrap=1" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/files/246335"
+                data-api-returntype="File">Managing to 2019</a></li>
+            <li><a class=" instructure_scribd_file instructure_file_link" title="Memo Resource Format _Fall2014_.doc" href="https://courseworks2.columbia.edu/courses/3969/files/247151/download?wrap=1" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/files/247151"
+                data-api-returntype="File">Memo Format</a>&nbsp;&amp;&nbsp;<a class=" instructure_scribd_file instructure_file_link" title="Example Memo 1.docx" href="https://courseworks2.columbia.edu/courses/3969/files/246331/download?wrap=1" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/files/246331"
+                data-api-returntype="File">Memo Example</a></li>
+            <li><a title="General Theories and Best Practices in Public Management" href="https://courseworks2.columbia.edu/courses/3969/discussion_topics/30828" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/discussion_topics/30828" data-api-returntype="Discussion">Discussion</a></li>
+            <li><a class=" instructure_scribd_file instructure_file_link" title="Recitation Lecture 1 - Jan 30 (adobe Connect).pdf" href="https://courseworks2.columbia.edu/courses/3969/files/357870/download?wrap=1" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/files/357870"
+                data-api-returntype="File">Recitation 1</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div style="clear: both; height: 10px;">&nbsp;</div>
+      <div style="width: 93%; padding: 0 5% 0 2%;">
+        <div style="float: left; display: inline; width: 500px; padding: 10px 0 0 0; margin: 0 20px 0 0;"><iframe src="https://player.vimeo.com/video/116159098" width="500" height="281" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
+        <div style="float: left; display: inline; width: 45%;">
+          <blockquote style="height: 281px; border-left: 4px solid #0b5395;">
+            <h4 style="background-color: #0b5395; padding: 5px 10px 5px 10px; font-weight: normal; font-size: 16px; color: #ffffff;">Lecture 1-1 Managing to 2019</h4>
+            <p>In this segment, Prof. Eimicke covers what the course is all about, the history of management, and how you will become a better manager/leader in the next 12 weeks.</p>
+          </blockquote>
+        </div>
+      </div>
+      <div style="clear: both; height: 10px;">&nbsp;</div>
+      <div style="width: 93%; padding: 0 5% 0 2%;">
+        <div style="float: left; display: inline; width: 500px; padding: 10px 0 0 0; margin: 0 20px 0 0;"><iframe src="https://player.vimeo.com/video/116159099" width="500" height="281" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
+        <div style="float: left; display: inline; width: 45%;">
+          <blockquote style="height: 281px; border-left: 4px solid #0b5395;">
+            <h4 style="background-color: #0b5395; padding: 5px 10px 5px 10px; font-weight: normal; font-size: 16px; color: #ffffff;">Lecture 1-2 Managing to 2019</h4>
+            <p>In this section, the Professor discusses and talks about the important people who have influenced management going as far back as the 1700's and offers a brief prelude into the importance of performance management.&nbsp;</p>
+          </blockquote>
+        </div>
+      </div>
+      <div style="clear: both; height: 10px;">&nbsp;</div>
+      <div style="width: 93%; padding: 0 5% 0 2%;">&nbsp;</div>
+      <div style="width: 96%; padding: 0 2%;">
+        <div style="float: left; display: inline; width: 150px; margin: 0 20px 5px 0;"><a title="Managing to 2019 Quiz 1" href="https://courseworks2.columbia.edu/courses/3969/assignments/20029" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/assignments/20029" data-api-returntype="Assignment"><img src="https://courseworks2.columbia.edu/courses/3969/files/247319/preview" alt="quizIcon.jpg" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/files/247319" data-api-returntype="File" /></a></div>
+        <div style="float: left; display: inline; width: 80%;">
+          <h4 style="background-color: #f7f7f7; padding: 5px 10px 5px 5px; font-weight: bold; color: #666666; margin-top: 0;"><a title="Strategic Planning, Parts 1 and 2" href="https://courseworks2.columbia.edu/courses/3969/quizzes/4090" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/quizzes/4090" data-api-returntype="Quiz"><img src="https://courseworks2.columbia.edu/courses/3969/files/247385/preview" alt="quiz.jpg" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/files/247385" data-api-returntype="File" /></a></h4>
+          <p style="padding: 0 5px;">After watching the above video and doing the readings, please participate in this week's quiz. <a title="Managing to 2019 Quiz 1" href="https://courseworks2.columbia.edu/courses/3969/assignments/20029" data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/3969/assignments/20029"
+              data-api-returntype="Assignment">Click here</a> to be redirected to the quiz page.</p>
+        </div>
+      </div>
+      <div style="clear: both; height: 10px;">&nbsp;</div>
+      <div style="width: 93%; padding: 0 5% 0 2%;">
+        <div style="float: left; display: inline; width: 500px; padding: 10px 0 0 0; margin: 0 20px 0 0;"><iframe src="https://player.vimeo.com/video/116159100" width="500" height="281" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
+        <div style="float: left; display: inline; width: 45%;">
+          <blockquote style="height: 281px; border-left: 4px solid #0b5395;">
+            <h4 style="background-color: #0b5395; padding: 5px 10px 5px 10px; font-weight: normal; font-size: 16px; color: #ffffff;">Lecture 1-3 Managing into 2019</h4> This segement is a continuation of classical economists and philosophers and how they influenced management techniques over the years.<br />&nbsp;</blockquote>
+        </div>
+      </div>
+      <div style="width: 93%; padding: 0 5% 0 2%;">
+        <div style="float: left; display: inline; width: 500px; padding: 10px 0 0 0; margin: 0 20px 0 0;"><iframe src="https://player.vimeo.com/video/116159097" width="500" height="281" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
+        <div style="float: left; display: inline; width: 45%;">
+          <blockquote style="height: 281px; border-left: 4px solid #0b5395;">
+            <h4 style="background-color: #0b5395; padding: 5px 10px 5px 10px; font-weight: normal; font-size: 16px; color: #ffffff;">Lecture 1-4 Managing to 2019</h4>
+            <p>This lecture discusses the history of management, the art and science as it relates to people managing organizations.</p>
+          </blockquote>
+        </div>
+      </div>
+      <div style="clear: both;">&nbsp;</div>
+
       <div :class="['STV1_SlimBanner', this.$store.getters.getTheme.slim]">
         <p>{{info.title.toUpperCase()}}</p>
       </div>

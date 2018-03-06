@@ -63,6 +63,22 @@
           </form>
         </div>
       </el-card>
+      <el-card class="card box-card" v-if="selected.list">
+        <div slot="header" class="clearfix">
+          <span class="big-text">Options</span>
+        </div>
+        <div class="">
+          Dates
+          <el-switch
+            v-model="info.useDates"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+        </div>
+
+      </el-card>
+
+
 
     </div>
 
@@ -153,7 +169,7 @@
               <!-- Column Labels -->
               <!-- If you add a label here for an additional column, that column must be added to all rows as well -->
               <th>Week</th>
-              <th>Date</th>
+              <th v-if="info.useDates">Date</th>
               <th>Topic</th>
             </tr>
           </thead>
@@ -161,7 +177,7 @@
 
              <tr v-for="(week, index) in weeks">
               <td>{{index + 1}}</td>
-              <td>{{formatDate(week.date)}}</td>
+              <td v-if="info.useDates" >{{formatDate(week.date)}}</td>
               <td>{{week.title}}</td>
             </tr>
           </tbody>
@@ -169,12 +185,10 @@
         </table>
 
 
-          <table class="ic-Table ic-Table--hover-row">
+          <!-- <table class="ic-Table ic-Table--hover-row">
             <thead>
               <tr>
 
-                <!-- Column Labels -->
-                <!-- If you add a label here for an additional column, that column must be added to all rows as well -->
                 <th>Week</th>
                 <th>Theme</th>
                 <th>Date</th>
@@ -220,7 +234,7 @@
                 <td>Instructor</td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
       <!-- End Weekly Schedule table -->
 
       <!-- Grading -->

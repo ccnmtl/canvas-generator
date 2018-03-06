@@ -21,8 +21,9 @@
           <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
           <li v-show="info.classType.option == 'Executive Training'"><router-link class="router" to="/program">Program Overview</router-link></li>
           <li><router-link class="router" to="/weeklylist">Weekly Activites</router-link></li>
-          <li v-show="info.classType.option !== 'Blended'"><router-link class="router" to="/weekly">Individual Activity</router-link></li>
-          <li v-show="info.classType.option == 'Blended'"><router-link class="router" to="/weeklyblended">Individual Activity</router-link></li>
+          <!-- <li v-show="info.classType.option !== 'Blended'"><router-link class="router" to="/weekly">Individual Activity</router-link></li> -->
+          <li v-show="!info.isBlended"><router-link class="router" to="/weekly">Individual Activity</router-link></li>
+          <li v-show="info.isBlended"><router-link class="router" to="/weeklyblended">Individual Activity</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/export">Export/Import Data</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/credits">CREDITS</router-link></li>
     			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
@@ -40,9 +41,16 @@
         <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url"></el-input> </label>
         <label for="select">Class Type <br>
           <select style="display: inline-block; width:150px" v-model="info.classType" name="Choose Banner" class="uk-select">
-            <option selected disabled>Choose Banner</option>
             <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
           </select>
+        </label>
+        <label for="select">Blended Model <br>
+
+        <el-switch
+          v-model="info.isBlended"
+          active-color="#13ce66"
+          inactive-color="#ff4949">
+        </el-switch>
         </label>
       </div>
       <span slot="footer" class="dialog-footer">
