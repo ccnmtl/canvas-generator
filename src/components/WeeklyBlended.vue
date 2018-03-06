@@ -115,7 +115,7 @@
       <div style="clear: both; height: 10px;">&nbsp;</div>
       <div style="width: 93%; padding: 0 5% 0 2%;">
         <div style="float: left; display: inline; width: 500px; padding: 10px 0 0 0; margin: 0 20px 0 0;"><iframe src="https://player.vimeo.com/video/116159098" width="500" height="281" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
-        <div style="float: left; display: inline; width: 45%;">
+        <div style="float: left; display: inline; width: 40%;">
           <blockquote style="height: 281px; border-left: 4px solid #0b5395;">
             <h4 style="background-color: #0b5395; padding: 5px 10px 5px 10px; font-weight: normal; font-size: 16px; color: #ffffff;">Lecture 1-1 Managing to 2019</h4>
             <p>In this segment, Prof. Eimicke covers what the course is all about, the history of management, and how you will become a better manager/leader in the next 12 weeks.</p>
@@ -125,7 +125,7 @@
       <div style="clear: both; height: 10px;">&nbsp;</div>
       <div style="width: 93%; padding: 0 5% 0 2%;">
         <div style="float: left; display: inline; width: 500px; padding: 10px 0 0 0; margin: 0 20px 0 0;"><iframe src="https://player.vimeo.com/video/116159099" width="500" height="281" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
-        <div style="float: left; display: inline; width: 45%;">
+        <div style="float: left; display: inline; width: 40%;">
           <blockquote style="height: 281px; border-left: 4px solid #0b5395;">
             <h4 style="background-color: #0b5395; padding: 5px 10px 5px 10px; font-weight: normal; font-size: 16px; color: #ffffff;">Lecture 1-2 Managing to 2019</h4>
             <p>In this section, the Professor discusses and talks about the important people who have influenced management going as far back as the 1700's and offers a brief prelude into the importance of performance management.&nbsp;</p>
@@ -145,14 +145,14 @@
       <div style="clear: both; height: 10px;">&nbsp;</div>
       <div style="width: 93%; padding: 0 5% 0 2%;">
         <div style="float: left; display: inline; width: 500px; padding: 10px 0 0 0; margin: 0 20px 0 0;"><iframe src="https://player.vimeo.com/video/116159100" width="500" height="281" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
-        <div style="float: left; display: inline; width: 45%;">
+        <div style="float: left; display: inline; width: 40%;">
           <blockquote style="height: 281px; border-left: 4px solid #0b5395;">
             <h4 style="background-color: #0b5395; padding: 5px 10px 5px 10px; font-weight: normal; font-size: 16px; color: #ffffff;">Lecture 1-3 Managing into 2019</h4> This segement is a continuation of classical economists and philosophers and how they influenced management techniques over the years.<br />&nbsp;</blockquote>
         </div>
       </div>
       <div style="width: 93%; padding: 0 5% 0 2%;">
         <div style="float: left; display: inline; width: 500px; padding: 10px 0 0 0; margin: 0 20px 0 0;"><iframe src="https://player.vimeo.com/video/116159097" width="500" height="281" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></div>
-        <div style="float: left; display: inline; width: 45%;">
+        <div style="float: left; display: inline; width: 40%;">
           <blockquote style="height: 281px; border-left: 4px solid #0b5395;">
             <h4 style="background-color: #0b5395; padding: 5px 10px 5px 10px; font-weight: normal; font-size: 16px; color: #ffffff;">Lecture 1-4 Managing to 2019</h4>
             <p>This lecture discusses the history of management, the art and science as it relates to people managing organizations.</p>

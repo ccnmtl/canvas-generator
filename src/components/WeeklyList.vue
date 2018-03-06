@@ -39,8 +39,18 @@
             <label for="text-area">Description</label>
             <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].description"> </el-input>
           </div>
+          <div class="center">
+            <label >Date
+            <el-date-picker
+              style="margin: 10px; margin-bottom:20px"
+              v-model="weeks[userInput.weekNumber - 1].date"
+              type="date"
+              placeholder="Pick start date">
+            </el-date-picker>
+            </label>
+          </div>
 
-          <div class="code-input center uk-margin-medium-top">
+          <div class="code-input center ">
             <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
             <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
@@ -52,6 +62,8 @@
               <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
               <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
             </form>
+            <button class="uk-button uk-button-danger uk-margin-small-top" @click="setDefaultImage(userInput.weekNumber - 1)">Reset Image</button>
+
           </div>
         </div>
         </el-card>
@@ -303,6 +315,9 @@ export default {
         if (index > 14 && this.info.classType.dateType == "Week") index = 14;
         week.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
       })
+    },
+    setDefaultImage(index){
+      this.weeks[index].imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
     },
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
     AddActivity(){

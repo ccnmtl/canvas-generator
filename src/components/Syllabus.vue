@@ -63,6 +63,39 @@
           </form>
         </div>
       </el-card>
+
+      <el-card class="card box-card">
+        <div slot="header" class="clearfix">
+          <span class="big-text">Edit Schedule Items</span>
+        </div>
+        <div class="code-input center">
+          Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
+            controls-position="right" size="small" :label="'Edit ' + info.classType.dateType"></el-input-number>
+        </div>
+
+        <select v-model="userInput.weekNumber" class="uk-select">
+          <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
+        </select>
+
+        <div v-if="weeks.length > 0">
+          <div class="code-input center uk-margin-small-top">
+            <label for="text-area">Title</label> <br>
+            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"> </el-input>
+          </div>
+        </div>
+
+        <div class="center">
+          <label >Date
+          <el-date-picker
+            style="margin: 10px; margin-bottom:20px"
+            v-model="weeks[userInput.weekNumber - 1].date"
+            type="date"
+            placeholder="Pick start date">
+          </el-date-picker>
+          </label>
+        </div>
+      </el-card>
+
       <el-card class="card box-card" v-if="selected.list">
         <div slot="header" class="clearfix">
           <span class="big-text">Options</span>
