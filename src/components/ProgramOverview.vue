@@ -7,20 +7,41 @@
   <div class="code-container">
 
     <div class="textbox-container">
-      <el-card class="card">
+      <el-card class="card center">
         How Many Weeks: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeeks" :min="1" :max="4"></el-input-number> <br>
         How Many Days per Week: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeekLength" :min="1" :max="7"></el-input-number>
         <br>
         <button type="button" class="add-weekly center uk-button uk-button-primary"
         name="button" @click="populateActivities(info.execWeeks*info.execWeekLength)">Edit # of Sessions</button>
 
-        <br> <br> Start Date <br>
+        <br> <br> Start Week <br>
         <el-date-picker
           style="margin: 10px; margin-bottom:20px"
           v-model="info.startDate"
-          type="date"
+          type="week"
+          format="M / d / yyyy"
           placeholder="Pick start date">
         </el-date-picker>
+        <br>
+      </el-card>
+
+        <el-card class="card center" style="width:325px; margin-bottom: 20px">
+
+        Days of Week<br>
+        <el-select v-model="info.weekDays"
+          multiple placeholder="Select"
+          style="margin: 5px; width: 270px"
+          v-on:visible-change="updateDays"
+          v-on:remove-tag="updateDays">
+
+          <el-option
+            v-for="(day, index) in days"
+            :key="day"
+            :label="day"
+            :value="index">
+          </el-option>
+        </el-select>
+        <br>
       </el-card>
 
       <el-card>
@@ -72,7 +93,9 @@
                   <thead>
                     <tr>
                       <th style="width: 90px;">&nbsp;</th>
-                      <th style="width: 75px;" v-for="day in info.execWeekLength"> {{incrementDate(info.startDate, week - 1, day - 1)}}</th>
+                      <th style="width: 75px;" v-for="(day, index) in info.execWeekLength">
+                        {{incrementDate(info.startDate, week - 1, info.weekDays[index])}}
+                      </th>
 
 
                       <!-- This line grab dates of first four days, then next four days, etc.. would work if I implemented a seperate start day for each week (possibly better)
@@ -190,6 +213,7 @@ export default {
         weekNumber: 0,
         uploadSwitchText: "Click to Upload Image from Url"
       },
+      days: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
       pEditable: false,
       tEditable: false,
       iEditable: true,
@@ -235,6 +259,18 @@ export default {
     },
     incrementDate(date, weeks, days){
       return moment(date).add(weeks, 'w').add(days, 'd').format("dddd Do")
+    },
+    updateDays(){
+      console.log("updating days...")
+      this.info.weekDays.sort(function(a, b){return a - b})
+
+      for (let week = 0; week < this.info.execWeeks; week++){
+        for (let day = 0; day < this.info.weekDays.length; day++){
+          let totalDays = this.info.weekDays.length * week + day
+          if(this.weeks[totalDays]) this.weeks[totalDays].date = moment(this.info.startDate).add(week, 'w').add(this.info.weekDays[day], 'd')
+        }
+      }
+      this.info.execWeekLength = this.info.weekDays.length
     },
     newLine(val) {
       if (!val) return "";
@@ -297,7 +333,7 @@ export default {
         this.weeks = this.weeks.slice(0, num);
       }
 
-      this.updateDates()
+      this.updateDays()
 
     },
     onFormSubmit(
@@ -369,8 +405,7 @@ export default {
       this.updateCode();
     }, 1000);
 
-    updateDates()
-    updateImages()
+    //updateDates()
   },
   beforeCreate() {
     EventBus.$on("set-default", response => {

@@ -29,6 +29,7 @@ export default new Vuex.Store({
       dateLength: "12",
       execWeeks: "2",
       execWeekLength: "4",
+      weekDays: [],
 
 
       classType: { option: "Weekly Course", dateType: "Week" },

@@ -305,10 +305,13 @@ export default {
       this.userInput.uploadSwitchText = this.userInput.isFile ? "Click to Upload Image from URL" : "Click to Upload Image from Computer"
     },
     updateDates(){
-      this.weeks.forEach((week, index)=>{
-        let interval = this.info.classType.dateType == "Week" ? 'w' : 'd'
-        week.date = moment(this.info.startDate).add(index, interval)
-      })
+      // right now do not update if in exec training mode
+      if (this.info.classType.dateType == "Week"){
+        this.weeks.forEach((week, index)=>{
+          let interval = this.info.classType.dateType == "Week" ? 'w' : 'd'
+          week.date = moment(this.info.startDate).add(index, interval)
+        })
+    }
     },
     updateImages(){
       this.weeks.forEach((week, index)=>{
