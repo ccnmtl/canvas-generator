@@ -24,8 +24,23 @@
         <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url"></el-input> </label>
         <label for="select">Class Type <br>
           <select style="display: inline-block; width:150px" v-model="info.classType" name="Choose Banner" class="uk-select">
-            <option selected disabled>Choose Banner</option>
             <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
+          </select>
+        </label>
+        <label for="select">Blended Model
+
+        <el-switch
+          v-model="info.isBlended"
+          active-color="#13ce66"
+          inactive-color="#ff4949">
+        </el-switch>
+        </label>
+        <span style="display:inline-block; width: 100;"> </span>
+
+        <label style="margin-left: 20px;">
+          School:
+          <select style="display: inline-block; width:150px" v-model="theme" name="Choose Banner" class="uk-select">
+            <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
           </select>
         </label>
       </div>
