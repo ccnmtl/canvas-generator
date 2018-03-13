@@ -9,7 +9,9 @@
     <div class="textbox-container">
       <el-card class="card center">
         How Many Weeks: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeeks" :min="1" :max="4"></el-input-number> <br>
-        How Many Days per Week: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeekLength" :min="1" :max="7"></el-input-number>
+        <!-- How Many Days per Week: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeekLength" :min="1" :max="7"></el-input-number> -->
+        Offset Class Start: <br> <el-input-number  style="margin: 10px;" v-model="info.weekOffset" :min="0" :max="info.execWeekLength - 1"></el-input-number>
+
         <br>
         <button type="button" class="add-weekly center uk-button uk-button-primary"
         name="button" @click="populateActivities(info.execWeeks*info.execWeekLength)">Edit # of Sessions</button>
@@ -106,10 +108,19 @@
                   <tbody>
                     <tr>
                       <td style="width: 88px;">9:30 am - 12:00 pm</td>
-                      <td style="width: 74x;" v-for="day in info.execWeekLength">
+                      <td style="width: 74x;" v-if="week == 1" v-for="idx in info.weekOffset">
+                      <p><strong>NO CLASS</strong></p>
+                      </td>
+                      <td style="width: 74x;" v-if="week == 1" v-for="day in (info.execWeekLength - info.weekOffset)">
                         <p v-if="day == 1 && week == 1"><em>(Overview of Program)</em></p>
                         <div v-if="(day - 1) + (week - 1) * info.execWeekLength < weeks.length">
                           <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title}}</strong></p>
+                          <p>{{info.profs[0].name}}</p>
+                        </div>
+                      </td>
+                      <td style="width: 74x;" v-if="week !== 1"  v-for="day in (info.execWeekLength)">
+                        <div v-if="(day - 1) + (week - 1) * info.execWeekLength < weeks.length">
+                          <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset].title}}</strong></p>
                           <p>{{info.profs[0].name}}</p>
                         </div>
                       </td>
@@ -120,9 +131,18 @@
                     </tr>
                     <tr>
                       <td style="width: 88px;">1:30 pm - &nbsp;4:00 pm</td>
-                      <td style="width: 74x;" v-for="day in info.execWeekLength">
+                      <td style="width: 74x;" v-if="week == 1" v-for="idx in info.weekOffset">
+                      <p><strong>NO CLASS</strong></p>
+                      </td>
+                      <td style="width: 74x;" v-if="week == 1" v-for="day in (info.execWeekLength - info.weekOffset)">
                         <div v-if="(day - 1) + (week - 1) * info.execWeekLength < weeks.length">
                           <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title + " II"}}</strong></p>
+                          <p>{{info.profs[0].name}}</p>
+                        </div>
+                      </td>
+                      <td style="width: 74x;" v-if="week !== 1" v-for="day in (info.execWeekLength)">
+                        <div v-if="(day - 1) + (week - 1) * info.execWeekLength < weeks.length">
+                          <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset].title + " II"}}</strong></p>
                           <p>{{info.profs[0].name}}</p>
                         </div>
                       </td>
@@ -266,7 +286,7 @@ export default {
 
       for (let week = 0; week < this.info.execWeeks; week++){
         for (let day = 0; day < this.info.weekDays.length; day++){
-          let totalDays = this.info.weekDays.length * week + day
+          let totalDays = this.info.weekDays.length * week + day - this.info.weekOffset
           if(this.weeks[totalDays]) this.weeks[totalDays].date = moment(this.info.startDate).add(week, 'w').add(this.info.weekDays[day], 'd')
         }
       }
@@ -405,6 +425,7 @@ export default {
       this.updateCode();
     }, 1000);
 
+    this.updateDays()
     //updateDates()
   },
   beforeCreate() {
