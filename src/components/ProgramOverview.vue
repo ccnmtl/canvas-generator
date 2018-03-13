@@ -109,10 +109,11 @@
                     <tr>
                       <td style="width: 88px;">9:30 am - 12:00 pm</td>
                       <td style="width: 74x;" v-if="week == 1" v-for="idx in info.weekOffset">
+                      <p v-if="idx == 1"><em>(Overview of Program)</em></p>
                       <p><strong>NO CLASS</strong></p>
                       </td>
                       <td style="width: 74x;" v-if="week == 1" v-for="day in (info.execWeekLength - info.weekOffset)">
-                        <p v-if="day == 1 && week == 1"><em>(Overview of Program)</em></p>
+                        <p v-if="day == 1 && week == 1 && info.weekOffset == 0"><em>(Overview of Program)</em></p>
                         <div v-if="(day - 1) + (week - 1) * info.execWeekLength < weeks.length">
                           <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title}}</strong></p>
                           <p>{{info.profs[0].name}}</p>
@@ -282,6 +283,8 @@ export default {
     },
     updateDays(){
       console.log("updating days...")
+      this.info.execWeekLength = this.info.weekDays.length
+      if (this.info.weekOffset >= this.info.execWeekLength) this.info.weekOffset = this.info.execWeekLength - 1
       this.info.weekDays.sort(function(a, b){return a - b})
 
       for (let week = 0; week < this.info.execWeeks; week++){
@@ -290,7 +293,6 @@ export default {
           if(this.weeks[totalDays]) this.weeks[totalDays].date = moment(this.info.startDate).add(week, 'w').add(this.info.weekDays[day], 'd')
         }
       }
-      this.info.execWeekLength = this.info.weekDays.length
     },
     newLine(val) {
       if (!val) return "";
