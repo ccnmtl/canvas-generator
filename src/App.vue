@@ -35,58 +35,19 @@
         </div>
     </div>
 
-    <el-dialog  title="Course Info" :visible.sync="dialogFormVisible" style="width: 80%; margin:auto;">
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px">
-        <el-form-item label="Course Title" prop="title">
-          <el-input autosize style="width: 80%" placeholder="Please input your Course Title" v-model="ruleForm.title"></el-input>
-        </el-form-item>
-        <el-form-item label="Course URL" prop="url">
-          <el-input autosize style="width: 80%" placeholder="Please input your Course URL" v-model="ruleForm.url"></el-input>
-        </el-form-item>
-        <el-form-item label="School" prop="theme">
-          <select style="display: inline-block; width:150px" v-model="ruleForm.theme" name="Choose Banner" class="uk-select">
-            <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
-          </select>
-        </el-form-item>
-        <el-form-item label="Course Type" prop="classType">
-          <select style="display: inline-block; width:150px" v-model="ruleForm.classType" name="Choose Banner" class="uk-select">
-            <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
-          </select>
-        </el-form-item>
-        <el-form-item label="Online Class" prop="isBlended">
-          <el-switch
-            v-model="ruleForm.isBlended"
-            active-color="#13ce66"
-            inactive-color="#ff4949">
-          </el-switch>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="confirmForm">Confirm</el-button>
-      </span>
-    </el-dialog>
-
-
     <!-- OLD DIALOG -->
-    <!-- <el-dialog title="Course Info" :visible.sync="dialogFormVisible">
+    <el-dialog title="Course Info" :visible.sync="dialogFormVisible">
       <div class="center">
         <label for="input"> Course Title <el-input placeholder="Please input" v-model="info.title"></el-input> </label>
         <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url"></el-input> </label>
-        <label for="select">Class Type <br>
+        <br>
+        <label for="select">Class Type
           <select style="display: inline-block; width:150px" v-model="info.classType" name="Choose Banner" class="uk-select">
             <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
           </select>
         </label>
-        <label for="select">Blended Model
 
-        <el-switch
-          v-model="info.isBlended"
-          active-color="#13ce66"
-          inactive-color="#ff4949">
-        </el-switch>
-        </label>
-        <span style="display:inline-block; width: 100;"> </span>
+        <span style="display:inline-block; width: 10px;"> </span>
 
         <label style="margin-left: 20px;">
           School:
@@ -94,12 +55,22 @@
             <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
           </select>
         </label>
+
+        <span style="display:inline-block; width: 20px;"> </span>
+
+        <label for="select">Blended Model
+        <el-switch
+          v-model="info.isBlended"
+          active-color="#13ce66"
+          inactive-color="#ff4949">
+        </el-switch>
+        </label>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
         <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
       </span>
-    </el-dialog> -->
+    </el-dialog>
 
     <div class="clearfix"></div>
 
