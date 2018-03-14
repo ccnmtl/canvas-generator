@@ -18,26 +18,32 @@ export default new Vuex.Store({
     //GENERAL COURSE INFO
     info: {
       // COURSE INFO
-      title: "Global Food Systems",
-      url: "https://courseworks2.columbia.edu/courses/29191/",
-      semester: "U6411 // SPRING 2017",
+      title: "",
+      url: "",
+      semester: "U6411 // SPRING 2020",
       classType: "default", // options are "default", "blended", "execEd",
       isBlended: "false",
+
       //TIME INFO
       startDate: moment(),
       dateType: "Day",
       dateLength: "12",
       execWeeks: "2",
-      execWeekLength: "4",
+      execWeekLength: "1",
       weekDays: [0],
       weekOffset: 0,
+
+      //EXEC SESSION INFO
+      multipleSessions: true,
+      sessionOneTime: "9:30 am - 12:00 pm",
+      sessionTwoTime: "1:30 pm -  4:00 pm",
 
 
       classType: { option: "Weekly Course", dateType: "Week" },
       classOptions:[
         { option: "Weekly Course", dateType: "Week" },
         { option: "Executive Training", dateType: "Session" },
-        { option: "Blended", dateType: "Week" },
+        // { option: "Blended", dateType: "Week" },
       ],
 
       //TEACHERS
@@ -76,7 +82,7 @@ export default new Vuex.Store({
 
     // UTILS
     loading: false,
-    infoFormVisible: false,
+    settingsFormVisible: false,
     prevPage: "/home",
     nextPage: "/weekly",
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",

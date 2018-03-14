@@ -7,10 +7,25 @@
   <div class="code-container">
 
     <div class="textbox-container">
-      <el-card class="card center">
+      <el-card class="card center" style="width:325px;">
         How Many Weeks: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeeks" :min="1" :max="4"></el-input-number> <br>
         <!-- How Many Days per Week: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeekLength" :min="1" :max="7"></el-input-number> -->
         Offset Class Start: <br> <el-input-number  style="margin: 10px;" v-model="info.weekOffset" :min="0" :max="info.execWeekLength - 1"></el-input-number>
+
+        <br> Days of Week<br>
+        <el-select v-model="info.weekDays"
+          multiple placeholder="Select"
+          style="margin: 5px; width: 270px"
+          v-on:visible-change="updateDays"
+          v-on:remove-tag="updateDays">
+
+          <el-option
+            v-for="(day, index) in days"
+            :key="day"
+            :label="day"
+            :value="index">
+          </el-option>
+        </el-select>
 
         <br>
         <button type="button" class="add-weekly center uk-button uk-button-primary"
@@ -27,26 +42,27 @@
         <br>
       </el-card>
 
-        <el-card class="card center" style="width:325px; margin-bottom: 20px">
+      <el-card class="card center" style="width:325px">
 
-        Days of Week<br>
-        <el-select v-model="info.weekDays"
-          multiple placeholder="Select"
-          style="margin: 5px; width: 270px"
-          v-on:visible-change="updateDays"
-          v-on:remove-tag="updateDays">
+          Two-Sessions per Day
+          <el-switch
+            v-model="info.multipleSessions"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
 
-          <el-option
-            v-for="(day, index) in days"
-            :key="day"
-            :label="day"
-            :value="index">
-          </el-option>
-        </el-select>
-        <br>
+          <br> <br>
+
+          <label for="text-area">First Session Time</label> <br>
+          <el-input type="textarea" autosize v-model="info.sessionOneTime"> </el-input>
+          <br>
+          <div v-if="info.multipleSessions">
+            <label for="text-area">Second Session Time</label> <br>
+            <el-input type="textarea" autosize v-model="info.sessionTwoTime"> </el-input>
+          </div>
       </el-card>
 
-      <el-card>
+      <el-card class="card">
       <div class="code-input center">
         Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
           controls-position="right" size="small" :label="'Edit ' + info.classType.dateType"></el-input-number>
@@ -62,7 +78,20 @@
           <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"> </el-input>
         </div>
       </div>
+
+      <div class="center">
+        <label >Date
+        <el-date-picker
+          style="margin: 10px; margin-bottom:20px"
+          v-model="weeks[userInput.weekNumber - 1].date"
+          type="date"
+          placeholder="Pick start date">
+        </el-date-picker>
+        </label>
+      </div>
       </el-card>
+
+
     </div>
 
     <!-- Where the canvas code is stored -->
@@ -96,7 +125,8 @@
                     <tr>
                       <th style="width: 90px;">&nbsp;</th>
                       <th style="width: 75px;" v-for="(day, index) in info.execWeekLength">
-                        {{incrementDate(info.startDate, week - 1, info.weekDays[index])}}
+                        {{formatDate(weeks[(day - 1) + (week - 1) * info.execWeekLength].date)}}
+                        <!-- {{incrementDate(info.startDate, week - 1, info.weekDays[index])}} -->
                       </th>
 
 
@@ -107,7 +137,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td style="width: 88px;">9:30 am - 12:00 pm</td>
+                      <td style="width: 88px;">{{info.sessionOneTime}}</td>
                       <td style="width: 74x;" v-if="week == 1" v-for="idx in info.weekOffset">
                       <p v-if="idx == 1"><em>(Overview of Program)</em></p>
                       <p><strong>NO CLASS</strong></p>
@@ -126,12 +156,12 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
+                    <tr v-if="info.multipleSessions">
                       <td style="width: 88px;"><strong>Lunch Break</strong></td>
                       <td v-for="day in info.execWeekLength"></td>
                     </tr>
-                    <tr>
-                      <td style="width: 88px;">1:30 pm - &nbsp;4:00 pm</td>
+                    <tr v-if="info.multipleSessions">
+                      <td style="width: 88px;">{{info.sessionTwoTime}}</td>
                       <td style="width: 74x;" v-if="week == 1" v-for="idx in info.weekOffset">
                       <p><strong>NO CLASS</strong></p>
                       </td>
@@ -320,6 +350,7 @@ export default {
     updateCode() {
       let code = document.getElementById("canvas-code");
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/gi, "");
+
     },
     updateSwitch() {
       this.userInput.isFile = !this.userInput.isFile;
@@ -454,6 +485,7 @@ export default {
       console.log("sending syllabus");
       EventBus.$emit("syllabus-data", syllabus);
     });
+
   },
   beforeUpdate() {
     this.updateCode();
