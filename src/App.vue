@@ -37,34 +37,29 @@
 
     <el-dialog  title="Course Info" :visible.sync="dialogFormVisible" style="width: 80%; margin:auto;">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px">
-        <div class="">
-          <el-form-item label="Course Title" prop="title">
-            <el-input autosize style="width: 80%" placeholder="Please input your Course Title" v-model="ruleForm.title"></el-input>
-          </el-form-item>
-          <el-form-item label="Course URL" prop="url">
-            <el-input autosize style="width: 80%" placeholder="Please input your Course URL" v-model="ruleForm.url"></el-input>
-          </el-form-item>
-          <el-form-item label="Course Type" prop="classType">
-            <select style="display: inline-block; width:150px" v-model="ruleForm.classType" name="Choose Banner" class="uk-select">
-              <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
-            </select>
-          </el-form-item>
-
-          <el-form-item label="Blended Model" prop="isBlended">
-            <el-switch
-              v-model="ruleForm.isBlended"
-              active-color="#13ce66"
-              inactive-color="#ff4949">
-            </el-switch>
-          </el-form-item>
-
-          <el-form-item label="School" prop="theme">
-            <select style="display: inline-block; width:150px" v-model="ruleForm.theme" name="Choose Banner" class="uk-select">
-              <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
-            </select>
-          </el-form-item>
-
-        </div>
+        <el-form-item label="Course Title" prop="title">
+          <el-input autosize style="width: 80%" placeholder="Please input your Course Title" v-model="ruleForm.title"></el-input>
+        </el-form-item>
+        <el-form-item label="Course URL" prop="url">
+          <el-input autosize style="width: 80%" placeholder="Please input your Course URL" v-model="ruleForm.url"></el-input>
+        </el-form-item>
+        <el-form-item label="School" prop="theme">
+          <select style="display: inline-block; width:150px" v-model="ruleForm.theme" name="Choose Banner" class="uk-select">
+            <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
+          </select>
+        </el-form-item>
+        <el-form-item label="Course Type" prop="classType">
+          <select style="display: inline-block; width:150px" v-model="ruleForm.classType" name="Choose Banner" class="uk-select">
+            <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
+          </select>
+        </el-form-item>
+        <el-form-item label="Online Class" prop="isBlended">
+          <el-switch
+            v-model="ruleForm.isBlended"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
@@ -72,6 +67,8 @@
       </span>
     </el-dialog>
 
+
+    <!-- OLD DIALOG -->
     <!-- <el-dialog title="Course Info" :visible.sync="dialogFormVisible">
       <div class="center">
         <label for="input"> Course Title <el-input placeholder="Please input" v-model="info.title"></el-input> </label>
@@ -147,16 +144,14 @@ export default {
       },
       rules: {
         title: [
-          { required: true, message: 'Please input your Course Title', trigger: 'blur' },
+          { required: true, message: 'Course Title is required', trigger: 'blur' },
           { min: 0, max: 35, message: 'Length should be less than 35 characters', trigger: 'blur' }
         ],
         url: [
-          { required: true, message: 'Please input your Course URL', trigger: 'blur' },
+          { required: true, message: 'Course URL is required', trigger: 'blur' },
           { type: "url" , message: 'Must be a valid URL', trigger: 'blur' }
         ],
-        theme: [
-          { required: true, message: 'Please choose a School', trigger: 'blur' },
-        ],
+
       }
     };
   },
