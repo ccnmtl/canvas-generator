@@ -1,7 +1,8 @@
 <template lang="html">
   <transition name="fade">
     <div class="content-box">
-      <div class="grid-row top-xs">
+
+      <div v-if="!this.$store.getters.getInfo.isBlended" class="grid-row top-xs">
         <div class="col-xs-4">
           <div class="styleguide-section__grid-demo-element">
             <div class="embed-container">
@@ -17,6 +18,28 @@
           </div>
         </div>
       </div>
+
+      <div v-if="this.$store.getters.getInfo.isBlended" class="grid-row top-xs">
+        <div class="col-xs-6">
+          <div class="styleguide-section__grid-demo-element">
+            <div class="embed-container">
+              <iframe :src="this.videoLink" width="500" height="281" allowfullscreen="allowfullscreen"
+              webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6">
+          <blockquote style="height: 281px; border-left: 4px solid #008ee2; font-weight: normal; font-size: 16px;">
+          <div class="styleguide-section__grid-demo-element">
+            <div class="STV1_WelcomeAlt">VIDEO: {{data.title}}</div>
+            <p>{{data.description}}</p>
+          </div>
+          </blockquote>
+        </div>
+
+      </div>
+
     </div>
   </transition>
 </template>
@@ -51,4 +74,5 @@ export default {
 </script>
 
 <style lang="css">
+
 </style>

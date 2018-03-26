@@ -10,33 +10,39 @@
       <el-select v-model="selected" placeholder="Select" style="margin-right: 100px; margin-left:100px; margin-bottom:10px; width: 150px;">
         <el-option
           v-for="(week, index) in weeks"
-          :key="week.date"
+          :key=index
           :label="info.classType.dateType + ' ' + (index + 1)"
           :value="index">
         </el-option>
       </el-select>
-      <textarea v-model="weeks[selected].title" class="code-input uk-textarea" rows="2" cols="60"></textarea>
+
+      <el-input autosize class="code-input" style="width: 400px" placeholder="Please input week title" v-model="weeks[selected].title"></el-input>
       <!-- <button type="button" name="button" class="uk-button uk-button-primary" @click="setToDefault">Reset to Default</button> -->
       <button type="button" name="button" class="show-editor center uk-button uk-button-primary" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
       <!-- This transition is defined as a css animations in the style section -->
       <transition name="fade"></transition>
       <div v-show="showEditor">
+        <el-alert
+          title="Edit Readings and Lecture Presentation table directly in Canvas" type="warning"
+          show-icon closable="false" style="width:80%; margin:auto; margin-bottom: 10px" justify="center">
+        </el-alert>
+
         <div class="quill">
           <quill-editor ref="myTextEditor"
                         v-model="weeks[selected].body"
                         :config="editorOption">
           </quill-editor>
         </div>
-        <div class="quill">
+
+        <!-- <div class="quill">
           <quill-editor ref="myTextEditor"
                         v-model="weeks[selected].required"
                         :config="editorOption">
           </quill-editor>
-        </div>
+        </div> -->
       </div>
       </transition>
 
-      <hr>
 
       <!-- This is a seperate component to handle adding new Acitivity Page elements abstractly. For more information check the WeeklyCodeModule.vue file. -->
       <weekly-code-module
@@ -52,7 +58,7 @@
         class="code-module"
         :content="weeks[selected].discussions"
         :fn="addDiscussion"
-        :inputs="['link','due', 'available', 'points']"
+        :inputs="['link','due', 'available']"
         @clearArr="weeks[selected].discussions = []">
         Discussion
       </weekly-code-module>
@@ -61,7 +67,7 @@
         class="code-module"
         :content="weeks[selected].assignments"
         :fn="addAssignment"
-        :inputs="['link','due', 'available', 'points']"
+        :inputs="['link','due', 'available']"
         @clearArr="weeks[selected].assignments = []">
         Assignment
       </weekly-code-module>
@@ -376,9 +382,8 @@ textarea {
 
 .quill {
   width: 80%;
-  margin-bottom: 50px;
-  margin-right: 50px;
-  margin-left: 50px;
+  margin-bottom: 25px;
+  margin: auto;
 }
 
 #canvas-code {

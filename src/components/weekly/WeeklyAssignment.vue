@@ -15,7 +15,7 @@
             <div class="ig-details__item">
               <strong>Available</strong> {{data.available}}
             </div>
-            <div class="ig-details__item">{{data.points}} pts</div>
+            <!-- <div class="ig-details__item">{{data.points}} pts</div> -->
           </div>
           </div>
         </div>

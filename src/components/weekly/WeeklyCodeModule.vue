@@ -17,7 +17,7 @@
       </div>
 
       <div v-show="editable">
-        <div class="code-input center uk-margin-medium-top" v-for = "input in inputs">
+        <div class="code-input center uk-margin-small-top" v-for = "input in inputs">
           <label for="text-area">{{capitalize(input)}}</label>
           <textarea v-model.lazy="currentItem[input]" id="text-area" class="uk-textarea" rows="2" cols="50"></textarea> <br>
         </div>
