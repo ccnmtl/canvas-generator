@@ -34,7 +34,6 @@
     </el-popover>
 
     <div>
-      {{info.usePops}}
     	<ul class="uk-tab uk-flex-center" data-uk-tab="{connect:'#tab-content'}">
         <li class="uk-active"><a href="#">Course Info</a></li>
         <li><a href="#">Description</a></li>
@@ -46,6 +45,17 @@
     	</ul>
     	<ul id="tab-content" class="uk-switcher uk-margin">
     		<li class="uk-active uk-text-center">
+          <el-alert
+            title="Please complete title"
+            type="warning" class="alert" show-icon
+            description="The course title or course URL are currently empty or not valid. Please complete these sections to continue."
+            v-show="!checkTitle">
+          </el-alert>
+          <el-alert
+            title="The length of the course title is longer than 35 characters and may not display properly. Please change the title or use a wide banner"
+            type="warning" class="alert" center show-icon
+            v-show="info.title.length > 35 && theme.banner != 'SIPA_W'">
+          </el-alert>
           <el-input style="width: 220px;" v-popover:titlepop placeholder="Please input your Course Title"  v-model="info.title"></el-input>
           <el-input title="This is your Course ID" style="width: 200px;" v-model="info.semester" v-tippy="{delay: [1000,200]}"></el-input>
           <el-input style="width: 400px;" v-popover:urlpop placeholder="Please input your Course URL"  v-model="info.url"></el-input>
@@ -215,6 +225,8 @@
 import { EventBus } from '../bus'
 import saveState from 'vue-save-state';
 import { quillEditor } from 'vue-quill-editor';
+import validator from 'validator';
+
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline'],
@@ -292,6 +304,10 @@ export default {
         output = link;
       }
       return output;
+    },
+    checkTitle(){
+      if (this.info.title.length < 1 || this.info.url.length < 1) return false
+      return validator.isURL(this.info.url)
     },
     // Parses the URL
     parseUrl(){
@@ -402,6 +418,12 @@ h1, h2 {
 ul {
   list-style-type: none;
   padding: 0;
+}
+
+.alert{
+  width: 50%;
+  margin: auto;
+  margin-bottom: 10px;
 }
 
 textarea {
