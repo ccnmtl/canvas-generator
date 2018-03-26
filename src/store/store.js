@@ -85,6 +85,7 @@ export default new Vuex.Store({
     settingsFormVisible: false,
     prevPage: "/home",
     nextPage: "/weekly",
+    usePops: "true",
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",
   },
   getters: {

@@ -5,9 +5,9 @@
 
       <!-- <a href="#offcanvas-slide" uk-toggle>Open</a> -->
 
-
       <div class="uk-float-right uk-padding-small">
         <h6>Course Info: <span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true"></span> CANVAS CODE GENERATOR</h6>
+
       </div>
 
       <div style="margin-left: 35%; width:30%;">
@@ -16,8 +16,7 @@
           <el-breadcrumb-item :to="{ path: '/syllabus' }">Syllabus</el-breadcrumb-item>
           <el-breadcrumb-item v-show="info.classType.option == 'Executive Training'" :to="{ path: '/program' }" >Program Overview</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/weeklylist' }">Weekly List</el-breadcrumb-item>
-          <el-breadcrumb-item v-show="!info.isBlended" :to="{ path: '/weekly' }" >Individual Activity</el-breadcrumb-item>
-          <el-breadcrumb-item v-show="info.isBlended" :to="{ path: '/weeklyblended' }" >Individual Activity</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/weekly' }" >Individual Activity</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/export' }">Export</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '' }"></el-breadcrumb-item>
         </el-breadcrumb>
@@ -37,8 +36,7 @@
           <li v-show="info.classType.option == 'Executive Training'"><router-link class="router" to="/program">Program Overview</router-link></li>
           <li><router-link class="router" to="/weeklylist">Weekly Activites</router-link></li>
           <!-- <li v-show="info.classType.option !== 'Blended'"><router-link class="router" to="/weekly">Individual Activity</router-link></li> -->
-          <li v-show="!info.isBlended"><router-link class="router" to="/weekly">Individual Activity</router-link></li>
-          <li v-show="info.isBlended"><router-link class="router" to="/weeklyblended">Individual Activity</router-link></li>
+          <li ><router-link class="router" to="/weekly">Individual Activity</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/export">Export/Import Data</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/credits">CREDITS</router-link></li>
     			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
@@ -78,6 +76,14 @@
         <label for="select">Blended Model
         <el-switch
           v-model="info.isBlended"
+          active-color="#13ce66"
+          inactive-color="#ff4949">
+        </el-switch>
+        </label>
+        <br>
+        <label for="select">Help Tooltips
+        <el-switch
+          v-model="info.usePops"
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>

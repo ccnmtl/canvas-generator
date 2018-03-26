@@ -21,17 +21,20 @@
     ref="titlepop" placement="top-start"
     title="Course Title" width="300"
     trigger="hover" open-delay="2000"
-    content="The course title should be below 30-40 characters to properly fit on the banner">
+    content="The course title should be below 30-40 characters to properly fit on the banner"
+    :disabled="!info.usePops">
     </el-popover>
 
     <el-popover
     ref="urlpop" placement="top-start"
     title="Course URL" width="300"
     trigger="hover" open-delay="2000"
+    :disabled="!info.usePops"
     content="The course url is necessary to properly link other pages to your canvas site. Please double check it is correct before copying to canvas.">
     </el-popover>
 
     <div>
+      {{info.usePops}}
     	<ul class="uk-tab uk-flex-center" data-uk-tab="{connect:'#tab-content'}">
         <li class="uk-active"><a href="#">Course Info</a></li>
         <li><a href="#">Description</a></li>
