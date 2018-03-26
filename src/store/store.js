@@ -22,7 +22,7 @@ export default new Vuex.Store({
       url: "",
       semester: "U6411 // SPRING 2020",
       classType: "default", // options are "default", "blended", "execEd",
-      isBlended: "false",
+      isBlended: false,
 
       //TIME INFO
       startDate: moment(),

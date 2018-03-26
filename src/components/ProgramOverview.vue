@@ -33,6 +33,7 @@
 
         <br> <br> Start Week <br>
         <el-date-picker
+          v-on:change="updateDays"
           style="margin: 10px; margin-bottom:20px"
           v-model="info.startDate"
           type="week"

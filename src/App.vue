@@ -5,11 +5,26 @@
 
       <!-- <a href="#offcanvas-slide" uk-toggle>Open</a> -->
 
+
       <div class="uk-float-right uk-padding-small">
         <h6>Course Info: <span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true"></span> CANVAS CODE GENERATOR</h6>
       </div>
 
+      <div style="margin-left: 35%; width:30%;">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/home' }">Home</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/syllabus' }">Syllabus</el-breadcrumb-item>
+          <el-breadcrumb-item v-show="info.classType.option == 'Executive Training'" :to="{ path: '/program' }" >Program Overview</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/weeklylist' }">Weekly List</el-breadcrumb-item>
+          <el-breadcrumb-item v-show="!info.isBlended" :to="{ path: '/weekly' }" >Individual Activity</el-breadcrumb-item>
+          <el-breadcrumb-item v-show="info.isBlended" :to="{ path: '/weeklyblended' }" >Individual Activity</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/export' }">Export</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '' }"></el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+
     <vue-snotify></vue-snotify>
+
 
     <div id="offcanvas-slide" uk-offcanvas>
         <div class="uk-offcanvas-bar uk-background">
@@ -34,6 +49,8 @@
        		<!-- <button class="uk-button uk-button-primary uk-margin-large-top">download the guide</button> -->
         </div>
     </div>
+
+
 
     <!-- OLD DIALOG -->
     <el-dialog title="Course Info" :visible.sync="dialogFormVisible">

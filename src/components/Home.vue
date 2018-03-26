@@ -3,7 +3,7 @@
 
     <!-- This Div contains all of the information inputs -->
     <!-- Currently it uses a component from the Element UI library for the tabs -->
-    <div class="center routers">
+    <!-- <div class="center routers">
       <router-link to="/">
       <el-button type="primary" class="nav-button"><i class="el-icon-arrow-left el-icon-left"></i>Previous Page</el-button>
       </router-link>
@@ -11,7 +11,7 @@
       <router-link to="/syllabus">
       <el-button type="primary" class="nav-button">Next Page<i class="el-icon-arrow-right el-icon-right"></i></el-button>
       </router-link>
-    </div>
+    </div> -->
 
     <div class="clearfix"></div>
 
@@ -27,9 +27,9 @@
     	</ul>
     	<ul id="tab-content" class="uk-switcher uk-margin">
     		<li class="uk-active uk-text-center">
-          <el-input style="width: 200px;" v-model="info.title"></el-input>
+          <el-input style="width: 220px;" placeholder="Please input your Course Title"  v-model="info.title"></el-input>
           <el-input style="width: 200px;" v-model="info.semester"></el-input>
-          <el-input style="width: 400px;" v-model="info.url"></el-input>
+          <el-input style="width: 400px;" placeholder="Please input your Course URL"  v-model="info.url"></el-input>
         </li>
     		<li class="uk-text-center">
           <div class='quill'>
