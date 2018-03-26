@@ -23,7 +23,7 @@
 
           <el-option
             v-for="(day, index) in days"
-            :key="day"
+            :key="index"
             :label="day"
             :value="index">
           </el-option>

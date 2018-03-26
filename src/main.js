@@ -11,6 +11,7 @@ import store from './store/store'
 import VueResource from 'vue-resource'
 import Snotify from 'vue-snotify'
 import 'vue-snotify/styles/material.css'
+import VueTippy from 'vue-tippy'
 
 //import Vuetify from 'vuetify'
 //import 'vuetify/dist/vuetify.min.css'
@@ -22,6 +23,7 @@ import locale from 'element-ui/lib/locale/lang/en'
 Vue.use(VueResource);
 Vue.use(Snotify);
 Vue.use(ElementUI, { locale })
+Vue.use(VueTippy)
 
 /* eslint-disable no-new */
 new Vue({

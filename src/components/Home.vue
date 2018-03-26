@@ -15,6 +15,22 @@
 
     <div class="clearfix"></div>
 
+    <!-- Popover Tips -->
+
+    <el-popover
+    ref="titlepop" placement="top-start"
+    title="Course Title" width="300"
+    trigger="hover" open-delay="2000"
+    content="The course title should be below 30-40 characters to properly fit on the banner">
+    </el-popover>
+
+    <el-popover
+    ref="urlpop" placement="top-start"
+    title="Course URL" width="300"
+    trigger="hover" open-delay="2000"
+    content="The course url is necessary to properly link other pages to your canvas site. Please double check it is correct before copying to canvas.">
+    </el-popover>
+
     <div>
     	<ul class="uk-tab uk-flex-center" data-uk-tab="{connect:'#tab-content'}">
         <li class="uk-active"><a href="#">Course Info</a></li>
@@ -27,9 +43,9 @@
     	</ul>
     	<ul id="tab-content" class="uk-switcher uk-margin">
     		<li class="uk-active uk-text-center">
-          <el-input style="width: 220px;" placeholder="Please input your Course Title"  v-model="info.title"></el-input>
-          <el-input style="width: 200px;" v-model="info.semester"></el-input>
-          <el-input style="width: 400px;" placeholder="Please input your Course URL"  v-model="info.url"></el-input>
+          <el-input style="width: 220px;" v-popover:titlepop placeholder="Please input your Course Title"  v-model="info.title"></el-input>
+          <el-input title="This is your Course ID" style="width: 200px;" v-model="info.semester" v-tippy="{delay: [1000,200]}"></el-input>
+          <el-input style="width: 400px;" v-popover:urlpop placeholder="Please input your Course URL"  v-model="info.url"></el-input>
         </li>
     		<li class="uk-text-center">
           <div class='quill'>
@@ -183,7 +199,10 @@
        	</div>
     </div>
 
+
+
   </div>
+
 </template>
 
 <script>
