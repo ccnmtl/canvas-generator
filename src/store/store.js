@@ -25,7 +25,7 @@ export default new Vuex.Store({
       isBlended: false,
 
       //TIME INFO
-      startDate: moment(),
+      startDate: moment().day(1),
       dateType: "Day",
       dateLength: "12",
       execWeeks: "2",
@@ -39,7 +39,7 @@ export default new Vuex.Store({
       sessionTwoTime: "1:30 pm -  4:00 pm",
 
 
-      classType: { option: "Weekly Course", dateType: "Week" },
+      classType: { option: "Executive Training", dateType: "Session" }, // { option: "Weekly Course", dateType: "Week" },
       classOptions:[
         { option: "Weekly Course", dateType: "Week" },
         { option: "Executive Training", dateType: "Session" },
