@@ -128,7 +128,7 @@ export default {
     },
     performImport () {
       this.$store.commit('updateInfo', this.importData.store.info)
-      this.$store.commit('updateTheme', this.importData.store.theme)
+      this.$store.commit('updateTheme', this.importData.store.theme.theme)
       this.$store.commit('updateWeeks', this.importData.store.weeks)
       this.$router.push({path: '/home'});
     },
