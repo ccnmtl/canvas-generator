@@ -9,15 +9,22 @@
     <div class="textbox-container">
       <el-card class="card center" style="width:325px;">
         How Many Weeks: <br>
-        <el-input-number  style="margin: 10px;" v-model="info.execWeeks" :min="1" :max="4"></el-input-number> <br>
-        <!-- How Many Days per Week: <br> <el-input-number  style="margin: 10px;" v-model="info.execWeekLength" :min="1" :max="7"></el-input-number> -->
-        Offset Class Start: <br>
-        <el-input-number  style="margin: 10px;" v-model="info.weekOffset" :min="0" :max="info.execWeekLength - 1"></el-input-number>
+        <el-input-number  style="margin: 10px;" v-model="info.execWeeks" :min="1" :max="4"></el-input-number>
+
+        <br> Start Week <br>
+        <el-date-picker
+          v-on:change="updateDays"
+          style="margin: 10px; margin-bottom:20px"
+          v-model="info.startDate"
+          type="week"
+          format="M / d / yyyy"
+          placeholder="Pick start date">
+        </el-date-picker>
 
         <br> Days of Week<br>
         <el-select v-model="info.weekDays"
           multiple placeholder="Select"
-          style="margin: 5px; width: 270px"
+          style="margin: 10px; width: 270px"
           v-on:visible-change="updateDays"
           v-on:remove-tag="updateDays">
 
@@ -30,39 +37,13 @@
         </el-select>
 
         <br>
+
+        Offset Class Start: <br>
+        <el-input-number  style="margin: 5px;" v-model="info.weekOffset" :min="0" :max="info.execWeekLength - 1"></el-input-number>
+
         <button type="button" class="add-weekly center uk-button uk-button-primary"
         name="button" @click="populateActivities(info.execWeeks * info.execWeekLength - info.weekOffset)">Edit # of Sessions</button>
-
-        <br> <br> Start Week <br>
-        <el-date-picker
-          v-on:change="updateDays"
-          style="margin: 10px; margin-bottom:20px"
-          v-model="info.startDate"
-          type="week"
-          format="M / d / yyyy"
-          placeholder="Pick start date">
-        </el-date-picker>
         <br>
-      </el-card>
-
-      <el-card class="card center" style="width:325px">
-
-          Two-Sessions per Day
-          <el-switch
-            v-model="info.multipleSessions"
-            active-color="#13ce66"
-            inactive-color="#ff4949">
-          </el-switch>
-
-          <br> <br>
-
-          <label for="text-area">First Session Time</label> <br>
-          <el-input type="textarea" autosize v-model="info.sessionOneTime"> </el-input>
-          <br>
-          <div v-if="info.multipleSessions">
-            <label for="text-area">Second Session Time</label> <br>
-            <el-input type="textarea" autosize v-model="info.sessionTwoTime"> </el-input>
-          </div>
       </el-card>
 
       <el-card class="card">
@@ -75,12 +56,15 @@
         <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
       </select>
 
-      <div v-if="weeks.length > 0">
         <div class="code-input center uk-margin-small-top">
           <label for="text-area">Title</label> <br>
           <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"> </el-input>
         </div>
-      </div>
+
+        <div v-if="info.multipleSessions && !info.autoSessionTitle" class="code-input center uk-margin-small-top">
+          <label for="text-area">Second Session Title</label> <br>
+          <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].secondTitle"> </el-input>
+        </div>
 
       <div class="center">
         <label >Date
@@ -94,6 +78,41 @@
       </div>
       </el-card>
 
+      <el-card class="card center" style="width:290px">
+
+          Two-Sessions per Day
+          <el-switch
+            v-model="info.multipleSessions"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+          <br>
+          <div v-if="info.multipleSessions">
+            <br>
+            Auto Title Second Session
+            <el-switch
+              v-model="info.autoSessionTitle"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </div>
+          <br>
+          Use Professor Name
+          <el-switch
+            v-model="info.useProfName"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+          <br> <br>
+
+          <label for="text-area">First Session Time</label> <br>
+          <el-input type="textarea" autosize v-model="info.sessionOneTime"> </el-input>
+          <br>
+          <div v-if="info.multipleSessions">
+            <label for="text-area">Second Session Time</label> <br>
+            <el-input type="textarea" autosize v-model="info.sessionTwoTime"> </el-input>
+          </div>
+      </el-card>
 
     </div>
 
@@ -126,14 +145,14 @@
                 <table class="ic-Table ic-Table--hover-row" style="height: 58px;" width="431">
                   <thead>
                     <tr>
-                      <th style="width: 90px;">&nbsp;</th>
-                      <th style="width: 75px;" v-if="week == 1" v-for="(day, index) in info.weekOffset">
+                      <th style="width: 88px;">&nbsp;</th>
+                      <th style="width: 74px;" v-if="week == 1" v-for="(day, index) in info.weekOffset">
                         {{incrementDate(info.startDate, week - 1, info.weekDays[index])}}
                       </th>
-                      <th style="width: 75px;" v-if="week == 1" v-for="(day, index) in (info.execWeekLength - info.weekOffset)">
+                      <th style="width: 74px;" v-if="week == 1" v-for="(day, index) in (info.execWeekLength - info.weekOffset)">
                         {{formatDate(weeks[(day - 1) + (week - 1) * info.execWeekLength].date)}}
                       </th>
-                      <th v-if="week > 1" style="width: 75px;" v-for="(day, index) in (info.execWeekLength)">
+                      <th v-if="week > 1" style="width: 74px;" v-for="(day, index) in (info.execWeekLength)">
                         {{formatDate(weeks[(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset].date)}}
                       </th>
 
@@ -155,13 +174,13 @@
                         <p v-if="day == 1 && week == 1 && info.weekOffset == 0"><em>(Overview of Program)</em></p>
                         <div v-if="(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset < weeks.length">
                           <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title}}</strong></p>
-                          <p>{{info.profs[0].name}}</p>
+                          <p v-if="info.useProfName">{{info.profs[0].name}}</p>
                         </div>
                       </td>
                       <td style="width: 74x;" v-if="week !== 1"  v-for="day in (info.execWeekLength)">
                         <div v-if="(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset < weeks.length">
                           <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset].title}}</strong></p>
-                          <p>{{info.profs[0].name}}</p>
+                          <p v-if="info.useProfName">{{info.profs[0].name}}</p>
                         </div>
                       </td>
                     </tr>
@@ -176,14 +195,16 @@
                       </td>
                       <td style="width: 74x;" v-if="week == 1" v-for="day in (info.execWeekLength - info.weekOffset)">
                         <div v-if="(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset < weeks.length">
-                          <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title + " II"}}</strong></p>
-                          <p>{{info.profs[0].name}}</p>
+                          <p v-if="info.autoSessionTitle"><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title + " II"}}</strong></p>
+                          <p v-else><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].secondTitle}}</strong></p>
+                          <p v-if="info.useProfName">{{info.profs[0].name}}</p>
                         </div>
                       </td>
                       <td style="width: 74x;" v-if="week !== 1" v-for="day in (info.execWeekLength)">
                         <div v-if="(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset < weeks.length">
-                          <p><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset].title + " II"}}</strong></p>
-                          <p>{{info.profs[0].name}}</p>
+                          <p v-if="info.autoSessionTitle"><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title + " II"}}</strong></p>
+                          <p v-else><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].secondTitle}}</strong></p>
+                          <p v-if="info.useProfName">{{info.profs[0].name}}</p>
                         </div>
                       </td>
                     </tr>

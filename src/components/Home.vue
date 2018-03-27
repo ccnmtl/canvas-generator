@@ -46,7 +46,7 @@
     	<ul id="tab-content" class="uk-switcher uk-margin">
     		<li class="uk-active uk-text-center">
           <el-alert
-            title="Please complete title"
+            title="Course Info Incomplete"
             type="warning" class="alert" show-icon
             description="The course title or course URL are currently empty or not valid. Please complete these sections to continue."
             v-show="!checkTitle">

@@ -49,7 +49,7 @@ export default {
     },
 
     weekDefault: {
-      title: 'Sustainable Agriculture and Food Systems',
+      title: 'Lecture',
       date: moment(),
       description: "This session will cover the foundational topics in food systems.",
       imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/week1' + '.png',
@@ -57,7 +57,8 @@ export default {
       required: '<table class="ic-Table ic-Table--condensed"><thead><tr><th>Readings</th><th>Lecture Presentation</th><th></th><th></th></tr></thead><tbody><tr><td>Auftragstaktik</td><td>Managing to 2019</td></tr><tr><td>Drucker and Management </td><td>Memo Format</td></tr><tr><td>Action Verb List</td><td>Discussion</td></tr><tr><td>Memo Guide</td><td>Recitation</td></tr></tbody></table>',
       videos: [],
       discussions: [],
-      assignments: []
+      assignments: [],
+      secondTitle: "",
     },
     videoDefault: {
       title: "All that Glitters is not Gold (18 minutes)",

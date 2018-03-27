@@ -197,6 +197,9 @@ export default {
     for (let i = 1; i <= 12; i++ ){
       let tempWeek = _.cloneDeep(this.$store.getters.dWeek)
       tempWeek.imgSrc = this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + '.png'
+      tempWeek.title = "Lecture " + i
+      tempWeek.secondTitle = "Lecture " + i + " II"
+
 
       weeklyActivities.push(tempWeek);
     }

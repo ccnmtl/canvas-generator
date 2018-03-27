@@ -34,7 +34,9 @@ export default new Vuex.Store({
       weekOffset: 0,
 
       //EXEC SESSION INFO
-      multipleSessions: true,
+      multipleSessions: false,
+      autoSessionTitle: true,
+      useProfName: true,
       sessionOneTime: "9:30 am - 12:00 pm",
       sessionTwoTime: "1:30 pm -  4:00 pm",
 
