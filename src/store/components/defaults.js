@@ -57,6 +57,7 @@ export default {
       useWeeklyImages: true,
       useLinks: true,
       usePops: true,
+      wideBanner: false,
 
       //DISPLAY PARAMETERS
       video:"https://vimeo.com/199382848/1dd8fc0f31",

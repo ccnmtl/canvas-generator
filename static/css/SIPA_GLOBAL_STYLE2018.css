@@ -200,6 +200,12 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
 		height: 110px;
 	}
 
+	.STV1_BannerBlue {
+		background: #008ee2 no-repeat center center;
+		background-color: #008ee2;
+		height: 110px;
+	}
+
   .CU01 {
     background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/STV1_BannerCU.jpg') no-repeat center center;
 		background-color: #008ee2;

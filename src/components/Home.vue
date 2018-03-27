@@ -45,6 +45,8 @@
     	</ul>
     	<ul id="tab-content" class="uk-switcher uk-margin">
     		<li class="uk-active uk-text-center">
+
+          <!-- Alerts based on validation of course title and url -->
           <el-alert
             title="Course Info Incomplete"
             type="warning" class="alert" show-icon
@@ -54,12 +56,15 @@
           <el-alert
             title="The length of the course title is longer than 35 characters and may not display properly. Please change the title or use a wide banner"
             type="warning" class="alert" center show-icon
-            v-show="info.title.length > 35 && theme.banner != 'SIPA_W'">
+            v-show="info.title.length > 35 && !info.wideBanner">
           </el-alert>
+
           <el-input style="width: 220px;" v-popover:titlepop placeholder="Please input your Course Title"  v-model="info.title"></el-input>
           <el-input title="This is your Course ID" style="width: 200px;" v-model="info.semester" v-tippy="{delay: [1000,200]}"></el-input>
           <el-input style="width: 400px;" v-popover:urlpop placeholder="Please input your Course URL"  v-model="info.url"></el-input>
+
         </li>
+
     		<li class="uk-text-center">
           <div class='quill'>
             <quill-editor ref="myTextEditor"
@@ -68,6 +73,7 @@
             </quill-editor>
           </div>
     		</li>
+
     		<li class="uk-text-center">
           <div v-for="prof in info.profs">
           <textarea v-model="prof.name" class="code-input uk-input" rows="1" cols="20"></textarea>
@@ -75,6 +81,7 @@
           <textarea v-model="prof.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
           </div>
         </li>
+
     		<li class="uk-text-center" v-if="info.tas.length > 0">
           <div v-for="ta in info.tas">
           <textarea v-model="ta.name" class="code-input uk-input" rows="1" cols="20"></textarea>
@@ -82,10 +89,12 @@
           <textarea v-model="ta.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
           </div>
     		</li>
+
     		<li class="uk-text-center">
           <textarea v-model="info.meetings" class="code-input uk-input" rows="1" cols="50"></textarea>
           <textarea v-model="info.discussions" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
     		</li>
+
     		<li class="uk-text-center">
           <button type="button" class="uk-button uk-button-primary " name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
           <textarea v-show="this.userInput.isVideo" v-model="userInput.video" class="code-input uk-input" rows="1" cols="50"></textarea>
@@ -94,6 +103,7 @@
             <input style="display: inline-block;" type="submit" class="uk-button uk-button-primary" value="Submit!">
           </form>
         </li>
+
         <li class="uk-text-center">
           <label>
             Banner Image:
@@ -101,7 +111,11 @@
               <option selected disabled>Choose Banner</option>
               <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
             </select>
+
+              <el-checkbox v-if="theme.wide" v-model="info.wideBanner">Use Wide Banner</el-checkbox>
           </label>
+
+          <!-- Old Logo select -- may need for independant banner switching -->
           <!-- <label>
             Logo Image:
             <select style="display: inline-block; width:150px" v-model="theme.logo" name="Choose Logo" class="uk-select">
@@ -119,12 +133,10 @@
     <hr />
 
     <div class="clearfix"></div>
-
-
     <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
       <div class="">
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
-          <div :class="['pad-box-mega','STV1_Banner', theme.banner]">
+          <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]">
             <img :src="theme.logo"/>
             <p>{{info.title.toUpperCase()}}</p>
             <p class="STV1_CourseCode">{{info.semester}}</p>

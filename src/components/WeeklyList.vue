@@ -10,12 +10,17 @@
 
       <button type="button" class="add-weekly center uk-button uk-button-primary"
       name="button" @click="populateActivities(userInput.toChange)">Edit # of Activities</button>
-      <el-date-picker
-        style="margin: 10px; margin-bottom:20px"
-        v-model="info.startDate"
-        type="date"
-        placeholder="Pick start date">
-      </el-date-picker>
+
+      <div v-if="info.classType.dateType == 'Week'" class="center">
+        <strong>Start Date:</strong>
+        <el-date-picker
+          style="margin: 10px; margin-bottom:20px"
+          v-model="info.startDate"
+          type="date"
+          placeholder="Pick start date">
+        </el-date-picker>
+      </div>
+
       <hr>
 
       <div>

@@ -22,6 +22,8 @@
       <!-- This transition is defined as a css animations in the style section -->
       <transition name="fade"></transition>
       <div v-show="showEditor">
+
+        <!-- Alert to warn about how to edit the table -->
         <el-alert
           title="Edit Readings and Lecture Presentation table directly in Canvas" type="warning"
           show-icon closable="false" style="width:80%; margin:auto; margin-bottom: 10px" justify="center">
@@ -40,6 +42,7 @@
                         :config="editorOption">
           </quill-editor>
         </div> -->
+
       </div>
       </transition>
 
