@@ -184,6 +184,7 @@
                         </div>
                       </td>
                     </tr>
+
                     <tr v-if="info.multipleSessions">
                       <td style="width: 88px;"><strong>Lunch Break</strong></td>
                       <td v-for="day in info.execWeekLength"></td>

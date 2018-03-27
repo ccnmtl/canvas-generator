@@ -16,68 +16,7 @@ export default new Vuex.Store({
     //DEFAULTS AND THEME ALSO INJECTED HERE THROUGH MODULES
 
     //GENERAL COURSE INFO
-    info: {
-      // COURSE INFO
-      title: "",
-      url: "",
-      semester: "U6411 // SPRING 2020",
-      classType: "default", // options are "default", "blended", "execEd",
-      isBlended: false,
-
-      //TIME INFO
-      startDate: moment().day(1),
-      dateType: "Day",
-      dateLength: "12",
-      execWeeks: "2",
-      execWeekLength: "1",
-      weekDays: [0],
-      weekOffset: 0,
-
-      //EXEC SESSION INFO
-      multipleSessions: false,
-      autoSessionTitle: true,
-      useProfName: true,
-      sessionOneTime: "9:30 am - 12:00 pm",
-      sessionTwoTime: "1:30 pm -  4:00 pm",
-
-
-      classType: { option: "Executive Training", dateType: "Session" }, // { option: "Weekly Course", dateType: "Week" },
-      classOptions:[
-        { option: "Weekly Course", dateType: "Week" },
-        { option: "Executive Training", dateType: "Session" },
-        // { option: "Blended", dateType: "Week" },
-      ],
-
-      //TEACHERS
-      profs:[
-        {
-          name: 'Professor Name',
-          email: 'professor@sipa.columbia.edu',
-          office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
-          imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
-        },
-      ],
-      tas:[
-        {
-          name: 'TA Name',
-          email: 'ta@sipa.columbia.edu',
-          office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
-          imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png",
-        },
-      ],
-
-      // Usage Options
-      useDates: true,
-      useWeeklyImages: true,
-      useLinks: true,
-
-      //DISPLAY PARAMETERS
-      video:"https://vimeo.com/199382848/1dd8fc0f31",
-      image:"https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/campus.jpg",
-      meetings: "Tuesday 9:00-10:50 am (IAB Room 411)",
-      discussions: "Thursday 9:00-10:50 am (IAB Room 411)",
-      description: "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
-    },
+    info: defaults.state.info,
 
     // Where the weeks are stored
     weeks: [],
@@ -87,7 +26,6 @@ export default new Vuex.Store({
     settingsFormVisible: false,
     prevPage: "/home",
     nextPage: "/weekly",
-    usePops: "true",
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",
   },
   getters: {
