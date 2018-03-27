@@ -20,7 +20,7 @@
     <el-popover
     ref="titlepop" placement="top-start"
     title="Course Title" width="300"
-    trigger="hover" open-delay="2000"
+    trigger="hover" :open-delay=2000
     content="The course title should be below 30-40 characters to properly fit on the banner"
     :disabled="!info.usePops">
     </el-popover>
@@ -28,7 +28,7 @@
     <el-popover
     ref="urlpop" placement="top-start"
     title="Course URL" width="300"
-    trigger="hover" open-delay="2000"
+    trigger="hover" :open-delay=2000
     :disabled="!info.usePops"
     content="The course url is necessary to properly link other pages to your canvas site. Please double check it is correct before copying to canvas.">
     </el-popover>
@@ -238,6 +238,7 @@ import { EventBus } from '../bus'
 import saveState from 'vue-save-state';
 import { quillEditor } from 'vue-quill-editor';
 import validator from 'validator';
+import _ from 'lodash'
 
 
 var toolbarOptions = [
@@ -361,7 +362,8 @@ export default {
     },
     setToDefault(){
       console.log('resetting data...')
-      this.info = { ...this.$store.getters.dInfo };
+      console.log(this.$store.getters.dInfo.profs[0].name)
+      this.$store.commit('updateInfo', _.cloneDeep(this.$store.getters.dInfo) )
     },
     onFormSubmit (type, ev){
       var formData = new FormData();

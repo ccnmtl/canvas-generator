@@ -521,7 +521,8 @@ export default {
     },
     setToDefault() {
       console.log("resetting data...");
-      this.info = { ...this.$store.getters.dInfo };
+      this.info.profs = this.$store.getters.dInfo.profs
+      this.info.tas = this.$store.getters.dInfo.tas
     },
     getSaveStateConfig() {
       return {

@@ -2,7 +2,7 @@ let moment = require ('moment')
 
 export default {
   state: {
-    info: {
+    infoDefault: {
       // COURSE INFO
       title: "",
       url: "",
@@ -121,7 +121,7 @@ export default {
   getters: {
     dWeek: state => state.weekDefault,
     dVideo: state => state.videoDefault,
-    dInfo: state => state.info,
+    dInfo: state => state.infoDefault,
     dProf: state => state.profDefault,
     dTA: state => state.taDefault,
     dWeekly: state => state.weeklyDefault

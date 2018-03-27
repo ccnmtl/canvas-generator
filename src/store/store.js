@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate'
+import _ from 'lodash'
 
 import defaults from './components/defaults'
 import theme from './components/theme'
-
 
 Vue.use(Vuex);
 
@@ -16,7 +16,7 @@ export default new Vuex.Store({
     //DEFAULTS AND THEME ALSO INJECTED HERE THROUGH MODULES
 
     //GENERAL COURSE INFO
-    info: defaults.state.info,
+    info: _.cloneDeep(defaults.state.infoDefault),
 
     // Where the weeks are stored
     weeks: [],
