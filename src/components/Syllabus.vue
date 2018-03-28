@@ -98,8 +98,19 @@
 
       <el-card class="card box-card" v-if="selected.list">
         <div slot="header" class="clearfix">
-          <span class="big-text">Options</span>
+          <span class="big-text">Sections / Options</span>
         </div>
+
+        <div class="center">
+          <strong>Syllabus Components:</strong>
+          <el-checkbox-group v-model="info.sectionBox1" >
+            <el-checkbox v-for="section in sections" :label="section" :key="section" border>{{section}}</el-checkbox>
+          </el-checkbox-group>
+          <el-checkbox-group v-model="info.sectionBox2" >
+            <el-checkbox-button v-for="section in sections2" :label="section" :key="section">{{section}}</el-checkbox-button>
+          </el-checkbox-group>
+        </div>
+        <br>
         <div class="">
           Dates
           <el-switch
@@ -169,31 +180,32 @@
       <!-- End Meeting Dates & Times -->
 
       <!-- Course Description -->
-      <div class="content-box pad-box-mini border border-b">
+      <div v-if="info.sectionBox1.includes('Description')" class="content-box pad-box-mini border border-b">
         <h2>Course Description</h2>
         <p>Use this space here for course description.</p>
       </div>
       <!-- End Course Description -->
 
       <!-- Course Objectives -->
-      <div class="content-box pad-box-mini border border-b">
+      <div v-if="info.sectionBox1.includes('Objectives')" class="content-box pad-box-mini border border-b">
         <h2>Course Objectives</h2>
         <p>Use this space here for course objectives.</p>
       </div>
       <!-- End Course Objectives -->
 
       <!-- Instruction Method -->
-      <div class="content-box pad-box-mini border border-b">
+      <!-- <div class="content-box pad-box-mini border border-b">
         <h2>Method of Instruction</h2>
         <p>The course will achieve its learning objectives by deploying a combination of lectures, cases, readings,
           videos, role plays, debates, and discussions with experienced field and policy practitioners.</p>
-      </div>
+      </div> -->
       <!-- End Instruction Method -->
 
       <!-- Weekly Schedule table -->
-      <div class="content-box pad-box-mini border border-b">
-        <h2>Weekly Schedule</h2>
-      </div>
+      <span v-if="info.sectionBox1.includes('Schedule')">
+        <div class="content-box pad-box-mini border border-b">
+          <h2>Weekly Schedule</h2>
+        </div>
 
         <table class="ic-Table ic-Table--hover-row">
           <thead>
@@ -216,62 +228,11 @@
           </tbody>
 
         </table>
+      </span>
 
-
-          <!-- <table class="ic-Table ic-Table--hover-row">
-            <thead>
-              <tr>
-
-                <th>Week</th>
-                <th>Theme</th>
-                <th>Date</th>
-                <th>Topic</th>
-                <th>Instructor</th>
-
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Theme</td>
-                <td>Date</td>
-                <td>Topic</td>
-                <td>Instructor</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Theme</td>
-                <td>Date</td>
-                <td>Topic</td>
-                <td>Instructor</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Theme</td>
-                <td>Date</td>
-                <td>Topic</td>
-                <td>Instructor</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Theme</td>
-                <td>Date</td>
-                <td>Topic</td>
-                <td>Instructor</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>Theme</td>
-                <td>Date</td>
-                <td>Topic</td>
-                <td>Instructor</td>
-              </tr>
-            </tbody>
-          </table> -->
-      <!-- End Weekly Schedule table -->
 
       <!-- Grading -->
-      <div class="content-box pad-box-mini border border-b">
+      <div v-if="info.sectionBox2.includes('Grading')" class="content-box pad-box-mini border border-b">
         <h2>Grading</h2>
         <p>Students will be graded through a Mid-term Exam (20%), two research/policy papers, together comprising 60% of the grade, and Class Participation (20%):</p>
         <ul>
@@ -283,12 +244,12 @@
       <!-- End Grading -->
 
       <!-- Additional Resources -->
-      <div class="content-box pad-box-mini border border-b">
+      <div v-if="info.sectionBox1.includes('Resources')" class="content-box pad-box-mini border border-b">
         <h2>Additional Resources</h2>
         <p>Beyond the weekly required and supplementary readings and viewings, the following resources are recommended if you are seeking to gain a superior level of understanding of the subject matter of this course. If you come across other interesting and useful
           resources relevant to the course objectives, please share these with the class through your blog posts.</p>
       </div>
-      <div class="content-box pad-box-mini border border-b">
+      <div v-if="info.sectionBox1.includes('Integrity')" class="content-box pad-box-mini border border-b">
         <h2>Academic Integrity Statement</h2>
         <p>The School of International &amp; Public Affairs does not tolerate cheating and/or plagiarism in any form. Those students who violate the Code of Academic &amp; Professional Conduct will be subject to the Dean&rsquo;s Disciplinary Procedures. Cut and
           paste the following link into your browser to view the Code of Academic &amp; Professional Conduct online. <a href="http://bulletin.columbia.edu/sipa/academic-policies">http://bulletin.columbia.edu/sipa/academic-policies</a></p>
@@ -387,6 +348,8 @@ export default {
         isFile: true,
         uploadSwitchText: "Click to Upload Image from Url"
       },
+      sections: ['Description', 'Objectives', 'Schedule'],
+      sections2: ['Grading', 'Resources', 'Integrity'],
       pEditable: false,
       tEditable: false,
       iEditable: true,

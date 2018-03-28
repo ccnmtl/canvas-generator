@@ -26,6 +26,10 @@ export default {
       sessionOneTime: "9:30 am - 12:00 pm",
       sessionTwoTime: "1:30 pm -  4:00 pm",
 
+      //SYLLABUS SECTIONS
+      sectionBox1: ['Description', 'Objectives', 'Schedule'],
+      sectionBox2: ['Grading', 'Resources', 'Integrity'],
+
 
       classType: { option: "Executive Training", dateType: "Session" }, // { option: "Weekly Course", dateType: "Week" },
       classOptions:[
