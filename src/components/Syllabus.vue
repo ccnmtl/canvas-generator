@@ -244,12 +244,12 @@
       <!-- End Grading -->
 
       <!-- Additional Resources -->
-      <div v-if="info.sectionBox1.includes('Resources')" class="content-box pad-box-mini border border-b">
+      <div v-if="info.sectionBox2.includes('Resources')" class="content-box pad-box-mini border border-b">
         <h2>Additional Resources</h2>
         <p>Beyond the weekly required and supplementary readings and viewings, the following resources are recommended if you are seeking to gain a superior level of understanding of the subject matter of this course. If you come across other interesting and useful
           resources relevant to the course objectives, please share these with the class through your blog posts.</p>
       </div>
-      <div v-if="info.sectionBox1.includes('Integrity')" class="content-box pad-box-mini border border-b">
+      <div v-if="info.sectionBox2.includes('Integrity')" class="content-box pad-box-mini border border-b">
         <h2>Academic Integrity Statement</h2>
         <p>The School of International &amp; Public Affairs does not tolerate cheating and/or plagiarism in any form. Those students who violate the Code of Academic &amp; Professional Conduct will be subject to the Dean&rsquo;s Disciplinary Procedures. Cut and
           paste the following link into your browser to view the Code of Academic &amp; Professional Conduct online. <a href="http://bulletin.columbia.edu/sipa/academic-policies">http://bulletin.columbia.edu/sipa/academic-policies</a></p>
