@@ -56,7 +56,7 @@
         <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
       </select>
 
-        <div class="code-input center uk-margin-small-top">
+        <div class="code-input center uk-margin-small-top" v-if="weeks[userInput.weekNumber - 1]">
           <label for="text-area">Title</label> <br>
           <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"> </el-input>
         </div>
@@ -66,7 +66,7 @@
           <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].secondTitle"> </el-input>
         </div>
 
-      <div class="center">
+      <div class="center" v-if="weeks[userInput.weekNumber - 1]">
         <label >Date
         <el-date-picker
           style="margin: 10px; margin-bottom:20px"

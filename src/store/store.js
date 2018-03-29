@@ -1,10 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate'
+import VuexPersistence from 'vuex-persist'
 import _ from 'lodash'
 
 import defaults from './components/defaults'
 import theme from './components/theme'
+
+const vuexLocal = new VuexPersistence({
+    storage: window.localStorage
+})
 
 Vue.use(Vuex);
 
@@ -56,11 +61,14 @@ export default new Vuex.Store({
     },
     updateWeek: (state, index, field, value) => {
       state.weeks[index][field] = value
-    }
+    },
+    refreshStore: (state) => {
+      state = state
+    },
   },
   modules: {
     defaults,
     theme
   },
-  // plugins: [createPersistedState()]
+  plugins: [vuexLocal.plugin]
 })

@@ -290,6 +290,7 @@ export default {
         return this.$store.getters.getInfo
       },
       set (payload) {
+        console.log('setting info')
         this.$store.commit('updateInfo', payload)
       }
     },
@@ -403,6 +404,7 @@ export default {
     this.updateCode();
     setInterval( () => {
       this.updateCode();
+      this.$store.commit('refreshStore')
     }, 1000);
   },
   beforeCreate(){
