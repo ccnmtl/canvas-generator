@@ -310,6 +310,7 @@ export default {
     this.updateCode();
     setInterval(() => {
       this.updateCode();
+      this.$store.commit('refreshStore')
     }, 1000);
   },
   beforeCreate(){
