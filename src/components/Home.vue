@@ -252,6 +252,7 @@ export default {
   name: 'Home',
   data () {
     return {
+      info: this.$store.getters.getInfo,
       userInput: {
         themeOptions: this.$store.getters.getThemeOptions,
         semester: "U6411 // SPRING 2017",
@@ -283,17 +284,21 @@ export default {
     quillEditor
   },
   mixins: [saveState],
-
+  watch: {
+    info: function(payload){
+      this.$store.commit('updateInfo', payload)
+    }
+  },
   computed: {
-    info: {
-      get () {
-        return this.$store.getters.getInfo
-      },
-      set (payload) {
-        console.log('setting info')
-        this.$store.commit('updateInfo', payload)
-      }
-    },
+    // info: {
+    //   get () {
+    //     return this.$store.getters.getInfo
+    //   },
+    //   set (payload) {
+    //     console.log('setting info')
+    //     this.$store.commit('updateInfo', payload)
+    //   }
+    // },
     theme: {
       get () {
         return this.$store.getters.getTheme
@@ -404,7 +409,7 @@ export default {
     this.updateCode();
     setInterval( () => {
       this.updateCode();
-      this.$store.commit('refreshStore')
+      // this.$store.commit('refreshStore')
     }, 1000);
   },
   beforeCreate(){
