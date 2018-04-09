@@ -44,6 +44,15 @@ export default new Vuex.Store({
     updateInfo: (state, payload) => {
       state.info = payload
     },
+    updateProp: (state, {prop, value}) => {
+      state.info[prop] = value
+    },
+    updateUser: (state, {user, prop, value}) => {
+      user[prop] = value
+    },
+    updateWeek: (state, {index, prop, value}) => {
+      state.weeks[index][prop] = value
+    },
     updateStore: (state, payload) => {
       state = payload
     },
@@ -59,9 +68,9 @@ export default new Vuex.Store({
     updateWeeks: (state, payload) => {
       state.weeks = payload
     },
-    updateWeek: (state, index, field, value) => {
-      state.weeks[index][field] = value
-    },
+    // updateWeek: (state, index, field, value) => {
+    //   state.weeks[index][field] = value
+    // },
     refreshStore: (state) => {
       state = state
     },

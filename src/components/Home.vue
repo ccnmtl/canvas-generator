@@ -59,9 +59,10 @@
             v-show="info.title.length > 35 && !info.wideBanner">
           </el-alert>
 
-          <el-input style="width: 220px;" v-popover:titlepop placeholder="Please input your Course Title"  v-model="info.title"></el-input>
-          <el-input title="This is your Course ID" style="width: 200px;" v-model="info.semester" v-tippy="{delay: [1000,200]}"></el-input>
-          <el-input style="width: 400px;" v-popover:urlpop placeholder="Please input your Course URL"  v-model="info.url"></el-input>
+          <el-input style="width: 220px;" v-popover:titlepop placeholder="Please input your Course Title" :value="info.title" @input="updateProp('title', $event)"></el-input>
+
+          <el-input title="This is your Course ID" style="width: 200px;" v-model="info.semester" @input="updateProp('semester', $event)" v-tippy="{delay: [1000,200]}"></el-input>
+          <el-input style="width: 400px;" v-popover:urlpop placeholder="Please input your Course URL"  v-model="info.url" @input="updateProp('url', $event)"></el-input>
 
         </li>
 
@@ -69,35 +70,37 @@
           <div class='quill'>
             <quill-editor ref="myTextEditor"
                           v-model="info.description"
+                          @input="updateProp('description', $event)"
                           :config="editorOption">
             </quill-editor>
           </div>
     		</li>
 
     		<li class="uk-text-center">
+
           <div v-for="prof in info.profs">
-          <textarea v-model="prof.name" class="code-input uk-input" rows="1" cols="20"></textarea>
-          <textarea v-model="prof.email" class="code-input uk-input" rows="1" cols="25"></textarea>
-          <textarea v-model="prof.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+          <el-input autosize v-model="prof.name" style="width: 150px;" @input="updateUser(prof, 'name', $event)"></el-input>
+          <el-input autosize v-model="prof.email" style="width: 250px;" @input="updateUser(prof, 'email', $event)"></el-input>
+          <el-input autosize v-model="prof.office" style="width: 400px;" @input="updateUser(prof, 'office', $event)"></el-input> <br>
           </div>
         </li>
 
     		<li class="uk-text-center" v-if="info.tas.length > 0">
           <div v-for="ta in info.tas">
-          <textarea v-model="ta.name" class="code-input uk-input" rows="1" cols="20"></textarea>
-          <textarea v-model="ta.email" class="code-input uk-input" rows="1" cols="25"></textarea>
-          <textarea v-model="ta.office" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+            <el-input autosize v-model="ta.name" style="width: 150px;" @input="updateUser(ta, 'name', $event)"></el-input>
+            <el-input autosize v-model="ta.email" style="width: 250px;" @input="updateUser(ta, 'email', $event)"></el-input>
+            <el-input autosize v-model="ta.office" style="width: 400px;" @input="updateUser(ta, 'office', $event)"></el-input> <br>
           </div>
     		</li>
 
     		<li class="uk-text-center">
-          <textarea v-model="info.meetings" class="code-input uk-input" rows="1" cols="50"></textarea>
-          <textarea v-model="info.discussions" class="code-input uk-input" rows="1" cols="50"></textarea> <br>
+          <el-input autosize style="width: 400px;" v-model="info.meetings" @input="updateProp('meetings', $event)"></el-input>
+          <el-input autosize style="width: 400px;" v-model="info.discussions" @input="updateProp('discussions', $event)"></el-input> <br>
     		</li>
 
     		<li class="uk-text-center">
           <button type="button" class="uk-button uk-button-primary " name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
-          <textarea v-show="this.userInput.isVideo" v-model="userInput.video" class="code-input uk-input" rows="1" cols="50"></textarea>
+          <el-input autosize style="width: 400px;" v-show="this.userInput.isVideo" v-model="info.video" @input="updateProp('video', $event)" ></el-input>
           <form  style="display: inline-block;"v-show="!this.userInput.isVideo" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
             <input style="display: inline-block;" name="image" id="image-file" type="file">
             <input style="display: inline-block;" type="submit" class="uk-button uk-button-primary" value="Submit!">
@@ -112,7 +115,7 @@
               <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
             </select>
 
-              <el-checkbox v-if="theme.wide" v-model="info.wideBanner">Use Wide Banner</el-checkbox>
+              <el-checkbox v-if="theme.wide" v-model="info.wideBanner" @input="updateProp('wideBanner', $event)" >Use Wide Banner</el-checkbox>
           </label>
 
           <!-- Old Logo select -- may need for independant banner switching -->
@@ -239,7 +242,25 @@ import saveState from 'vue-save-state';
 import { quillEditor } from 'vue-quill-editor';
 import validator from 'validator';
 import _ from 'lodash'
+import mutations from '../store/mutations'
 
+// import Vue from 'vue'
+// import store from '../store/store'
+//
+// Vue.directive('model-prop', {
+//   bind: function (el, binding, vnode){
+//     let prop = binding.arg
+//     el.value = store.getters.getInfo[prop]
+//     console.log(prop)
+//     console.log(el.value)
+//   },
+//   update: function (el, binding, vnode){
+//     let prop = binding.arg
+//     el.value = store.getters.getInfo[prop]
+//     console.log(prop)
+//     store.commit('updateProp', {prop, value: el.value})
+//   }
+// })
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline'],
@@ -252,7 +273,7 @@ export default {
   name: 'Home',
   data () {
     return {
-      info: this.$store.getters.getInfo,
+      // info: this.$store.getters.getInfo,
       userInput: {
         themeOptions: this.$store.getters.getThemeOptions,
         semester: "U6411 // SPRING 2017",
@@ -283,12 +304,12 @@ export default {
   components: {
     quillEditor
   },
-  mixins: [saveState],
-  watch: {
-    info: function(payload){
-      this.$store.commit('updateInfo', payload)
-    }
-  },
+  mixins: [saveState, mutations],
+  // watch: {
+  //   info: function(payload){
+  //     this.$store.commit('updateInfo', payload)
+  //   }
+  // },
   computed: {
     // info: {
     //   get () {
@@ -310,8 +331,8 @@ export default {
     // Parses an inputted video link to output the correct embed link for the source
     videoLink(){
       let output;
-      let link = this.userInput.video;
-      let parts = link.split('/');
+      let link = this.info.video;
+      let parts = link.split('/') || [];
       if (parts[2].includes('vimeo.com')){
         output = 'https://player.vimeo.com/video/' + parts[3]
       }
@@ -368,7 +389,6 @@ export default {
     },
     setToDefault(){
       console.log('resetting data...')
-      console.log(this.$store.getters.dInfo.profs[0].name)
       this.$store.commit('updateInfo', _.cloneDeep(this.$store.getters.dInfo) )
     },
     onFormSubmit (type, ev){
