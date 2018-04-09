@@ -9,13 +9,14 @@
     <div class="textbox-container">
       <el-card class="card center" style="width:325px;">
         How Many Weeks: <br>
-        <el-input-number  style="margin: 10px;" v-model="info.execWeeks" :min="1" :max="4"></el-input-number>
+        <el-input-number  style="margin: 10px;" v-model="info.execWeeks" @input="updateProp('execWeeks', $event)" :min="1" :max="4"></el-input-number>
 
         <br> Start Week <br>
         <el-date-picker
           v-on:change="updateDays"
           style="margin: 10px; margin-bottom:20px"
-          v-model="info.startDate"
+          :value="info.startDate"
+          @input="updateProp('startDate', $event)"
           type="week"
           format="M / d / yyyy"
           placeholder="Pick start date">
@@ -23,6 +24,7 @@
 
         <br> Days of Week<br>
         <el-select v-model="info.weekDays"
+          @input="updateProp('weekDays', $event)"
           multiple placeholder="Select"
           style="margin: 10px; width: 270px"
           v-on:visible-change="updateDays"
@@ -39,7 +41,7 @@
         <br>
 
         Offset Class Start: <br>
-        <el-input-number  style="margin: 5px;" v-model="info.weekOffset" :min="0" :max="info.execWeekLength - 1"></el-input-number>
+        <el-input-number  style="margin: 5px;" v-model="info.weekOffset" @input="updateProp('weekOffset', $event)" :min="0" :max="info.execWeekLength - 1"></el-input-number>
 
         <button type="button" class="add-weekly center uk-button uk-button-primary"
         name="button" @click="populateActivities(info.execWeeks * info.execWeekLength - info.weekOffset)">Edit # of Sessions</button>
@@ -58,12 +60,12 @@
 
         <div class="code-input center uk-margin-small-top" v-if="weeks[userInput.weekNumber - 1]">
           <label for="text-area">Title</label> <br>
-          <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"> </el-input>
+          <el-input type="textarea" autosize :value="weeks[userInput.weekNumber - 1].title" @input="updateWeek(userInput.weekNumber - 1, 'title', $event)"> </el-input>
         </div>
 
         <div v-if="info.multipleSessions && !info.autoSessionTitle" class="code-input center uk-margin-small-top">
           <label for="text-area">Second Session Title</label> <br>
-          <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].secondTitle"> </el-input>
+          <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].secondTitle" @input="updateWeek(userInput.weekNumber - 1, 'secondTitle', $event)"> </el-input>
         </div>
 
       <div class="center" v-if="weeks[userInput.weekNumber - 1]">
@@ -71,6 +73,7 @@
         <el-date-picker
           style="margin: 10px; margin-bottom:20px"
           v-model="weeks[userInput.weekNumber - 1].date"
+          @input="updateWeek(userInput.weekNumber - 1, 'date', $event)"
           type="date"
           placeholder="Pick start date">
         </el-date-picker>
@@ -83,6 +86,7 @@
           Two-Sessions per Day
           <el-switch
             v-model="info.multipleSessions"
+            @input="updateProp('multipleSessions', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
@@ -92,6 +96,7 @@
             Auto Title Second Session
             <el-switch
               v-model="info.autoSessionTitle"
+              @input="updateProp('autoSessionTitle', $event)"
               active-color="#13ce66"
               inactive-color="#ff4949">
             </el-switch>
@@ -100,17 +105,18 @@
           Use Professor Name
           <el-switch
             v-model="info.useProfName"
+            @input="updateProp('useProfName', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
           <br> <br>
 
           <label for="text-area">First Session Time</label> <br>
-          <el-input type="textarea" autosize v-model="info.sessionOneTime"> </el-input>
+          <el-input type="textarea" autosize v-model="info.sessionOneTime" @input="updateProp('sessionOneTime', $event)"> </el-input>
           <br>
           <div v-if="info.multipleSessions">
             <label for="text-area">Second Session Time</label> <br>
-            <el-input type="textarea" autosize v-model="info.sessionTwoTime"> </el-input>
+            <el-input type="textarea" autosize v-model="info.sessionTwoTime" @input="updateProp('sessionTwoTime', $event)"> </el-input>
           </div>
       </el-card>
 
@@ -203,7 +209,7 @@
                       </td>
                       <td style="width: 74x;" v-if="week !== 1" v-for="day in (info.execWeekLength)">
                         <div v-if="(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset < weeks.length">
-                          <p v-if="info.autoSessionTitle"><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].title + " II"}}</strong></p>
+                          <p v-if="info.autoSessionTitle"><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset].title + " II"}}</strong></p>
                           <p v-else><strong>{{weeks[(day - 1) + (week - 1) * info.execWeekLength].secondTitle}}</strong></p>
                           <p v-if="info.useProfName">{{info.profs[0].name}}</p>
                         </div>
@@ -267,6 +273,7 @@ import { mapGetters, mapMutations } from "vuex";
 import { EventBus } from "../bus";
 import { quillEditor } from "vue-quill-editor";
 import saveState from "vue-save-state";
+import mutations from '../store/mutations'
 
 var moment = require('moment');
 
@@ -311,26 +318,9 @@ export default {
   components: {
     quillEditor
   },
-  mixins: [saveState],
+  mixins: [saveState, mutations],
   computed: {
     ...mapGetters(["getInfo", "dWeek", 'getWeeks']),
-
-    info: {
-      get() {
-        return this.$store.getters.getInfo;
-      },
-      set(payload) {
-        this.$store.commit("updateInfo", payload);
-      }
-    },
-    weeks: {
-      get() {
-        return this.getWeeks;
-      },
-      set(payload) {
-        this.$store.commit("updateWeeks", payload);
-      }
-    }
   },
   watch: {
     'info.weekOffset': function(){
@@ -350,14 +340,17 @@ export default {
     updateDays(){
       console.log("updating days...")
       this.info.execWeekLength = this.info.weekDays.length
-      if (this.info.weekOffset >= this.info.execWeekLength) this.info.weekOffset = this.info.execWeekLength - 1
-      this.info.weekDays.sort(function(a, b){return a - b})
+      if (this.info.weekOffset >= this.info.execWeekLength) this.updateProp('weekOffset', this.info.execWeekLength - 1)
+      this.updateProp('weekDays', this.info.weekDays.sort(function(a, b){return a - b}))
 
       for (let week = 0; week < this.info.execWeeks; week++){
         for (let day = 0; day < this.info.weekDays.length; day++){
           let totalDays = this.info.weekDays.length * week + day - this.info.weekOffset
-          if(this.weeks[totalDays]) this.weeks[totalDays].date = moment(this.info.startDate).add(week, 'w').add(this.info.weekDays[day], 'd')
-          if(this.weeks[totalDays]) console.log(this.formatDate(this.weeks[totalDays].date))
+          let newDate = moment(this.info.startDate).add(week, 'w').add(this.info.weekDays[day], 'd')
+          if(this.weeks[totalDays] && this.formatDate(this.weeks[totalDays].date) != this.formatDate(newDate)) {
+            this.updateWeek(totalDays, 'date', moment(this.info.startDate).add(week, 'w').add(this.info.weekDays[day], 'd'))
+            // console.log(this.formatDate(this.weeks[totalDays].date))
+          }
         }
       }
     },
@@ -411,8 +404,6 @@ export default {
     // Adds a user inputted number of activities
     populateActivities(num){
       let diff = num - this.weeks.length
-
-      console.log(diff)
 
       if (diff > 0 ){
         for (let i = 0; i < diff; i++ ) this.AddActivity();
@@ -490,6 +481,7 @@ export default {
     }
   },
   mounted() {
+
     this.updateCode();
     setInterval(() => {
       this.updateCode();

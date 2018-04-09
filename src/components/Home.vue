@@ -413,7 +413,8 @@ export default {
       this.$http.post('http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image',formData).then( response => {
         console.log('success')
         let imageData = JSON.parse(response.bodyText);
-        this.info.image = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
+        this.updateProp('image', imageData.imageUrls[0])
+        // this.info.image = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
       }, response => {
         console.log(response)
       });
