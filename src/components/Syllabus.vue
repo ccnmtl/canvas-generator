@@ -320,6 +320,7 @@ import { mapGetters, mapMutations } from "vuex";
 import { EventBus } from "../bus";
 import { quillEditor } from "vue-quill-editor";
 import saveState from "vue-save-state";
+import mutations from '../store/mutations'
 
 var moment = require('moment');
 
@@ -364,18 +365,18 @@ export default {
   components: {
     quillEditor
   },
-  mixins: [saveState],
+  mixins: [saveState, mutations],
   computed: {
     ...mapGetters(["getInfo", "dProf", "dTA", 'getWeeks']),
 
-    info: {
-      get() {
-        return this.$store.getters.getInfo;
-      },
-      set(payload) {
-        this.$store.commit("updateInfo", payload);
-      }
-    },
+    // info: {
+    //   get() {
+    //     return this.$store.getters.getInfo;
+    //   },
+    //   set(payload) {
+    //     this.$store.commit("updateInfo", payload);
+    //   }
+    //},
     weeks: {
       get() {
         return this.getWeeks;
