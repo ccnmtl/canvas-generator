@@ -6,8 +6,11 @@
       <!-- <a href="#offcanvas-slide" uk-toggle>Open</a> -->
 
       <div class="uk-float-right uk-padding-small">
-        <h6>Course Info: <span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true"></span> CANVAS CODE GENERATOR</h6>
-
+        <h6>Course Info: <span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true">        </span>
+        <a href="#help-slide" uk-toggle>
+          <el-button type="success" style="display: inline-block;"> Help <i class="fas fa-question-circle"></i></el-button>
+        </a>
+        </h6>
       </div>
 
       <div style="margin-left: 35%; width:30%;">
@@ -24,6 +27,19 @@
 
     <vue-snotify></vue-snotify>
 
+
+    <div id="help-slide" uk-offcanvas="overlay: true">
+      <div class="uk-offcanvas-bar">
+         <button class="uk-offcanvas-close" type="button" uk-close></button>
+         <h3>Help</h3>
+         <div v-html="helpInfo.body"></div>
+         <div v-show="!helpInfo.exists">
+           <p> There is no help available for this page </p>
+           <p> Please check the <router-link class="router" to="/guide">User Guide</router-link></p>
+         </div>
+
+     </div>
+    </div>
 
     <div id="offcanvas-slide" uk-offcanvas>
         <div class="uk-offcanvas-bar uk-background">
@@ -119,6 +135,7 @@
 <script>
 import { EventBus } from "./bus";
 import { mapGetters, mapMutations } from 'vuex'
+import help from './store/help'
 
 var moment = require('moment');
 
@@ -173,6 +190,12 @@ export default {
   computed: {
     loading() {
       return this.$store.getters.loading;
+    },
+    helpInfo() {
+      let path = this.$route.name
+      let body = help[path] || ''
+      body = '<h5>' + path + '</h5>' + body
+      return {body, exists: help[path]}
     },
     info: {
       get () {
