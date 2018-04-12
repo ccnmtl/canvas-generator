@@ -391,7 +391,6 @@ export default {
     })
   },
   beforeUpdate(){
-    this.updateCode();
   }
 
 }

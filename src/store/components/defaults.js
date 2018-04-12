@@ -16,7 +16,7 @@ export default {
       dateLength: "12",
       execWeeks: "2",
       execWeekLength: "1",
-      weekDays: [0],
+      weekDays: [0,2,4],
       weekOffset: 0,
 
       //EXEC SESSION INFO

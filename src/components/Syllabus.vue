@@ -44,6 +44,7 @@
 
         </div>
         <el-button style="float: right; margin-bottom: 10px;" type="danger" size="medium" @click="removeProf">Remove</el-button>
+
         <div v-show="iEditable" v-if="selected.list.length > 0" class="center">
           <el-input style="width: 200px; float:left" class="e-input" v-model="info[selected.list][selected.index].name" @input="updateUser(info[selected.list][selected.index],'name', $event)"> </el-input>
 
@@ -355,7 +356,7 @@ export default {
       tEditable: false,
       iEditable: true,
       outputCode: "",
-      selected: { index: 0, list: this.$store.getters.getInfo.profs },
+      selected: { index: 0, list: 'profs' },
       editorOption: {
         modules: {
           toolbar: toolbarOptions
@@ -452,8 +453,9 @@ export default {
     removeProf() {
       let { list, index } = this.selected;
       console.log(list);
-      console.log(index);
-      list.splice(index, 1);
+      let users = this.info[list]
+      users.splice(index, 1);
+      this.updateProp(list, users)
       this.selected = { index: 0, list };
     },
     clearProfs() {
@@ -461,9 +463,14 @@ export default {
       this.info.tas = [this.dTA];
     },
     setToDefault() {
-      console.log("resetting data...");
-      this.info.profs = this.$store.getters.dInfo.profs
-      this.info.tas = this.$store.getters.dInfo.tas
+      console.log('resetting data...')
+      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let props = ['profs','tas','sectionBox1', 'sectionBox2']
+
+      props.forEach( (prop) => {
+        this.updateProp(prop, dInfo[prop])
+      })
+
     },
     getSaveStateConfig() {
       return {
@@ -500,7 +507,6 @@ export default {
     });
   },
   beforeUpdate() {
-    this.updateCode();
   }
 };
 </script>

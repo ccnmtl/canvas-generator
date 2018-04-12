@@ -351,8 +351,6 @@ export default {
       props.forEach( (prop) => {
         this.updateProp(prop, dInfo[prop])
       })
-
-      // this.$store.commit('updateInfo', _.cloneDeep(this.$store.getters.dInfo) )
     },
     onFormSubmit (type, ev){
       var formData = new FormData();

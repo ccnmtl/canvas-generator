@@ -447,8 +447,14 @@ export default {
       })
     },
     setToDefault() {
-      console.log("resetting data...");
-      this.info = { ...this.$store.getters.dInfo };
+      console.log('resetting data...')
+      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let props = ['execWeeks', 'weekDays', 'startDate', 'weekOffset', 'multipleSessions',
+      'autoSessionTitle','useProfName','sessionOneTime','sessionTwoTime']
+
+      props.forEach( (prop) => {
+        this.updateProp(prop, dInfo[prop])
+      })
     },
     getSaveStateConfig() {
       return {
@@ -488,7 +494,6 @@ export default {
 
   },
   beforeUpdate() {
-    this.updateCode();
   }
 };
 </script>

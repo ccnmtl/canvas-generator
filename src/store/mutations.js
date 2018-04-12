@@ -59,7 +59,7 @@ export default {
     // Parses the code from the canvas-code div and puts it in the output
     updateCode(){
       console.log('updating code..')
-      this.updateProp('url', this.parseUrl(this.info.url))
+      if (this.$route.path == '/home') this.updateProp('url', this.parseUrl(this.info.url))
       let code = document.getElementById("canvas-code");
       setTimeout( () => {
         this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
