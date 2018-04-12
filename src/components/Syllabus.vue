@@ -395,29 +395,6 @@ export default {
       if (!val) return "";
       return val.replace(/\r?\n/g, "<br />");
     },
-    copyText(option) {
-      var copyTextarea = document.querySelector("#copy-text-area");
-
-      if (option == "aux") {
-        var aux = document.createElement("input");
-        aux.setAttribute("value", copyTextarea.value);
-        document.body.appendChild(aux);
-        aux.select();
-        console.log("creating aux element..");
-      } else {
-        copyTextarea.select();
-      }
-
-      document.execCommand("copy");
-
-      this.$snotify.success("Code has been copied", { showProgressBar: false });
-
-      if (option == "aux") document.body.removeChild(aux);
-    },
-    updateCode() {
-      let code = document.getElementById("canvas-code");
-      this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/gi, "");
-    },
     updateSwitch() {
       this.userInput.isFile = !this.userInput.isFile;
       this.userInput.uploadSwitchText = this.userInput.isFile
@@ -496,9 +473,6 @@ export default {
   },
   mounted() {
     this.updateCode();
-    setInterval(() => {
-      this.updateCode();
-    }, 1000);
   },
   beforeCreate() {
     EventBus.$on("set-default", response => {

@@ -240,23 +240,6 @@ export default {
     ...mapGetters([
       'getInfo', 'dWeek', 'getWeeks'
     ]),
-
-    // info: {
-    //   get () {
-    //     return this.getInfo
-    //   },
-    //   set (payload) {
-    //     this.updateInfo
-    //   }
-    // },
-    // weeks: {
-    //   get () {
-    //     return this.getWeeks
-    //   },
-    //   set (payload) {
-    //     this.$store.commit('updateWeeks', payload)
-    //   }
-    // },
     day() {
       return moment(this.info.startDate).format("dddd, MMMM Do")
     },
@@ -289,30 +272,6 @@ export default {
     ...mapMutations([
       'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
     ]),
-    copyText(option) {
-      var copyTextarea = document.querySelector('#copy-text-area');
-
-      if (option == 'aux'){
-        var aux = document.createElement("input");
-        aux.setAttribute("value", copyTextarea.value);
-        document.body.appendChild(aux);
-        aux.select();
-        console.log('creating aux element..')
-      }
-      else {
-        copyTextarea.select();
-      }
-
-      document.execCommand('copy')
-
-      this.$snotify.success('Code has been copied', {showProgressBar: false});
-
-      if (option == 'aux') document.body.removeChild(aux);
-    },
-    updateCode(){
-      let code = document.getElementById("canvas-code");
-      this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
-    },
     updateSwitch(){
       this.userInput.isFile = !this.userInput.isFile;
       this.userInput.uploadSwitchText = this.userInput.isFile ? "Click to Upload Image from URL" : "Click to Upload Image from Computer"
@@ -418,9 +377,6 @@ export default {
       this.needsInit = false;
     }
     this.updateCode();
-    setInterval( () => {
-      this.updateCode();
-    }, 1000);
   },
   beforeCreate(){
     EventBus.$on('import-data', data => {

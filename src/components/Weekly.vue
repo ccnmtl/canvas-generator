@@ -226,49 +226,8 @@ export default {
     ...mapGetters([
       'getInfo', 'dWeek', 'getWeeks'
     ]),
-
-    // info: {
-    //   get () {
-    //     return this.getInfo
-    //   },
-    //   set (payload) {
-    //     this.updateInfo
-    //   }
-    // },
-    // weeks: {
-    //   get () {
-    //     return this.getWeeks
-    //   },
-    //   set (payload) {
-    //     this.$store.commit('updateWeeks', payload)
-    //   }
-    // }
   },
   methods: {
-    copyText(option) {
-      var copyTextarea = document.querySelector('#copy-text-area');
-
-      if (option == 'aux'){
-        var aux = document.createElement("input");
-        aux.setAttribute("value", copyTextarea.value);
-        document.body.appendChild(aux);
-        aux.select();
-        console.log('creating aux element..')
-      }
-      else {
-        copyTextarea.select();
-      }
-
-      document.execCommand('copy')
-
-      this.$snotify.success('Code has been copied', {showProgressBar: false});
-
-      if (option == 'aux') document.body.removeChild(aux);
-    },
-    updateCode() {
-      let code = document.getElementById("canvas-code");
-      this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
-    },
     addVideo() {
       let tempVideo = {
         title: "All that Glitters is not Gold (18 minutes)",
@@ -311,9 +270,6 @@ export default {
   },
   mounted() {
     this.updateCode();
-    setInterval(() => {
-      this.updateCode();
-    }, 1000);
   },
   beforeCreate(){
     EventBus.$on('set-default', response => {

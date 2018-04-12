@@ -119,6 +119,7 @@
 <script>
 import { EventBus } from '../bus'
 import saveState from 'vue-save-state';
+import mutations from '../store/mutations'
 import { quillEditor } from 'vue-quill-editor';
 
 export default {
@@ -146,15 +147,16 @@ export default {
       }
     }
   },
+  mixins: [saveState, mutations],
   computed: {
-    info: {
-      get () {
-        return this.$store.getters.getInfo
-      },
-      set (payload) {
-        this.$store.commit('updateInfo', payload)
-      }
-    },
+    // info: {
+    //   get () {
+    //     return this.$store.getters.getInfo
+    //   },
+    //   set (payload) {
+    //     this.$store.commit('updateInfo', payload)
+    //   }
+    // },
   },
   methods: {
     getStarted(){
@@ -167,10 +169,10 @@ export default {
     confirmForm(){
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.info.title = this.ruleForm.title
-          this.info.url = this.ruleForm.url
-          this.info.classType = this.ruleForm.classType
-          this.info.isBlended = this.ruleForm.isBlended
+          this.updateProp('title', this.ruleForm.title)
+          this.updateProp('url', this.ruleForm.url)
+          this.updateProp('classType', this.ruleForm.classType)
+          this.updateProp('isBlended', this.ruleForm.isBlended)
           this.theme = this.ruleForm.theme
           this.dialogFormVisible = false
 
@@ -180,6 +182,11 @@ export default {
           return false;
         }
       })
+    },
+    getSaveStateConfig() {
+      return {
+          'cacheKey': 'Splash',
+      };
     }
   },
   mounted () {

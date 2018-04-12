@@ -195,7 +195,7 @@
     </div>
 
     <div class="uk-float-right">
-      <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a>
+      <a class="uk-button uk-button-primary" href="#modal-overflow" @click="updateCode" uk-toggle>View the Code</a>
       <button class="uk-button uk-button-primary" @click="copyText('aux')">Copy the Code</button>
       <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
     </div>
@@ -356,32 +356,6 @@ export default {
     }
   },
   methods: {
-    // Copies the text when user selects the code output area
-    copyText(option) {
-      var copyTextarea = document.querySelector('#copy-text-area');
-
-      if (option == 'aux'){
-        var aux = document.createElement("input");
-        aux.setAttribute("value", copyTextarea.value);
-        document.body.appendChild(aux);
-        aux.select();
-        console.log('creating aux element..')
-      }
-      else {
-        copyTextarea.select();
-      }
-
-      document.execCommand('copy')
-
-      this.$snotify.success('Code has been copied', {showProgressBar: false});
-
-      if (option == 'aux') document.body.removeChild(aux);
-    },
-    // Parses the code from the canvas-code div and puts it in the output
-    updateCode(){
-      let code = document.getElementById("canvas-code");
-      this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
-    },
     // Toggles button to insert video or image
     mediaSwitch(){
       this.userInput.isVideo = !this.userInput.isVideo;
@@ -426,12 +400,8 @@ export default {
     }
   },
   mounted(){
-    // Once the component is loaded, start updating the code every second
+    // Once the component is loaded, update the code text box
     this.updateCode();
-    setInterval( () => {
-      this.updateCode();
-      // this.$store.commit('refreshStore')
-    }, 1000);
   },
   beforeCreate(){
     EventBus.$on('import-data', data => {

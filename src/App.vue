@@ -69,11 +69,11 @@
     <!-- OLD DIALOG -->
     <el-dialog title="Course Info" :visible.sync="dialogFormVisible">
       <div class="center">
-        <label for="input"> Course Title <el-input placeholder="Please input" v-model="info.title"></el-input> </label>
-        <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url"></el-input> </label>
+        <label for="input"> Course Title <el-input placeholder="Please input" v-model="info.title" @input="updateProp('title', $event)"></el-input> </label>
+        <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url" @input="updateProp('url', $event)"></el-input> </label>
         <br>
         <label for="select">Class Type
-          <select style="display: inline-block; width:150px" v-model="info.classType" name="Choose Banner" class="uk-select">
+          <select style="display: inline-block; width:150px" v-model="info.classType" @input="updateProp('classType', $event)" name="Choose Banner" class="uk-select">
             <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
           </select>
         </label>
@@ -92,6 +92,7 @@
         <label for="select">Blended Model
         <el-switch
           v-model="info.isBlended"
+          @input="updateProp('isBlended', $event)"
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>
@@ -100,6 +101,7 @@
         <label for="select">Help Tooltips
         <el-switch
           v-model="info.usePops"
+          @input="updateProp('useProps', $event)"
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>
