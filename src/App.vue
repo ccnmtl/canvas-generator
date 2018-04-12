@@ -150,46 +150,12 @@ export default {
       hasImportData: false,
       dialogFormVisible: false,
       exportData: {},
-      ruleForm: {
-        title: this.$store.getters.getInfo.title,
-        url: this.$store.getters.getInfo.urlArgs,
-        classType: this.$store.getters.getInfo.classType,
-        isBlended: this.$store.getters.getInfo.isBlended,
-        theme: this.$store.getters.getTheme,
-      },
-      rules: {
-        title: [
-          { required: true, message: 'Course Title is required', trigger: 'blur' },
-          { min: 0, max: 35, message: 'Length should be less than 35 characters', trigger: 'blur' }
-        ],
-        url: [
-          { required: true, message: 'Course URL is required', trigger: 'blur' },
-          { type: "url" , message: 'Must be a valid URL', trigger: 'blur' }
-        ],
-
-      }
     };
   },
   methods: {
     ...mapMutations([
       'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
     ]),
-    confirmForm(){
-      this.$refs['ruleForm'].validate((valid) => {
-        if (valid) {
-          this.info.title = this.ruleForm.title
-          this.info.url = this.ruleForm.url
-          this.info.classType = this.ruleForm.classType
-          this.info.isBlended = this.ruleForm.isBlended
-          this.theme = this.ruleForm.theme
-          this.dialogFormVisible = false
-
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      })
-    },
     getSaveStateConfig() {
       return {
           'cacheKey': 'App',

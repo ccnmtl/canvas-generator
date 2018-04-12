@@ -195,7 +195,7 @@
     </div>
 
     <div class="uk-float-right">
-      <a class="uk-button uk-button-primary" href="#modal-overflow" @click="updateCode" uk-toggle>View the Code</a>
+      <a class="uk-button uk-button-primary" href="#modal-overflow" @click="viewCode" uk-toggle>View the Code</a>
       <button class="uk-button uk-button-primary" @click="copyText('aux')">Copy the Code</button>
       <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
     </div>
@@ -311,23 +311,6 @@ export default {
   //   }
   // },
   computed: {
-    // info: {
-    //   get () {
-    //     return this.$store.getters.getInfo
-    //   },
-    //   set (payload) {
-    //     console.log('setting info')
-    //     this.$store.commit('updateInfo', payload)
-    //   }
-    // },
-    theme: {
-      get () {
-        return this.$store.getters.getTheme
-      },
-      set (payload) {
-        this.$store.commit('updateTheme', payload)
-      }
-    },
     // Parses an inputted video link to output the correct embed link for the source
     videoLink(){
       let output;
@@ -349,13 +332,12 @@ export default {
       if (this.info.title.length < 1 || this.info.url.length < 1) return false
       return validator.isURL(this.info.url)
     },
-    // Parses the URL
-    parseUrl(){
-      // info.url = info.url.replace(/\/?(\?|#|$)/, '/$1')
-      // return info.url
-    }
   },
   methods: {
+    viewCode(){
+      console.log('firing')
+      this.updateCode()
+    },
     // Toggles button to insert video or image
     mediaSwitch(){
       this.userInput.isVideo = !this.userInput.isVideo;
@@ -363,7 +345,14 @@ export default {
     },
     setToDefault(){
       console.log('resetting data...')
-      this.$store.commit('updateInfo', _.cloneDeep(this.$store.getters.dInfo) )
+      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let props = ['description', 'title', 'url', 'video', 'image', 'meetings','discussions']
+
+      props.forEach( (prop) => {
+        this.updateProp(prop, dInfo[prop])
+      })
+
+      // this.$store.commit('updateInfo', _.cloneDeep(this.$store.getters.dInfo) )
     },
     onFormSubmit (type, ev){
       var formData = new FormData();
@@ -416,7 +405,6 @@ export default {
     })
   },
   beforeUpdate(){
-    this.updateCode();
   }
 }
 </script>
