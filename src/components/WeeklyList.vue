@@ -16,6 +16,7 @@
         <el-date-picker
           style="margin: 10px; margin-bottom:20px"
           v-model="info.startDate"
+          @input="updateProp('startDate', $event)"
           type="date"
           placeholder="Pick start date">
         </el-date-picker>
@@ -30,25 +31,28 @@
             controls-position="right" size="small" :label="'Edit ' + info.classType.dateType"></el-input-number>
         </div>
 
-        <select v-model="userInput.weekNumber" class="uk-select">
+        <select v-model="userInput.weekNumber" class="uk-select" >
           <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
         </select>
 
         <div v-if="weeks.length > 0">
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Title</label> <br>
-            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"> </el-input>
+            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"
+            @input="updateWeek(userInput.weekNumber - 1,'title', $event)"> </el-input>
           </div>
 
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Description</label>
-            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].description"> </el-input>
+            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].description"
+            @input="updateWeek(userInput.weekNumber - 1,'description', $event)"> </el-input>
           </div>
           <div class="center">
             <label >Date
             <el-date-picker
               style="margin: 10px; margin-bottom:20px"
               v-model="weeks[userInput.weekNumber - 1].date"
+              @input="updateWeek(userInput.weekNumber - 1,'date', $event)"
               type="date"
               placeholder="Pick start date">
             </el-date-picker>
@@ -76,6 +80,7 @@
           Links
           <el-switch
             v-model="info.useLinks"
+            @input="updateProp('useLinks', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
@@ -83,6 +88,7 @@
           Dates
           <el-switch
             v-model="info.useDates"
+            @input="updateProp('useDates', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
@@ -91,6 +97,7 @@
           Images
           <el-switch
             v-model="info.useWeeklyImages"
+            @input="updateProp('useWeeklyImages', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
@@ -177,6 +184,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import mutations from '../store/mutations'
 import { EventBus } from '../bus'
 import { quillEditor } from 'vue-quill-editor';
 import saveState from 'vue-save-state';
@@ -218,7 +226,7 @@ export default {
     quillEditor,
     WeeklyListItem
   },
-  mixins: [saveState],
+  mixins: [saveState, mutations],
   watch: {
     "info.startDate": function(){
         this.updateDates();
@@ -233,22 +241,22 @@ export default {
       'getInfo', 'dWeek', 'getWeeks'
     ]),
 
-    info: {
-      get () {
-        return this.getInfo
-      },
-      set (payload) {
-        this.updateInfo
-      }
-    },
-    weeks: {
-      get () {
-        return this.getWeeks
-      },
-      set (payload) {
-        this.$store.commit('updateWeeks', payload)
-      }
-    },
+    // info: {
+    //   get () {
+    //     return this.getInfo
+    //   },
+    //   set (payload) {
+    //     this.updateInfo
+    //   }
+    // },
+    // weeks: {
+    //   get () {
+    //     return this.getWeeks
+    //   },
+    //   set (payload) {
+    //     this.$store.commit('updateWeeks', payload)
+    //   }
+    // },
     day() {
       return moment(this.info.startDate).format("dddd, MMMM Do")
     },
@@ -311,7 +319,7 @@ export default {
     },
     updateDates(){
       // right now do not update if in exec training mode
-      if (this.info.classType.dateType == "Week"){
+      if (true){ //this.info.classType.dateType == "Week"
         this.weeks.forEach((week, index)=>{
           let interval = this.info.classType.dateType == "Week" ? 'w' : 'd'
           week.date = moment(this.info.startDate).add(index, interval)
@@ -335,6 +343,7 @@ export default {
 
       let tempWeek = _.cloneDeep(this.dWeek)
       tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + '.png'
+      tempWeek.date = moment()
 
       // let tempWeek = this.dWeek
       // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
@@ -353,7 +362,7 @@ export default {
 
       if (diff < 0) {
         this.userInput.weekNumber = 1;
-        this.weeks = this.weeks.slice(0, num);
+        this.sliceWeek(num);
       }
 
       this.updateDates()

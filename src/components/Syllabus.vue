@@ -25,7 +25,7 @@
                 v-for="(prof, index) in info.profs"
                 :key="prof.name"
                 :label="prof.name"
-                :value="{index, list: info.profs, key: prof.name}">
+                :value="{index, list: 'profs', key: prof.name}">
               </el-option>
             </el-option-group>
             <el-option-group
@@ -35,7 +35,7 @@
                 v-for="(ta, index) in info.tas"
                 :key="ta.name"
                 :label="ta.name"
-                :value="{index, list: info.tas, key: ta.name}">
+                :value="{index, list: 'tas', key: ta.name}">
               </el-option>
             </el-option-group>
           </el-select>
@@ -45,19 +45,18 @@
         </div>
         <el-button style="float: right; margin-bottom: 10px;" type="danger" size="medium" @click="removeProf">Remove</el-button>
         <div v-show="iEditable" v-if="selected.list.length > 0" class="center">
+          <el-input style="width: 200px; float:left" class="e-input" v-model="info[selected.list][selected.index].name" @input="updateUser(info[selected.list][selected.index],'name', $event)"> </el-input>
 
-          <el-input style="width: 200px; float:left" class="e-input" v-model="selected.list[selected.index].name"> </el-input>
-
-          <el-input class="e-input"v-model="selected.list[selected.index].email"> </el-input>
-          <el-input class="e-input" type="textarea" autosize v-model="selected.list[selected.index].office"> </el-input>
+          <el-input class="e-input"v-model="info[selected.list][selected.index].email" @input="updateUser(info[selected.list][selected.index],'email', $event)"> </el-input>
+          <el-input class="e-input" type="textarea" autosize v-model="info[selected.list][selected.index].office" @input="updateUser(info[selected.list][selected.index],'office', $event)"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
-          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', selected.list[selected.index])">
+          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', info[selected.list][selected.index])">
             <input name="image" id="image-file" type="file"> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
-          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', selected.list[selected.index])">
+          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', info[selected.list][selected.index])">
             <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
@@ -79,7 +78,7 @@
         <div >
           <div class="code-input center uk-margin-small-top" v-if="weeks[userInput.weekNumber - 1]">
             <label for="text-area">Title</label> <br>
-            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"> </el-input>
+            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title" @input="updateWeek(userInput.weekNumber - 1,'title', $event)"> </el-input>
           </div>
         </div>
 
@@ -88,6 +87,7 @@
           <el-date-picker
             style="margin: 10px; margin-bottom:20px"
             v-model="weeks[userInput.weekNumber - 1].date"
+            @input="updateWeek(userInput.weekNumber - 1,'date', $event)"
             type="date"
             placeholder="Pick start date">
           </el-date-picker>
@@ -102,10 +102,10 @@
 
         <div class="center">
           <strong>Syllabus Components:</strong>
-          <el-checkbox-group v-model="info.sectionBox1" >
+          <el-checkbox-group v-model="info.sectionBox1" @input="updateProp('sectionBox1', $event)">
             <el-checkbox v-for="section in sections" :label="section" :key="section" border>{{section}}</el-checkbox>
           </el-checkbox-group>
-          <el-checkbox-group v-model="info.sectionBox2" >
+          <el-checkbox-group v-model="info.sectionBox2" @input="updateProp('sectionBox2', $event)">
             <el-checkbox-button v-for="section in sections2" :label="section" :key="section">{{section}}</el-checkbox-button>
           </el-checkbox-group>
         </div>
@@ -114,6 +114,7 @@
           Dates
           <el-switch
             v-model="info.useDates"
+            @input="updateProp('useDates', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
@@ -377,14 +378,14 @@ export default {
     //     this.$store.commit("updateInfo", payload);
     //   }
     //},
-    weeks: {
-      get() {
-        return this.getWeeks;
-      },
-      set(payload) {
-        this.$store.commit("updateWeeks", payload);
-      }
-    }
+    // weeks: {
+    //   get() {
+    //     return this.getWeeks;
+    //   },
+    //   set(payload) {
+    //     this.$store.commit("updateWeeks", payload);
+    //   }
+    // }
   },
   methods: {
     formatDate(date){

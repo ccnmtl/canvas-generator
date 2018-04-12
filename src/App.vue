@@ -134,8 +134,10 @@
 
 <script>
 import { EventBus } from "./bus";
+import saveState from 'vue-save-state';
 import { mapGetters, mapMutations } from 'vuex'
 import help from './store/help'
+import mutations from './store/mutations'
 
 var moment = require('moment');
 
@@ -185,8 +187,14 @@ export default {
           return false;
         }
       })
+    },
+    getSaveStateConfig() {
+      return {
+          'cacheKey': 'App',
+      };
     }
   },
+  mixins: [saveState, mutations],
   computed: {
     loading() {
       return this.$store.getters.loading;
@@ -197,41 +205,44 @@ export default {
       body = '<h5>' + path + '</h5>' + body
       return {body, exists: help[path]}
     },
-    info: {
-      get () {
-        return this.$store.getters.getInfo
-      },
-      set (payload) {
-        this.$store.commit('updateInfo', payload)
-      }
-    },
-    theme: {
-      get () {
-        return this.$store.getters.getTheme
-      },
-      set (payload) {
-        this.$store.commit('updateTheme', payload)
-      }
-    },
+    // info: {
+    //   get () {
+    //     return this.$store.getters.getInfo
+    //   },
+    //   set (payload) {
+    //     this.$store.commit('updateInfo', payload)
+    //   }
+    // },
+    // theme: {
+    //   get () {
+    //     return this.$store.getters.getTheme
+    //   },
+    //   set (payload) {
+    //     this.$store.commit('updateTheme', payload)
+    //   }
+    // },
   },
   mounted() {
-    let weeklyActivities = [];
 
-    for (let i = 1; i <= 12; i++ ){
-      let tempWeek = _.cloneDeep(this.$store.getters.dWeek)
-      tempWeek.imgSrc = this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + '.png'
-      tempWeek.title = "Lecture " + i
-      tempWeek.secondTitle = "Lecture " + i + " II"
+    if (this.weeks.length < 1){
+      let weeklyActivities = [];
+
+      for (let i = 1; i <= 12; i++ ){
+        let tempWeek = _.cloneDeep(this.$store.getters.dWeek)
+        tempWeek.imgSrc = this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + '.png'
+        tempWeek.title = "Lecture " + i
+        tempWeek.secondTitle = "Lecture " + i + " II"
 
 
-      weeklyActivities.push(tempWeek);
+        weeklyActivities.push(tempWeek);
+      }
+
+      weeklyActivities.forEach((week, index)=>{
+        week.date = moment().add(index, 'w')
+      })
+
+      this.updateWeeks(weeklyActivities)
     }
-
-    weeklyActivities.forEach((week, index)=>{
-      week.date = moment().add(index, 'w')
-    })
-
-    this.updateWeeks(weeklyActivities)
   }
 };
 </script>

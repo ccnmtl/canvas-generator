@@ -16,7 +16,8 @@
         </el-option>
       </el-select>
 
-      <el-input autosize class="code-input" style="width: 400px" placeholder="Please input week title" v-model="weeks[selected].title"></el-input>
+      <el-input autosize class="code-input" style="width: 400px" placeholder="Please input week title" v-model="weeks[selected].title"
+        @input="updateWeek(selected,'title', $event)"></el-input>
       <!-- <button type="button" name="button" class="uk-button uk-button-primary" @click="setToDefault">Reset to Default</button> -->
       <button type="button" name="button" class="show-editor center uk-button uk-button-primary" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
       <!-- This transition is defined as a css animations in the style section -->
@@ -32,6 +33,7 @@
         <div class="quill">
           <quill-editor ref="myTextEditor"
                         v-model="weeks[selected].body"
+                        @input="updateWeek(selected,'body', $event)"
                         :config="editorOption">
           </quill-editor>
         </div>
@@ -166,6 +168,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import mutations from '../store/mutations'
 import { EventBus } from '../bus'
 import { quillEditor } from 'vue-quill-editor';
 import WeeklyCodeModule from './weekly/WeeklyCodeModule'
@@ -218,28 +221,28 @@ export default {
     WeeklyDiscussion,
     WeeklyAssignment
   },
-  mixins: [saveState],
+  mixins: [saveState, mutations],
   computed: {
     ...mapGetters([
       'getInfo', 'dWeek', 'getWeeks'
     ]),
 
-    info: {
-      get () {
-        return this.getInfo
-      },
-      set (payload) {
-        this.updateInfo
-      }
-    },
-    weeks: {
-      get () {
-        return this.getWeeks
-      },
-      set (payload) {
-        this.$store.commit('updateWeeks', payload)
-      }
-    }
+    // info: {
+    //   get () {
+    //     return this.getInfo
+    //   },
+    //   set (payload) {
+    //     this.updateInfo
+    //   }
+    // },
+    // weeks: {
+    //   get () {
+    //     return this.getWeeks
+    //   },
+    //   set (payload) {
+    //     this.$store.commit('updateWeeks', payload)
+    //   }
+    // }
   },
   methods: {
     copyText(option) {

@@ -1,15 +1,17 @@
+import { mapGetters, mapMutations } from 'vuex'
+
 export default {
   computed: {
-    // ...mapGetters(["getInfo", "dWeek", 'getWeeks']),
+    ...mapGetters(["getInfo", "dWeek", 'getWeeks','getTheme']),
     info() {
-      return this.$store.getters.getInfo
+      return this.getInfo
     },
     weeks() {
-      return this.$store.getters.getWeeks
+      return this.getWeeks
     },
     theme: {
       get () {
-        return this.$store.getters.getTheme
+        return this.getTheme
       },
       set (payload) {
         this.$store.commit('updateTheme', payload)
@@ -17,11 +19,14 @@ export default {
     },
   },
   methods: {
+    ...mapMutations([
+      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
+    ]),
     updateProp(prop, value) {
       this.$store.commit('updateProp', {prop, value})
     },
-    updateUser(user, prop, e) {
-      this.$store.commit('updateUser', {user, prop, value: e.target.value})
+    updateUser(user, prop, value) {
+      this.$store.commit('updateUser', {user, prop, value})
     },
     updateWeek(index, prop, value) {
       this.$store.commit('updateWeek', {index, prop, value})
