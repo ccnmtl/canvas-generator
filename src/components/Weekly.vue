@@ -27,7 +27,7 @@
         <!-- Alert to warn about how to edit the table -->
         <el-alert
           title="Edit Readings and Lecture Presentation table directly in Canvas" type="warning"
-          show-icon closable="false" style="width:80%; margin:auto; margin-bottom: 10px" justify="center">
+          show-icon style="width:80%; margin:auto; margin-bottom: 10px" justify="center">
         </el-alert>
 
         <div class="quill">
@@ -53,27 +53,33 @@
       <weekly-code-module
         class="code-module"
         :content="weeks[selected].videos"
+        property='videos'
+        :idx="selected"
         :fn="addVideo"
         :inputs="['title','description', 'source']"
-        @clearArr="weeks[selected].videos = []">
+        @clearArr="updateWeek(selected,'videos', [])">
         Video
       </weekly-code-module>
 
       <weekly-code-module
         class="code-module"
         :content="weeks[selected].discussions"
+        property='discussions'
+        :idx="selected"
         :fn="addDiscussion"
         :inputs="['link','due', 'available']"
-        @clearArr="weeks[selected].discussions = []">
+        @clearArr="updateWeek(selected,'discussions', [])">
         Discussion
       </weekly-code-module>
 
       <weekly-code-module
         class="code-module"
         :content="weeks[selected].assignments"
+        property='assignments'
+        :idx="selected"
         :fn="addAssignment"
         :inputs="['link','due', 'available']"
-        @clearArr="weeks[selected].assignments = []">
+        @clearArr="updateWeek(selected,'assignments', [])">
         Assignment
       </weekly-code-module>
 
@@ -221,7 +227,7 @@ export default {
     WeeklyDiscussion,
     WeeklyAssignment
   },
-  mixins: [saveState, mutations],
+  mixins: [ mutations],
   computed: {
     ...mapGetters([
       'getInfo', 'dWeek', 'getWeeks'
@@ -234,8 +240,10 @@ export default {
         description: "‘All that Glitters is not Gold’ features various communities’ representatives concern about the introduction of genetically engineered ‘Golden’ rice in the Philippines.",
         source: "https://www.youtube.com/watch?v=GxSGKD50ioE"
       }
+      let arr = _.cloneDeep(this.weeks[this.selected].videos)
+      arr.push(tempVideo);
+      this.updateWeek(this.selected,'videos', arr)
 
-      this.weeks[this.selected].videos.push(tempVideo);
     },
     addDiscussion() {
       let tempDisc = {
@@ -245,7 +253,10 @@ export default {
         points: 10
       }
 
-      this.weeks[this.selected].discussions.push(tempDisc);
+      let arr = _.cloneDeep(this.weeks[this.selected].discussions)
+      arr.push(tempDisc);
+      this.updateWeek(this.selected,'discussions', arr)
+
     },
     addAssignment() {
       let tempAssign = {
@@ -255,7 +266,10 @@ export default {
         points: 10
       }
 
-      this.weeks[this.selected].assignments.push(tempAssign);
+      let arr = _.cloneDeep(this.weeks[this.selected].assignments)
+      arr.push(tempAssign);
+      this.updateWeek(this.selected,'assignments', arr)
+
     },
     setToDefault(){
       console.log('resetting data...')

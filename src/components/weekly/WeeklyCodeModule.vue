@@ -19,7 +19,7 @@
       <div v-show="editable">
         <div class="code-input center uk-margin-small-top" v-for = "input in inputs">
           <label for="text-area">{{capitalize(input)}}</label>
-          <textarea v-model.lazy="currentItem[input]" id="text-area" class="uk-textarea" rows="2" cols="50"></textarea> <br>
+          <textarea :value="currentItem[input]" @input="modify(currentItem, input, $event)" id="text-area" class="uk-textarea" rows="2" cols="50"></textarea> <br>
         </div>
       </div>
 
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+
+import mutations from '../../store/mutations'
 
 export default {
   data() {
@@ -53,9 +55,19 @@ export default {
   },
     remove(){
       this.content.splice(this.index - 1, 1);
+    },
+    modify(item, input, event){
+      // let week = _.cloneDeep(this.$store.getters.getWeeks()[this.selected])
+      let prop = _.cloneDeep(this.$store.getters.getWeeks[this.idx][this.property])
+      prop[this.index - 1][input] = event.target.value
+
+      console.log(prop[this.index - 1][input])
+      console.log(this.property)
+      this.updateWeek(this.idx, this.property, prop)
     }
   },
-  props: ['content', 'fn', 'inputs']
+  props: ['content', 'fn', 'inputs','property','idx'],
+  mixins: [mutations]
 }
 </script>
 
