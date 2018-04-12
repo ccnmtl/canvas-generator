@@ -29,6 +29,7 @@
               </el-option>
             </el-option-group>
             <el-option-group
+              v-if="info.tas.length > 0"
               key="tas"
               label="TAs">
               <el-option
@@ -444,19 +445,35 @@ export default {
         );
     },
     addProf() {
-      this.info.profs.push(this.dProf);
+      let tempProf = _.cloneDeep(this.dProf)
+      this.info.profs.push(tempProf);
+      this.selected = { index: this.info.profs.length - 1, list: 'profs' }
+
     },
     addTA() {
       let tempTA = _.cloneDeep(this.dTA)
       this.info.tas.push(tempTA);
+      this.selected = { index: this.info.tas.length - 1, list: 'tas' }
+
     },
     removeProf() {
       let { list, index } = this.selected;
       console.log(list);
-      let users = this.info[list]
+      let users = _.cloneDeep(this.info[list])
       users.splice(index, 1);
+      if (index == 0){
+        if (list == 'profs'){
+          console.log('tried to delete prof')
+          return
+          console.log('after return')
+        }
+        console.log('deleting last ta')
+        this.selected = { index: 0, list: 'profs' }
+      }
+      else {
+        this.selected = { index: index - 1, list }
+      }
       this.updateProp(list, users)
-      this.selected = { index: 0, list };
     },
     clearProfs() {
       this.info.profs = [this.dProf];

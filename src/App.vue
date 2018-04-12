@@ -101,7 +101,7 @@
         <label for="select">Help Tooltips
         <el-switch
           v-model="info.usePops"
-          @input="updateProp('useProps', $event)"
+          @input="updateProp('usePops', $event)"
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>
