@@ -281,18 +281,21 @@ export default {
       if (true){ //this.info.classType.dateType == "Week"
         this.weeks.forEach((week, index)=>{
           let interval = this.info.classType.dateType == "Week" ? 'w' : 'd'
-          week.date = moment(this.info.startDate).add(index, interval)
+          let date = moment(this.info.startDate).add(index, interval)
+          this.updateWeek(index,'date', date)
         })
     }
     },
     updateImages(){
       this.weeks.forEach((week, index)=>{
         if (index > 14 && this.info.classType.dateType == "Week") index = 14;
-        week.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
+        let imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
+        this.updateWeek(index,'imgSrc', imgSrc)
       })
     },
     setDefaultImage(index){
-      this.weeks[index].imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
+      let imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
+      this.updateWeek(index,'imgSrc', imgSrc)
     },
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
     AddActivity(){
@@ -328,7 +331,7 @@ export default {
 
     },
     setToDefault(){
-      this.weeks = [];
+      this.$store.commit('updateWeeks', [])
       this.populateActivities(12);
     },
     // Handles uploading the file or url to Amazon EC2 via POST request, which subsequently uploads the image to S3
