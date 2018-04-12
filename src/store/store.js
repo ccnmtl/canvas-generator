@@ -79,5 +79,5 @@ export default new Vuex.Store({
     defaults,
     theme
   },
-  plugins: [vuexLocal.plugin]
+  plugins: [createPersistedState()]
 })
