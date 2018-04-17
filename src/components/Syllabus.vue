@@ -369,6 +369,14 @@ export default {
     quillEditor
   },
   mixins: [saveState, mutations],
+  watch: {
+    // Protects against selected.list becoming an object (need to track down why this happens)
+    selected: function(){
+      if (typeof this.selected.list !== 'string'){
+        this.selected.list = 'profs'
+      }
+    }
+  },
   computed: {
     ...mapGetters(["getInfo", "dProf", "dTA", 'getWeeks']),
 
