@@ -49,8 +49,8 @@
         <div v-show="iEditable" v-if="selected.list.length > 0" class="center">
           <el-input style="width: 200px; float:left" class="e-input" v-model="info[selected.list][selected.index].name" @input="updateUser(info[selected.list][selected.index],'name', $event)"> </el-input>
 
-          <el-input class="e-input"v-model="info[selected.list][selected.index].email" @input="updateUser(info[selected.list][selected.index],'email', $event)"> </el-input>
-          <el-input class="e-input" type="textarea" autosize v-model="info[selected.list][selected.index].office" @input="updateUser(info[selected.list][selected.index],'office', $event)"> </el-input>
+          <el-input class="e-input" v-if="selected.list" v-model="info[selected.list][selected.index].email" @input="updateUser(info[selected.list][selected.index],'email', $event)"> </el-input>
+          <el-input class="e-input" v-if="selected.list" type="textarea" autosize v-model="info[selected.list][selected.index].office" @input="updateUser(info[selected.list][selected.index],'office', $event)"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
@@ -58,7 +58,7 @@
             <input name="image" id="image-file" type="file"> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
-          <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', info[selected.list][selected.index])">
+          <form v-show="!this.userInput.isFile" v-if="selected.list" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', info[selected.list][selected.index])">
             <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
@@ -184,7 +184,7 @@
       <!-- Course Description -->
       <div v-if="info.sectionBox1.includes('Description')" class="content-box pad-box-mini border border-b">
         <h2>Course Description</h2>
-        <p>Use this space here for course description.</p>
+        <p>{{info.description}}</p>
       </div>
       <!-- End Course Description -->
 
