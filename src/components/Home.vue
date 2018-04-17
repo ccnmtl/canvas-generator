@@ -164,6 +164,7 @@
                   <p>&nbsp;</p>
                   <p>
                     <a class="Button" style="text-decoration: none;" :href="info.url + 'assignments/syllabus'" >Course Syllabus</a>
+                    <a class="Button" style="text-decoration: none;" :href="info.url + 'pages/weekly-activities'" >Weekly Activites</a>
                   </p>
                 </div>
               </div>
