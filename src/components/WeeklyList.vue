@@ -306,6 +306,8 @@ export default {
       let tempWeek = _.cloneDeep(this.dWeek)
       tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + '.png'
       tempWeek.date = moment()
+      tempWeek.title = "Lecture " + index
+      tempWeek.secondTitle = "Lecture " + index + " II"
 
       // let tempWeek = this.dWeek
       // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'

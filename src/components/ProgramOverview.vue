@@ -155,11 +155,13 @@
                       <th style="width: 74px;" v-if="week == 1" v-for="(day, index) in info.weekOffset">
                         {{incrementDate(info.startDate, week - 1, info.weekDays[index])}}
                       </th>
-                      <th style="width: 74px;" v-if="week == 1" v-for="(day, index) in (info.execWeekLength - info.weekOffset)">
-                        {{formatDate(weeks[(day - 1) + (week - 1) * info.execWeekLength].date)}}
+                      <th style="width: 74px;" v-if="week == 1"
+                      v-for="(day, index) in (info.execWeekLength - info.weekOffset)">
+                        {{parseDate((day - 1) + (week - 1) * info.execWeekLength)}}
                       </th>
-                      <th v-if="week > 1" style="width: 74px;" v-for="(day, index) in (info.execWeekLength)">
-                        {{formatDate(weeks[(day - 1) + (week - 1) * info.execWeekLength - info.weekOffset].date)}}
+                      <th v-if="week > 1"
+                      style="width: 74px;" v-for="(day, index) in (info.execWeekLength)">
+                        {{parseDate((day - 1) + (week - 1) * info.execWeekLength - info.weekOffset)}}
                       </th>
 
 
@@ -332,7 +334,12 @@ export default {
       'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
     ]),
     formatDate(date){
+      if (!date) date = moment()
       return moment(date, "dddd, MMMM Do").format("dddd Do")
+    },
+    parseDate(index){
+      if (!this.weeks[index]) return "N/A"
+      return this.formatDate(this.weeks[index].date)
     },
     incrementDate(date, weeks, days){
       return moment(date).add(weeks, 'w').add(days, 'd').format("dddd Do")
@@ -371,6 +378,9 @@ export default {
 
       let tempWeek = _.cloneDeep(this.dWeek)
       tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + '.png'
+      tempWeek.date = moment()
+      tempWeek.title = "Lecture " + index
+      tempWeek.secondTitle = "Lecture " + index + " II"
 
       // let tempWeek = this.dWeek
       // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
@@ -387,7 +397,7 @@ export default {
 
       if (diff < 0) {
         this.userInput.weekNumber = 1;
-        this.weeks = this.weeks.slice(0, num);
+        this.sliceWeek(num);
       }
 
       this.updateDays()

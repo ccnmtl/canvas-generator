@@ -359,11 +359,13 @@ export default {
       if (type == 'url'){
         console.log('uploading url...')
         var imageurl = document.querySelector('#image-url'); // Gets form data in html
+        if (imagefile.files.length == 0) return;
         formData.append("imageUrl", imageurl.value);  // Adds api header to tell server that it is a url
       }
       else {
         console.log('uploading file...')
         var imagefile = document.querySelector('#image-file');
+        if (imagefile.files.length == 0) return;
         formData.append("image", imagefile.files[0]); // Adds api header to tell server that it is a file
       }
 
