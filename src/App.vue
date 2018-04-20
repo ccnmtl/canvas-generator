@@ -6,14 +6,15 @@
       <!-- <a href="#offcanvas-slide" uk-toggle>Open</a> -->
 
       <div class="uk-float-right uk-padding-small">
-        <h6>Course Info: <span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 1" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true">        </span>
-        <a href="#help-slide" uk-toggle>
-          <el-button type="success" style="display: inline-block;"> Help <i class="fas fa-question-circle"></i></el-button>
+        <a href="#" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true">
+          <el-button type="primary" style="display: inline-block;">Course Info: <i class="fas fa-cog"></i></el-button>
         </a>
-        </h6>
+        <a href="#help-slide" uk-toggle>
+          <el-button type="warning" style="display: inline-block;"> Help <i class="fas fa-question-circle"></i></el-button>
+        </a>
       </div>
 
-      <div style="margin-left: 35%; width:30%;">
+      <div style="margin-left: auto; margin-right: auto; width:35%;">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/home' }">Home</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/syllabus' }">Syllabus</el-breadcrumb-item>
@@ -27,7 +28,7 @@
 
     <vue-snotify></vue-snotify>
 
-
+    <!-- HELP CONTENT -->
     <div id="help-slide" uk-offcanvas="overlay: true">
       <div class="uk-offcanvas-bar">
          <button class="uk-offcanvas-close" type="button" uk-close></button>
@@ -37,10 +38,10 @@
            <p> There is no help available for this page </p>
            <p> Please check the <router-link class="router" to="/guide">User Guide</router-link></p>
          </div>
-
      </div>
     </div>
 
+    <!-- MENU CONTENT -->
     <div id="offcanvas-slide" uk-offcanvas>
         <div class="uk-offcanvas-bar uk-background">
     		<ul class="uk-nav uk-nav-default">
@@ -64,48 +65,46 @@
         </div>
     </div>
 
-
-
-    <!-- OLD DIALOG -->
-    <el-dialog title="Course Info" :visible.sync="dialogFormVisible">
-      <div class="center">
-        <label for="input"> Course Title <el-input placeholder="Please input" v-model="info.title" @input="updateProp('title', $event)"></el-input> </label>
-        <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url" @input="updateProp('url', $event)"></el-input> </label>
-        <br>
-        <label for="select">Class Type
+    <!-- COURSE INFO DIALOG -->
+    <el-dialog title="Course Info" :visible.sync="dialogFormVisible" style="width: 80%; margin:auto;">
+      <div class="left">
+        <p>
+          <label for="coursetitle" style="min-width: 90px">Course Title</label>
+          <el-input name="coursetitle" style="width: 400px" placeholder="Please input" v-model="info.title" @input="updateProp('title', $event)"></el-input>
+        </p>
+        <p>
+          <label for="courseurl" style="min-width: 90px">Course URL</label>
+          <el-input name="courseurl" style="width: 400px" placeholder="Please input" v-model="info.url" @input="updateProp('url', $event)"></el-input>
+        </p>
+        <p>
+          <label for="select" style="min-width: 90px">Class Type</label>
           <select style="display: inline-block; width:150px" v-model="info.classType" @input="updateProp('classType', $event)" name="Choose Banner" class="uk-select">
             <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
           </select>
-        </label>
 
-        <span style="display:inline-block; width: 10px;"> </span>
-
-        <label style="margin-left: 20px;">
-          School:
+          <label style="margin-left: 30px; min-width: 60px;">School </label>
           <select style="display: inline-block; width:150px" v-model="theme" name="Choose Banner" class="uk-select">
             <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
           </select>
-        </label>
-
-        <span style="display:inline-block; width: 20px;"> </span>
-
-        <label for="select">Blended Model
-        <el-switch
-          v-model="info.isBlended"
-          @input="updateProp('isBlended', $event)"
-          active-color="#13ce66"
-          inactive-color="#ff4949">
-        </el-switch>
-        </label>
-        <br>
-        <label for="select">Help Tooltips
-        <el-switch
-          v-model="info.usePops"
-          @input="updateProp('usePops', $event)"
-          active-color="#13ce66"
-          inactive-color="#ff4949">
-        </el-switch>
-        </label>
+        </p>
+        <p>
+          <label for="select" style="min-width: 110px">Blended Model</label>
+          <el-switch
+            v-model="info.isBlended"
+            @input="updateProp('isBlended', $event)"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+        </p>
+        <p>
+          <label for="select" style="min-width: 110px">Help Tooltips</label>
+          <el-switch
+            v-model="info.usePops"
+            @input="updateProp('usePops', $event)"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+        </p>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
