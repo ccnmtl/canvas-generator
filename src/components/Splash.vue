@@ -6,14 +6,12 @@
                <p>&nbsp;</p>
                <p>&nbsp;</p>
                <img class="columbia-logo" src="https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/columbia-logo-white.png" />
-               <h1 class="uk-heading"><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 2.5"></span> CANVAS COURSE BUILDER</h1>
-               <!-- <button class="uk-button uk-button-primary uk-button-large" @click="getStarted">Get Started</button> -->
+               <h2 class="uk-heading"><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 2.0"></span> CANVAS COURSE BUILDER</h2>
 
                <router-link class="router" to="/guide">
-               <button class="uk-button uk-button-secondary uk-button-large"> View Guide</button>
+               <el-button type="default" style="display: inline-block; margin-right: 20px;">View Guide</el-button>
                </router-link>
-               <button class="uk-button uk-button-primary uk-button-large" @click="dialogFormVisible = true">Get Started</button>
-
+               <el-button type="default" style="display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
             </div>
         </div>
     </div>
@@ -204,6 +202,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .columbia-logo {
-    width: 500px;
+    width: 400px;
   }
 </style>
