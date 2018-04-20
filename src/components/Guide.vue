@@ -5,16 +5,19 @@
             <div class="uk-background-cover uk-height-large uk-panel uk-text-center" style="background-image: url(static/images/cover01.jpg);">
                <div class="uk-overlay uk-overlay-primary uk-height-large">
                   <h1 class="uk-heading uk-margin-medium-top">Guide</h1>
-                  <hr style="width: 70%; margin-left: auto; margin-right: auto;">
                   <p class="uk-margin-auto-left uk-margin-auto-right">This website is designed to allow Professors and TA’s to quickly build beautiful and functional class websites on Columbia’s new Canvas/Courseworks platform.</p>
                   <p class="uk-margin-auto-left uk-margin-auto-right">This website provides a standard template for a 12 week course.</p>
                   <p class="uk-margin-auto-left uk-margin-auto-right">To build your course, watch the 4 minute training video, and download the guide below:</p>
-                  <hr style="width: 70%; margin-left: auto; margin-right: auto;">
                   <div class="uk-margin-medium-bottom uk-margin-auto-left uk-margin-auto-right">
-                    <a href="static/files/CanvasCourseBuilderGuide.pdf" download><el-button type="primary" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Download the Guide</el-button></a>
-                    <a href="#"><el-button type="primary" style="display: inline-block; margin-right: 20px;"><i class="fas fa-video"></i> Watch the Demo</el-button></a>
-                    <a href="#" download><el-button type="success" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Weekly Course</el-button></a>
-                    <a href="#" download><el-button type="success" style="display: inline-block;"><i class="fas fa-download"></i> Executive Training</el-button></a>
+                    <a href="static/files/CanvasCourseBuilderGuide.pdf" download><button class="uk-button uk-button-default uk-button-large uk-margin-medium-top">Download the Guide</button></a> &nbsp;&nbsp; <button class="uk-button uk-button-default uk-button-large uk-margin-medium-top" type="button" uk-toggle="target: #modal-media-video">Watch the Demo</button>
+                  </div>
+                  <div id="modal-media-video" uk-modal>
+                      <div class="uk-modal-dialog uk-width-xlarge uk-margin-auto-vertical">
+                          <button class="uk-modal-close-outside" type="button" uk-close></button>
+                          <video controls uk-video>
+                              <source src="static/files/CourseBuilderDemo.mp4?test1" type="video/mp4">
+                          </video>
+                      </div>
                   </div>
                </div>
             </div>
