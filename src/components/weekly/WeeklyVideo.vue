@@ -30,7 +30,7 @@
         </div>
 
         <div class="col-xs-6">
-          <blockquote style="height: 281px; border-left: 4px solid #008ee2; font-weight: normal; font-size: 16px;">
+          <blockquote style="height: auto; border-left: 4px solid #008ee2; font-weight: normal; font-size: 16px;">
           <div class="styleguide-section__grid-demo-element">
             <div class="STV1_WelcomeAlt">VIDEO: {{data.title}}</div>
             <p>{{data.description}}</p>
