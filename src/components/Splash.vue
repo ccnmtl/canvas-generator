@@ -5,13 +5,12 @@
             <div class="uk-background-cover uk-height-large uk-panel uk-text-center" style="background-image: url(static/images/cover01.jpg);">
                <p>&nbsp;</p>
                <p>&nbsp;</p>
-               <img class="columbia-logo" src="https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/columbia-logo-white.png" />
-               <h2 class="uk-heading"><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 2.0"></span> CANVAS COURSE BUILDER</h2>
-
+               <img class="columbia-logo" src="https://s3.amazonaws.com/cu-coursebuilder/images/CCB_logo.jpg" />
+               <br><br>
                <router-link class="router" to="/guide">
-               <el-button type="success" style="display: inline-block; margin-right: 20px;">View Guide</el-button>
+               <el-button type="primary" size="large" style="display: inline-block; margin-left: 15px; margin-right: 20px;">View Guide</el-button>
                </router-link>
-               <el-button type="success" style="display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
+               <el-button type="primary" size="large" style="display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
             </div>
         </div>
     </div>
@@ -203,5 +202,10 @@ export default {
 <style scoped>
   .columbia-logo {
     width: 400px;
+  }
+  .el-button--large {
+    padding: 21px 29px;
+    font-size: 24px;
+    border-radius: 4px;
   }
 </style>
