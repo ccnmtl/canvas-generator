@@ -1,30 +1,45 @@
 <template>
   <div id="app">
 
-      <a href="#offcanvas-slide" class="uk-button uk-button-default noBorder" uk-toggle><span uk-icon="icon: table"></span> &nbsp;Menu</a>
+    <el-row>
+      <el-col :span="6" style="padding: 20px;">
+        <a href="#offcanvas-slide" class="uk-button uk-button-default noBorder" uk-toggle><span uk-icon="icon: table"></span> &nbsp;Menu</a>
+      </el-col>
+      <el-col :span="12" style="padding: 10px;">
+          <ul class="bcTrail center">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Syllabus</a></li>
+            <li><a href="#">Program Overview</a></li>
+            <li><a href="#">Weekly List</a></li>
+            <li><a href="#">Individual Activity</a></li>
+            <li><a href="#">Export</a></li>
+          </ul>
+      </el-col>
+      <el-col :span="6">
+        <div class="uk-float-right uk-padding-small">
+          <a href="#" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true">
+            <el-button type="primary" style="display: inline-block;">Course Info: <i class="fas fa-cog"></i></el-button>
+          </a>
+          <a href="#help-slide" uk-toggle>
+            <el-button type="warning" style="display: inline-block;"> Help <i class="fas fa-question-circle"></i></el-button>
+          </a>
+        </div>
+      </el-col>
+    </el-row>
 
-      <!-- <a href="#offcanvas-slide" uk-toggle>Open</a> -->
+    <!--
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/home' }">Home</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/syllabus' }">Syllabus</el-breadcrumb-item>
+      <el-breadcrumb-item v-show="info.classType.option == 'Executive Training'" :to="{ path: '/program' }" >Program Overview</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/weeklylist' }">Weekly List</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/weekly' }" >Individual Activity</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/export' }">Export</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '' }"></el-breadcrumb-item>
+    </el-breadcrumb>
 
-      <div class="uk-float-right uk-padding-small">
-        <a href="#" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true">
-          <el-button type="primary" style="display: inline-block;">Course Info: <i class="fas fa-cog"></i></el-button>
-        </a>
-        <a href="#help-slide" uk-toggle>
-          <el-button type="warning" style="display: inline-block;"> Help <i class="fas fa-question-circle"></i></el-button>
-        </a>
-      </div>
-
-      <div style="margin-left: auto; margin-right: auto; width:35%;">
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/home' }">Home</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/syllabus' }">Syllabus</el-breadcrumb-item>
-          <el-breadcrumb-item v-show="info.classType.option == 'Executive Training'" :to="{ path: '/program' }" >Program Overview</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/weeklylist' }">Weekly List</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/weekly' }" >Individual Activity</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/export' }">Export</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '' }"></el-breadcrumb-item>
-        </el-breadcrumb>
-      </div>
+    <a href="#offcanvas-slide" uk-toggle>Open</a>
+    -->
 
     <vue-snotify></vue-snotify>
 
@@ -256,4 +271,34 @@ html {
 .nav-button {
   display:inline-block;
 }
+
+.bcTrail{
+  padding-top: 15px;
+}
+
+.bcTrail li{
+  list-style: none;
+  display: inline-block;
+  padding-right: 5px;
+  font-size: 13px;
+}
+
+.bcTrail li::after {
+    content: " / ";
+    padding-left: 5px;
+}
+
+.bcTrail li a{
+  text-decoration: none;
+  color: #48576a;
+}
+
+.bcTrail li a:hover{
+  text-decoration: none;
+  color: #39f;
+}
+
+
+
+
 </style>

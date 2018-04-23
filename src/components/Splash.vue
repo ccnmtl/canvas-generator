@@ -9,9 +9,9 @@
                <h2 class="uk-heading"><span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 2.0"></span> CANVAS COURSE BUILDER</h2>
 
                <router-link class="router" to="/guide">
-               <el-button type="default" style="display: inline-block; margin-right: 20px;">View Guide</el-button>
+               <el-button type="success" style="display: inline-block; margin-right: 20px;">View Guide</el-button>
                </router-link>
-               <el-button type="default" style="display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
+               <el-button type="success" style="display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
             </div>
         </div>
     </div>

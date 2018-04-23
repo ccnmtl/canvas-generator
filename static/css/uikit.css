@@ -1899,7 +1899,7 @@ select.uk-form-width-xsmall {
 .uk-button-default {
   background-color: transparent;
   color: #333;
-  border: 1px solid #e5e5e5; 
+  border: 1px solid #e5e5e5;
 }
 /* Hover + Focus */
 .uk-button-default:hover,
@@ -11962,7 +11962,7 @@ td.uk-text-break {
 }
 
 .noBorder {
-  border: none; 
+  border: none;
 }
 
 .darkFont {
