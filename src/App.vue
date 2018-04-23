@@ -9,7 +9,7 @@
           <ul class="bcTrail center">
             <li><router-link class="router" to="/home">Home</router-link></li>
             <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
-            <li><router-link class="router" to="/weeklylist">Program Overview</router-link></li>
+            <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program">Program Overview</router-link></li>
             <li><router-link class="router" to="/weeklylist">Weekly List</router-link></li>
             <li><router-link class="router" to="/weekly">Individual Activity</router-link></li>
             <li><router-link class="router" to="/export">Export</router-link></li>
