@@ -7,12 +7,12 @@
       </el-col>
       <el-col :span="12" style="padding: 10px;">
           <ul class="bcTrail center">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Syllabus</a></li>
-            <li><a href="#">Program Overview</a></li>
-            <li><a href="#">Weekly List</a></li>
-            <li><a href="#">Individual Activity</a></li>
-            <li><a href="#">Export</a></li>
+            <li><router-link class="router" to="/home">Home</router-link></li>
+            <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
+            <li><router-link class="router" to="/weeklylist">Program Overview</router-link></li>
+            <li><router-link class="router" to="/weeklylist">Weekly List</router-link></li>
+            <li><router-link class="router" to="/weekly">Individual Activity</router-link></li>
+            <li><router-link class="router" to="/export">Export</router-link></li>
           </ul>
       </el-col>
       <el-col :span="6">
