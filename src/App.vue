@@ -29,15 +29,15 @@
     <vue-snotify></vue-snotify>
 
     <!-- HELP CONTENT -->
-    <div id="help-slide" uk-offcanvas="overlay: true">
+    <div id="help-slide" uk-offcanvas="mode: push">
       <div class="uk-offcanvas-bar">
          <button class="uk-offcanvas-close" type="button" uk-close></button>
          <h3>Help</h3>
          <div v-html="helpInfo.body"></div>
          <div v-show="!helpInfo.exists">
            <p> There is no help available for this page </p>
-           <p> Please check the <router-link class="router" to="/guide">User Guide</router-link></p>
          </div>
+         <p> Please check the <router-link class="router" to="/guide">User Guide</router-link> for more information.</p>
      </div>
     </div>
 

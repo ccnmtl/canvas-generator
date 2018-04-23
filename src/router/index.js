@@ -16,6 +16,7 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Welcome Page',
       component: Splash
     },
     {

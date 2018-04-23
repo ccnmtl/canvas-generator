@@ -29,20 +29,123 @@
        	</div>
     </div>
 
+    <el-dialog  title="Course Info" :visible.sync="dialogFormVisible" style="width: 80%; margin:auto;">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px">
+        <el-form-item label="Course Title" prop="title">
+          <el-input autosize style="width: 80%" placeholder="Please input your Course Title" v-model="ruleForm.title"></el-input>
+        </el-form-item>
+        <el-form-item label="Course URL" prop="url">
+          <el-input autosize style="width: 80%" placeholder="Please input your Course URL" v-model="ruleForm.url"></el-input>
+        </el-form-item>
+        <el-form-item label="School" prop="theme">
+          <select style="display: inline-block; width:150px" v-model="ruleForm.theme" name="Choose Banner" class="uk-select">
+            <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
+          </select>
+        </el-form-item>
+        <el-form-item label="Course Type" prop="classType">
+          <select style="display: inline-block; width:150px" v-model="ruleForm.classType" name="Choose Banner" class="uk-select">
+            <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
+          </select>
+        </el-form-item>
+        <el-form-item label="Online Class" prop="isBlended">
+          <el-switch
+            v-model="ruleForm.isBlended"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="confirmForm">Confirm</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 import { EventBus } from '../bus'
 import saveState from 'vue-save-state';
-import { quillEditor } from 'vue-quill-editor';
+import mutations from '../store/mutations'
 
 export default {
   name: 'Home',
   data () {
     return {
+      dialogFormVisible: false,
+      ruleForm: {
+        title: this.$store.getters.getInfo.title,
+        url: this.$store.getters.getInfo.urlArgs,
+        classType: this.$store.getters.getInfo.classType,
+        isBlended: this.$store.getters.getInfo.isBlended,
+        theme: this.$store.getters.getTheme,
+      },
+      rules: {
+        title: [
+          { required: true, message: 'Course Title is required', trigger: 'blur' },
+          { min: 0, max: 35, message: 'Length should be less than 35 characters', trigger: 'blur' }
+        ],
+        url: [
+          { required: true, message: 'Course URL is required', trigger: 'blur' },
+          { type: "url" , message: 'Must be a valid URL', trigger: 'blur' }
+        ],
+
+      }
     }
+  },
+  mixins: [saveState, mutations],
+  computed: {
+    // info: {
+    //   get () {
+    //     return this.$store.getters.getInfo
+    //   },
+    //   set (payload) {
+    //     this.$store.commit('updateInfo', payload)
+    //   }
+    // },
+  },
+  methods: {
+    getStarted(){
+      this.$router.push({path: '/home'});
+    },
+    getStartedModal(){
+      this.dialogFormVisible = false
+      this.$router.push({path: '/home'});
+    },
+    confirmForm(){
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          this.updateProp('title', this.ruleForm.title)
+          this.updateProp('url', this.ruleForm.url)
+          this.updateProp('classType', this.ruleForm.classType)
+          this.updateProp('isBlended', this.ruleForm.isBlended)
+          this.theme = this.ruleForm.theme
+          this.dialogFormVisible = false
+
+          this.$router.push({path: '/home'});
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      })
+    },
+    getSaveStateConfig() {
+      return {
+          'cacheKey': 'Guide',
+      };
+    }
+  },
+  mounted () {
+    // If it should load all pages on the splash, run the code below
+
+    // let initialPath = this.$route.path
+    // let paths = ['/home', '/weekly', '/weeklylist'].filter(p => p !== initialPath).concat([initialPath])
+    // paths.forEach((path, i) => {
+    //   setTimeout(() => this.$router.replace(path), i * 30)
+    // })
   }
+
 }
 </script>
 
