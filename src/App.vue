@@ -20,8 +20,20 @@
           <a href="#" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true">
             <el-button type="primary" style="display: inline-block;">Course Info: <i class="fas fa-cog"></i></el-button>
           </a>
+
+          <el-dropdown>
+            <el-button type="success">
+              Code <i class="el-icon-caret-bottom el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item><i class="fas fa-code"></i> View the code</el-dropdown-item>
+              <el-dropdown-item><i class="fas fa-copy"></i> Copy the code</el-dropdown-item>
+              <el-dropdown-item><i class="fas fa-exclamation-triangle"></i> Reset to default</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+
           <a href="#help-slide" uk-toggle>
-            <el-button type="warning" style="display: inline-block;"> Help <i class="fas fa-question-circle"></i></el-button>
+            <el-button type="warning" style="display: inline-block;"> Help <i class="fas fa-info-circle"></i></el-button>
           </a>
         </div>
       </el-col>
