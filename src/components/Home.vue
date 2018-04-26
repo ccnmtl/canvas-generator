@@ -33,6 +33,18 @@
     content="The course url is necessary to properly link other pages to your canvas site. Please double check it is correct before copying to canvas.">
     </el-popover>
 
+    <el-dropdown style="right: 15px; top: 125px;
+    position:absolute; ">
+      <el-button type="success">
+        Modify Code <i class="el-icon-caret-bottom el-icon--right"></i>
+      </el-button>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item><i class="fas fa-code"></i> View the code</el-dropdown-item>
+        <el-dropdown-item><i class="fas fa-copy"></i> Copy the code</el-dropdown-item>
+        <el-dropdown-item><i class="fas fa-exclamation-triangle"></i> Reset to default</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+
     <div>
     	<ul class="uk-tab uk-flex-center" data-uk-tab="{connect:'#tab-content'}">
         <li class="uk-active"><a href="#">Course Info</a></li>
