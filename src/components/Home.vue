@@ -176,7 +176,7 @@
                   <p>&nbsp;</p>
                   <p>
                     <a class="Button" style="text-decoration: none;" :href="info.url + 'assignments/syllabus'" >Course Syllabus</a>
-                    <a class="Button" style="text-decoration: none;" :href="info.url + 'pages/weekly-activities'" >Weekly Activites</a>
+                    <a class="Button" style="text-decoration: none;" :href="weeklyUrl" >Weekly Activites</a>
                   </p>
                 </div>
               </div>
@@ -345,6 +345,11 @@ export default {
       if (this.info.title.length < 1 || this.info.url.length < 1) return false
       return validator.isURL(this.info.url)
     },
+    weeklyUrl(){
+      let ending = 'pages/weekly-activities'
+      if (this.info.classType.dateType == "Session") ending = 'pages/session-activities'
+      return this.info.url + ending
+    }
   },
   methods: {
     viewCode(){
