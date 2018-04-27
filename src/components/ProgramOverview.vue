@@ -335,7 +335,7 @@ export default {
     ]),
     formatDate(date){
       if (!date) date = moment()
-      return moment(date, "dddd, MMMM Do").format("dddd Do")
+      return moment(date).format("dddd Do")
     },
     parseDate(index){
       if (!this.weeks[index]) return "N/A"

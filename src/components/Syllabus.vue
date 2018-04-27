@@ -410,7 +410,7 @@ export default {
   },
   methods: {
     formatDate(date){
-      return moment(date, "dddd, MMMM Do").format("MMMM Do")
+      return moment(date).format("MMMM Do")
     },
     newLine(val) {
       if (!val) return "";
