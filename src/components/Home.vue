@@ -54,6 +54,7 @@
     		<li><a href="#">Meeting Times</a></li>
     		<li><a href="#">Media Input</a></li>
         <li><a href="#">Banner</a></li>
+        <li><a href="#">Buttons</a></li>
     	</ul>
     	<ul id="tab-content" class="uk-switcher uk-margin">
     		<li class="uk-active uk-text-center">
@@ -142,6 +143,19 @@
           </label> -->
           <!-- <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input uk-input" rows="1" cols="50"></textarea> -->
     		</li>
+        <li class="uk-text-center">
+          Syllabus Button
+          <el-switch
+            v-model="info.sylButton"
+            @input="updateProp('sylButton', $event)">
+          </el-switch>
+          <br>
+          Activities Button
+          <el-switch
+            v-model="info.weekButton"
+            @input="updateProp('weekButton', $event)">
+          </el-switch>
+        </li>
     	</ul>
     </div>
 
@@ -175,8 +189,8 @@
                   <p class="html" v-html="info.description"></p>
                   <p>&nbsp;</p>
                   <p>
-                    <a class="Button" style="text-decoration: none;" :href="info.url + 'assignments/syllabus'" >Course Syllabus</a>
-                    <a class="Button" style="text-decoration: none;" :href="weeklyUrl" >Weekly Activites</a>
+                    <a class="Button" v-if="info.sylButton" style="text-decoration: none;" :href="info.url + 'assignments/syllabus'" >Course Syllabus</a>
+                    <a class="Button" v-if="info.weekButton" style="text-decoration: none;" :href="weeklyUrl" >Weekly Activites</a>
                   </p>
                 </div>
               </div>

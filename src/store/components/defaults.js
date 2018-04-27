@@ -63,9 +63,11 @@ export default {
       usePops: true,
       wideBanner: false,
 
-      //DISPLAY PARAMETERS
+      // Home Page Paramaters
       video:"https://vimeo.com/199382848/1dd8fc0f31",
       image:"https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/campus.jpg",
+      sylButton: true,
+      weekButton: true,
       meetings: "Tuesday 9:00-10:50 am (IAB Room 411)",
       discussions: "Thursday 9:00-10:50 am (IAB Room 411)",
       description: "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
