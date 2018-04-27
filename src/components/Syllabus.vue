@@ -119,7 +119,7 @@
             <el-checkbox v-for="section in sections" :label="section" :key="section" border>{{section}}</el-checkbox>
           </el-checkbox-group>
           <el-checkbox-group v-model="info.sectionBox2" @input="updateProp('sectionBox2', $event)">
-            <el-checkbox-button v-for="section in sections2" :label="section" :key="section">{{section}}</el-checkbox-button>
+            <el-checkbox v-for="section in sections2" :label="section" :key="section">{{section}}</el-checkbox>
           </el-checkbox-group>
         </div>
         <br>
