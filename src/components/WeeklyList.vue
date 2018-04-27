@@ -290,7 +290,7 @@ export default {
       this.weeks.forEach((week, index)=>{
         if (index > 14 && this.info.classType.dateType == "Week") index = 14;
         let imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
-        this.updateWeek(index,'imgSrc', imgSrc)
+        if (week.imgSrc.includes(this.$store.state.imageServer)) this.updateWeek(index,'imgSrc', imgSrc)
       })
     },
     setDefaultImage(index){
