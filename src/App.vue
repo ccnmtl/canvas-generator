@@ -57,14 +57,16 @@
 
     <!-- HELP CONTENT -->
     <div id="help-slide" uk-offcanvas="mode: push">
-      <div class="uk-offcanvas-bar">
+      <div class="uk-offcanvas-bar help-bar">
          <button class="uk-offcanvas-close" type="button" uk-close></button>
          <h3>Help</h3>
          <div v-html="helpInfo.body"></div>
          <div v-show="!helpInfo.exists">
            <p> There is no help available for this page </p>
          </div>
-         <p> Please check the <router-link class="router" to="/guide">User Guide</router-link> for more information.</p>
+         <p> Please check the <router-link class="router" to="/guide">User Guide</router-link> for more information. </p>
+         <p>If you encounter any bugs please
+          email a detailed description of the bug and its context to <a :href="'mailto:coursebuilderhelp@gmail.com?Subject=Bug ' + info.title " target="_top">coursebuilderhelp@gmail.com</a></p>
      </div>
     </div>
 
@@ -256,6 +258,10 @@ html {
   font-size: 13px;
   font-weight: bold;
 }*/
+
+.help-bar {
+  width: 500px;
+}
 
 .export-container {
   height: 80px;

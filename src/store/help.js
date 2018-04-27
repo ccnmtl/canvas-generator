@@ -3,9 +3,11 @@ export default {
   `
   <p>
   The Home Page Template is where you enter the primary data about your course, including Title, Url, Description, and information about the instructors and meeting times.
+  Please double check that your Course URL (the third input on the <strong> COURSE INFO </strong> tab) is correct as this is used to generate the links to each page.
   </p>
   <p>
   You can also adjust the image or video embeded on the home page to the left of the description by selecting the <strong> "MEDIA INPUT" </strong> tab as well as the banner for your school (if you did not select on the starting form).
+  Use the BUTTONS tab to turn the Syllabus and Activities button on or off depending on whether you use these pages in your course.
   </p>
 
   <p>

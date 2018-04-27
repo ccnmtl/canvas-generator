@@ -1,7 +1,39 @@
 <template>
   <div id="app">
 
-  <div class="uk-child-width-1-1@s uk-light" uk-grid>
+    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+        <div>
+            <div class="uk-background-primary uk-padding uk-light uk-height-large">
+              <h1>IMPORT</h1>
+              <p>If you have previously saved an export file from this version of Coursebuilder you can use the input below to import all of the data into this
+              session. Warning! This will overwrite all information you have currently entered.</p>
+              <h4>Select a ".json" file from a previous data export</h4>
+
+              <form>
+                <button class="uk-button uk-button-default" v-if="hasImportData" @click.prevent="performImport">
+                  File read successfully! Click here to confirm import.
+                </button>
+                <div class="uk-margin" uk-margin>
+                   <input style="display:inline-block;" class="uk-padding" type="file" accept=".json" name="import-file" @change="onImportFileChange" />
+                   <br> <br>
+                </div>
+              </form>
+            </div>
+        </div>
+        <div>
+            <div class="uk-background-secondary uk-padding uk-light uk-height-large">
+              <h1>EXPORT</h1>
+              <p>If you have completed your class or want to save the data you have previously submitted, click the export button to
+               save a ".json" file that you can import at a later date (using the import section to the left).</p>
+               <br> <br> <br>
+              <button class="uk-button-large uk-button-default" type="button" name="button" @click="exportJSON">Export</button>
+
+            </div>
+        </div>
+
+    </div>
+
+  <!-- <div class="uk-child-width-1-1@s uk-light" uk-grid>
       <div>
           <div class="uk-background-primary uk-height-large uk-panel uk-text-center">
              <p>&nbsp;</p>
@@ -21,7 +53,7 @@
 
           </div>
       </div>
-  </div>
+  </div> -->
 
   <div class="clearfix"></div>
 
