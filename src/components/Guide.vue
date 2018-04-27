@@ -16,6 +16,9 @@
                     <a href="#" download><el-button type="success" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Weekly Course</el-button></a>
                     <a href="#" download><el-button type="success" style="display: inline-block;"><i class="fas fa-download"></i> Executive Training</el-button></a>
                   </div>
+                  <div class="uk-margin-medium-bottom uk-margin-auto-left uk-margin-auto-right">
+                    <el-button type="primary" size="large" style="display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
+                  </div>
                </div>
             </div>
         </div>
