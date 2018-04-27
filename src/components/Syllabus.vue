@@ -195,7 +195,7 @@
       <!-- Course Description -->
       <div v-if="info.sectionBox1.includes('Description')" class="content-box pad-box-mini border border-b">
         <h2>Course Description</h2>
-        <p>{{info.description}}</p>
+        <div v-html="info.description"></div>
       </div>
       <!-- End Course Description -->
 
