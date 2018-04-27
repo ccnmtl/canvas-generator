@@ -4,7 +4,7 @@
 
   <hr>
 
-  <el-dropdown style="right:15 px;margin-left: 90%; margin-bottom: 10px">
+  <!-- <el-dropdown style="right:15 px;margin-left: 90%; margin-bottom: 10px">
     <el-button type="success">
       Modify Code <i class="el-icon-caret-bottom el-icon--right"></i>
     </el-button>
@@ -13,7 +13,7 @@
       <el-dropdown-item><i class="fas fa-copy"></i> Copy the code</el-dropdown-item>
       <el-dropdown-item><i class="fas fa-exclamation-triangle"></i> Reset to default</el-dropdown-item>
     </el-dropdown-menu>
-  </el-dropdown>
+  </el-dropdown> -->
 
   <div class="code-container">
 
