@@ -11,11 +11,10 @@
                   <p class="uk-margin-auto-left uk-margin-auto-right">To build your course, watch the short training video, download the guide below, and click <strong> Get Started</strong></p>
                   <hr style="width: 70%; margin-left: auto; margin-right: auto;">
                   <div class="uk-margin-medium-bottom uk-margin-auto-left uk-margin-auto-right">
-                    <a href="static/files/CanvasCourseBuilderGuide.pdf" download><el-button type="primary" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Download the Guide</el-button></a>
+                    <a href="./static/files/CanvasCourseBuilderGuide.pdf" download><el-button type="primary" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Download the Guide</el-button></a>
                     <el-button type="primary" style="display: inline-block; margin-right: 20px;" uk-toggle="target: #modal-media-video"><i class="fas fa-video"></i> Watch the Demo Video</el-button>
-                    <!-- <button class="uk-button uk-button-default uk-button-large uk-margin-medium-top" type="button" uk-toggle="target: #modal-media-video">Watch the Demo Video</button> -->
-                    <a href="#" download><el-button type="success" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Weekly Course</el-button></a>
-                    <a href="#" download><el-button type="success" style="display: inline-block;"><i class="fas fa-download"></i> Executive Training</el-button></a>
+                    <a href="./static/files/weekly-template.imscc" download><el-button type="success" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Weekly Course</el-button></a>
+                    <a href="./static/files/executive-template.imscc" download><el-button type="success" style="display: inline-block;"><i class="fas fa-download"></i> Executive Training</el-button></a>
                   </div>
                   <div class="uk-margin-medium-bottom uk-margin-auto-left uk-margin-auto-right">
                     <el-button type="primary" size="large" style="display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
