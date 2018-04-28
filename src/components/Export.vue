@@ -15,6 +15,7 @@
                 </button>
                 <div class="uk-margin" uk-margin>
                    <input style="display:inline-block;" class="uk-padding" type="file" accept=".json" name="import-file" @change="onImportFileChange" />
+                   <!-- <input style="display:inline-block;" class="uk-padding" type="file" name="import-file2" @change="onImportFileChange2" /> -->
                    <br> <br>
                 </div>
               </form>
@@ -67,8 +68,10 @@
 </template>
 
 <script>
+
 import { EventBus } from '../bus'
 import saveFile from '../util/save-file'
+import JSZip from 'JSZip'
 
 export default {
   name: 'Export',
@@ -157,6 +160,24 @@ export default {
       }
 
       reader.readAsText(file)
+    },
+    onImportFileChange2 (changeEvent) {
+      let files = changeEvent.target.files
+      console.log(files)
+      JSZip.loadAsync(files[0]).then(function(zip) {
+        console.log(zip)
+        zip.file("wiki_content/day-1.html", "<h1><strong>TEST OF HTML</strong></h1>");
+        zip.generateAsync({type:"blob"})
+        .then(function (blob) {
+          saveFile({
+            name: 'ziptest.zip',
+            data: blob
+          })
+        });
+        zip.forEach(function (relativePath, zipEntry) {  // 2) print entries
+        });
+      })
+
     },
     performImport () {
       this.$store.commit('updateInfo', this.importData.store.info)
