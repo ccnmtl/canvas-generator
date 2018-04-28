@@ -113,8 +113,8 @@
 
     		<li class="uk-text-center">
           <button type="button" class="uk-button uk-button-primary " name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
-          <el-input autosize style="width: 400px;" v-show="this.userInput.isVideo" v-model="info.video" @input="updateProp('video', $event)" ></el-input>
-          <form  style="display: inline-block;"v-show="!this.userInput.isVideo" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
+          <el-input autosize style="width: 400px;" v-show="this.info.isVideo" v-model="info.video" @input="updateProp('video', $event)" ></el-input>
+          <form  style="display: inline-block;"v-show="!this.info.isVideo" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
             <input style="display: inline-block;" name="image" id="image-file" type="file">
             <input style="display: inline-block;" type="submit" class="uk-button uk-button-primary" value="Submit!">
           </form>
@@ -163,7 +163,7 @@
 
     <div class="clearfix"></div>
     <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
-      <div class="">
+        <div class="">
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
           <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]">
             <img :src="theme.logo"/>
@@ -217,8 +217,8 @@
             <p><strong>SPECIAL DISCUSSION FORUMS:</strong> {{info.discussions}}</p>
           </div>
         </div>
+        <!-- <home-view> </home-view> -->
       </div>
-
     </div>
 
     <div class="uk-float-right">
@@ -270,24 +270,7 @@ import { quillEditor } from 'vue-quill-editor';
 import validator from 'validator';
 import _ from 'lodash'
 import mutations from '../store/mutations'
-
-// import Vue from 'vue'
-// import store from '../store/store'
-//
-// Vue.directive('model-prop', {
-//   bind: function (el, binding, vnode){
-//     let prop = binding.arg
-//     el.value = store.getters.getInfo[prop]
-//     console.log(prop)
-//     console.log(el.value)
-//   },
-//   update: function (el, binding, vnode){
-//     let prop = binding.arg
-//     el.value = store.getters.getInfo[prop]
-//     console.log(prop)
-//     store.commit('updateProp', {prop, value: el.value})
-//   }
-// })
+import homeView from './render/home-view'
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline'],
@@ -329,7 +312,7 @@ export default {
     }
   },
   components: {
-    quillEditor
+    quillEditor, homeView
   },
   mixins: [saveState, mutations],
   // watch: {
@@ -372,8 +355,8 @@ export default {
     },
     // Toggles button to insert video or image
     mediaSwitch(){
-      this.userInput.isVideo = !this.userInput.isVideo;
-      this.userInput.mediaSwitchText = this.userInput.isVideo ? "Toggle to input Image" : "Toggle to input Video"
+      this.updateProp('isVideo', !this.info.isVideo)
+      this.userInput.mediaSwitchText = this.info.isVideo ? "Toggle to input Image" : "Toggle to input Video"
     },
     setToDefault(){
       console.log('resetting data...')
