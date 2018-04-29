@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="limiter show-content user_content clearfix enhanced ic-Layout-contentMain">
+  <div id="home-box" class="limiter show-content user_content clearfix enhanced ic-Layout-contentMain">
     <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]">
       <img :src="theme.logo"/>
       <p>{{info.title.toUpperCase()}}</p>
@@ -69,9 +69,24 @@ export default {
   computed: {
     currentItem(){
       return this.content[this.index - 1];
+    },
+    weeklyUrl(){
+      let ending = 'pages/weekly-activities'
+      if (this.info.classType.dateType == "Session") ending = 'pages/session-activities'
+      return this.info.url + ending
     }
   },
   methods: {
+    returnCode(){
+      console.log('updating code..')
+      if (this.$route.path == '/home') this.updateProp('url', this.parseUrl(this.info.url))
+      let code = document.getElementById("home-box");
+      return code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
+      setTimeout( function() {
+        // console.log(code.innerHTML.replace(/\bdata-v-\S+\"/ig,""))
+        return code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
+      }, 30)
+    },
     clear(){
       this.$emit('clearArr');
       console.log('clearing...')

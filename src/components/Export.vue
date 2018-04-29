@@ -28,9 +28,13 @@
                save a ".json" file that you can import at a later date (using the import section to the left).</p>
                <br> <br> <br>
               <button class="uk-button-large uk-button-default" type="button" name="button" @click="exportJSON">Export</button>
+              <!-- <button class="uk-button-large uk-button-default" type="button" name="button" @click="testChildren">Test</button> -->
+              <button class="uk-button-large uk-button-default" type="button" name="button" @click="exportIMSCC">IMSCC</button>
 
             </div>
         </div>
+        <home-view v-show="false" ref="home"></home-view>
+        <syllabus-view v-show="false" ref="syllabus"></syllabus-view>
 
     </div>
 
@@ -71,7 +75,12 @@
 
 import { EventBus } from '../bus'
 import saveFile from '../util/save-file'
-import JSZip from 'JSZip'
+import homeView from './render/home-view'
+import syllabusView from './render/syllabusView'
+
+import mutations from '../store/mutations'
+import JSZip from 'jszip'
+import JSZipUtils from 'jszip-utils'
 
 export default {
   name: 'Export',
@@ -92,53 +101,9 @@ export default {
       }
     },
   },
+  components: {homeView, syllabusView},
+  mixins: [mutations],
   mounted () {
-    // casually go to each route for a minimal amount of time on load to ensure export works
-    // paths is list of all routes with the current route as the last item, so we cycle to where we are
-
-    // const loading = this.$loading({
-    //       lock: true,
-    //       text: 'Loading',
-    //       spinner: 'el-icon-loading',
-    //       background: 'rgba(0, 0, 0, 0.7)'
-    // });
-
-    // this.loading = true;
-    //
-    // setTimeout(() => {
-    //   let initialPath = this.$route.path
-    //   let paths = ['/home', '/weekly', '/weeklylist','/syllabus'].filter(p => p !== initialPath).concat([initialPath])
-    //   paths.forEach((path, i) => {
-    //     setTimeout(() => this.$router.replace(path), i * 30)
-    //   })
-    // }, 500);
-
-
-    // setTimeout(() => {
-    //   this.loading = false //loading.close();
-    // }, 1500);
-    //
-    // EventBus.$on('home-data', data => {
-    //   this.exportData.home = data
-    //   console.log('got home')
-    //   this.exportDataIfPossible()
-    // })
-    // EventBus.$on('weekly-data', data => {
-    //   this.exportData.weekly = data
-    //   console.log('got weekly')
-    //   this.exportDataIfPossible()
-    // })
-    // EventBus.$on('list-data', data => {
-    //   this.exportData.weeklyList = data
-    //   console.log('got list')
-    //   this.exportDataIfPossible()
-    // })
-    // EventBus.$on('syllabus-data', data => {
-    //   this.exportData.syllabus = data
-    //   console.log('got syllabus')
-    //   this.exportDataIfPossible()
-    // })
-
   },
   methods: {
     // openFullScreen() {
@@ -147,6 +112,12 @@ export default {
     //       this.fullscreenLoading = false;
     //     }, 2000);
     // },
+    testChildren(){
+      this.updateProp('url', this.parseUrl(this.info.url))
+      setTimeout( () => {
+        let code = this.$refs.home.returnCode()
+        console.log(code)}, 50)
+    },
     onImportFileChange (changeEvent) {
       let file = changeEvent.target.files[0]
       if (!file) {
@@ -162,21 +133,84 @@ export default {
       reader.readAsText(file)
     },
     onImportFileChange2 (changeEvent) {
+      let homeHeading = `
+      <html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Home</title>
+        <meta name="identifier" content="i95bef606c8b4f001957aa6848c66310f" />
+        <meta name="editing_roles" content="teachers" />
+        <meta name="workflow_state" content="active" />
+        <meta name="front_page" content="true" />
+      </head>
+      <body>`
+
+      let homeFooter = '</body> </html>'
+
+      this.updateProp('url', this.parseUrl(this.info.url))
+
       let files = changeEvent.target.files
-      console.log(files)
-      JSZip.loadAsync(files[0]).then(function(zip) {
+      JSZip.loadAsync(files[0]).then((zip) => {
         console.log(zip)
-        zip.file("wiki_content/day-1.html", "<h1><strong>TEST OF HTML</strong></h1>");
+        zip.file("wiki_content/home.html", homeHeading + this.$refs.home.returnCode() + homeFooter);
         zip.generateAsync({type:"blob"})
-        .then(function (blob) {
+        .then((blob) => {
           saveFile({
-            name: 'ziptest.zip',
+            name: this.info.title + '_export.imscc',
             data: blob
           })
         });
-        zip.forEach(function (relativePath, zipEntry) {  // 2) print entries
-        });
+        // zip.forEach(function (relativePath, zipEntry) {  // 2) print entries
+        // });
       })
+
+    },
+    exportIMSCC () {
+      let heading = {
+        home:
+        `
+        <html>
+        <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <title>Home</title>
+          <meta name="identifier" content="i95bef606c8b4f001957aa6848c66310f" />
+          <meta name="editing_roles" content="teachers" />
+          <meta name="workflow_state" content="active" />
+          <meta name="front_page" content="true" />
+        </head>
+        <body>`,
+        syllabus:
+        `<html>
+        <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>Syllabus</title>
+        </head>
+        <body>`
+      }
+
+      let footer = '</body> </html>'
+
+      this.updateProp('url', this.parseUrl(this.info.url))
+
+      JSZipUtils.getBinaryContent('static/files/weekly-template.imscc', (err, data) => {
+          if(err) {
+              throw err; // or handle err
+          }
+
+          JSZip.loadAsync(data).then((zip) => {
+            console.log(zip)
+            zip.file("wiki_content/home.html", heading.home + this.$refs.home.returnCode() + footer)
+            zip.file("course_settings/syllabus.html", heading.syllabus + this.$refs.syllabus.returnCode() + footer);
+            zip.generateAsync({type:"blob"})
+            .then((blob) => {
+              saveFile({
+                name: this.info.title + '_export.imscc',
+                data: blob
+              })
+            });
+          })
+      });
+
 
     },
     performImport () {
