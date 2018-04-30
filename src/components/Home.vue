@@ -270,7 +270,7 @@ import { quillEditor } from 'vue-quill-editor';
 import validator from 'validator';
 import _ from 'lodash'
 import mutations from '../store/mutations'
-import homeView from './render/home-view'
+import homeView from './render/homeView'
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline'],

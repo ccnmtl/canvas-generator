@@ -187,10 +187,6 @@ el-tab-pane {
   height: 190px;
 }
 
-.crop {
-  width: 450px;
-  height: 250px;
-  object-fit: cover;
-}
+
 
 </style>

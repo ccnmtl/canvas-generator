@@ -169,7 +169,6 @@ export default {
     returnCode(){
       console.log('returning syl code..')
       let code = document.getElementById("syl-box");
-      console.log(code)
       return code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
     },
     formatDate(date){

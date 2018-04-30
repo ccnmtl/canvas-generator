@@ -33,9 +33,12 @@
 
             </div>
         </div>
-        <home-view v-show="false" ref="home"></home-view>
-        <syllabus-view v-show="false" ref="syllabus"></syllabus-view>
+    </div>
 
+    <home-view v-show="false" ref="home"></home-view>
+    <syllabus-view v-show="false" ref="syllabus"></syllabus-view>
+    <div v-for="n in (weeks.length)">
+      <week-view v-show="false" :idx="n-1" :ref="'week'+ n"></week-view>
     </div>
 
   <!-- <div class="uk-child-width-1-1@s uk-light" uk-grid>
@@ -75,12 +78,14 @@
 
 import { EventBus } from '../bus'
 import saveFile from '../util/save-file'
-import homeView from './render/home-view'
-import syllabusView from './render/syllabusView'
-
 import mutations from '../store/mutations'
 import JSZip from 'jszip'
 import JSZipUtils from 'jszip-utils'
+
+import homeView from './render/homeView'
+import syllabusView from './render/syllabusView'
+import weekView from './render/weekView'
+import headings from '../store/export-headings'
 
 export default {
   name: 'Export',
@@ -101,7 +106,7 @@ export default {
       }
     },
   },
-  components: {homeView, syllabusView},
+  components: {homeView, syllabusView, weekView},
   mixins: [mutations],
   mounted () {
   },
@@ -132,61 +137,7 @@ export default {
 
       reader.readAsText(file)
     },
-    onImportFileChange2 (changeEvent) {
-      let homeHeading = `
-      <html>
-      <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Home</title>
-        <meta name="identifier" content="i95bef606c8b4f001957aa6848c66310f" />
-        <meta name="editing_roles" content="teachers" />
-        <meta name="workflow_state" content="active" />
-        <meta name="front_page" content="true" />
-      </head>
-      <body>`
-
-      let homeFooter = '</body> </html>'
-
-      this.updateProp('url', this.parseUrl(this.info.url))
-
-      let files = changeEvent.target.files
-      JSZip.loadAsync(files[0]).then((zip) => {
-        console.log(zip)
-        zip.file("wiki_content/home.html", homeHeading + this.$refs.home.returnCode() + homeFooter);
-        zip.generateAsync({type:"blob"})
-        .then((blob) => {
-          saveFile({
-            name: this.info.title + '_export.imscc',
-            data: blob
-          })
-        });
-        // zip.forEach(function (relativePath, zipEntry) {  // 2) print entries
-        // });
-      })
-
-    },
     exportIMSCC () {
-      let heading = {
-        home:
-        `
-        <html>
-        <head>
-          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-          <title>Home</title>
-          <meta name="identifier" content="i95bef606c8b4f001957aa6848c66310f" />
-          <meta name="editing_roles" content="teachers" />
-          <meta name="workflow_state" content="active" />
-          <meta name="front_page" content="true" />
-        </head>
-        <body>`,
-        syllabus:
-        `<html>
-        <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Syllabus</title>
-        </head>
-        <body>`
-      }
 
       let footer = '</body> </html>'
 
@@ -199,8 +150,18 @@ export default {
 
           JSZip.loadAsync(data).then((zip) => {
             console.log(zip)
-            zip.file("wiki_content/home.html", heading.home + this.$refs.home.returnCode() + footer)
-            zip.file("course_settings/syllabus.html", heading.syllabus + this.$refs.syllabus.returnCode() + footer);
+            zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
+            zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer);
+
+            for (let i=1; i <= this.weeks.length; i++){
+              let title = '<title>Week ' + i + '</title>'
+              let iden = '<meta name="identifier" content="' + headings.week_ids[i-1] + '"/>'
+              let el = document.getElementById("week-box" + (i-1))
+              let code = el.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
+              // console.log(headings.top + title + iden + headings.bottom + code + footer)
+              zip.file("wiki_content/week-"+ i +".html", headings.top + title + iden + headings.bottom + code + footer)
+            }
+
             zip.generateAsync({type:"blob"})
             .then((blob) => {
               saveFile({
@@ -255,7 +216,39 @@ export default {
           data: JSON.stringify(this.exportData)
         })
       }, waitTime)
-    }
+    },
+    onImportFileChange2 (changeEvent) {
+      let homeHeading = `
+      <html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Home</title>
+        <meta name="identifier" content="i95bef606c8b4f001957aa6848c66310f" />
+        <meta name="editing_roles" content="teachers" />
+        <meta name="workflow_state" content="active" />
+        <meta name="front_page" content="true" />
+      </head>
+      <body>`
+
+      let homeFooter = '</body> </html>'
+
+      this.updateProp('url', this.parseUrl(this.info.url))
+
+      let files = changeEvent.target.files
+      JSZip.loadAsync(files[0]).then((zip) => {
+        console.log(zip)
+        zip.file("wiki_content/home.html", homeHeading + this.$refs.home.returnCode() + homeFooter);
+        zip.generateAsync({type:"blob"})
+        .then((blob) => {
+          saveFile({
+            name: this.info.title + '_export.imscc',
+            data: blob
+          })
+        });
+        // zip.forEach(function (relativePath, zipEntry) {  // 2) print entries
+        // });
+      })
+    },
   }
 }
 </script>
