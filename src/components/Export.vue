@@ -37,6 +37,7 @@
 
     <home-view v-show="false" ref="home"></home-view>
     <syllabus-view v-show="false" ref="syllabus"></syllabus-view>
+    <list-view v-show="false" ref="list"></list-view>
     <div v-for="n in (weeks.length)">
       <week-view v-show="false" :idx="n-1" :ref="'week'+ n"></week-view>
     </div>
@@ -85,6 +86,8 @@ import JSZipUtils from 'jszip-utils'
 import homeView from './render/homeView'
 import syllabusView from './render/syllabusView'
 import weekView from './render/weekView'
+import listView from './render/listView'
+
 import headings from '../store/export-headings'
 
 export default {
@@ -106,7 +109,7 @@ export default {
       }
     },
   },
-  components: {homeView, syllabusView, weekView},
+  components: {homeView, syllabusView, weekView, listView},
   mixins: [mutations],
   mounted () {
   },
@@ -151,6 +154,7 @@ export default {
           JSZip.loadAsync(data).then((zip) => {
             console.log(zip)
             zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
+            zip.file("wiki_content/weekly-activities.html", headings.list + this.$refs.list.returnCode() + footer)
             zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer);
 
             for (let i=1; i <= this.weeks.length; i++){
@@ -158,7 +162,6 @@ export default {
               let iden = '<meta name="identifier" content="' + headings.week_ids[i-1] + '"/>'
               let el = document.getElementById("week-box" + (i-1))
               let code = el.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
-              // console.log(headings.top + title + iden + headings.bottom + code + footer)
               zip.file("wiki_content/week-"+ i +".html", headings.top + title + iden + headings.bottom + code + footer)
             }
 

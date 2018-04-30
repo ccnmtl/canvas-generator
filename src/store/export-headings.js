@@ -18,6 +18,16 @@ export default {
   <title>Syllabus</title>
   </head>
   <body>`,
+  list: `
+  <html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Weekly Activities</title>
+  <meta name="identifier" content="ibde40a47665735d8e854129214e164be"/>
+  <meta name="editing_roles" content="teachers"/>
+  <meta name="workflow_state" content="active"/>
+  </head>
+  <body>`,
   top:
   `<html>
   <head>
