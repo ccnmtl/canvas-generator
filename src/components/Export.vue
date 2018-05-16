@@ -165,6 +165,12 @@ export default {
               zip.file("wiki_content/week-"+ i +".html", headings.top + title + iden + headings.bottom + code + footer)
             }
 
+            let redirect_url = '<lticm:property name="url">' + this.info.url + 'pages/weekly-activities</lticm:property>'
+            console.log(this.info.url)
+            console.log(redirect_url)
+            zip.file("ic0780a1b3ec00e092caacf7b0d3865e4.xml", headings.redirect_top + redirect_url + headings.redirect_bottom)
+
+
             zip.generateAsync({type:"blob"})
             .then((blob) => {
               saveFile({
