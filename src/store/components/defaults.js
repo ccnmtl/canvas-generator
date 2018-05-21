@@ -1,3 +1,5 @@
+// Where the default App info is stored. A good place to see most of the different pieces of data (as the store just deep clones this to reduce redundnacy).
+
 let moment = require ('moment')
 
 export default {

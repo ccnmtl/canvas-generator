@@ -48,37 +48,6 @@
           </span>
         </el-dialog>
 
-    <!-- <el-dialog title="Course Info" :visible.sync="dialogFormVisible">
-      <div class="center">
-        <label for="input"> Course Title <el-input placeholder="Please input" v-model="info.title"></el-input> </label>
-        <label for="input"> Course URL <br> <el-input autosize style="width: 400px" placeholder="Please input" v-model="info.url"></el-input> </label>
-        <label for="select">Class Type <br>
-          <select style="display: inline-block; width:150px" v-model="info.classType" name="Choose Banner" class="uk-select">
-            <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
-          </select>
-        </label>
-        <label for="select">Blended Model
-
-        <el-switch
-          v-model="info.isBlended"
-          active-color="#13ce66"
-          inactive-color="#ff4949">
-        </el-switch>
-        </label>
-        <span style="display:inline-block; width: 100;"> </span>
-
-        <label style="margin-left: 20px;">
-          School:
-          <select style="display: inline-block; width:150px" v-model="theme" name="Choose Banner" class="uk-select">
-            <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
-          </select>
-        </label>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="getStartedModal">Confirm</el-button>
-      </span>
-    </el-dialog> -->
 
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
         <div>
@@ -145,14 +114,6 @@ export default {
   },
   mixins: [saveState, mutations],
   computed: {
-    // info: {
-    //   get () {
-    //     return this.$store.getters.getInfo
-    //   },
-    //   set (payload) {
-    //     this.$store.commit('updateInfo', payload)
-    //   }
-    // },
   },
   methods: {
     getStarted(){
@@ -185,15 +146,6 @@ export default {
       };
     }
   },
-  mounted () {
-    // If it should load all pages on the splash, run the code below
-
-    // let initialPath = this.$route.path
-    // let paths = ['/home', '/weekly', '/weeklylist'].filter(p => p !== initialPath).concat([initialPath])
-    // paths.forEach((path, i) => {
-    //   setTimeout(() => this.$router.replace(path), i * 30)
-    // })
-  }
 
 }
 </script>

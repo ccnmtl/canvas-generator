@@ -1,3 +1,9 @@
+// A mixin which is injected into most components (the properties here, like methods are acessible within the component without having to rewrite)
+// Stores the basic mutation functions to update various properties
+// Also stored commonly used functions like copyText, which is the same on all Components
+
+// TODO Refactor more of the shared functions here (or to a seperate mixin file)
+
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {

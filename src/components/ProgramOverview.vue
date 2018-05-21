@@ -163,12 +163,6 @@
                       style="width: 74px;" v-for="(day, index) in (info.execWeekLength)">
                         {{parseDate((day - 1) + (week - 1) * info.execWeekLength - info.weekOffset)}}
                       </th>
-
-
-
-                      <!-- This line grab dates of first four days, then next four days, etc.. would work if I implemented a seperate start day for each week (possibly better)
-                      <th style="width: 75px;" v-for="i in info.execWeekLength"> {{formatDate(weeks[(day - 1) + (week - 1) * info.execWeekLength].date)}}</th> -->
-
                     </tr>
                   </thead>
                   <tbody>
@@ -260,12 +254,6 @@
       <p>Copyright © Columbia University. All rights reserved.</p>
       </div>
   </div>
-
-  <!-- <p style="font-weight: bold" class="center">Code Output</p>
-
-  <div class="footer">
-    <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea> <br> <br>
-  </div> -->
 
 </div>
 </template>
@@ -384,7 +372,7 @@ export default {
 
       // let tempWeek = this.dWeek
       // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
-      //
+    
       this.addWeek(tempWeek)
     },
     // Adds a user inputted number of activities
