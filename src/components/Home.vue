@@ -142,6 +142,8 @@
     <hr />
 
     <div class="clearfix"></div>
+
+    <!-- Where the code preview is displayed and where you change how the template parses the store info-->
     <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
         <div class="">
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">

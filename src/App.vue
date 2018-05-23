@@ -135,9 +135,12 @@
 
     <!-- If Export Should be Top Level Insert Code Here -->
 
+
+    <!-- Where each router component is loaded when navigated to by a router link -->
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+
   </div>
 </template>
 
