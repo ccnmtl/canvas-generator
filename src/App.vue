@@ -2,9 +2,12 @@
   <div id="app">
 
     <el-row>
+      <!-- Off Canvas Menu Slide -->
       <el-col :span="6" style="padding: 20px;">
         <a href="#offcanvas-slide" class="uk-button uk-button-default noBorder" uk-toggle><span uk-icon="icon: table"></span> &nbsp;Menu</a>
       </el-col>
+
+      <!-- Breadcrumb navigation bar -->
       <el-col :span="12" style="padding: 10px;">
           <ul class="bcTrail center">
             <li><router-link class="router" to="/home">Home</router-link></li>
@@ -15,13 +18,16 @@
             <li><router-link class="router" to="/export">Export</router-link></li>
           </ul>
       </el-col>
+
+      <!-- Top Right Dialog Buttons -->
       <el-col :span="6">
         <div class="uk-float-right uk-padding-small">
           <a href="#" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true">
             <el-button type="primary" style="display: inline-block;">Course Info: <i class="fas fa-cog"></i></el-button>
           </a>
 
-          <!-- <el-dropdown>
+          <!-- New Dropdown, not yet designed
+          <el-dropdown>
             <el-button type="success">
               Code <i class="el-icon-caret-bottom el-icon--right"></i>
             </el-button>
@@ -38,20 +44,6 @@
         </div>
       </el-col>
     </el-row>
-
-    <!--
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/home' }">Home</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/syllabus' }">Syllabus</el-breadcrumb-item>
-      <el-breadcrumb-item v-show="info.classType.option == 'Executive Training'" :to="{ path: '/program' }" >Program Overview</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/weeklylist' }">Weekly List</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/weekly' }" >Individual Activity</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/export' }">Export</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '' }"></el-breadcrumb-item>
-    </el-breadcrumb>
-
-    <a href="#offcanvas-slide" uk-toggle>Open</a>
-    -->
 
     <vue-snotify></vue-snotify>
 
@@ -81,7 +73,6 @@
           <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
           <li v-show="info.classType.option == 'Executive Training'"><router-link class="router" to="/program">Program Overview</router-link></li>
           <li><router-link class="router" to="/weeklylist">Weekly Activites</router-link></li>
-          <!-- <li v-show="info.classType.option !== 'Blended'"><router-link class="router" to="/weekly">Individual Activity</router-link></li> -->
           <li ><router-link class="router" to="/weekly">Individual Activity</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/export">Export/Import Data</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/credits">CREDITS</router-link></li>
@@ -90,7 +81,6 @@
     			<li><a href="https://courseworks2.columbia.edu/" target="_blank">Canvas Website</a></li>
     			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
     		</ul>
-       		<!-- <button class="uk-button uk-button-primary uk-margin-large-top">download the guide</button> -->
         </div>
     </div>
 
@@ -143,22 +133,14 @@
 
     <div class="clearfix"></div>
 
-    <!-- <div class="center routers">
-      <router-link :to="this.$store.state.prevPage">
-      <el-button type="primary" class="nav-button"><i class="el-icon-arrow-left el-icon-left"></i>Previous Page</el-button>
-      </router-link>
-      <span class="nav-text">{{this.$route.name}}</span>
-      <router-link :to="this.$store.state.nextPage">
-      <el-button type="primary" class="nav-button">Next Page<i class="el-icon-arrow-right el-icon-right"></i></el-button>
-      </router-link>
-
-    </div> -->
-
     <!-- If Export Should be Top Level Insert Code Here -->
 
+
+    <!-- Where each router component is loaded when navigated to by a router link -->
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+
   </div>
 </template>
 
@@ -201,22 +183,6 @@ export default {
       body = '<h5>' + path + '</h5>' + body
       return {body, exists: help[path]}
     },
-    // info: {
-    //   get () {
-    //     return this.$store.getters.getInfo
-    //   },
-    //   set (payload) {
-    //     this.$store.commit('updateInfo', payload)
-    //   }
-    // },
-    // theme: {
-    //   get () {
-    //     return this.$store.getters.getTheme
-    //   },
-    //   set (payload) {
-    //     this.$store.commit('updateTheme', payload)
-    //   }
-    // },
   },
   mounted() {
 
@@ -253,11 +219,6 @@ export default {
 html {
   font-size: 100%;
 }
-
-/*.uk-button, .uk-button-small {
-  font-size: 13px;
-  font-weight: bold;
-}*/
 
 .help-bar {
   width: 500px;
@@ -315,8 +276,5 @@ html {
   text-decoration: none;
   color: #39f;
 }
-
-
-
 
 </style>

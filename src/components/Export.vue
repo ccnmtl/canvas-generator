@@ -42,28 +42,6 @@
       <week-view v-show="false" :idx="n-1" :ref="'week'+ n"></week-view>
     </div>
 
-  <!-- <div class="uk-child-width-1-1@s uk-light" uk-grid>
-      <div>
-          <div class="uk-background-primary uk-height-large uk-panel uk-text-center">
-             <p>&nbsp;</p>
-             <p>&nbsp;</p>
-
-             <form>
-               <h3>Select a ".json" file from a previous data export</h3>
-               <button class="uk-button uk-button-default" v-if="hasImportData" @click.prevent="performImport">
-                 File read successfully! Click here to confirm import.
-               </button>
-               <div class="uk-margin" uk-margin>
-                  <input style="display:inline-block;" class="uk-padding" type="file" accept=".json" name="import-file" @change="onImportFileChange" />
-                  <br> <br>
-                  <button class="uk-button-large uk-button-default" type="button" name="button" @click="exportJSON">Export</button>
-               </div>
-             </form>
-
-          </div>
-      </div>
-  </div> -->
-
   <div class="clearfix"></div>
 
   <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
@@ -191,23 +169,12 @@ export default {
     },
     exportJSON () {
       this.exportData = {}
-      // EventBus.$emit('export-data')
       this.exportDataIfPossible()
     },
     exportDataIfPossible () {
       console.log("here")
-      // only export if all data to arrived
-      // let valid = this.exportData.home && this.exportData.weekly && this.exportData.weeklyList && this.exportData.syllabus
+
       let waitTime = 0;
-
-      // if rough export is selected wait a short amount of time for all data to come in
-      // currently not used as all routes are cycled when app is mounted
-
-      // if (document.getElementById("rough-export").checked){
-      //   console.log('waiting..')
-      //   valid = true;
-      //   waitTime = 300;
-      // }
 
       let today = new Date();
       let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();

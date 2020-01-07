@@ -4,17 +4,6 @@
 
   <hr>
 
-  <!-- <el-dropdown style="right:15 px;margin-left: 90%; margin-bottom: 10px">
-    <el-button type="success">
-      Modify Code <i class="el-icon-caret-bottom el-icon--right"></i>
-    </el-button>
-    <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item><i class="fas fa-code"></i> View the code</el-dropdown-item>
-      <el-dropdown-item><i class="fas fa-copy"></i> Copy the code</el-dropdown-item>
-      <el-dropdown-item><i class="fas fa-exclamation-triangle"></i> Reset to default</el-dropdown-item>
-    </el-dropdown-menu>
-  </el-dropdown> -->
-
   <div class="code-container">
 
     <div class="textbox-container">
@@ -391,22 +380,6 @@ export default {
   computed: {
     ...mapGetters(["getInfo", "dProf", "dTA", 'getWeeks']),
 
-    // info: {
-    //   get() {
-    //     return this.$store.getters.getInfo;
-    //   },
-    //   set(payload) {
-    //     this.$store.commit("updateInfo", payload);
-    //   }
-    //},
-    // weeks: {
-    //   get() {
-    //     return this.getWeeks;
-    //   },
-    //   set(payload) {
-    //     this.$store.commit("updateWeeks", payload);
-    //   }
-    // }
   },
   methods: {
     formatDate(date){

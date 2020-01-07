@@ -1,3 +1,5 @@
+// Utility to help with undo/redo but never implemented
+
 
 import _ from 'lodash'
 function deepEquals(o1, o2) { return JSON.stringify(o1) === JSON.stringify(o2) }

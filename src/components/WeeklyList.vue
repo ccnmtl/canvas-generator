@@ -174,10 +174,6 @@
       </div>
   </div>
 
-  <!-- <p style="font-weight: bold" class="center">Code Output</p>
-  <div class="footer">
-    <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea> <br> <br>
-  </div> -->
 
 </div>
 </template>

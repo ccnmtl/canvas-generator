@@ -3,15 +3,6 @@
 
     <!-- This Div contains all of the information inputs -->
     <!-- Currently it uses a component from the Element UI library for the tabs -->
-    <!-- <div class="center routers">
-      <router-link to="/">
-      <el-button type="primary" class="nav-button"><i class="el-icon-arrow-left el-icon-left"></i>Previous Page</el-button>
-      </router-link>
-      <span class="nav-text">Home Template</span>
-      <router-link to="/syllabus">
-      <el-button type="primary" class="nav-button">Next Page<i class="el-icon-arrow-right el-icon-right"></i></el-button>
-      </router-link>
-    </div> -->
 
     <div class="clearfix"></div>
 
@@ -32,18 +23,6 @@
     :disabled="!info.usePops"
     content="The course url is necessary to properly link other pages to your canvas site. Please double check it is correct before copying to canvas.">
     </el-popover>
-
-    <!-- <el-dropdown style="right: 15px; top: 125px;
-    position:absolute; ">
-      <el-button type="success">
-        Modify Code <i class="el-icon-caret-bottom el-icon--right"></i>
-      </el-button>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item><i class="fas fa-code"></i> View the code</el-dropdown-item>
-        <el-dropdown-item><i class="fas fa-copy"></i> Copy the code</el-dropdown-item>
-        <el-dropdown-item><i class="fas fa-exclamation-triangle"></i> Reset to default</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown> -->
 
     <div>
     	<ul class="uk-tab uk-flex-center" data-uk-tab="{connect:'#tab-content'}">
@@ -131,7 +110,7 @@
               <el-checkbox v-if="theme.wide" v-model="info.wideBanner" @input="updateProp('wideBanner', $event)" >Use Wide Banner</el-checkbox>
           </label>
 
-          <!-- Old Logo select -- may need for independant banner switching -->
+          <!-- Old Logo select; may need for independant banner switching -->
           <!-- <label>
             Logo Image:
             <select style="display: inline-block; width:150px" v-model="theme.logo" name="Choose Logo" class="uk-select">
@@ -142,6 +121,7 @@
             </select>
           </label> -->
           <!-- <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input uk-input" rows="1" cols="50"></textarea> -->
+
     		</li>
         <li class="uk-text-center">
           Syllabus Button
@@ -162,6 +142,8 @@
     <hr />
 
     <div class="clearfix"></div>
+
+    <!-- Where the code preview is displayed and where you change how the template parses the store info-->
     <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
         <div class="">
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
@@ -261,8 +243,6 @@
 </template>
 
 <script>
-// For testing we remove localstorage -- take line out for build
-// localStorage.clear();
 
 import { EventBus } from '../bus'
 import saveState from 'vue-save-state';
@@ -283,7 +263,6 @@ export default {
   name: 'Home',
   data () {
     return {
-      // info: this.$store.getters.getInfo,
       userInput: {
         themeOptions: this.$store.getters.getThemeOptions,
         semester: "U6411 // SPRING 2017",
@@ -315,11 +294,6 @@ export default {
     quillEditor, homeView
   },
   mixins: [saveState, mutations],
-  // watch: {
-  //   info: function(payload){
-  //     this.$store.commit('updateInfo', payload)
-  //   }
-  // },
   computed: {
     // Parses an inputted video link to output the correct embed link for the source
     videoLink(){

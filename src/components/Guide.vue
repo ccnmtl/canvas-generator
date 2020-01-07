@@ -108,14 +108,6 @@ export default {
   },
   mixins: [saveState, mutations],
   computed: {
-    // info: {
-    //   get () {
-    //     return this.$store.getters.getInfo
-    //   },
-    //   set (payload) {
-    //     this.$store.commit('updateInfo', payload)
-    //   }
-    // },
   },
   methods: {
     getStarted(){
@@ -149,13 +141,6 @@ export default {
     }
   },
   mounted () {
-    // If it should load all pages on the splash, run the code below
-
-    // let initialPath = this.$route.path
-    // let paths = ['/home', '/weekly', '/weeklylist'].filter(p => p !== initialPath).concat([initialPath])
-    // paths.forEach((path, i) => {
-    //   setTimeout(() => this.$router.replace(path), i * 30)
-    // })
   }
 
 }

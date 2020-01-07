@@ -12,10 +12,6 @@ import VueResource from 'vue-resource'
 import Snotify from 'vue-snotify'
 import 'vue-snotify/styles/material.css'
 import VueTippy from 'vue-tippy'
-
-//import Vuetify from 'vuetify'
-//import 'vuetify/dist/vuetify.min.css'
-
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css' // Use this OR theme chalk in index.html
 import locale from 'element-ui/lib/locale/lang/en'

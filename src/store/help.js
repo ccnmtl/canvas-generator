@@ -1,3 +1,5 @@
+// Stores the help text for each page
+
 export default {
   "Home Template":
   `
