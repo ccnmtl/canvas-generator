@@ -6,6 +6,7 @@ import _ from 'lodash'
 
 import defaults from './components/defaults'
 import theme from './components/theme'
+import cases from './components/cases'
 
 const vuexLocal = new VuexPersistence({
     storage: window.localStorage
@@ -77,7 +78,8 @@ export default new Vuex.Store({
   },
   modules: {
     defaults,
-    theme
+    theme,
+    cases
   },
   plugins: [createPersistedState()]
 })

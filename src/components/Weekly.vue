@@ -5,7 +5,7 @@
   <hr>
 
   <div class="code-container">
-
+    
     <div class="textbox-container">
       <el-select v-model="selected" placeholder="Select" style="margin-right: 100px; margin-left:100px; margin-bottom:10px; width: 150px;">
         <el-option
@@ -48,6 +48,14 @@
 
       </div>
       </transition>
+
+      <el-cascader
+        v-model="selectedCase"
+        :options="caseOptions"
+        @change="handleChange"
+        size="large">
+      </el-cascader>
+
 
 
       <!-- This is a seperate component to handle adding new Acitivity Page elements abstractly. For more information check the WeeklyCodeModule.vue file. -->
@@ -114,6 +122,8 @@
 
       <!-- The videos, discussions, and assignments are all built into their own smaller components to keep it more organized
       They are WeeklyDiscussion.vue, WeeklyAssignment.vue, and WeeklyVideo.vue respectively. -->
+
+
       <weekly-video  v-for="(video, index) in weeks[selected].videos" :data="video" :index="index+1" :key="video.source"> </weekly-video>
 
       <transition name="fade">
@@ -231,8 +241,30 @@ export default {
   mixins: [ mutations],
   computed: {
     ...mapGetters([
-      'getInfo', 'dWeek', 'getWeeks'
+      'getInfo', 'dWeek', 'getWeeks', 'getCases'
     ]),
+    caseOptions(){
+
+      let cases = this.getCases
+      let options = []
+
+      cases.forEach(function(category, i){
+        options[i] = {
+          value: category.category,
+          label: category.category,
+          children:[]
+        }
+
+        category.cases.forEach(function(caseChild, j){
+          options[i].children[j] = {
+            value: caseChild.name,
+            label: caseChild.name
+          }
+        })
+      })
+
+      return options
+    },
   },
   methods: {
     addVideo() {
