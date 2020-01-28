@@ -252,6 +252,10 @@ import _ from 'lodash'
 import mutations from '../store/mutations'
 import homeView from './render/homeView'
 
+import xml2js from 'xml2js'
+import JSZip from 'jszip'
+import JSZipUtils from 'jszip-utils'
+
 var toolbarOptions = [
   ['bold', 'italic', 'underline'],
   ['blockquote',{ 'list': 'ordered'}, { 'list': 'bullet' }],
@@ -380,6 +384,53 @@ export default {
   mounted(){
     // Once the component is loaded, update the code text box
     this.updateCode();
+    
+    JSZipUtils.getBinaryContent('static/files/weekly-template.imscc', (err, data) => {
+      if(err) {
+          throw err; // or handle err
+      }
+
+
+
+      JSZip.loadAsync(data).then((zip) => {
+        zip.file('imsmanifest.xml').async("string").then(function (data){
+        let parser = new DOMParser();
+        let manifest = parser.parseFromString(data, "text/xml")
+
+        let resources = manifest.getElementsByTagName("resources")
+        let sampleResource = manifest.getElementsByTagName("resource")[0]
+        let file = sampleResource.getElementsByTagName('file')
+
+        console.log(sampleResource)
+
+        // let builder = new xml2js.Builder();
+
+        // xml2js.parseString(manifest, function (err, result) {
+        //     //result.questestinterop.assessment[0].$.ident = 'ccb-q2'
+        //     //result.questestinterop.assessment[0].$.title = 'Quiz 2'
+        //     //console.log(result.questestinterop.assessment[0].$.ident); // Output: Hello world!
+
+        //     console.log(result.manifest.resources[0].resource[0])
+
+        //     //var newxml = builder.buildObject(result);
+        //     //console.log(newxml)
+        // });
+        })
+
+      });
+      })
+
+      // function addResource(xml, iden, type="page", link, use=""){
+      //   let resource = xml.createElement("resource");
+      //   resource.setAttribute("identifier", iden);
+
+      //   switch(type){
+      //     case 
+      //   }
+
+      // }
+
+
   },
   beforeCreate(){
     EventBus.$on('import-data', data => {
