@@ -15,11 +15,16 @@ import VueTippy from 'vue-tippy'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css' // Use this OR theme chalk in index.html
 import locale from 'element-ui/lib/locale/lang/en'
+import VueSelectImage from 'vue-select-image'
+require('vue-select-image/dist/vue-select-image.css')
+
 
 Vue.use(VueResource);
 Vue.use(Snotify);
 Vue.use(ElementUI, { locale })
 Vue.use(VueTippy)
+Vue.use(VueSelectImage)
+
 
 /* eslint-disable no-new */
 new Vue({

@@ -4,6 +4,26 @@
 
   <hr>
 
+  <div id="case-slide" uk-offcanvas="">
+      <div class="uk-offcanvas-bar help-bar">
+         <button class="uk-offcanvas-close" type="button" uk-close></button>
+         <h3>Add Case</h3>
+        
+        <el-cascader
+            v-model="selectedCase"
+            :options="caseOptions"
+            @change="handleChange"
+            size="large">
+          </el-cascader>
+
+          <vue-select-image :dataImages="dataImages"
+                  :is-multiple="true"
+                  :selectedImages="initialSelected"
+                  @onselectmultipleimage="onSelectMultipleImage">
+          </vue-select-image>
+     </div>
+  </div>
+
   <div class="code-container">
     
     <div class="textbox-container">
@@ -49,14 +69,6 @@
       </div>
       </transition>
 
-      <el-cascader
-        v-model="selectedCase"
-        :options="caseOptions"
-        @change="handleChange"
-        size="large">
-      </el-cascader>
-
-
 
       <!-- This is a seperate component to handle adding new Acitivity Page elements abstractly. For more information check the WeeklyCodeModule.vue file. -->
       <weekly-code-module
@@ -92,6 +104,12 @@
         Assignment
       </weekly-code-module>
 
+      <hr>
+
+      <a href="#case-slide" uk-toggle>
+        <el-button  class="center" size="large" style="display: inline-block;"> Add Case <i class="fas fa-info-circle"></i></el-button>
+      </a>
+  
 
     </div>
 
@@ -228,7 +246,16 @@ export default {
         modules: {
           toolbar: toolbarOptions
         }
-      }
+      },
+      dataImages: [{
+        id: '1',
+        src: 'https://unsplash.it/150?random',
+        alt: 'Alt Image 1'
+      }, {
+        id: '2',
+        src: 'https://unsplash.it/150?random',
+        alt: 'Alt Image 2'
+      }]
     }
   },
   components: {
