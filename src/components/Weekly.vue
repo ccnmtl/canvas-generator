@@ -5,23 +5,104 @@
   <hr>
 
   <div id="case-slide" uk-offcanvas="">
-      <div class="uk-offcanvas-bar help-bar">
-         <button class="uk-offcanvas-close" type="button" uk-close></button>
-         <h3>Add Case</h3>
-        
-        <el-cascader
-            v-model="selectedCase"
-            :options="caseOptions"
-            @change="handleChange"
-            size="large">
-          </el-cascader>
+    <div class="uk-offcanvas-bar home-bar">
+      <button class="uk-offcanvas-close" type="button" uk-close></button>
+      <h3>Add Case</h3>
 
-          <vue-select-image :dataImages="dataImages"
-                  :is-multiple="true"
-                  :selectedImages="initialSelected"
-                  @onselectmultipleimage="onSelectMultipleImage">
-          </vue-select-image>
-     </div>
+      <el-cascader v-model="selectedCase" :options="caseOptions" @change="handleChange" size="large">
+      </el-cascader>
+
+
+      <div class="STV1_SlimBanner">
+        <p>PICKER CENTER CASE COLLECTION</p>
+      </div>
+      <div class="pad-box-mini">
+        <h3 style="margin-bottom: 15px;"><i class="icon-folder"></i> CITY MANAGEMENT &amp; URBANIZATION CASES</h3>
+      </div>
+      <div class="content-box">
+        <div class="grid-row top-xs">
+          <div class="col-xs-4">
+            <div class="styleguide-section__grid-demo-element">
+              <a @click="addCase(1)"> <img class="weeklyIconImg"
+                  src="https://courseworks2.columbia.edu/courses/44225/files/1256295/preview"
+                  data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/files/1256295"
+                  data-api-returntype="File" /> </a></div>
+          </div>
+          <div class="col-xs-8">
+            <div class="styleguide-section__grid-demo-element">
+              <div class="welcome"><i class="icon-search"></i>&nbsp;Big Data for Public Safety</div>
+              <p>Case that examines the use of "Big Data" and technology in the delivery of city services in NY.
+                Includes interviews with Senior officials, including NYPD Police Commissioner William Bratton and
+                others.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-box">
+        <div class="grid-row top-xs">
+          <div class="col-xs-4">
+            <div class="styleguide-section__grid-demo-element"><a @click="addCase(2)">  <img class="weeklyIconImg"
+                  src="https://courseworks2.columbia.edu/courses/44225/files/1256296/preview"
+                  data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/files/1256296"
+                  data-api-returntype="File" /> </a></div>
+          </div>
+          <div class="col-xs-8">
+            <div class="styleguide-section__grid-demo-element">
+              <div class="welcome"><i class="icon-search"></i>&nbsp;City Services Across Brazil</div>
+              <p>New case focused on government innovation on the local city level. Our case will look at how outside
+                private sector consultants and provide a "Boot camp" for local government officials of medium to small
+                size cities, allowing them to apply "best practices" in a variety of areas to improve local services.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-box">
+        <div class="grid-row top-xs">
+          <div class="col-xs-4">
+            <div class="styleguide-section__grid-demo-element"><a
+                href="https://courseworks2.columbia.edu/courses/44225/pages/cu003"
+                data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/pages/cu003"
+                data-api-returntype="Page"> <img class="weeklyIconImg"
+                  src="https://courseworks2.columbia.edu/courses/44225/files/1256297/preview"
+                  data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/files/1256297"
+                  data-api-returntype="File" /> </a></div>
+          </div>
+          <div class="col-xs-8">
+            <div class="styleguide-section__grid-demo-element">
+              <div class="welcome"><i class="icon-search"></i> Smart City Technology in Rio</div>
+              <p>With an investment of over $50 million, Rio created what many call the world&rsquo;s most advanced
+                digital control center. This case explores how cop cameras, mapping of favelas and other initiatives are
+                turning Rio&rsquo;s problems into ones and zeros, and using this information to refocus city services.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-box">
+        <div class="grid-row top-xs">
+          <div class="col-xs-4">
+            <div class="styleguide-section__grid-demo-element"><a
+                href="https://courseworks2.columbia.edu/courses/44225/pages/cu004"
+                data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/pages/cu004"
+                data-api-returntype="Page"> <img class="weeklyIconImg"
+                  src="https://courseworks2.columbia.edu/courses/44225/files/1256298/preview"
+                  data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/files/1256298"
+                  data-api-returntype="File" /> </a></div>
+          </div>
+          <div class="col-xs-8">
+            <div class="styleguide-section__grid-demo-element">
+              <div class="welcome"><i class="icon-search"></i> Tortoise or Hare? Fundaci&oacute;n Carvajal and
+                Buenaventura</div>
+              <p>This case brings readers into the world of nonprofit social development. Fundaci&oacute;n Carvajal (FC)
+                decides in 2011 to expand operations beyond familiar territory to the port city of Buenaventura,
+                Colombia. As the program director prepares the ground for this new project, he faces the challenge of
+                being asked to accelerate a baseline survey by shortcutting trust-building activities.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="code-container">
@@ -109,6 +190,7 @@
       <a href="#case-slide" uk-toggle>
         <el-button  class="center" size="large" style="display: inline-block;"> Add Case <i class="fas fa-info-circle"></i></el-button>
       </a>
+        <el-button  @click="updateWeek(selected,'cases', [])" class="center" size="large" type="danger" style="display: inline-block;"> Clear Cases <i class="fas fa-trash"></i></el-button>
   
 
     </div>
@@ -151,6 +233,14 @@
           <weekly-discussion  v-for="(disc, index) in weeks[selected].discussions" :data="disc" :index="index+1" :key="disc.link"> </weekly-discussion>
           <weekly-assignment  v-for="(assign, index) in weeks[selected].assignments" :data="assign" :index="index+1" :key="assign.link"> </weekly-assignment>
           </ul>
+        </div>
+      </div>
+    </transition>
+
+    <transition name="fade">
+      <div class="item-group-container" style="padding-bottom: 0;" v-if="weeks[selected].cases.length > 0">
+        <div class="item-group-condensed">
+          {{weeks[selected].cases}}
         </div>
       </div>
     </transition>
@@ -294,6 +384,19 @@ export default {
     },
   },
   methods: {
+    addCase(id){
+      console.log(id)
+      let cases = this.getCases
+      let arr = _.cloneDeep(this.weeks[this.selected].cases)
+      cases.forEach(function(category){
+        let newCase = category.cases.filter(item => item.id == id)
+        console.log(newCase)
+        if(!arr.includes(newCase)) arr.push(newCase)
+      })
+
+      this.updateWeek(this.selected,'cases',arr)
+
+    },
     addVideo() {
       let tempVideo = {
         title: "All that Glitters is not Gold (18 minutes)",
@@ -387,6 +490,10 @@ h2 {
 
 textarea {
   width: auto;
+}
+
+.home-bar{
+  width: 40vw;
 }
 
 .code-module {

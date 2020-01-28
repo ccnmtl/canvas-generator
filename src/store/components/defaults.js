@@ -86,6 +86,7 @@ export default {
       videos: [],
       discussions: [],
       assignments: [],
+      cases: [],
       secondTitle: "",
     },
     videoDefault: {
