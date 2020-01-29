@@ -31,7 +31,7 @@
     		<li><a href="#">Professor</a></li>
     		<li v-if="info.tas.length > 0"><a href="#">TA</a></li>
     		<li><a href="#">Meeting Times</a></li>
-    		<li><a href="#">Media Input</a></li>
+    		<li><a href="#">Video / Photo</a></li>
         <li><a href="#">Banner</a></li>
         <li><a href="#">Buttons</a></li>
     	</ul>

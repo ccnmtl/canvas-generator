@@ -32,9 +32,9 @@
           </div>
           <div class="col-xs-8">
             <div class="styleguide-section__grid-demo-element">
-              <div class="welcome"><i class="icon-search"></i>&nbsp;{{caseStudy.name}} 
+              <div class="welcome" style="height:50px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}} 
               <el-button @click="removeCase(caseStudy)" size="small" type="danger" style="float: right;">Remove Case</el-button>
-              <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right;">Add Case</el-button></div>
+              <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right; margin-right: 5px">Add Case</el-button></div>
               <p>{{caseStudy.shortDescription}}</p>
             </div>
           </div>
@@ -502,7 +502,7 @@ textarea {
 }
 
 .home-bar {
-  width: 40vw;
+  width: 45vw;
 }
 
 .code-module {
