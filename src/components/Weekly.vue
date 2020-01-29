@@ -58,7 +58,7 @@
         </el-option>
       </el-select>
 
-      <el-input autosize class="code-input" style="width: 400px" placeholder="Please input week title" v-model="weeks[selected].title"
+      <el-input autosize class="code-input" style="width: 400px" placeholder="Please input week title" :value="weeks[selected].title"
         @input="updateWeek(selected,'title', $event)"></el-input>
       <!-- <button type="button" name="button" class="uk-button uk-button-primary" @click="setToDefault">Reset to Default</button> -->
       <button type="button" name="button" class="show-editor center uk-button uk-button-primary" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
@@ -74,11 +74,13 @@
         </el-alert>
 
         <div class="quill">
-          <quill-editor ref="myTextEditor"
+          <!-- <quill-editor ref="myTextEditor"
                         v-model="weeks[selected].body"
                         @input="updateWeek(selected,'body', $event)"
                         :config="editorOption">
-          </quill-editor>
+          </quill-editor> -->
+
+          <ckeditor :editor="editor" @input="updateWeek(selected,'body', $event)" :value="weeks[selected].body" :config="editorConfig"></ckeditor>
         </div>
 
         <!-- <div class="quill">
@@ -291,6 +293,7 @@ import { mapGetters, mapMutations } from "vuex";
 import mutations from "../store/mutations";
 import { EventBus } from "../bus";
 import { quillEditor } from "vue-quill-editor";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import WeeklyCodeModule from "./weekly/WeeklyCodeModule";
 import WeeklyVideo from "./weekly/WeeklyVideo";
 import WeeklyDiscussion from "./weekly/WeeklyDiscussion";
@@ -334,23 +337,13 @@ export default {
       discussions: [],
       assignments: [],
       outputCode: "",
+      editor: ClassicEditor,
+      editorConfig: {},
       editorOption: {
         modules: {
           toolbar: toolbarOptions
         }
-      },
-      dataImages: [
-        {
-          id: "1",
-          src: "https://unsplash.it/150?random",
-          alt: "Alt Image 1"
-        },
-        {
-          id: "2",
-          src: "https://unsplash.it/150?random",
-          alt: "Alt Image 2"
-        }
-      ]
+      }
     };
   },
   components: {
@@ -446,10 +439,21 @@ export default {
     },
     setToDefault() {
       console.log("resetting data...");
-      this.userInput = { ...this.$store.getters.dWeekly };
-      this.weeks[this.selected].videos = this.weeks[
-        this.selected
-      ].assignments = this.weeks[this.selected].discussions = [];
+      let dWeek = _.cloneDeep(this.$store.getters.dWeek);
+      let props = [
+        "description",
+        "title",
+        "body",
+        "required",
+        "videos",
+        "discussions",
+        "assignments",
+        "cases"
+      ];
+
+      props.forEach(prop => {
+        this.updateWeek(this.selected, prop, dWeek[prop]);
+      });
     },
     getSaveStateConfig() {
       return {
