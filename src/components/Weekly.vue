@@ -3,105 +3,45 @@
   <div id="weeklylist">
 
   <hr>
-
+  
   <div id="case-slide" uk-offcanvas="">
     <div class="uk-offcanvas-bar home-bar">
       <button class="uk-offcanvas-close" type="button" uk-close></button>
       <h3>Add Case</h3>
 
-      <el-cascader v-model="selectedCase" :options="caseOptions" @change="handleChange" size="large">
-      </el-cascader>
+      <!-- <el-cascader v-model="selectedCase" :options="caseOptions" @change="handleChange" size="large">
+      </el-cascader> -->
 
 
       <div class="STV1_SlimBanner">
         <p>PICKER CENTER CASE COLLECTION</p>
       </div>
+
+      <div v-for="category in getCases">
       <div class="pad-box-mini">
-        <h3 style="margin-bottom: 15px;"><i class="icon-folder"></i> CITY MANAGEMENT &amp; URBANIZATION CASES</h3>
+        <h3 style="margin-bottom: 15px;"><i class="icon-folder"></i> {{category.category}}</h3>
       </div>
-      <div class="content-box">
+
+      <div v-for="caseStudy in category.cases" class="content-box">
         <div class="grid-row top-xs">
           <div class="col-xs-4">
             <div class="styleguide-section__grid-demo-element">
-              <a @click="addCase(1)"> <img class="weeklyIconImg"
-                  src="https://courseworks2.columbia.edu/courses/44225/files/1256295/preview"
-                  data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/files/1256295"
-                  data-api-returntype="File" /> </a></div>
+              <a @click="addCase(caseStudy)">
+                 <img class="weeklyIconImg" :src="caseStudy.thumbnail"/> </a>
+            </div>
           </div>
           <div class="col-xs-8">
             <div class="styleguide-section__grid-demo-element">
-              <div class="welcome"><i class="icon-search"></i>&nbsp;Big Data for Public Safety</div>
-              <p>Case that examines the use of "Big Data" and technology in the delivery of city services in NY.
-                Includes interviews with Senior officials, including NYPD Police Commissioner William Bratton and
-                others.</p>
+              <div class="welcome"><i class="icon-search"></i>&nbsp;{{caseStudy.name}} 
+              <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right;">Add Case</el-button></div>
+              <p>{{caseStudy.shortDescription}}</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="content-box">
-        <div class="grid-row top-xs">
-          <div class="col-xs-4">
-            <div class="styleguide-section__grid-demo-element"><a @click="addCase(2)">  <img class="weeklyIconImg"
-                  src="https://courseworks2.columbia.edu/courses/44225/files/1256296/preview"
-                  data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/files/1256296"
-                  data-api-returntype="File" /> </a></div>
-          </div>
-          <div class="col-xs-8">
-            <div class="styleguide-section__grid-demo-element">
-              <div class="welcome"><i class="icon-search"></i>&nbsp;City Services Across Brazil</div>
-              <p>New case focused on government innovation on the local city level. Our case will look at how outside
-                private sector consultants and provide a "Boot camp" for local government officials of medium to small
-                size cities, allowing them to apply "best practices" in a variety of areas to improve local services.
-              </p>
-            </div>
-          </div>
-        </div>
+
       </div>
-      <div class="content-box">
-        <div class="grid-row top-xs">
-          <div class="col-xs-4">
-            <div class="styleguide-section__grid-demo-element"><a
-                href="https://courseworks2.columbia.edu/courses/44225/pages/cu003"
-                data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/pages/cu003"
-                data-api-returntype="Page"> <img class="weeklyIconImg"
-                  src="https://courseworks2.columbia.edu/courses/44225/files/1256297/preview"
-                  data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/files/1256297"
-                  data-api-returntype="File" /> </a></div>
-          </div>
-          <div class="col-xs-8">
-            <div class="styleguide-section__grid-demo-element">
-              <div class="welcome"><i class="icon-search"></i> Smart City Technology in Rio</div>
-              <p>With an investment of over $50 million, Rio created what many call the world&rsquo;s most advanced
-                digital control center. This case explores how cop cameras, mapping of favelas and other initiatives are
-                turning Rio&rsquo;s problems into ones and zeros, and using this information to refocus city services.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="content-box">
-        <div class="grid-row top-xs">
-          <div class="col-xs-4">
-            <div class="styleguide-section__grid-demo-element"><a
-                href="https://courseworks2.columbia.edu/courses/44225/pages/cu004"
-                data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/pages/cu004"
-                data-api-returntype="Page"> <img class="weeklyIconImg"
-                  src="https://courseworks2.columbia.edu/courses/44225/files/1256298/preview"
-                  data-api-endpoint="https://courseworks2.columbia.edu/api/v1/courses/44225/files/1256298"
-                  data-api-returntype="File" /> </a></div>
-          </div>
-          <div class="col-xs-8">
-            <div class="styleguide-section__grid-demo-element">
-              <div class="welcome"><i class="icon-search"></i> Tortoise or Hare? Fundaci&oacute;n Carvajal and
-                Buenaventura</div>
-              <p>This case brings readers into the world of nonprofit social development. Fundaci&oacute;n Carvajal (FC)
-                decides in 2011 to expand operations beyond familiar territory to the port city of Buenaventura,
-                Colombia. As the program director prepares the ground for this new project, he faces the challenge of
-                being asked to accelerate a baseline survey by shortcutting trust-building activities.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </div>
   </div>
 
@@ -238,9 +178,63 @@
     </transition>
 
     <transition name="fade">
-      <div class="item-group-container" style="padding-bottom: 0;" v-if="weeks[selected].cases.length > 0">
-        <div class="item-group-condensed">
-          {{weeks[selected].cases}}
+      <div  v-if="weeks[selected].cases.length > 0">
+
+        <div v-for="caseStudy in weeks[selected].cases">
+        <div class="STV1_SlimBanner">
+          <p>PICKER CENTER CASE COLLECTION</p>
+        </div>
+        <div class="content-box">
+          <div class="grid-row">
+            <div class="col-xs-12 col-md-12 col-lg-6">
+              <div class="styleguide-section__grid-demo-element">
+                <div class="embed-container"><iframe :src="caseStudy.videoCase" width="300" height="150"
+                    allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen"
+                    mozallowfullscreen="mozallowfullscreen"></iframe></div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-12 col-lg-6">
+              <div class="styleguide-section__grid-demo-element">
+                <h3 style="margin-bottom: 5px; margin-top: 0;"><i class="icon-folder"></i>&nbsp;{{caseStudy.name}}</h3>
+                <p>{{caseStudy.description}}</p>
+               <a class="instructure_file_link instructure_scribd_file" title="Case Study"
+                    :href="caseStudy.writtenCase"
+                    :data-api-endpoint="caseStudy.writtenCase"
+                    data-api-returntype="File"><button>Case Study Document</button></a> <a class="instructure_file_link instructure_scribd_file"
+                    title="Original Documents"
+                    :href="caseStudy.originalDocuments"
+                    :data-api-endpoint="caseStudy.originalDocuments"
+                    data-api-returntype="File"><button>Original Documents</button></a> <a class="instructure_file_link instructure_scribd_file"
+                    title="Transcripts"
+                    :href="caseStudy.transcripts"
+                    :data-api-endpoint="caseStudy.transcripts"
+                    data-api-returntype="File"><button>Transcripts</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="caseStudy.aditionalInterviews.length > 0">
+        <div class="content-box">
+          <div class="grid-row">
+            <div class="col-xs-12 col-lg-12">
+              <div class="styleguide-section__grid-demo-element">
+                <div class="STV1_Welcome">ADDITIONAL INTERVIEWS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-box">
+          <div class="grid-row">
+            <div class="col-xs-12 col-lg-4" v-for="interview in caseStudy.aditionalInterviews">
+              <div class="styleguide-section__grid-demo-element">
+                <div class="embed-container"><iframe :src="interview" width="300" height="150"
+                    allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen"
+                    mozallowfullscreen="mozallowfullscreen"></iframe></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
         </div>
       </div>
     </transition>
@@ -292,27 +286,31 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-import mutations from '../store/mutations'
-import { EventBus } from '../bus'
-import { quillEditor } from 'vue-quill-editor';
-import WeeklyCodeModule from './weekly/WeeklyCodeModule'
-import WeeklyVideo from './weekly/WeeklyVideo'
-import WeeklyDiscussion from './weekly/WeeklyDiscussion'
-import WeeklyAssignment from './weekly/WeeklyAssignment'
-import saveState from 'vue-save-state';
-import Home from './Home'
+import { mapGetters, mapMutations } from "vuex";
+import mutations from "../store/mutations";
+import { EventBus } from "../bus";
+import { quillEditor } from "vue-quill-editor";
+import WeeklyCodeModule from "./weekly/WeeklyCodeModule";
+import WeeklyVideo from "./weekly/WeeklyVideo";
+import WeeklyDiscussion from "./weekly/WeeklyDiscussion";
+import WeeklyAssignment from "./weekly/WeeklyAssignment";
+import saveState from "vue-save-state";
+import Home from "./Home";
 
 var toolbarOptions = [
-  ['bold', 'italic', 'underline'],
-  ['blockquote', {
-    'list': 'ordered'
-  }, {
-    'list': 'bullet'
-  }],
-  [{ 'indent': '-1'}, { 'indent': '+1' }],
-  [{ 'script': 'sub'}, { 'script': 'super' }],
-  ['link', 'clean']
+  ["bold", "italic", "underline"],
+  [
+    "blockquote",
+    {
+      list: "ordered"
+    },
+    {
+      list: "bullet"
+    }
+  ],
+  [{ indent: "-1" }, { indent: "+1" }],
+  [{ script: "sub" }, { script: "super" }],
+  ["link", "clean"]
 ];
 
 export default {
@@ -321,9 +319,12 @@ export default {
     return {
       userInput: {
         videoNumber: 1,
-        weekTitle: 'WEEK 1: Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective',
-        description: "We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss “The Big Picture,” starting with the historical context of the current global food system, including the “Green Revolution.” Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.",
-        required:'<span ><p><strong>Lecture Slides:</strong></p><p><strong>Download PDF:&nbsp;</strong><a href="https://courseworks2.columbia.edu/courses/29191/files/1032282/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">GFS Week 6 Africa (February 21, 2017) Final.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></p><p><strong>Required Readings / Viewings:</strong></p><ul><li>Sanchez, P.A. (2002) Soil fertility and hunger in Africa.&nbsp;<em>Science&nbsp;</em><strong>295</strong>: 2019-2020.</li><li>Download PDF:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/929036/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">Soil_Fertility_and_Hunger_in_Africa_2002.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li><li><strong>Familiarize yourself with the work of the Alliance for an African Green Revolution (AGRA):&nbsp;</strong><a href="http://www.agra.org/" target="_blank" style="color: rgb(0, 142, 226);">http://www.agra.org/&nbsp;(Links to an external site.)</a></li></ul><p><strong>Supplementary Resources</strong></p><ul><li>Listen: --“African Land Fertile Ground for Crops and Investors.” NPR. June 15, 2012.&nbsp;<a href="http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors" target="_blank" style="color: rgb(0, 142, 226);">http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors&nbsp;(Links to an external site.)</a></li><li>Download mp3:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/1009373/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">20120615_atc_06.mp3<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li></ul></span>',
+        weekTitle:
+          "WEEK 1: Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
+        description:
+          "We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss “The Big Picture,” starting with the historical context of the current global food system, including the “Green Revolution.” Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.",
+        required:
+          '<span ><p><strong>Lecture Slides:</strong></p><p><strong>Download PDF:&nbsp;</strong><a href="https://courseworks2.columbia.edu/courses/29191/files/1032282/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">GFS Week 6 Africa (February 21, 2017) Final.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></p><p><strong>Required Readings / Viewings:</strong></p><ul><li>Sanchez, P.A. (2002) Soil fertility and hunger in Africa.&nbsp;<em>Science&nbsp;</em><strong>295</strong>: 2019-2020.</li><li>Download PDF:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/929036/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">Soil_Fertility_and_Hunger_in_Africa_2002.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li><li><strong>Familiarize yourself with the work of the Alliance for an African Green Revolution (AGRA):&nbsp;</strong><a href="http://www.agra.org/" target="_blank" style="color: rgb(0, 142, 226);">http://www.agra.org/&nbsp;(Links to an external site.)</a></li></ul><p><strong>Supplementary Resources</strong></p><ul><li>Listen: --“African Land Fertile Ground for Crops and Investors.” NPR. June 15, 2012.&nbsp;<a href="http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors" target="_blank" style="color: rgb(0, 142, 226);">http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors&nbsp;(Links to an external site.)</a></li><li>Download mp3:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/1009373/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">20120615_atc_06.mp3<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li></ul></span>'
       },
       selected: 0,
       videoEditable: false,
@@ -331,22 +332,25 @@ export default {
       videos: [],
       discussions: [],
       assignments: [],
-      outputCode: '',
+      outputCode: "",
       editorOption: {
         modules: {
           toolbar: toolbarOptions
         }
       },
-      dataImages: [{
-        id: '1',
-        src: 'https://unsplash.it/150?random',
-        alt: 'Alt Image 1'
-      }, {
-        id: '2',
-        src: 'https://unsplash.it/150?random',
-        alt: 'Alt Image 2'
-      }]
-    }
+      dataImages: [
+        {
+          id: "1",
+          src: "https://unsplash.it/150?random",
+          alt: "Alt Image 1"
+        },
+        {
+          id: "2",
+          src: "https://unsplash.it/150?random",
+          alt: "Alt Image 2"
+        }
+      ]
+    };
   },
   components: {
     quillEditor,
@@ -355,129 +359,132 @@ export default {
     WeeklyDiscussion,
     WeeklyAssignment
   },
-  mixins: [ mutations],
+  mixins: [mutations],
   computed: {
-    ...mapGetters([
-      'getInfo', 'dWeek', 'getWeeks', 'getCases'
-    ]),
-    caseOptions(){
+    ...mapGetters(["getInfo", "dWeek", "getWeeks", "getCases"]),
+    caseOptions() {
+      let cases = this.getCases;
+      let options = [];
 
-      let cases = this.getCases
-      let options = []
-
-      cases.forEach(function(category, i){
+      cases.forEach(function(category, i) {
         options[i] = {
           value: category.category,
           label: category.category,
-          children:[]
-        }
+          children: []
+        };
 
-        category.cases.forEach(function(caseChild, j){
+        category.cases.forEach(function(caseChild, j) {
           options[i].children[j] = {
             value: caseChild.name,
             label: caseChild.name
-          }
-        })
-      })
+          };
+        });
+      });
 
-      return options
-    },
+      return options;
+    }
   },
   methods: {
-    addCase(id){
-      console.log(id)
-      let cases = this.getCases
-      let arr = _.cloneDeep(this.weeks[this.selected].cases)
-      cases.forEach(function(category){
-        let newCase = category.cases.filter(item => item.id == id)
-        console.log(newCase)
-        if(!arr.includes(newCase)) arr.push(newCase)
-      })
+    addCase(caseStudy) {
+      let arr = this.weeks[this.selected].cases;
+      if (arr.indexOf(caseStudy) == -1) arr.push(caseStudy);
+    },
+    addCaseByID(id) {
+      console.log(id);
+      let cases = this.getCases;
+      let arr = _.cloneDeep(this.weeks[this.selected].cases);
+      cases.forEach(function(category) {
+        let newCase = category.cases.filter(item => item.id == id)[0];
+        console.log(newCase);
 
-      this.updateWeek(this.selected,'cases',arr)
+        let isUnique = true;
+        isUnique = arr.forEach(function(caseStudy) {
+          if (caseStudy.id == newCase.id) return false;
+        });
 
+        if (isUnique && newCase) arr.push(newCase);
+      });
+
+      this.updateWeek(this.selected, "cases", arr);
     },
     addVideo() {
       let tempVideo = {
         title: "All that Glitters is not Gold (18 minutes)",
-        description: "‘All that Glitters is not Gold’ features various communities’ representatives concern about the introduction of genetically engineered ‘Golden’ rice in the Philippines.",
+        description:
+          "‘All that Glitters is not Gold’ features various communities’ representatives concern about the introduction of genetically engineered ‘Golden’ rice in the Philippines.",
         source: "https://www.youtube.com/watch?v=GxSGKD50ioE"
-      }
-      let arr = _.cloneDeep(this.weeks[this.selected].videos)
+      };
+      let arr = _.cloneDeep(this.weeks[this.selected].videos);
       arr.push(tempVideo);
-      this.updateWeek(this.selected,'videos', arr)
-
+      this.updateWeek(this.selected, "videos", arr);
     },
     addDiscussion() {
       let tempDisc = {
         due: "Feb 4, 2017",
         available: "Jan 1",
-        link: this.info.url + 'discussion_topics/',
+        link: this.info.url + "discussion_topics/",
         points: 10
-      }
+      };
 
-      let arr = _.cloneDeep(this.weeks[this.selected].discussions)
+      let arr = _.cloneDeep(this.weeks[this.selected].discussions);
       arr.push(tempDisc);
-      this.updateWeek(this.selected,'discussions', arr)
-
+      this.updateWeek(this.selected, "discussions", arr);
     },
     addAssignment() {
       let tempAssign = {
         due: "Feb 4, 2017",
         available: "Jan 1",
-        link: this.info.url + 'assignments/',
+        link: this.info.url + "assignments/",
         points: 10
-      }
+      };
 
-      let arr = _.cloneDeep(this.weeks[this.selected].assignments)
+      let arr = _.cloneDeep(this.weeks[this.selected].assignments);
       arr.push(tempAssign);
-      this.updateWeek(this.selected,'assignments', arr)
-
+      this.updateWeek(this.selected, "assignments", arr);
     },
-    setToDefault(){
-      console.log('resetting data...')
-      this.userInput = { ...this.$store.getters.dWeekly};
-      this.weeks[this.selected].videos = this.weeks[this.selected].assignments = this.weeks[this.selected].discussions = [];
+    setToDefault() {
+      console.log("resetting data...");
+      this.userInput = { ...this.$store.getters.dWeekly };
+      this.weeks[this.selected].videos = this.weeks[
+        this.selected
+      ].assignments = this.weeks[this.selected].discussions = [];
     },
     getSaveStateConfig() {
       return {
-          'cacheKey': 'Weekly',
+        cacheKey: "Weekly"
       };
     }
   },
   mounted() {
     this.updateCode();
   },
-  beforeCreate(){
-    EventBus.$on('set-default', response => {
-      this.setToDefault()
-      console.log(response)
-    })
+  beforeCreate() {
+    EventBus.$on("set-default", response => {
+      this.setToDefault();
+      console.log(response);
+    });
 
-    EventBus.$on('import-data', data => {
-      this.userInput = { ...data.weekly.userInput}
-      this.weeks[selected].videos = data.weekly.videos
-      this.weeks[selected].assignments = data.weekly.assignments
-      this.weeks[selected].discussions = data.weekly.discussions
-      console.log('importing data to weekly...')
-    })
+    EventBus.$on("import-data", data => {
+      this.userInput = { ...data.weekly.userInput };
+      this.weeks[selected].videos = data.weekly.videos;
+      this.weeks[selected].assignments = data.weekly.assignments;
+      this.weeks[selected].discussions = data.weekly.discussions;
+      console.log("importing data to weekly...");
+    });
 
-    EventBus.$on('export-data', () => {
-
+    EventBus.$on("export-data", () => {
       // let weeklyList = {
       //   weeklyActivites: this.weeklyActivites
       // }
       // EventBus.$emit('list-data', weeklyList)
 
-      let weekly = this.$data
-      console.log('sending weekly')
-      EventBus.$emit('weekly-data', weekly)
-    })
+      let weekly = this.$data;
+      console.log("sending weekly");
+      EventBus.$emit("weekly-data", weekly);
+    });
   },
-  beforeUpdate() {
-  }
-
-}
+  beforeUpdate() {}
+};
 </script>
 
 
@@ -492,7 +499,7 @@ textarea {
   width: auto;
 }
 
-.home-bar{
+.home-bar {
   width: 40vw;
 }
 
@@ -515,7 +522,7 @@ textarea {
   width: 40%;
   margin: auto;
   align-self: flex-start;
-  margin-top: 20px
+  margin-top: 20px;
 }
 
 .code-input {
@@ -539,7 +546,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.5s ease
+  transition: all 0.5s ease;
 }
 
 .footer {
@@ -550,7 +557,7 @@ textarea {
 
 #copy-text-area {
   width: 80%;
-  height: 200px
+  height: 200px;
 }
 
 .GFbanner {
@@ -559,14 +566,14 @@ textarea {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity .5s
+  transition: opacity 0.5s;
 }
 
 .fade-enter,
 .fade-leave-to
 /* .fade-leave-active in <2.1.8 */
 
-{
-  opacity: 0
+ {
+  opacity: 0;
 }
 </style>
