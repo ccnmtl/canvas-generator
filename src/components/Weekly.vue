@@ -33,6 +33,7 @@
           <div class="col-xs-8">
             <div class="styleguide-section__grid-demo-element">
               <div class="welcome"><i class="icon-search"></i>&nbsp;{{caseStudy.name}} 
+              <el-button @click="removeCase(caseStudy)" size="small" type="danger" style="float: right;">Remove Case</el-button>
               <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right;">Add Case</el-button></div>
               <p>{{caseStudy.shortDescription}}</p>
             </div>
@@ -386,23 +387,24 @@ export default {
   },
   methods: {
     addCase(caseStudy) {
-      let arr = this.weeks[this.selected].cases;
-      if (arr.indexOf(caseStudy) == -1) arr.push(caseStudy);
-    },
-    addCaseByID(id) {
-      console.log(id);
-      let cases = this.getCases;
       let arr = _.cloneDeep(this.weeks[this.selected].cases);
-      cases.forEach(function(category) {
-        let newCase = category.cases.filter(item => item.id == id)[0];
-        console.log(newCase);
 
-        let isUnique = true;
-        isUnique = arr.forEach(function(caseStudy) {
-          if (caseStudy.id == newCase.id) return false;
-        });
+      let isUnique = true;
+      arr.forEach(function(testCase) {
+        if (testCase.id == caseStudy.id) isUnique = false;
+      });
 
-        if (isUnique && newCase) arr.push(newCase);
+      if (isUnique) arr.push(caseStudy);
+      this.updateWeek(this.selected, "cases", arr);
+    },
+    removeCase(caseStudy) {
+      let arr = _.cloneDeep(this.weeks[this.selected].cases);
+
+      arr.forEach(function(testCase, index, array) {
+        if (testCase.id == caseStudy.id) {
+          console.log("splice");
+          arr.splice(index, 1);
+        }
       });
 
       this.updateWeek(this.selected, "cases", arr);
