@@ -17,7 +17,7 @@ export default {
                   description:'This case traces the development of big data analytics in New York City from Commissioner Bratton’s work in the early 90s to the work of Michael Flowers and the famous “geek squad" under Mayor Bloomberg. Includes interviews with senior officials, including NYPD Police Commissioner William Bratton and others. Key issues include transparency and community pushback, scalability, and adaptability to other areas of government, such as the New York Fire Department.'
               },
               {
-                  name: " City Services Across Brazil",
+                  name: "City Services Across Brazil",
                   id: 2,
                   thumbnail:"https://cu-coursebuilder.s3.amazonaws.com/static/cases/city+services.jpg",
                   writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/Case_City+Services+Across+Brazil.pdf",
@@ -36,7 +36,7 @@ export default {
                   videoCase:"https://player.vimeo.com/video/300611822",
                   originalDocuments:"",
                   transcripts:"",
-                  aditionalInterviews:["","",""],
+                  aditionalInterviews:[],
                   shortDescription:'With an investment of over $50 million, Rio created what many call the world’s most advanced digital control center. This case explores how cop cameras, mapping of favelas and other initiatives are turning Rio’s problems into ones and zeros, and using this information to refocus city services.',
                   description:'With an investment of over $50 million, Rio created what many call the world’s most advanced digital control center. This case explores how cop cameras, mapping of favelas and other initiatives are turning Rio’s problems into ones and zeros, and using this information to refocus city services.'
               }],
@@ -104,7 +104,7 @@ export default {
                   videoCase:"https://player.vimeo.com/video/334077041?title=0&byline=0&portrait=0",
                   originalDocuments:"",
                   transcripts:"",
-                  aditionalInterviews:["","",""],
+                  aditionalInterviews:[],
                   shortDescription:'Filmed on location in Ghana and USA, this report examines the debate on "conservation agriculture" and global warming. Can techniques such as "no-till farming" work in a developing country such as Ghana? Can they help sequester carbon from the atmosphere and help solve global warming? Dramatic aerial footage from USA and Africa helps illustrate this issue.',
                   description:'This spring 2018 Capstone project looks at two private rainforest reserves in Costa Rica. It explores Costa Rica’s innovative “climate services” program, the debate on forests’ role in climate change mitigation, and the international voluntary carbon credit market.'
               },
@@ -116,7 +116,7 @@ export default {
                   videoCase:"https://player.vimeo.com/video/348636321?title=0&byline=0&portrait=0",
                   originalDocuments:"",
                   transcripts:"",
-                  aditionalInterviews:["","",""],
+                  aditionalInterviews:[],
                   shortDescription:'Climate and Food Security in Vietnam – This summer 2018 MPA-DP summer placement profiles the field work of two SIPA researchers in Vietnam, as they explore the role of climate variability in food production. Their work is part of one of the first Columbia World Projects, and connects to similar research underway in five other countries.',
                   description:'Climate and Food Security in Vietnam – This summer 2018 MPA-DP summer placement profiles the field work of two SIPA researchers in Vietnam, as they explore the role of climate variability in food production. Their work is part of one of the first Columbia World Projects, and connects to similar research underway in five other countries.'
               },
@@ -128,7 +128,7 @@ export default {
                   videoCase:"",
                   originalDocuments:"",
                   transcripts:"",
-                  aditionalInterviews:["","",""],
+                  aditionalInterviews:[],
                   shortDescription:'This spring 2019 Capstone project explores how off grid solar technology is changing the energy landscape in Uganda. It follows SIPA researchers as they work with local solar energy startups, and explores the issues surrounding creating successful businesses designed to serve poor and offline clients.',
                   description:'This spring 2019 Capstone project explores how off grid solar technology is changing the energy landscape in Uganda. It follows SIPA researchers as they work with local solar energy startups, and explores the issues surrounding creating successful businesses designed to serve poor and offline clients.'
               }]
@@ -154,53 +154,70 @@ export default {
               [{
                   name: "Schools of Tomorrow?",
                   id: 12,
-                  thumbnail:"",
-                  writtenCase: "",
-                  videoCase:"",
-                  originalDocuments:"",
+                  thumbnail:"https://cu-coursebuilder.s3.amazonaws.com/static/cases/schools+of+tomorrow.jpg",
+                  writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/SCHOOLSOFTOMORROW-CASE+STUDY.pdf",
+                  videoCase:"https://player.vimeo.com/video/203183533",
+                  originalDocuments:"https://cu-coursebuilder.s3.amazonaws.com/static/cases/Original+Documents_Schools+of+Tomorrow.pdf",
                   transcripts:"",
-                  aditionalInterviews:["","",""],
+                  aditionalInterviews:[],
                   shortDescription: 'Across the globe, countries have expanded free public education, but recent studies show most systems fall short of their mark in terms of educational outcomes. Filmed on location in the South Bronx, Rio and Mumbai, this case explores global efforts to make urban schools work.',
-                  description: ''
+                  description: 'Across the globe, countries have expanded free public education, but recent studies show most systems fall short of their mark in terms of educational outcomes. Filmed on location in the South Bronx, Rio and Mumbai, this case explores global efforts to make urban schools work.'
               },
               {
                   name: "Internet in a Box",
                   id: 13,
-                  thumbnail:"",
-                  writtenCase: "",
-                  videoCase:"",
+                  thumbnail:"https://cu-coursebuilder.s3.amazonaws.com/static/cases/internet+in+a+box.jpg",
+                  writtenCase:"",
+                  videoCase:"https://player.vimeo.com/video/334076843?title=0&byline=0&portrait=0",
                   originalDocuments:"",
                   transcripts:"",
-                  aditionalInterviews:["","",""],
+                  aditionalInterviews:[],
                   shortDescription: 'This spring 2018 Capstone project studies an innovative “off line internet” device that allows Wikipedia and other educational content to be brought to students in the Peruvian Andes and Amazon regions.',
-                  description: ''
+                  description: 'This spring 2018 Capstone project studies an innovative “off line internet” device that allows Wikipedia and other educational content to be brought to students in the Peruvian Andes and Amazon regions.'
               },
               {
                   name: "Digital Activism",
                   id: 14,
-                  thumbnail:"",
-                  writtenCase: "",
-                  videoCase:"",
+                  thumbnail:"https://cu-coursebuilder.s3.amazonaws.com/static/cases/digital+activism.jpg",
+                  writtenCase:"",
+                  videoCase:"https://player.vimeo.com/video/334072957?title=0&byline=0&portrait=0",
                   originalDocuments:"",
                   transcripts:"",
-                  aditionalInterviews:["","",""],
+                  aditionalInterviews:[],
                   shortDescription: 'This SIPA Technology, Media and Communications class project explores the ways that digital tools are changing politics and activism. The film profiles student political activists at Columbia and Temple University in Philadelphia, and follows their work in the lead up to the 2018 US Mid-Term elections.',
-                  description: ''
-              },
-              {
-                  name: "",
+                  description: 'This spring 2018 Capstone project studies an innovative “off line internet” device that allows Wikipedia and other educational content to be brought to students in the Peruvian Andes and Amazon regions.'
+              }]
+            },
+            {
+              category: "Security & Defense",
+              cases:
+              [{
+                  name: "Revitalizing Afghanistan",
                   id: 15,
-                  thumbnail:"",
+                  thumbnail:"https://cu-coursebuilder.s3.amazonaws.com/static/cases/RURALCOMMUNITY-caseicon.jpg",
                   writtenCase: "",
-                  videoCase:"",
+                  videoCase:"https://player.vimeo.com/video/271788981",
                   originalDocuments:"",
                   transcripts:"",
-                  aditionalInterviews:["","",""],
-                  shortDescription: '',
-                  description: ''
-              }]
-            }]
-          },
+                  aditionalInterviews:[],
+                  shortDescription: 'By 2009, the US military involvement in Afghanistan was entering its 9th year, at a cost up to that time of almost 2,500 US lives and 220 billion dollars. Leaders at the US Defense and State Departments felt that a new approach was needed, in which economic development, and specifically rural agricultural development, could provide concrete benefits to local populations, and move former combatants into productive rural jobs. This audiovisual case study documents the creation and implementation of a place-based development project involving NGOs, government actors, and private sector investors.',
+                  description: 'By 2009, the US military involvement in Afghanistan was entering its 9th year, at a cost up to that time of almost 2,500 US lives and 220 billion dollars. Leaders at the US Defense and State Departments felt that a new approach was needed, in which economic development, and specifically rural agricultural development, could provide concrete benefits to local populations, and move former combatants into productive rural jobs. This audiovisual case study documents the creation and implementation of a place-based development project involving NGOs, government actors, and private sector investors.'
+              },
+            {
+                name: "Youth and Crisis Planning",
+                id: 16,
+                thumbnail:"https://cu-coursebuilder.s3.amazonaws.com/static/cases/youth+and+crisis.jpg",
+                writtenCase: "",
+                videoCase:"https://player.vimeo.com/video/334076921?title=0&byline=0&portrait=0",
+                originalDocuments:"",
+                transcripts:"",
+                aditionalInterviews:[],
+                shortDescription: 'This spring 2019 Capstone travels to Nepal, to conduct field research regarding new UN protocols designed to include youth in humanitarian crises planning. It follows the team as they discuss the response to Nepal’s 2015 earthquake, and how to best integrate young people into plans for future crises response.',
+                description: ''
+            },]
+            }
+            
+        ]},
     getters: {
       getCases: state => state.cases,
     },
