@@ -67,7 +67,21 @@ export default {
         <lticm:property name="visibility">public</lticm:property>
       </lticm:options>
     </blti:extensions>
-  </cartridge_basiclti_link>`
+  </cartridge_basiclti_link>`,
+  discussion_meta_bottom:
+  `<delayed_post_at>2017-01-06T05:00:00</delayed_post_at>
+  <position/>
+  <type>topic</type>
+  <discussion_type>side_comment</discussion_type>
+  <has_group_category>false</has_group_category>
+  <workflow_state>active</workflow_state>
+  <module_locked>false</module_locked>
+  <allow_rating>false</allow_rating>
+  <only_graders_can_rate>false</only_graders_can_rate>
+  <sort_by_rating>false</sort_by_rating>
+  <todo_date/>
+</topicMeta>
+  `
 }
 
 let heading = {

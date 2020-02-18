@@ -422,7 +422,7 @@ export default {
     },
     addDiscussion() {
 
-      let manifestID = "ccb-week-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1)
+      let manifestID = "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1)
       let tempDisc = {
         available: this.weeks[this.selected].date.format("dddd, MMMM Do"),
         id: manifestID,

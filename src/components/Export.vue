@@ -154,6 +154,12 @@ export default {
               addResource(manifest, "ccb-week-" + i, 'wiki_content/pages/week-' + i)
             }
 
+            this.weeks.forEach(week => {
+              week.discussions.forEach (discussion => {
+                
+              })
+            })
+
             let serializer = new XMLSerializer();
             let manifestString = serializer.serializeToString(manifest);
 
