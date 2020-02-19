@@ -385,7 +385,7 @@ export default {
     // Once the component is loaded, update the code text box
     this.updateCode();
     
-    JSZipUtils.getBinaryContent('static/files/weekly-template.imscc', (err, data) => {
+    JSZipUtils.getBinaryContent('static/files/test-course-2-export.imscc', (err, data) => {
       if(err) {
           throw err; // or handle err
       }
@@ -397,11 +397,14 @@ export default {
         let parser = new DOMParser();
         let manifest = parser.parseFromString(data, "text/xml")
 
-        let resources = manifest.getElementsByTagName("resources")
+        let resources = manifest.getElementsByTagName("resources")[0]
         let sampleResource = manifest.getElementsByTagName("resource")[0]
-        let file = sampleResource.getElementsByTagName('file')
+        let file = sampleResource.firstElementChild
+        //sampleResource.setAttribute("href", "testing.html");
 
-        console.log(sampleResource)
+        addResource(manifest, "cc-syllabus-test", "syllabus.html", "page")
+
+        console.log(resources)
 
         // let builder = new xml2js.Builder();
 
@@ -420,15 +423,30 @@ export default {
       });
       })
 
-      // function addResource(xml, iden, type="page", link, use=""){
-      //   let resource = xml.createElement("resource");
-      //   resource.setAttribute("identifier", iden);
+      function addResource(xml, iden, link, type="page", use=""){
+        let resource = xml.createElement("resource");
+        let file = xml.createElement("file");
+        resource.appendChild(file)
 
-      //   switch(type){
-      //     case 
-      //   }
+        let resourceList = xml.getElementsByTagName("resources")[0]
 
-      // }
+        resource.setAttribute("identifier", iden);
+
+        switch(type){
+          case "page":
+            resource.setAttribute("type", "webcontent");
+            resource.setAttribute("href", link);
+            file.setAttribute("href", link);
+            break;
+          case "discusson":
+            break;
+          default:
+            break;
+        }
+
+        resourceList.appendChild(resource)
+
+      }
 
 
   },

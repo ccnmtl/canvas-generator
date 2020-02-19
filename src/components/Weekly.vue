@@ -112,7 +112,7 @@
         property='discussions'
         :idx="selected"
         :fn="addDiscussion"
-        :inputs="['link','due', 'available']"
+        :inputs="['available']"
         @clearArr="updateWeek(selected,'discussions', [])">
         Discussion
       </weekly-code-module>
@@ -123,7 +123,7 @@
         property='assignments'
         :idx="selected"
         :fn="addAssignment"
-        :inputs="['link','due', 'available']"
+        :inputs="['available']"
         @clearArr="updateWeek(selected,'assignments', [])">
         Assignment
       </weekly-code-module>
@@ -414,11 +414,12 @@ export default {
       this.updateWeek(this.selected, "videos", arr);
     },
     addDiscussion() {
+
+      let manifestID = "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1)
       let tempDisc = {
-        due: "Feb 4, 2017",
-        available: "Jan 1",
-        link: this.info.url + "discussion_topics/",
-        points: 10
+        available: this.weeks[this.selected].date.format("dddd, MMMM Do"),
+        id: manifestID,
+        link: "%24CANVAS_OBJECT_REFERENCE%24/discussion_topics/" + manifestID,
       };
 
       let arr = _.cloneDeep(this.weeks[this.selected].discussions);

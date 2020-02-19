@@ -8,7 +8,6 @@
           </div>
           <div class="ig-info"><a class="ig-title" :href="data.link" :data-api-endpoint="data.link" data-api-returntype="Discussion"> Discussion 1</a>
             <div class="ig-details">
-              <div class="ig-details__item"><strong>Due</strong> {{data.due}}</div>
               <div class="ig-details__item"><strong>Available</strong> {{data.available}}</div>
               <!-- <div class="ig-details__item">{{data.points}} pts</div> -->
             </div>
