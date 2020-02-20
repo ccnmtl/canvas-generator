@@ -77,18 +77,18 @@
 </template>
 
 <script>
-import { EventBus } from "../bus";
-import saveFile from "../util/save-file";
-import mutations from "../store/mutations";
-import JSZip from "jszip";
-import JSZipUtils from "jszip-utils";
+import { EventBus } from "../bus"
+import saveFile from "../util/save-file"
+import mutations from "../store/mutations"
+import JSZip from "jszip"
+import JSZipUtils from "jszip-utils"
 
-import homeView from "./render/homeView";
-import syllabusView from "./render/syllabusView";
-import weekView from "./render/weekView";
-import listView from "./render/listView";
+import homeView from "./render/homeView"
+import syllabusView from "./render/syllabusView"
+import weekView from "./render/weekView"
+import listView from "./render/listView"
 
-import headings from "../store/export-headings";
+import headings from "../store/export-headings"
 
 export default {
   name: "Export",
@@ -97,25 +97,23 @@ export default {
       hasImportData: false,
       fullscreenLoading: false,
       exportData: {}
-    };
+    }
   },
   computed: {
     loading: {
       get() {
-        return this.$store.getters.loading;
+        return this.$store.getters.loading
       },
       set(payload) {
-        this.$store.commit("updateLoading", payload);
+        this.$store.commit("updateLoading", payload)
       }
     }
   },
   components: { homeView, syllabusView, weekView, listView },
   mixins: [mutations],
   mounted() {
-    let manifest = this.readLocalXML(
-      "../../static/files/Clean Course/course_settings/course_settings.xml"
-    );
-    console.log(manifest);
+    let manifest = this.readLocalXML("../../static/files/Clean Course/course_settings/course_settings.xml")
+    console.log(manifest)
   },
   methods: {
     // openFullScreen() {
@@ -125,266 +123,233 @@ export default {
     //     }, 2000);
     // },
     testChildren() {
-      this.updateProp("url", this.parseUrl(this.info.url));
+      this.updateProp("url", this.parseUrl(this.info.url))
       setTimeout(() => {
-        let code = this.$refs.home.returnCode();
-        console.log(code);
-      }, 50);
+        let code = this.$refs.home.returnCode()
+        console.log(code)
+      }, 50)
     },
     onImportFileChange(changeEvent) {
-      let file = changeEvent.target.files[0];
+      let file = changeEvent.target.files[0]
       if (!file) {
-        return;
+        return
       }
 
-      let reader = new FileReader();
+      let reader = new FileReader()
       reader.onload = loadEvent => {
-        this.importData = JSON.parse(loadEvent.target.result);
-        this.hasImportData = !!this.importData;
-      };
+        this.importData = JSON.parse(loadEvent.target.result)
+        this.hasImportData = !!this.importData
+      }
 
-      reader.readAsText(file);
+      reader.readAsText(file)
     },
     exportIMSCC() {
-      let footer = "</body> </html>";
+      let serializer = new XMLSerializer()
+      let footer = "</body> </html>"
+      this.updateProp("url", this.parseUrl(this.info.url))
 
-      this.updateProp("url", this.parseUrl(this.info.url));
+      JSZipUtils.getBinaryContent("static/files/clean-course.imscc", (err, data) => {
+        if (err) {
+          throw err // or handle err
+        }
 
-      JSZipUtils.getBinaryContent(
-        "static/files/clean-course.imscc",
-        (err, data) => {
-          if (err) {
-            throw err; // or handle err
-          }
+        JSZip.loadAsync(data).then(zip => {
+          console.log(zip)
+          zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
+          zip.file("wiki_content/weekly-activities.html", headings.list + this.$refs.list.returnCode() + footer)
+          zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer)
 
-          JSZip.loadAsync(data).then(zip => {
-            console.log(zip);
-            zip.file(
-              "wiki_content/home.html",
-              headings.home + this.$refs.home.returnCode() + footer
-            );
-            zip.file(
-              "wiki_content/weekly-activities.html",
-              headings.list + this.$refs.list.returnCode() + footer
-            );
-            zip.file(
-              "course_settings/syllabus.html",
-              headings.syllabus + this.$refs.syllabus.returnCode() + footer
-            );
+          let redirect_url = '<lticm:property name="url">' + this.info.url + "pages/weekly-activities</lticm:property>"
 
-            let redirect_url =
-              '<lticm:property name="url">' +
-              this.info.url +
-              "pages/weekly-activities</lticm:property>";
+          zip.file("ccb-weekly-redirect.xml", headings.redirect_top + redirect_url + headings.redirect_bottom)
 
-            zip.file(
-              "ccb-weekly-redirect.xml",
-              headings.redirect_top + redirect_url + headings.redirect_bottom
-            );
+          // Add info to manifest
+          zip
+            .file("imsmanifest.xml")
+            .async("string")
+            .then(data => {
+              let parser = new DOMParser()
+              let manifest = parser.parseFromString(data, "text/xml")
 
-            // Add info to manifest
-            zip
-              .file("imsmanifest.xml")
-              .async("string")
-              .then(data => {
-                let parser = new DOMParser();
-                let manifest = parser.parseFromString(data, "text/xml");
+              //add weeks
+              for (let i = 1; i <= this.weeks.length; i++) {
+                let title = "<title>Week " + i + "</title>"
+                let iden = '<meta name="identifier" content="ccb-week' + i + '"/>'
+                let el = document.getElementById("week-box" + (i - 1))
+                let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
+                zip.file(
+                  "wiki_content/week-" + i + ".html",
+                  headings.top + title + iden + headings.bottom + code + footer
+                )
+                addResource({
+                  xml: manifest,
+                  iden: "ccb-week-" + i,
+                  link: "wiki_content/pages/week-" + i
+                })
+              }
 
-                //add weeks
-                for (let i = 1; i <= this.weeks.length; i++) {
-                  let title = "<title>Week " + i + "</title>";
-                  let iden =
-                    '<meta name="identifier" content="ccb-week' + i + '"/>';
-                  let el = document.getElementById("week-box" + (i - 1));
-                  let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "");
-                  zip.file(
-                    "wiki_content/week-" + i + ".html",
-                    headings.top +
-                      title +
-                      iden +
-                      headings.bottom +
-                      code +
-                      footer
-                  );
+              this.weeks.forEach((week, weekIndex) => {
+                week.discussions.forEach((discussion, discussionIndex) => {
                   addResource({
                     xml: manifest,
-                    iden: "ccb-week-" + i,
-                    link: "wiki_content/pages/week-" + i
-                  });
-                }
+                    type: "discussion",
+                    iden: discussion.id,
+                    meta: discussion.id + "-meta"
+                  })
 
-                this.weeks.forEach(week => {
-                  week.discussions.forEach(discussion => {
-                    addResource({
-                      xml: manifest,
-                      type: "discussion",
-                      iden: discussion.id,
-                      meta: discussion.id + "-meta"
-                    });
-                  });
-                });
+                  let discussionTemplate = this.readLocalXML("../../static/files/xml-templates/discussion.xml")
+                  let discussionMetaTemplate = this.readLocalXML("../../static/files/xml-templates/discussion_meta.xml")
 
-                let serializer = new XMLSerializer();
-                let manifestString = serializer.serializeToString(manifest);
-                console.log(manifest);
-                zip.file("imsmanifest.xml", manifestString);
+                  let discussionTitle = discussionTemplate.getElementsByTagName("title")[0]
+                  let discussionTopicMeta = discussionMetaTemplate.getElementsByTagName("topicMeta")[0]
+                  let discussionTopicID = discussionMetaTemplate.getElementsByTagName("topic_id")[0]
+                  let discussionMetaTitle = discussionMetaTemplate.getElementsByTagName("title")[0]
 
-                zip.generateAsync({ type: "blob" }).then(blob => {
-                  saveFile({
-                    name: this.info.title + "_export.imscc",
-                    data: blob
-                  });
-                });
-              });
-          });
-        }
-      );
+                  discussionTitle.innerHTML = discussionMetaTitle.innerHTML =
+                    "Session " + (weekIndex + 1) + " - Discussion " + (discussionIndex + 1)
+                  discussionTopicMeta.setAttribute("identifier", discussion.id + "-meta")
+                  discussionTopicID.innerHTML = discussion.id
+
+                  console.log(discussionTemplate)
+
+                  let discussionString = serializer.serializeToString(discussionTemplate)
+                  let discussionMetaString = serializer.serializeToString(discussionMetaTemplate)
+                  zip.file(discussion.id + ".xml", discussionString)
+                  zip.file(discussion.id + "-meta" + ".xml", discussionMetaString)
+                })
+              })
+
+              let manifestString = serializer.serializeToString(manifest)
+              console.log(manifest)
+              zip.file("imsmanifest.xml", manifestString)
+
+              zip.generateAsync({ type: "blob" }).then(blob => {
+                saveFile({
+                  name: this.info.title + "_export.imscc",
+                  data: blob
+                })
+              })
+            })
+        })
+      })
 
       function addResource(options) {
-        let { xml, iden, link, type = "page", meta } = options;
-        console.log(type);
-        let resource = xml.createElement("resource");
-        let file = xml.createElement("file");
-        resource.appendChild(file);
+        let { xml, iden, link, type = "page", meta } = options
+        let resource = xml.createElement("resource")
+        let file = xml.createElement("file")
+        resource.appendChild(file)
 
-        let resourceList = xml.getElementsByTagName("resources")[0];
+        let resourceList = xml.getElementsByTagName("resources")[0]
 
-        resource.setAttribute("identifier", iden);
+        resource.setAttribute("identifier", iden)
 
         switch (type) {
           case "page":
-            resource.setAttribute("type", "webcontent");
-            resource.setAttribute("href", link);
-            file.setAttribute("href", link);
-            break;
+            resource.setAttribute("type", "webcontent")
+            resource.setAttribute("href", link)
+            file.setAttribute("href", link)
+            break
           case "discussion":
-            resource.setAttribute("type", "imsdt_xmlv1p1");
-            resource.setAttribute("href", iden + ".xml");
-            file.setAttribute("href", iden + ".xml");
+            resource.setAttribute("type", "imsdt_xmlv1p1")
+            resource.setAttribute("href", iden + ".xml")
+            file.setAttribute("href", iden + ".xml")
 
-            let depend = xml.createElement("dependency");
-            depend.setAttribute("identifierref", meta);
-            resource.appendChild(depend);
+            let depend = xml.createElement("dependency")
+            depend.setAttribute("identifierref", meta)
+            resource.appendChild(depend)
 
-            let metaResource = xml.createElement("resource");
-            let metaFile = xml.createElement("file");
-            metaResource.appendChild(metaFile);
-            metaResource.setAttribute("identifier", meta);
-            metaResource.setAttribute(
-              "type",
-              "associatedcontent/imscc_xmlv1p1/learning-application-resource"
-            );
-            metaResource.setAttribute("href", meta + ".xml");
-            metaFile.setAttribute("href", meta + ".xml");
+            let metaResource = xml.createElement("resource")
+            let metaFile = xml.createElement("file")
+            metaResource.appendChild(metaFile)
+            metaResource.setAttribute("identifier", meta)
+            metaResource.setAttribute("type", "associatedcontent/imscc_xmlv1p1/learning-application-resource")
+            metaResource.setAttribute("href", meta + ".xml")
+            metaFile.setAttribute("href", meta + ".xml")
 
-            resourceList.appendChild(metaResource);
-            break;
+            resourceList.appendChild(metaResource)
+            break
+          case "assignment":
+            resource.setAttribute("type", "associatedcontent/imscc_xmlv1p1/learning-application-resource")
+
+            break
           default:
-            break;
+            break
         }
 
-        resourceList.appendChild(resource);
+        resourceList.appendChild(resource)
       }
     },
     // old imscc exporter
     exportIMSCCOld() {
-      let footer = "</body> </html>";
+      let footer = "</body> </html>"
 
-      this.updateProp("url", this.parseUrl(this.info.url));
+      this.updateProp("url", this.parseUrl(this.info.url))
 
-      JSZipUtils.getBinaryContent(
-        "static/files/weekly-template.imscc",
-        (err, data) => {
-          if (err) {
-            throw err; // or handle err
+      JSZipUtils.getBinaryContent("static/files/weekly-template.imscc", (err, data) => {
+        if (err) {
+          throw err // or handle err
+        }
+
+        JSZip.loadAsync(data).then(zip => {
+          zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
+          zip.file("wiki_content/weekly-activities.html", headings.list + this.$refs.list.returnCode() + footer)
+          zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer)
+
+          for (let i = 1; i <= this.weeks.length; i++) {
+            let title = "<title>Week " + i + "</title>"
+            let iden = '<meta name="identifier" content="' + headings.week_ids[i - 1] + '"/>'
+            let el = document.getElementById("week-box" + (i - 1))
+            let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
+            zip.file("wiki_content/week-" + i + ".html", headings.top + title + iden + headings.bottom + code + footer)
           }
 
-          JSZip.loadAsync(data).then(zip => {
-            console.log(zip);
-            zip.file(
-              "wiki_content/home.html",
-              headings.home + this.$refs.home.returnCode() + footer
-            );
-            zip.file(
-              "wiki_content/weekly-activities.html",
-              headings.list + this.$refs.list.returnCode() + footer
-            );
-            zip.file(
-              "course_settings/syllabus.html",
-              headings.syllabus + this.$refs.syllabus.returnCode() + footer
-            );
+          let redirect_url = '<lticm:property name="url">' + this.info.url + "pages/weekly-activities</lticm:property>"
 
-            for (let i = 1; i <= this.weeks.length; i++) {
-              let title = "<title>Week " + i + "</title>";
-              let iden =
-                '<meta name="identifier" content="' +
-                headings.week_ids[i - 1] +
-                '"/>';
-              let el = document.getElementById("week-box" + (i - 1));
-              let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "");
-              zip.file(
-                "wiki_content/week-" + i + ".html",
-                headings.top + title + iden + headings.bottom + code + footer
-              );
-            }
+          zip.file(
+            "ic0780a1b3ec00e092caacf7b0d3865e4.xml",
+            headings.redirect_top + redirect_url + headings.redirect_bottom
+          )
 
-            let redirect_url =
-              '<lticm:property name="url">' +
-              this.info.url +
-              "pages/weekly-activities</lticm:property>";
-            console.log(this.info.url);
-            console.log(redirect_url);
-            zip.file(
-              "ic0780a1b3ec00e092caacf7b0d3865e4.xml",
-              headings.redirect_top + redirect_url + headings.redirect_bottom
-            );
-
-            zip.generateAsync({ type: "blob" }).then(blob => {
-              saveFile({
-                name: this.info.title + "_export.imscc",
-                data: blob
-              });
-            });
-          });
-        }
-      );
+          zip.generateAsync({ type: "blob" }).then(blob => {
+            saveFile({
+              name: this.info.title + "_export.imscc",
+              data: blob
+            })
+          })
+        })
+      })
     },
     performImport() {
-      this.$store.commit("updateInfo", this.importData.store.info);
-      this.$store.commit("updateTheme", this.importData.store.theme.theme);
-      this.$store.commit("updateWeeks", this.importData.store.weeks);
-      this.$router.push({ path: "/home" });
+      this.$store.commit("updateInfo", this.importData.store.info)
+      this.$store.commit("updateTheme", this.importData.store.theme.theme)
+      this.$store.commit("updateWeeks", this.importData.store.weeks)
+      this.$router.push({ path: "/home" })
     },
     exportJSON() {
-      this.exportData = {};
-      this.exportDataIfPossible();
+      this.exportData = {}
+      this.exportDataIfPossible()
     },
     exportDataIfPossible() {
-      console.log("here");
+      console.log("here")
 
-      let waitTime = 0;
+      let waitTime = 0
 
-      let today = new Date();
-      let date =
-        today.getFullYear() +
-        "-" +
-        (today.getMonth() + 1) +
-        "-" +
-        today.getDate();
-      let time = today.getHours() + "-" + today.getMinutes();
-      let dateTime = date + " " + time;
+      let today = new Date()
+      let date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
+      let time = today.getHours() + "-" + today.getMinutes()
+      let dateTime = date + " " + time
 
       // get store
-      this.exportData.store = this.$store.getters.getStore;
+      this.exportData.store = this.$store.getters.getStore
 
       // save file as json
-      console.log("exporting..");
+      console.log("exporting..")
       setTimeout(() => {
         saveFile({
           name: this.$store.state.info.title + " " + dateTime + ".json",
           data: JSON.stringify(this.exportData)
-        });
-      }, waitTime);
+        })
+      }, waitTime)
     },
     onImportFileChange2(changeEvent) {
       let homeHeading = `
@@ -397,43 +362,40 @@ export default {
         <meta name="workflow_state" content="active" />
         <meta name="front_page" content="true" />
       </head>
-      <body>`;
+      <body>`
 
-      let homeFooter = "</body> </html>";
+      let homeFooter = "</body> </html>"
 
-      this.updateProp("url", this.parseUrl(this.info.url));
+      this.updateProp("url", this.parseUrl(this.info.url))
 
-      let files = changeEvent.target.files;
+      let files = changeEvent.target.files
       JSZip.loadAsync(files[0]).then(zip => {
-        console.log(zip);
-        zip.file(
-          "wiki_content/home.html",
-          homeHeading + this.$refs.home.returnCode() + homeFooter
-        );
+        console.log(zip)
+        zip.file("wiki_content/home.html", homeHeading + this.$refs.home.returnCode() + homeFooter)
         zip.generateAsync({ type: "blob" }).then(blob => {
           saveFile({
             name: this.info.title + "_export.imscc",
             data: blob
-          });
-        });
+          })
+        })
         // zip.forEach(function (relativePath, zipEntry) {  // 2) print entries
         // });
-      });
+      })
     },
     readLocalXML(path) {
-      var output = null;
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("GET", path, false);
-      xmlhttp.send();
+      var output = null
+      var xmlhttp = new XMLHttpRequest()
+      xmlhttp.open("GET", path, false)
+      xmlhttp.send()
       if (xmlhttp.status == 200) {
-        output = xmlhttp.responseText;
+        output = xmlhttp.responseText
       }
-      let parser = new DOMParser();
-      let parsedXML = parser.parseFromString(output, "text/xml");
-      return parsedXML;
+      let parser = new DOMParser()
+      let parsedXML = parser.parseFromString(output, "text/xml")
+      return parsedXML
     }
   }
-};
+}
 </script>
 
 <style>
