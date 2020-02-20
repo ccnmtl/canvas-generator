@@ -153,10 +153,10 @@
                 </div>
                 <div class="pad-box-mini border border-b border-t">
                   <p v-html="weeks[selected].body"></p>
-                  <div class="pad-box-mini">
+                  <!-- <div class="pad-box-mini">
                     <span v-html="weeks[selected].required" >
                     </span>
-                  </div>
+                  </div> -->
               </div>
             </div>
           </div>
