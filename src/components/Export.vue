@@ -1,38 +1,62 @@
 <template>
   <div id="app">
-
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
-        <div>
-            <div class="uk-background-primary uk-padding uk-light uk-height-large">
-              <h1>IMPORT</h1>
-              <p>If you have previously saved an export file from this version of Coursebuilder you can use the input below to import all of the data into this
-              session. Warning! This will overwrite all information you have currently entered.</p>
-              <h4>Select a ".json" file from a previous data export</h4>
+      <div>
+        <div class="uk-background-primary uk-padding uk-light uk-height-large">
+          <h1>IMPORT</h1>
+          <p>
+            If you have previously saved an export file from this version of Coursebuilder you can use the input below to import all of the data into this
+            session. Warning! This will overwrite all information you have currently entered.
+          </p>
+          <h4>Select a ".json" file from a previous data export</h4>
 
-              <form>
-                <button class="uk-button uk-button-default" v-if="hasImportData" @click.prevent="performImport">
-                  File read successfully! Click here to confirm import.
-                </button>
-                <div class="uk-margin" uk-margin>
-                   <input style="display:inline-block;" class="uk-padding" type="file" accept=".json" name="import-file" @change="onImportFileChange" />
-                   <!-- <input style="display:inline-block;" class="uk-padding" type="file" name="import-file2" @change="onImportFileChange2" /> -->
-                   <br> <br>
-                </div>
-              </form>
+          <form>
+            <button
+              class="uk-button uk-button-default"
+              v-if="hasImportData"
+              @click.prevent="performImport"
+            >File read successfully! Click here to confirm import.</button>
+            <div class="uk-margin" uk-margin>
+              <input
+                style="display:inline-block;"
+                class="uk-padding"
+                type="file"
+                accept=".json"
+                name="import-file"
+                @change="onImportFileChange"
+              />
+              <!-- <input style="display:inline-block;" class="uk-padding" type="file" name="import-file2" @change="onImportFileChange2" /> -->
+              <br />
+              <br />
             </div>
+          </form>
         </div>
-        <div>
-            <div class="uk-background-secondary uk-padding uk-light uk-height-large">
-              <h1>EXPORT</h1>
-              <p>If you have completed your class or want to save the data you have previously submitted, click the export button to
-               save a ".json" file that you can import at a later date (using the import section to the left).</p>
-               <br> <br> <br>
-              <button class="uk-button-large uk-button-default" type="button" name="button" @click="exportJSON">Export</button>
-              <!-- <button class="uk-button-large uk-button-default" type="button" name="button" @click="testChildren">Test</button> -->
-              <button class="uk-button-large uk-button-default" type="button" name="button" @click="exportIMSCC">IMSCC</button>
-
-            </div>
+      </div>
+      <div>
+        <div class="uk-background-secondary uk-padding uk-light uk-height-large">
+          <h1>EXPORT</h1>
+          <p>
+            If you have completed your class or want to save the data you have previously submitted, click the export button to
+            save a ".json" file that you can import at a later date (using the import section to the left).
+          </p>
+          <br />
+          <br />
+          <br />
+          <button
+            class="uk-button-large uk-button-default"
+            type="button"
+            name="button"
+            @click="exportJSON"
+          >Export</button>
+          <!-- <button class="uk-button-large uk-button-default" type="button" name="button" @click="testChildren">Test</button> -->
+          <button
+            class="uk-button-large uk-button-default"
+            type="button"
+            name="button"
+            @click="exportIMSCC"
+          >IMSCC</button>
         </div>
+      </div>
     </div>
 
     <home-view v-show="false" ref="home"></home-view>
@@ -42,54 +66,56 @@
       <week-view v-show="false" :idx="n-1" :ref="'week'+ n"></week-view>
     </div>
 
-  <div class="clearfix"></div>
+    <div class="clearfix"></div>
 
-  <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
+    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
       <div class="uk-background-muted uk-padding">
-  		<p>Copyright © Columbia University. All rights reserved.</p>
-     	</div>
-  </div>
-
+        <p>Copyright © Columbia University. All rights reserved.</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { EventBus } from "../bus";
+import saveFile from "../util/save-file";
+import mutations from "../store/mutations";
+import JSZip from "jszip";
+import JSZipUtils from "jszip-utils";
 
-import { EventBus } from '../bus'
-import saveFile from '../util/save-file'
-import mutations from '../store/mutations'
-import JSZip from 'jszip'
-import JSZipUtils from 'jszip-utils'
+import homeView from "./render/homeView";
+import syllabusView from "./render/syllabusView";
+import weekView from "./render/weekView";
+import listView from "./render/listView";
 
-import homeView from './render/homeView'
-import syllabusView from './render/syllabusView'
-import weekView from './render/weekView'
-import listView from './render/listView'
-
-import headings from '../store/export-headings'
+import headings from "../store/export-headings";
 
 export default {
-  name: 'Export',
-  data () {
+  name: "Export",
+  data() {
     return {
       hasImportData: false,
       fullscreenLoading: false,
       exportData: {}
-    }
+    };
   },
   computed: {
     loading: {
-      get () {
-        return this.$store.getters.loading
+      get() {
+        return this.$store.getters.loading;
       },
-      set (payload) {
-        this.$store.commit('updateLoading', payload)
+      set(payload) {
+        this.$store.commit("updateLoading", payload);
       }
-    },
+    }
   },
-  components: {homeView, syllabusView, weekView, listView},
+  components: { homeView, syllabusView, weekView, listView },
   mixins: [mutations],
-  mounted () {
+  mounted() {
+    let manifest = this.readLocalXML(
+      "../../static/files/Clean Course/course_settings/course_settings.xml"
+    );
+    console.log(manifest);
   },
   methods: {
     // openFullScreen() {
@@ -98,190 +124,269 @@ export default {
     //       this.fullscreenLoading = false;
     //     }, 2000);
     // },
-    testChildren(){
-      this.updateProp('url', this.parseUrl(this.info.url))
-      setTimeout( () => {
-        let code = this.$refs.home.returnCode()
-        console.log(code)}, 50)
+    testChildren() {
+      this.updateProp("url", this.parseUrl(this.info.url));
+      setTimeout(() => {
+        let code = this.$refs.home.returnCode();
+        console.log(code);
+      }, 50);
     },
-    onImportFileChange (changeEvent) {
-      let file = changeEvent.target.files[0]
+    onImportFileChange(changeEvent) {
+      let file = changeEvent.target.files[0];
       if (!file) {
-        return
+        return;
       }
 
-      let reader = new FileReader()
+      let reader = new FileReader();
       reader.onload = loadEvent => {
-        this.importData = JSON.parse(loadEvent.target.result)
-        this.hasImportData = !!this.importData
-      }
+        this.importData = JSON.parse(loadEvent.target.result);
+        this.hasImportData = !!this.importData;
+      };
 
-      reader.readAsText(file)
+      reader.readAsText(file);
     },
-    exportIMSCC () {
+    exportIMSCC() {
+      let footer = "</body> </html>";
 
-      let footer = '</body> </html>'
+      this.updateProp("url", this.parseUrl(this.info.url));
 
-      this.updateProp('url', this.parseUrl(this.info.url))
-
-      JSZipUtils.getBinaryContent('static/files/clean-course.imscc', (err, data) => {
-          if(err) {
-              throw err; // or handle err
+      JSZipUtils.getBinaryContent(
+        "static/files/clean-course.imscc",
+        (err, data) => {
+          if (err) {
+            throw err; // or handle err
           }
 
-          JSZip.loadAsync(data).then((zip) => {
-            console.log(zip)
-            zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
-            zip.file("wiki_content/weekly-activities.html", headings.list + this.$refs.list.returnCode() + footer)
-            zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer);
+          JSZip.loadAsync(data).then(zip => {
+            console.log(zip);
+            zip.file(
+              "wiki_content/home.html",
+              headings.home + this.$refs.home.returnCode() + footer
+            );
+            zip.file(
+              "wiki_content/weekly-activities.html",
+              headings.list + this.$refs.list.returnCode() + footer
+            );
+            zip.file(
+              "course_settings/syllabus.html",
+              headings.syllabus + this.$refs.syllabus.returnCode() + footer
+            );
 
-            let redirect_url = '<lticm:property name="url">' + this.info.url + 'pages/weekly-activities</lticm:property>'
+            let redirect_url =
+              '<lticm:property name="url">' +
+              this.info.url +
+              "pages/weekly-activities</lticm:property>";
 
-            zip.file("ccb-weekly-redirect.xml", headings.redirect_top + redirect_url + headings.redirect_bottom)
-            
+            zip.file(
+              "ccb-weekly-redirect.xml",
+              headings.redirect_top + redirect_url + headings.redirect_bottom
+            );
+
             // Add info to manifest
-            zip.file('imsmanifest.xml').async("string").then((data) => {
-            let parser = new DOMParser();
-            let manifest = parser.parseFromString(data, "text/xml")
+            zip
+              .file("imsmanifest.xml")
+              .async("string")
+              .then(data => {
+                let parser = new DOMParser();
+                let manifest = parser.parseFromString(data, "text/xml");
 
-            //add weeks
-            for (let i=1; i <= this.weeks.length; i++){
-              let title = '<title>Week ' + i + '</title>'
-              let iden = '<meta name="identifier" content="ccb-week' + i + '"/>'
-              let el = document.getElementById("week-box" + (i-1))
-              let code = el.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
-              zip.file("wiki_content/week-"+ i +".html", headings.top + title + iden + headings.bottom + code + footer)
-              addResource(manifest, "ccb-week-" + i, 'wiki_content/pages/week-' + i)
-            }
+                //add weeks
+                for (let i = 1; i <= this.weeks.length; i++) {
+                  let title = "<title>Week " + i + "</title>";
+                  let iden =
+                    '<meta name="identifier" content="ccb-week' + i + '"/>';
+                  let el = document.getElementById("week-box" + (i - 1));
+                  let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "");
+                  zip.file(
+                    "wiki_content/week-" + i + ".html",
+                    headings.top +
+                      title +
+                      iden +
+                      headings.bottom +
+                      code +
+                      footer
+                  );
+                  addResource({
+                    xml: manifest,
+                    iden: "ccb-week-" + i,
+                    link: "wiki_content/pages/week-" + i
+                  });
+                }
 
-            this.weeks.forEach(week => {
-              week.discussions.forEach (discussion => {
-                
-              })
-            })
+                this.weeks.forEach(week => {
+                  week.discussions.forEach(discussion => {
+                    addResource({
+                      xml: manifest,
+                      type: "discussion",
+                      iden: discussion.id,
+                      meta: discussion.id + "-meta"
+                    });
+                  });
+                });
 
-            let serializer = new XMLSerializer();
-            let manifestString = serializer.serializeToString(manifest);
+                let serializer = new XMLSerializer();
+                let manifestString = serializer.serializeToString(manifest);
+                console.log(manifest);
+                zip.file("imsmanifest.xml", manifestString);
 
-            zip.file('imsmanifest.xml', manifestString )
+                zip.generateAsync({ type: "blob" }).then(blob => {
+                  saveFile({
+                    name: this.info.title + "_export.imscc",
+                    data: blob
+                  });
+                });
+              });
+          });
+        }
+      );
 
-            zip.generateAsync({type:"blob"})
-            .then((blob) => {
-              saveFile({
-                name: this.info.title + '_export.imscc',
-                data: blob
-              })
-            });
-          
-            })
-
-          })
-      })
-
-      
-      function addResource(xml, iden, link, type="page", use=""){
+      function addResource(options) {
+        let { xml, iden, link, type = "page", meta } = options;
+        console.log(type);
         let resource = xml.createElement("resource");
         let file = xml.createElement("file");
-        resource.appendChild(file)
+        resource.appendChild(file);
 
-        let resourceList = xml.getElementsByTagName("resources")[0]
+        let resourceList = xml.getElementsByTagName("resources")[0];
 
         resource.setAttribute("identifier", iden);
 
-        switch(type){
+        switch (type) {
           case "page":
             resource.setAttribute("type", "webcontent");
             resource.setAttribute("href", link);
             file.setAttribute("href", link);
             break;
-          case "discusson":
+          case "discussion":
+            resource.setAttribute("type", "imsdt_xmlv1p1");
+            resource.setAttribute("href", iden + ".xml");
+            file.setAttribute("href", iden + ".xml");
+
+            let depend = xml.createElement("dependency");
+            depend.setAttribute("identifierref", meta);
+            resource.appendChild(depend);
+
+            let metaResource = xml.createElement("resource");
+            let metaFile = xml.createElement("file");
+            metaResource.appendChild(metaFile);
+            metaResource.setAttribute("identifier", meta);
+            metaResource.setAttribute(
+              "type",
+              "associatedcontent/imscc_xmlv1p1/learning-application-resource"
+            );
+            metaResource.setAttribute("href", meta + ".xml");
+            metaFile.setAttribute("href", meta + ".xml");
+
+            resourceList.appendChild(metaResource);
             break;
           default:
             break;
         }
 
-        resourceList.appendChild(resource)
-
+        resourceList.appendChild(resource);
       }
-
     },
     // old imscc exporter
-    exportIMSCCOld () {
+    exportIMSCCOld() {
+      let footer = "</body> </html>";
 
-      let footer = '</body> </html>'
+      this.updateProp("url", this.parseUrl(this.info.url));
 
-      this.updateProp('url', this.parseUrl(this.info.url))
-
-      JSZipUtils.getBinaryContent('static/files/weekly-template.imscc', (err, data) => {
-          if(err) {
-              throw err; // or handle err
+      JSZipUtils.getBinaryContent(
+        "static/files/weekly-template.imscc",
+        (err, data) => {
+          if (err) {
+            throw err; // or handle err
           }
 
-          JSZip.loadAsync(data).then((zip) => {
-            console.log(zip)
-            zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
-            zip.file("wiki_content/weekly-activities.html", headings.list + this.$refs.list.returnCode() + footer)
-            zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer);
+          JSZip.loadAsync(data).then(zip => {
+            console.log(zip);
+            zip.file(
+              "wiki_content/home.html",
+              headings.home + this.$refs.home.returnCode() + footer
+            );
+            zip.file(
+              "wiki_content/weekly-activities.html",
+              headings.list + this.$refs.list.returnCode() + footer
+            );
+            zip.file(
+              "course_settings/syllabus.html",
+              headings.syllabus + this.$refs.syllabus.returnCode() + footer
+            );
 
-            for (let i=1; i <= this.weeks.length; i++){
-              let title = '<title>Week ' + i + '</title>'
-              let iden = '<meta name="identifier" content="' + headings.week_ids[i-1] + '"/>'
-              let el = document.getElementById("week-box" + (i-1))
-              let code = el.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
-              zip.file("wiki_content/week-"+ i +".html", headings.top + title + iden + headings.bottom + code + footer)
+            for (let i = 1; i <= this.weeks.length; i++) {
+              let title = "<title>Week " + i + "</title>";
+              let iden =
+                '<meta name="identifier" content="' +
+                headings.week_ids[i - 1] +
+                '"/>';
+              let el = document.getElementById("week-box" + (i - 1));
+              let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "");
+              zip.file(
+                "wiki_content/week-" + i + ".html",
+                headings.top + title + iden + headings.bottom + code + footer
+              );
             }
 
-            let redirect_url = '<lticm:property name="url">' + this.info.url + 'pages/weekly-activities</lticm:property>'
-            console.log(this.info.url)
-            console.log(redirect_url)
-            zip.file("ic0780a1b3ec00e092caacf7b0d3865e4.xml", headings.redirect_top + redirect_url + headings.redirect_bottom)
+            let redirect_url =
+              '<lticm:property name="url">' +
+              this.info.url +
+              "pages/weekly-activities</lticm:property>";
+            console.log(this.info.url);
+            console.log(redirect_url);
+            zip.file(
+              "ic0780a1b3ec00e092caacf7b0d3865e4.xml",
+              headings.redirect_top + redirect_url + headings.redirect_bottom
+            );
 
-
-            zip.generateAsync({type:"blob"})
-            .then((blob) => {
+            zip.generateAsync({ type: "blob" }).then(blob => {
               saveFile({
-                name: this.info.title + '_export.imscc',
+                name: this.info.title + "_export.imscc",
                 data: blob
-              })
+              });
             });
-          })
-      });
-
-
+          });
+        }
+      );
     },
-    performImport () {
-      this.$store.commit('updateInfo', this.importData.store.info)
-      this.$store.commit('updateTheme', this.importData.store.theme.theme)
-      this.$store.commit('updateWeeks', this.importData.store.weeks)
-      this.$router.push({path: '/home'});
+    performImport() {
+      this.$store.commit("updateInfo", this.importData.store.info);
+      this.$store.commit("updateTheme", this.importData.store.theme.theme);
+      this.$store.commit("updateWeeks", this.importData.store.weeks);
+      this.$router.push({ path: "/home" });
     },
-    exportJSON () {
-      this.exportData = {}
-      this.exportDataIfPossible()
+    exportJSON() {
+      this.exportData = {};
+      this.exportDataIfPossible();
     },
-    exportDataIfPossible () {
-      console.log("here")
+    exportDataIfPossible() {
+      console.log("here");
 
       let waitTime = 0;
 
       let today = new Date();
-      let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      let date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
       let time = today.getHours() + "-" + today.getMinutes();
-      let dateTime = date+' '+time;
+      let dateTime = date + " " + time;
 
       // get store
-      this.exportData.store = this.$store.getters.getStore
+      this.exportData.store = this.$store.getters.getStore;
 
       // save file as json
-      console.log ('exporting..')
-      setTimeout( () => {
+      console.log("exporting..");
+      setTimeout(() => {
         saveFile({
-          name: this.$store.state.info.title + " " + dateTime + '.json',
+          name: this.$store.state.info.title + " " + dateTime + ".json",
           data: JSON.stringify(this.exportData)
-        })
-      }, waitTime)
+        });
+      }, waitTime);
     },
-    onImportFileChange2 (changeEvent) {
+    onImportFileChange2(changeEvent) {
       let homeHeading = `
       <html>
       <head>
@@ -292,55 +397,67 @@ export default {
         <meta name="workflow_state" content="active" />
         <meta name="front_page" content="true" />
       </head>
-      <body>`
+      <body>`;
 
-      let homeFooter = '</body> </html>'
+      let homeFooter = "</body> </html>";
 
-      this.updateProp('url', this.parseUrl(this.info.url))
+      this.updateProp("url", this.parseUrl(this.info.url));
 
-      let files = changeEvent.target.files
-      JSZip.loadAsync(files[0]).then((zip) => {
-        console.log(zip)
-        zip.file("wiki_content/home.html", homeHeading + this.$refs.home.returnCode() + homeFooter);
-        zip.generateAsync({type:"blob"})
-        .then((blob) => {
+      let files = changeEvent.target.files;
+      JSZip.loadAsync(files[0]).then(zip => {
+        console.log(zip);
+        zip.file(
+          "wiki_content/home.html",
+          homeHeading + this.$refs.home.returnCode() + homeFooter
+        );
+        zip.generateAsync({ type: "blob" }).then(blob => {
           saveFile({
-            name: this.info.title + '_export.imscc',
+            name: this.info.title + "_export.imscc",
             data: blob
-          })
+          });
         });
         // zip.forEach(function (relativePath, zipEntry) {  // 2) print entries
         // });
-      })
+      });
     },
+    readLocalXML(path) {
+      var output = null;
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", path, false);
+      xmlhttp.send();
+      if (xmlhttp.status == 200) {
+        output = xmlhttp.responseText;
+      }
+      let parser = new DOMParser();
+      let parsedXML = parser.parseFromString(output, "text/xml");
+      return parsedXML;
+    }
   }
-}
+};
 </script>
 
 <style>
-
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: 100%;
+  font-size: 100%;
 }
 
-.export-container{
+.export-container {
   width: 100%;
   text-align: center;
 }
 
-.export-button{
+.export-button {
   width: 80px;
   height: 50px;
 }
 
-.center{
+.center {
   text-align: center;
 }
-
 </style>
