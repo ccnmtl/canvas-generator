@@ -5,7 +5,7 @@ import _ from 'lodash'
 function deepEquals(o1, o2) { return JSON.stringify(o1) === JSON.stringify(o2) }
 
 export default {
-	data() {
+  data() {
     return {
       info: _.cloneDeep(this.$store.getters.getInfo),
     }
@@ -17,20 +17,20 @@ export default {
   },
   watch: {
     getInfo: {
-    	deep: true,
-    	handler(newInfo) {
+      deep: true,
+      handler(newInfo) {
         if (!_.isEqual(newInfo, this.info)) { // condition to prevent infinite loops
-    			this.info = _.cloneDeep(newInfo);
+          this.info = _.cloneDeep(newInfo);
           console.log('...handling state change')
         }
-    	}
+      }
     },
-  	info: {
-    	deep: true,
-    	handler(newInfo) {
+    info: {
+      deep: true,
+      handler(newInfo) {
         console.log('handling new info')
-    		this.$store.commit('updateInfo', _.cloneDeep(newInfo))
-    	}
+        this.$store.commit('updateInfo', _.cloneDeep(newInfo))
+      }
     }
-	}
+  }
 }

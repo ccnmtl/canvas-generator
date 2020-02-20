@@ -5,7 +5,7 @@
       <!-- Off Canvas Menu Slide -->
       <el-col :span="6" style="padding: 20px;">
         <a href="#offcanvas-slide" class="uk-button uk-button-default noBorder" uk-toggle><span uk-icon="icon: table"></span> &nbsp;Menu</a>
-      </el-col>
+      </el-col> 
 
       <!-- Breadcrumb navigation bar -->
       <el-col :span="12" style="padding: 10px;">
@@ -145,13 +145,13 @@
 </template>
 
 <script>
-import { EventBus } from "./bus";
-import saveState from 'vue-save-state';
-import { mapGetters, mapMutations } from 'vuex'
-import help from './store/help'
-import mutations from './store/mutations'
+import { EventBus } from "./bus"
+import saveState from "vue-save-state"
+import { mapGetters, mapMutations } from "vuex"
+import help from "./store/help"
+import mutations from "./store/mutations"
 
-var moment = require('moment');
+var moment = require("moment")
 
 export default {
   name: "app",
@@ -159,54 +159,51 @@ export default {
     return {
       hasImportData: false,
       dialogFormVisible: false,
-      exportData: {},
-    };
+      exportData: {}
+    }
   },
   methods: {
-    ...mapMutations([
-      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
-    ]),
+    ...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
     getSaveStateConfig() {
       return {
-          'cacheKey': 'App',
-      };
+        cacheKey: "App"
+      }
     }
   },
   mixins: [saveState, mutations],
   computed: {
     loading() {
-      return this.$store.getters.loading;
+      return this.$store.getters.loading
     },
     helpInfo() {
       let path = this.$route.name
-      let body = help[path] || ''
-      body = '<h5>' + path + '</h5>' + body
-      return {body, exists: help[path]}
-    },
+      let body = help[path] || ""
+      body = "<h5>" + path + "</h5>" + body
+      return { body, exists: help[path] }
+    }
   },
   mounted() {
+    if (this.weeks.length < 1) {
+      let weeklyActivities = []
 
-    if (this.weeks.length < 1){
-      let weeklyActivities = [];
-
-      for (let i = 1; i <= 12; i++ ){
+      for (let i = 1; i <= 12; i++) {
         let tempWeek = _.cloneDeep(this.$store.getters.dWeek)
-        tempWeek.imgSrc = this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + '.png'
+        tempWeek.imgSrc =
+          this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + ".png"
         tempWeek.title = "Lecture " + i
         tempWeek.secondTitle = "Lecture " + i + " II"
 
-
-        weeklyActivities.push(tempWeek);
+        weeklyActivities.push(tempWeek)
       }
 
-      weeklyActivities.forEach((week, index)=>{
-        week.date = moment().add(index, 'w')
+      weeklyActivities.forEach((week, index) => {
+        week.date = moment().add(index, "w")
       })
 
       this.updateWeeks(weeklyActivities)
     }
   }
-};
+}
 </script>
 
 <style>
@@ -248,14 +245,14 @@ html {
 }
 
 .nav-button {
-  display:inline-block;
+  display: inline-block;
 }
 
-.bcTrail{
+.bcTrail {
   padding-top: 15px;
 }
 
-.bcTrail li{
+.bcTrail li {
   list-style: none;
   display: inline-block;
   padding-right: 5px;
@@ -263,18 +260,17 @@ html {
 }
 
 .bcTrail li::after {
-    content: " / ";
-    padding-left: 5px;
+  content: " / ";
+  padding-left: 5px;
 }
 
-.bcTrail li a{
+.bcTrail li a {
   text-decoration: none;
   color: #48576a;
 }
 
-.bcTrail li a:hover{
+.bcTrail li a:hover {
   text-decoration: none;
   color: #39f;
 }
-
 </style>

@@ -45,34 +45,29 @@
 </template>
 
 <script>
-
 export default {
   data() {
-    return {
-    }
+    return {}
   },
-  props: ['data', 'index'],
+  props: ["data", "index"],
   computed: {
-    videoLink(){
-      let output;
-      let link = this.data.source;
-      let parts = link.split('/');
-      if (parts[2].includes('vimeo.com')){
-        output = 'https://player.vimeo.com/video/' + parts[3]
+    videoLink() {
+      let output
+      let link = this.data.source
+      let parts = link.split("/")
+      if (parts[2].includes("vimeo.com")) {
+        output = "https://player.vimeo.com/video/" + parts[3]
+      } else if (parts[2].includes("youtube")) {
+        let split = link.split("=")
+        output = "https://www.youtube.com/embed/" + split[1]
+      } else {
+        output = link
       }
-      else if (parts[2].includes('youtube')){
-        let split = link.split('=')
-        output = 'https://www.youtube.com/embed/' + split[1]
-      }
-      else {
-        output = link;
-      }
-      return output;
+      return output
     }
   }
 }
 </script>
 
 <style lang="css">
-
 </style>

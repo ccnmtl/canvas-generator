@@ -1,6 +1,6 @@
 // Where the default App info is stored. A good place to see most of the different pieces of data (as the store just deep clones this to reduce redundnacy).
 
-let moment = require ('moment')
+let moment = require('moment')
 
 export default {
   state: {
@@ -18,7 +18,7 @@ export default {
       dateLength: "12",
       execWeeks: "2",
       execWeekLength: "1",
-      weekDays: [0,2,4],
+      weekDays: [0, 2, 4],
       weekOffset: 0,
 
       //EXEC SESSION INFO
@@ -34,14 +34,14 @@ export default {
 
 
       classType: { option: "Executive Training", dateType: "Session" }, // { option: "Weekly Course", dateType: "Week" },
-      classOptions:[
+      classOptions: [
         { option: "Weekly Course", dateType: "Week" },
         { option: "Executive Training", dateType: "Session" },
         // { option: "Blended", dateType: "Week" },
       ],
 
       //TEACHERS
-      profs:[
+      profs: [
         {
           name: 'Professor Name',
           email: 'professor@sipa.columbia.edu',
@@ -49,7 +49,7 @@ export default {
           imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
         },
       ],
-      tas:[
+      tas: [
         {
           name: 'TA Name',
           email: 'ta@sipa.columbia.edu',
@@ -66,9 +66,9 @@ export default {
       wideBanner: false,
 
       // Home Page Paramaters
-      video:"https://vimeo.com/199382848/1dd8fc0f31",
+      video: "https://vimeo.com/199382848/1dd8fc0f31",
       isVideo: false,
-      image:"https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/campus.jpg",
+      image: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/campus.jpg",
       sylButton: true,
       weekButton: true,
       meetings: "Tuesday 9:00-10:50 am (IAB Room 411)",

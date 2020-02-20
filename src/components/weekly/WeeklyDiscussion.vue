@@ -19,14 +19,13 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
       url: this.$store.state.info.url
     }
   },
-  props: ['data', 'index']
+  props: ["data", "index"]
 }
 </script>
 

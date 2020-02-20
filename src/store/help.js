@@ -2,7 +2,7 @@
 
 export default {
   "Home Template":
-  `
+    `
   <p>
   The Home Page Template is where you enter the primary data about your course, including Title, Url, Description, and information about the instructors and meeting times.
   Please double check that your Course URL (the third input on the <strong> COURSE INFO </strong> tab) is correct as this is used to generate the links to each page.
@@ -17,7 +17,7 @@ export default {
   </p>
   `,
   "Syllabus Template":
-  `
+    `
   <p>The Syllabus Template is where you enter the primary information about the instructors and determine which syllabus sections you would like to include in your class. </p>
   <p>Use the "ADD PROFESSOR" and "ADD TA" buttons at the top of the page to add new instructors. You can edit or remove an instructor by selecting their name from the dropdown menu next to
   "EDIT INFO" and clicking "EDIT" if there are no forms visible.</p>
@@ -28,7 +28,7 @@ export default {
   <p> Once you are completed you should edit the text on the page for each syllabus section directly in canvas. </p>
   `,
   "Program Overview":
-  `
+    `
   <p>The Program Overview Template lets you create a page that shows an overview of the sessions in your executive training course at a glance. This page is best completed before the "WEEKLY LIST" Page
   as it will automatically set the correct dates based on your selected settings. </p>
   <p>First, complete the first box, starting with "HOW MANY WEEKS" and proceeding down in the order of the dialogs. Use the "OFFSET CLASS START" option if your course starts on a day other than your usual session time.
@@ -37,7 +37,7 @@ export default {
   <p> There are additional input sections to quickly change the title and date of each session manually and to modify whether there are two meetings times per day.
   `,
   "Weekly Activities List":
-  `
+    `
   <p>The Weekly Activities List shows all of the sessions in your course and links to their individual pages. At the top of the page
   you can select the number of lectures or sessions in your course and click te "EDIT # OF ACTIVITES" button to trim the amount of sessions shown.
   If you are in a weekly course, you can also select a "START DATE" which will automatically modify each session's date so that the they appear a week after one another.
@@ -48,7 +48,7 @@ export default {
   <p>If you do not want to have individual pages for each class session, then click the "LINKS" toggle to remove the hotlinks on the session images and titles.</p>
   `,
   "Weekly Activity":
-  `
+    `
   <p>On the Individual Activity page you can edit the information for each session. First you can select which session you would like to change using the dropdown
   at the top of the page. Next you can edit the title using the input directly below or the decription, by clicking the "SHOW TEXT EDITOR" button if no input is visible.
   The readings and lecture presentation sections should be edited directly in the Canvas rich text editor for each page.</p>
@@ -56,7 +56,7 @@ export default {
   <p>You may also add videos, discussins, or assignments by clicking the respective buttons, selecting "EDIT" and modifying the inputs shown.</p>
   `,
   default:
-  `
+    `
   `,
 
 }

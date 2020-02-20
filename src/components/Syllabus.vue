@@ -319,13 +319,13 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import { EventBus } from "../bus";
-import { quillEditor } from "vue-quill-editor";
-import saveState from "vue-save-state";
-import mutations from '../store/mutations'
+import { mapGetters, mapMutations } from "vuex"
+import { EventBus } from "../bus"
+import { quillEditor } from "vue-quill-editor"
+import saveState from "vue-save-state"
+import mutations from "../store/mutations"
 
-var moment = require('moment');
+var moment = require("moment")
 
 var toolbarOptions = [
   ["bold", "italic", "underline"],
@@ -341,7 +341,7 @@ var toolbarOptions = [
   [{ indent: "-1" }, { indent: "+1" }],
   [{ script: "sub" }, { script: "super" }],
   ["link", "clean"]
-];
+]
 
 export default {
   name: "Syllabus",
@@ -351,19 +351,19 @@ export default {
         isFile: true,
         uploadSwitchText: "Click to Upload Image from Url"
       },
-      sections: ['Description', 'Objectives', 'Schedule'],
-      sections2: ['Grading', 'Resources', 'Integrity'],
+      sections: ["Description", "Objectives", "Schedule"],
+      sections2: ["Grading", "Resources", "Integrity"],
       pEditable: false,
       tEditable: false,
       iEditable: true,
       outputCode: "",
-      selected: { index: 0, list: 'profs' },
+      selected: { index: 0, list: "profs" },
       editorOption: {
         modules: {
           toolbar: toolbarOptions
         }
       }
-    };
+    }
   },
   components: {
     quillEditor
@@ -371,138 +371,123 @@ export default {
   mixins: [saveState, mutations],
   watch: {
     // Protects against selected.list becoming an object (need to track down why this happens)
-    selected: function(){
-      if (typeof this.selected.list !== 'string'){
-        this.selected.list = 'profs'
+    selected: function() {
+      if (typeof this.selected.list !== "string") {
+        this.selected.list = "profs"
       }
     }
   },
   computed: {
-    ...mapGetters(["getInfo", "dProf", "dTA", 'getWeeks']),
-
+    ...mapGetters(["getInfo", "dProf", "dTA", "getWeeks"])
   },
   methods: {
-    formatDate(date){
+    formatDate(date) {
       return moment(date).format("MMMM Do")
     },
     newLine(val) {
-      if (!val) return "";
-      return val.replace(/\r?\n/g, "<br />");
+      if (!val) return ""
+      return val.replace(/\r?\n/g, "<br />")
     },
     updateSwitch() {
-      this.userInput.isFile = !this.userInput.isFile;
+      this.userInput.isFile = !this.userInput.isFile
       this.userInput.uploadSwitchText = this.userInput.isFile
         ? "Click to Upload Image from URL"
-        : "Click to Upload Image from Computer";
+        : "Click to Upload Image from Computer"
     },
-    onFormSubmit(
-      type,
-      obj,
-      id = type == "url" ? "#image-url" : "#image-file",
-      ev
-    ) {
-      var formData = new FormData();
+    onFormSubmit(type, obj, id = type == "url" ? "#image-url" : "#image-file", ev) {
+      var formData = new FormData()
 
       if (type == "url") {
-        console.log("uploading url...");
-        var imageurl = document.querySelector(id); // Gets form data in html
-        if (imageurl.value == "") return;
-        formData.append("imageUrl", imageurl.value); // Adds api header to tell server that it is a url
+        console.log("uploading url...")
+        var imageurl = document.querySelector(id) // Gets form data in html
+        if (imageurl.value == "") return
+        formData.append("imageUrl", imageurl.value) // Adds api header to tell server that it is a url
       } else {
-        console.log("uploading file...");
-        var imagefile = document.querySelector(id);
-        if (imagefile.files.length == 0) return;
-        formData.append("image", imagefile.files[0]); // Adds api header to tell server that it is a file
+        console.log("uploading file...")
+        var imagefile = document.querySelector(id)
+        if (imagefile.files.length == 0) return
+        formData.append("image", imagefile.files[0]) // Adds api header to tell server that it is a file
       }
 
       // More api headers to tell the server the dimensions to crop
-      formData.append("imageWidth", 200);
-      formData.append("imageHeight", 200);
+      formData.append("imageWidth", 200)
+      formData.append("imageHeight", 200)
 
       // Send post request to Amazon server using vue-resource with form data
-      this.$http
-        .post(
-          "http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image",
-          formData
-        )
-        .then(
-          response => {
-            console.log("success");
-            let imageData = JSON.parse(response.bodyText);
-            obj.imgSrc = imageData.imageUrls[0]; // Change requisite weekly activity image src to the hosted file
-          },
-          response => {
-            console.log(response);
-          }
-        );
+      this.$http.post("http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image", formData).then(
+        response => {
+          console.log("success")
+          let imageData = JSON.parse(response.bodyText)
+          obj.imgSrc = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
+        },
+        response => {
+          console.log(response)
+        }
+      )
     },
     addProf() {
       let tempProf = _.cloneDeep(this.dProf)
-      this.info.profs.push(tempProf);
-      this.selected = { index: this.info.profs.length - 1, list: 'profs' }
-
+      this.info.profs.push(tempProf)
+      this.selected = { index: this.info.profs.length - 1, list: "profs" }
     },
     addTA() {
       let tempTA = _.cloneDeep(this.dTA)
-      this.info.tas.push(tempTA);
-      this.selected = { index: this.info.tas.length - 1, list: 'tas' }
-
+      this.info.tas.push(tempTA)
+      this.selected = { index: this.info.tas.length - 1, list: "tas" }
     },
     removeProf() {
-      let { list, index } = this.selected;
-      console.log(list);
+      let { list, index } = this.selected
+      console.log(list)
       let users = _.cloneDeep(this.info[list])
-      users.splice(index, 1);
-      if (index == 0){
-        if (list == 'profs'){
-          console.log('tried to delete prof')
+      users.splice(index, 1)
+      if (index == 0) {
+        if (list == "profs") {
+          console.log("tried to delete prof")
           return
-          console.log('after return')
+          console.log("after return")
         }
-        console.log('deleting last ta')
-        this.selected = { index: 0, list: 'profs' }
-      }
-      else {
+        console.log("deleting last ta")
+        this.selected = { index: 0, list: "profs" }
+      } else {
         this.selected = { index: index - 1, list }
       }
       this.updateProp(list, users)
     },
     clearProfs() {
-      this.info.profs = [this.dProf];
-      this.info.tas = [this.dTA];
+      this.info.profs = [this.dProf]
+      this.info.tas = [this.dTA]
     },
     setToDefault() {
-      console.log('resetting data...')
+      console.log("resetting data...")
       let dInfo = _.cloneDeep(this.$store.getters.dInfo)
-      let props = ['profs','tas','sectionBox1', 'sectionBox2']
+      let props = ["profs", "tas", "sectionBox1", "sectionBox2"]
 
-      props.forEach( (prop) => {
+      props.forEach(prop => {
         this.updateProp(prop, dInfo[prop])
       })
-
     },
     getSaveStateConfig() {
       return {
         cacheKey: "Syllabus"
-      };
+      }
     }
   },
   mounted() {
-    this.updateCode();
+    this.updateCode()
   },
   beforeCreate() {
     EventBus.$on("set-default", response => {
-      this.setToDefault();
-      console.log(response);
-    });
+      this.setToDefault()
+      console.log(response)
+    })
 
     EventBus.$on("import-data", data => {
-      this.userInput = { ...data.weekly.userInput };
-      this.videos = data.weekly.videos;
-      this.assignments = data.weekly.assignments;
-      this.discussions = data.weekly.discussions;
-      console.log("importing data to weekly...");
-    });
+      this.userInput = { ...data.weekly.userInput }
+      this.videos = data.weekly.videos
+      this.assignments = data.weekly.assignments
+      this.discussions = data.weekly.discussions
+      console.log("importing data to weekly...")
+    })
 
     EventBus.$on("export-data", () => {
       // let weeklyList = {
@@ -510,14 +495,13 @@ export default {
       // }
       // EventBus.$emit('list-data', weeklyList)
 
-      let syllabus = this.$data;
-      console.log("sending syllabus");
-      EventBus.$emit("syllabus-data", syllabus);
-    });
+      let syllabus = this.$data
+      console.log("sending syllabus")
+      EventBus.$emit("syllabus-data", syllabus)
+    })
   },
-  beforeUpdate() {
-  }
-};
+  beforeUpdate() {}
+}
 </script>
 
 

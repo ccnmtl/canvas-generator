@@ -148,10 +148,8 @@
 </template>
 
 <script>
-
-import mutations from '../../store/mutations'
-var moment = require('moment');
-
+import mutations from "../../store/mutations"
+var moment = require("moment")
 
 export default {
   data() {
@@ -161,30 +159,27 @@ export default {
     }
   },
   computed: {
-    currentItem(){
-      return this.content[this.index - 1];
+    currentItem() {
+      return this.content[this.index - 1]
     }
   },
   methods: {
-    returnCode(){
-      console.log('returning syl code..')
-      let code = document.getElementById("syl-box");
-      return code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
+    returnCode() {
+      console.log("returning syl code..")
+      let code = document.getElementById("syl-box")
+      return code.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
     },
-    formatDate(date){
+    formatDate(date) {
       return moment(date).format("MMMM Do")
     },
     newLine(val) {
-      if (!val) return "";
-      return val.replace(/\r?\n/g, "<br />");
-    },
-
+      if (!val) return ""
+      return val.replace(/\r?\n/g, "<br />")
+    }
   },
   mixins: [mutations]
 }
 </script>
 
 <style lang="css">
-
-
 </style>

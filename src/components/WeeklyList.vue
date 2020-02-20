@@ -179,27 +179,27 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-import mutations from '../store/mutations'
-import { EventBus } from '../bus'
-import { quillEditor } from 'vue-quill-editor';
-import saveState from 'vue-save-state';
-import WeeklyListItem from './weekly/WeeklyListItem'
-import Home from './Home'
-import _ from 'lodash'
+import { mapGetters, mapMutations } from "vuex"
+import mutations from "../store/mutations"
+import { EventBus } from "../bus"
+import { quillEditor } from "vue-quill-editor"
+import saveState from "vue-save-state"
+import WeeklyListItem from "./weekly/WeeklyListItem"
+import Home from "./Home"
+import _ from "lodash"
 
-var moment = require('moment');
+var moment = require("moment")
 
 var toolbarOptions = [
-  ['bold', 'italic', 'underline'],
-  ['blockquote',{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  [{ 'header': [1, 2, 3, 4, 5, 6, false] },'clean'],
-  ['link', 'image']
-];
+  ["bold", "italic", "underline"],
+  ["blockquote", { list: "ordered" }, { list: "bullet" }],
+  [{ header: [1, 2, 3, 4, 5, 6, false] }, "clean"],
+  ["link", "image"]
+]
 
 export default {
-  name:"Weekly List",
-  data () {
+  name: "Weekly List",
+  data() {
     return {
       userInput: {
         startDate: null,
@@ -207,11 +207,11 @@ export default {
         toChange: 12,
         isFile: true,
         isLinked: true,
-        uploadSwitchText: "Click to Upload Image from Url",
+        uploadSwitchText: "Click to Upload Image from Url"
       },
       needsInit: true,
-      outputCode: '',
-      editorOption:{
+      outputCode: "",
+      editorOption: {
         modules: {
           toolbar: toolbarOptions
         }
@@ -224,83 +224,106 @@ export default {
   },
   mixins: [saveState, mutations],
   watch: {
-    "info.startDate": function(){
-        this.updateDates();
+    "info.startDate": function() {
+      this.updateDates()
     },
-    "info.classType": function(){
-        this.updateDates();
-        this.updateImages()
-    },
+    "info.classType": function() {
+      this.updateDates()
+      this.updateImages()
+    }
   },
   computed: {
-    ...mapGetters([
-      'getInfo', 'dWeek', 'getWeeks'
-    ]),
+    ...mapGetters(["getInfo", "dWeek", "getWeeks"]),
     day() {
       return moment(this.info.startDate).format("dddd, MMMM Do")
     },
     week() {
-      return moment(this.info.startDate).add(1, 'w').format("dddd, MMMM Do")
+      return moment(this.info.startDate)
+        .add(1, "w")
+        .format("dddd, MMMM Do")
     },
     activitiesTitle() {
       if (this.info.classType.dateType == "Session") return "Session"
       return this.info.classType.dateType == "Week" ? "Weekly" : "Daily"
     },
     // Changes the description wording so that it matches the current number of weeks on the page
-    numWeeks(){
+    numWeeks() {
       let num = this.weeks.length
 
-      var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
-      var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+      var a = [
+        "",
+        "one ",
+        "two ",
+        "three ",
+        "four ",
+        "five ",
+        "six ",
+        "seven ",
+        "eight ",
+        "nine ",
+        "ten ",
+        "eleven ",
+        "twelve ",
+        "thirteen ",
+        "fourteen ",
+        "fifteen ",
+        "sixteen ",
+        "seventeen ",
+        "eighteen ",
+        "nineteen "
+      ]
+      var b = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
 
-      if ((num = num.toString()).length > 9) return 'overflow';
-      let n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-      if (!n) return; var str = '';
-      str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
-      str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
-      str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
-      str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
-      str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
-      return str;
+      if ((num = num.toString()).length > 9) return "overflow"
+      let n = ("000000000" + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/)
+      if (!n) return
+      var str = ""
+      str += n[1] != 0 ? (a[Number(n[1])] || b[n[1][0]] + " " + a[n[1][1]]) + "crore " : ""
+      str += n[2] != 0 ? (a[Number(n[2])] || b[n[2][0]] + " " + a[n[2][1]]) + "lakh " : ""
+      str += n[3] != 0 ? (a[Number(n[3])] || b[n[3][0]] + " " + a[n[3][1]]) + "thousand " : ""
+      str += n[4] != 0 ? (a[Number(n[4])] || b[n[4][0]] + " " + a[n[4][1]]) + "hundred " : ""
+      str += n[5] != 0 ? (str != "" ? "and " : "") + (a[Number(n[5])] || b[n[5][0]] + " " + a[n[5][1]]) : ""
+      return str
     }
   },
   methods: {
-    ...mapMutations([
-      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
-    ]),
-    updateSwitch(){
-      this.userInput.isFile = !this.userInput.isFile;
-      this.userInput.uploadSwitchText = this.userInput.isFile ? "Click to Upload Image from URL" : "Click to Upload Image from Computer"
+    ...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
+    updateSwitch() {
+      this.userInput.isFile = !this.userInput.isFile
+      this.userInput.uploadSwitchText = this.userInput.isFile
+        ? "Click to Upload Image from URL"
+        : "Click to Upload Image from Computer"
     },
-    updateDates(){
+    updateDates() {
       // right now do not update if in exec training mode
-      if (true){ //this.info.classType.dateType == "Week"
-        this.weeks.forEach((week, index)=>{
-          let interval = this.info.classType.dateType == "Week" ? 'w' : 'd'
+      if (true) {
+        //this.info.classType.dateType == "Week"
+        this.weeks.forEach((week, index) => {
+          let interval = this.info.classType.dateType == "Week" ? "w" : "d"
           let date = moment(this.info.startDate).add(index, interval)
-          this.updateWeek(index,'date', date)
+          this.updateWeek(index, "date", date)
         })
-    }
+      }
     },
-    updateImages(){
-      this.weeks.forEach((week, index)=>{
-        if (index > 14 && this.info.classType.dateType == "Week") index = 14;
-        let imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
-        if (week.imgSrc.includes(this.$store.state.imageServer)) this.updateWeek(index,'imgSrc', imgSrc)
+    updateImages() {
+      this.weeks.forEach((week, index) => {
+        if (index > 14 && this.info.classType.dateType == "Week") index = 14
+        let imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + ".png"
+        if (week.imgSrc.includes(this.$store.state.imageServer)) this.updateWeek(index, "imgSrc", imgSrc)
       })
     },
-    setDefaultImage(index){
-      let imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
-      this.updateWeek(index,'imgSrc', imgSrc)
+    setDefaultImage(index) {
+      let imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + ".png"
+      this.updateWeek(index, "imgSrc", imgSrc)
     },
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
-    AddActivity(){
+    AddActivity() {
       let index = this.weeks.length + 1
 
-      if (index > 15 && this.info.classType.dateType == "Week") index = 15;
+      if (index > 15 && this.info.classType.dateType == "Week") index = 15
 
       let tempWeek = _.cloneDeep(this.dWeek)
-      tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + '.png'
+      tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + ".png"
       tempWeek.date = moment()
       tempWeek.title = "Lecture " + index
       tempWeek.secondTitle = "Lecture " + index + " II"
@@ -311,97 +334,96 @@ export default {
       this.addWeek(tempWeek)
     },
     // Adds a user inputted number of activities
-    populateActivities(num){
+    populateActivities(num) {
       let diff = num - this.weeks.length
 
       console.log(diff)
 
-      if (diff > 0 ){
-        for (let i = 0; i < diff; i++ ) this.AddActivity();
+      if (diff > 0) {
+        for (let i = 0; i < diff; i++) this.AddActivity()
       }
 
       if (diff < 0) {
-        this.userInput.weekNumber = 1;
-        this.sliceWeek(num);
+        this.userInput.weekNumber = 1
+        this.sliceWeek(num)
       }
 
       this.updateDates()
-
     },
-    setToDefault(){
-      this.$store.commit('updateWeeks', [])
-      this.populateActivities(12);
+    setToDefault() {
+      this.$store.commit("updateWeeks", [])
+      this.populateActivities(12)
     },
     // Handles uploading the file or url to Amazon EC2 via POST request, which subsequently uploads the image to S3
     // and sends back the new url as a JSON in the Api response
 
-    onFormSubmit (type, ev){
-      var formData = new FormData();
+    onFormSubmit(type, ev) {
+      var formData = new FormData()
 
-      if (type == 'url'){
-        console.log('uploading url...')
-        var imageurl = document.querySelector('#image-url'); // Gets form data in html
-        if (imageurl.value == "") return;
-        formData.append("imageUrl", imageurl.value);  // Adds api header to tell server that it is a url
-      }
-      else {
-        console.log('uploading file...')
-        var imagefile = document.querySelector('#image-file');
-        if (imagefile.files.length == 0) return;
-        formData.append("image", imagefile.files[0]); // Adds api header to tell server that it is a file
+      if (type == "url") {
+        console.log("uploading url...")
+        var imageurl = document.querySelector("#image-url") // Gets form data in html
+        if (imageurl.value == "") return
+        formData.append("imageUrl", imageurl.value) // Adds api header to tell server that it is a url
+      } else {
+        console.log("uploading file...")
+        var imagefile = document.querySelector("#image-file")
+        if (imagefile.files.length == 0) return
+        formData.append("image", imagefile.files[0]) // Adds api header to tell server that it is a file
       }
 
       // More api headers to tell the server the dimensions to crop
-      formData.append('imageWidth', 360)
-      formData.append('imageHeight', 150)
+      formData.append("imageWidth", 360)
+      formData.append("imageHeight", 150)
 
       // Send post request to Amazon server using vue-resource with form data
-      this.$http.post('http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image',formData).then( response => {
-        console.log('success')
-        let imageData = JSON.parse(response.bodyText);
-        this.updateWeek(this.userInput.weekNumber - 1,'imgSrc', imageData.imageUrls[0]) // Change requisite weekly activity image src to the hosted file
-        // this.weeks[this.userInput.weekNumber - 1].imgSrc = imageData.imageUrls[0]
-      }, response => {
-        console.log(response)
-      });
-
+      this.$http.post("http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image", formData).then(
+        response => {
+          console.log("success")
+          let imageData = JSON.parse(response.bodyText)
+          this.updateWeek(this.userInput.weekNumber - 1, "imgSrc", imageData.imageUrls[0]) // Change requisite weekly activity image src to the hosted file
+          // this.weeks[this.userInput.weekNumber - 1].imgSrc = imageData.imageUrls[0]
+        },
+        response => {
+          console.log(response)
+        }
+      )
     },
     getSaveStateConfig() {
       return {
-          'cacheKey': 'Weeklylist',
-      };
+        cacheKey: "Weeklylist"
+      }
     }
   },
-  mounted(){
+  mounted() {
     if (this.needsInit) {
-      console.log('populating...')
+      console.log("populating...")
       // this.populateActivities(12)
-      this.needsInit = false;
+      this.needsInit = false
     }
-    this.updateCode();
+    this.updateCode()
   },
-  beforeCreate(){
-    EventBus.$on('import-data', data => {
+  beforeCreate() {
+    EventBus.$on("import-data", data => {
       this.weeks = data.weeklyList.weeks
-      console.log('importing data to weekly list...')
+      console.log("importing data to weekly list...")
     })
 
-    EventBus.$on('export-data', () => {
+    EventBus.$on("export-data", () => {
       let weeklyList = this.$data
-      EventBus.$emit('list-data', weeklyList)
-      console.log('sending list')
+      EventBus.$emit("list-data", weeklyList)
+      console.log("sending list")
     })
   },
-  beforeUpdate(){
-  }
-
+  beforeUpdate() {}
 }
 </script>
 
 
 
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 
@@ -415,7 +437,7 @@ textarea {
 }
 
 .add-weekly {
-  margin: 10px
+  margin: 10px;
 }
 
 .week-card {
@@ -430,7 +452,7 @@ textarea {
   margin-left: 3%;
   margin-right: 30px;
   align-self: flex-start;
-  margin-top: 20px
+  margin-top: 20px;
 }
 
 .code-input {
@@ -439,7 +461,6 @@ textarea {
 
 .quill {
   width: 75%;
-
 }
 
 #canvas-code {
@@ -462,11 +483,10 @@ textarea {
 
 #copy-text-area {
   width: 80%;
-  height: 200px
+  height: 200px;
 }
 
 .GFbanner {
   height: 190px;
 }
-
 </style>

@@ -56,8 +56,7 @@
 </template>
 
 <script>
-
-import mutations from '../../store/mutations'
+import mutations from "../../store/mutations"
 
 export default {
   data() {
@@ -67,37 +66,37 @@ export default {
     }
   },
   computed: {
-    currentItem(){
-      return this.content[this.index - 1];
+    currentItem() {
+      return this.content[this.index - 1]
     },
-    weeklyUrl(){
-      let ending = 'pages/weekly-activities'
-      if (this.info.classType.dateType == "Session") ending = 'pages/session-activities'
+    weeklyUrl() {
+      let ending = "pages/weekly-activities"
+      if (this.info.classType.dateType == "Session") ending = "pages/session-activities"
       return this.info.url + ending
     }
   },
   methods: {
-    returnCode(){
-      console.log('updating code..')
-      if (this.$route.path == '/home') this.updateProp('url', this.parseUrl(this.info.url))
-      let code = document.getElementById("home-box");
-      return code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
-      setTimeout( function() {
+    returnCode() {
+      console.log("updating code..")
+      if (this.$route.path == "/home") this.updateProp("url", this.parseUrl(this.info.url))
+      let code = document.getElementById("home-box")
+      return code.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
+      setTimeout(function() {
         // console.log(code.innerHTML.replace(/\bdata-v-\S+\"/ig,""))
-        return code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
+        return code.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
       }, 30)
     },
-    clear(){
-      this.$emit('clearArr');
-      console.log('clearing...')
+    clear() {
+      this.$emit("clearArr")
+      console.log("clearing...")
     },
     capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  },
-    remove(){
-      this.content.splice(this.index - 1, 1);
+      return string.charAt(0).toUpperCase() + string.slice(1)
     },
-    modify(item, input, event){
+    remove() {
+      this.content.splice(this.index - 1, 1)
+    },
+    modify(item, input, event) {
       // let week = _.cloneDeep(this.$store.getters.getWeeks()[this.selected])
       let prop = _.cloneDeep(this.$store.getters.getWeeks[this.idx][this.property])
       prop[this.index - 1][input] = event.target.value
@@ -107,7 +106,7 @@ export default {
       this.updateWeek(this.idx, this.property, prop)
     }
   },
-  props: ['content', 'fn', 'inputs','property','idx'],
+  props: ["content", "fn", "inputs", "property", "idx"],
   mixins: [mutations]
 }
 </script>
@@ -121,13 +120,12 @@ export default {
   margin-bottom: 10px;
 }
 
-textarea{
+textarea {
   margin-bottom: 10px;
   width: auto;
 }
 
-
-.alert{
+.alert {
   width: 50%;
   margin: auto;
   margin-bottom: 10px;
@@ -137,7 +135,7 @@ textarea {
   width: auto;
 }
 
-.quill{
+.quill {
   width: 700px;
   margin: auto;
 }
@@ -146,7 +144,7 @@ el-tab-pane {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: 'blue';
+  background-color: "blue";
 }
 
 .textbox-container {
@@ -155,7 +153,7 @@ el-tab-pane {
   justify-content: center;
 }
 
-.textbox{
+.textbox {
   margin-left: 40px;
 }
 
@@ -186,7 +184,4 @@ el-tab-pane {
 .STV1_Banner {
   height: 190px;
 }
-
-
-
 </style>

@@ -259,13 +259,13 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import { EventBus } from "../bus";
-import { quillEditor } from "vue-quill-editor";
-import saveState from "vue-save-state";
-import mutations from '../store/mutations'
+import { mapGetters, mapMutations } from "vuex"
+import { EventBus } from "../bus"
+import { quillEditor } from "vue-quill-editor"
+import saveState from "vue-save-state"
+import mutations from "../store/mutations"
 
-var moment = require('moment');
+var moment = require("moment")
 
 var toolbarOptions = [
   ["bold", "italic", "underline"],
@@ -281,7 +281,7 @@ var toolbarOptions = [
   [{ indent: "-1" }, { indent: "+1" }],
   [{ script: "sub" }, { script: "super" }],
   ["link", "clean"]
-];
+]
 
 export default {
   name: "weekly",
@@ -292,7 +292,7 @@ export default {
         weekNumber: 1,
         uploadSwitchText: "Click to Upload Image from Url"
       },
-      days: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
       pEditable: false,
       tEditable: false,
       iEditable: true,
@@ -303,181 +303,193 @@ export default {
           toolbar: toolbarOptions
         }
       }
-    };
+    }
   },
   components: {
     quillEditor
   },
   mixins: [saveState, mutations],
   computed: {
-    ...mapGetters(["getInfo", "dWeek", 'getWeeks']),
+    ...mapGetters(["getInfo", "dWeek", "getWeeks"])
   },
   watch: {
-    'info.weekOffset': function(){
+    "info.weekOffset": function() {
       this.updateDays()
     }
   },
   methods: {
-    ...mapMutations([
-      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
-    ]),
-    formatDate(date){
+    ...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
+    formatDate(date) {
       if (!date) date = moment()
       return moment(date).format("dddd Do")
     },
-    parseDate(index){
+    parseDate(index) {
       if (!this.weeks[index]) return "N/A"
       return this.formatDate(this.weeks[index].date)
     },
-    incrementDate(date, weeks, days){
-      return moment(date).add(weeks, 'w').add(days, 'd').format("dddd Do")
+    incrementDate(date, weeks, days) {
+      return moment(date)
+        .add(weeks, "w")
+        .add(days, "d")
+        .format("dddd Do")
     },
-    updateDays(){
+    updateDays() {
       console.log("updating days...")
       this.info.execWeekLength = this.info.weekDays.length
-      if (this.info.weekOffset >= this.info.execWeekLength) this.updateProp('weekOffset', this.info.execWeekLength - 1)
-      this.updateProp('weekDays', this.info.weekDays.sort(function(a, b){return a - b}))
+      if (this.info.weekOffset >= this.info.execWeekLength) this.updateProp("weekOffset", this.info.execWeekLength - 1)
+      this.updateProp(
+        "weekDays",
+        this.info.weekDays.sort(function(a, b) {
+          return a - b
+        })
+      )
 
-      for (let week = 0; week < this.info.execWeeks; week++){
-        for (let day = 0; day < this.info.weekDays.length; day++){
+      for (let week = 0; week < this.info.execWeeks; week++) {
+        for (let day = 0; day < this.info.weekDays.length; day++) {
           let totalDays = this.info.weekDays.length * week + day - this.info.weekOffset
-          let newDate = moment(this.info.startDate).add(week, 'w').add(this.info.weekDays[day], 'd')
-          if(this.weeks[totalDays] && this.formatDate(this.weeks[totalDays].date) != this.formatDate(newDate)) {
-            this.updateWeek(totalDays, 'date', moment(this.info.startDate).add(week, 'w').add(this.info.weekDays[day], 'd'))
+          let newDate = moment(this.info.startDate)
+            .add(week, "w")
+            .add(this.info.weekDays[day], "d")
+          if (this.weeks[totalDays] && this.formatDate(this.weeks[totalDays].date) != this.formatDate(newDate)) {
+            this.updateWeek(
+              totalDays,
+              "date",
+              moment(this.info.startDate)
+                .add(week, "w")
+                .add(this.info.weekDays[day], "d")
+            )
             // console.log(this.formatDate(this.weeks[totalDays].date))
           }
         }
       }
     },
     newLine(val) {
-      if (!val) return "";
-      return val.replace(/\r?\n/g, "<br />");
+      if (!val) return ""
+      return val.replace(/\r?\n/g, "<br />")
     },
     updateSwitch() {
-      this.userInput.isFile = !this.userInput.isFile;
+      this.userInput.isFile = !this.userInput.isFile
       this.userInput.uploadSwitchText = this.userInput.isFile
         ? "Click to Upload Image from URL"
-        : "Click to Upload Image from Computer";
+        : "Click to Upload Image from Computer"
     },
-    AddActivity(){
+    AddActivity() {
       let index = this.weeks.length + 1
 
-      if (index > 15 && this.info.classType.dateType == "Week") index = 15;
+      if (index > 15 && this.info.classType.dateType == "Week") index = 15
 
       let tempWeek = _.cloneDeep(this.dWeek)
-      tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + '.png'
+      tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + ".png"
       tempWeek.date = moment()
       tempWeek.title = "Lecture " + index
       tempWeek.secondTitle = "Lecture " + index + " II"
 
       // let tempWeek = this.dWeek
       // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
-    
+
       this.addWeek(tempWeek)
     },
     // Adds a user inputted number of activities
-    populateActivities(num){
+    populateActivities(num) {
       let diff = num - this.weeks.length
 
-      if (diff > 0 ){
-        for (let i = 0; i < diff; i++ ) this.AddActivity();
+      if (diff > 0) {
+        for (let i = 0; i < diff; i++) this.AddActivity()
       }
 
       if (diff < 0) {
-        this.userInput.weekNumber = 1;
-        this.sliceWeek(num);
+        this.userInput.weekNumber = 1
+        this.sliceWeek(num)
       }
 
       this.updateDays()
-
     },
-    onFormSubmit(
-      type,
-      obj,
-      id = type == "url" ? "#image-url" : "#image-file",
-      ev
-    ) {
-      var formData = new FormData();
+    onFormSubmit(type, obj, id = type == "url" ? "#image-url" : "#image-file", ev) {
+      var formData = new FormData()
 
       if (type == "url") {
-        console.log("uploading url...");
-        var imageurl = document.querySelector(id); // Gets form data in html
-        if (imageurl.value == "") return;
-        formData.append("imageUrl", imageurl.value); // Adds api header to tell server that it is a url
+        console.log("uploading url...")
+        var imageurl = document.querySelector(id) // Gets form data in html
+        if (imageurl.value == "") return
+        formData.append("imageUrl", imageurl.value) // Adds api header to tell server that it is a url
       } else {
-        console.log("uploading file...");
-        var imagefile = document.querySelector(id);
-        if (imagefile.files.length == 0) return;
-        formData.append("image", imagefile.files[0]); // Adds api header to tell server that it is a file
+        console.log("uploading file...")
+        var imagefile = document.querySelector(id)
+        if (imagefile.files.length == 0) return
+        formData.append("image", imagefile.files[0]) // Adds api header to tell server that it is a file
       }
 
       // More api headers to tell the server the dimensions to crop
-      formData.append("imageWidth", 200);
-      formData.append("imageHeight", 200);
+      formData.append("imageWidth", 200)
+      formData.append("imageHeight", 200)
 
       // Send post request to Amazon server using vue-resource with form data
-      this.$http
-        .post(
-          "http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image",
-          formData
-        )
-        .then(
-          response => {
-            console.log("success");
-            let imageData = JSON.parse(response.bodyText);
-            obj.imgSrc = imageData.imageUrls[0]; // Change requisite weekly activity image src to the hosted file
-          },
-          response => {
-            console.log(response);
-          }
-        );
+      this.$http.post("http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image", formData).then(
+        response => {
+          console.log("success")
+          let imageData = JSON.parse(response.bodyText)
+          obj.imgSrc = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
+        },
+        response => {
+          console.log(response)
+        }
+      )
     },
-    updateDates(){
-      this.weeks.forEach((week, index)=>{
-        let interval = this.info.classType.dateType == "Week" ? 'w' : 'd'
+    updateDates() {
+      this.weeks.forEach((week, index) => {
+        let interval = this.info.classType.dateType == "Week" ? "w" : "d"
         week.date = moment(this.info.startDate).add(index, interval)
       })
     },
-    updateImages(){
-      this.weeks.forEach((week, index)=>{
-        if (index > 14 && this.info.classType.dateType == "Week") index = 14;
-        week.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + '.png'
+    updateImages() {
+      this.weeks.forEach((week, index) => {
+        if (index > 14 && this.info.classType.dateType == "Week") index = 14
+        week.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + ".png"
       })
     },
     setToDefault() {
-      console.log('resetting data...')
+      console.log("resetting data...")
       let dInfo = _.cloneDeep(this.$store.getters.dInfo)
-      let props = ['execWeeks', 'weekDays', 'startDate', 'weekOffset', 'multipleSessions',
-      'autoSessionTitle','useProfName','sessionOneTime','sessionTwoTime']
+      let props = [
+        "execWeeks",
+        "weekDays",
+        "startDate",
+        "weekOffset",
+        "multipleSessions",
+        "autoSessionTitle",
+        "useProfName",
+        "sessionOneTime",
+        "sessionTwoTime"
+      ]
 
-      props.forEach( (prop) => {
+      props.forEach(prop => {
         this.updateProp(prop, dInfo[prop])
       })
     },
     getSaveStateConfig() {
       return {
         cacheKey: "Syllabus"
-      };
+      }
     }
   },
   mounted() {
-    this.updateCode();
+    this.updateCode()
     this.updateDays()
     //updateDates()
   },
   beforeCreate() {
     EventBus.$on("set-default", response => {
-      this.setToDefault();
-      console.log(response);
-    });
+      this.setToDefault()
+      console.log(response)
+    })
 
     EventBus.$on("import-data", data => {
-      this.userInput = { ...data.weekly.userInput };
-      this.videos = data.weekly.videos;
-      this.assignments = data.weekly.assignments;
-      this.discussions = data.weekly.discussions;
-      console.log("importing data to weekly...");
-    });
+      this.userInput = { ...data.weekly.userInput }
+      this.videos = data.weekly.videos
+      this.assignments = data.weekly.assignments
+      this.discussions = data.weekly.discussions
+      console.log("importing data to weekly...")
+    })
 
     EventBus.$on("export-data", () => {
       // let weeklyList = {
@@ -485,15 +497,13 @@ export default {
       // }
       // EventBus.$emit('list-data', weeklyList)
 
-      let syllabus = this.$data;
-      console.log("sending syllabus");
-      EventBus.$emit("syllabus-data", syllabus);
-    });
-
+      let syllabus = this.$data
+      console.log("sending syllabus")
+      EventBus.$emit("syllabus-data", syllabus)
+    })
   },
-  beforeUpdate() {
-  }
-};
+  beforeUpdate() {}
+}
 </script>
 
 

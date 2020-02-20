@@ -30,8 +30,7 @@
 </template>
 
 <script>
-
-import mutations from '../../store/mutations'
+import mutations from "../../store/mutations"
 
 export default {
   data() {
@@ -41,22 +40,22 @@ export default {
     }
   },
   computed: {
-    currentItem(){
-      return this.content[this.index - 1];
+    currentItem() {
+      return this.content[this.index - 1]
     }
   },
   methods: {
-    clear(){
-      this.$emit('clearArr');
-      console.log('clearing...')
+    clear() {
+      this.$emit("clearArr")
+      console.log("clearing...")
     },
     capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  },
-    remove(){
-      this.content.splice(this.index - 1, 1);
+      return string.charAt(0).toUpperCase() + string.slice(1)
     },
-    modify(item, input, event){
+    remove() {
+      this.content.splice(this.index - 1, 1)
+    },
+    modify(item, input, event) {
       // let week = _.cloneDeep(this.$store.getters.getWeeks()[this.selected])
       let prop = _.cloneDeep(this.$store.getters.getWeeks[this.idx][this.property])
       prop[this.index - 1][input] = event.target.value
@@ -66,7 +65,7 @@ export default {
       this.updateWeek(this.idx, this.property, prop)
     }
   },
-  props: ['content', 'fn', 'inputs','property','idx'],
+  props: ["content", "fn", "inputs", "property", "idx"],
   mixins: [mutations]
 }
 </script>
@@ -80,11 +79,10 @@ export default {
   margin-bottom: 10px;
 }
 
-textarea{
+textarea {
   margin-bottom: 10px;
   width: auto;
 }
-
 </style>
 
 <!-- <div>

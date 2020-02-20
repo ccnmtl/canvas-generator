@@ -82,14 +82,14 @@
 </template>
 
 <script>
-import { EventBus } from '../bus'
-import saveState from 'vue-save-state';
-import mutations from '../store/mutations'
-import { quillEditor } from 'vue-quill-editor';
+import { EventBus } from "../bus"
+import saveState from "vue-save-state"
+import mutations from "../store/mutations"
+import { quillEditor } from "vue-quill-editor"
 
 export default {
-  name: 'Home',
-  data () {
+  name: "Home",
+  data() {
     return {
       dialogFormVisible: false,
       ruleForm: {
@@ -97,67 +97,64 @@ export default {
         url: this.$store.getters.getInfo.urlArgs,
         classType: this.$store.getters.getInfo.classType,
         isBlended: this.$store.getters.getInfo.isBlended,
-        theme: this.$store.getters.getTheme,
+        theme: this.$store.getters.getTheme
       },
       rules: {
         title: [
-          { required: true, message: 'Course Title is required', trigger: 'blur' },
-          { min: 0, max: 35, message: 'Length should be less than 35 characters', trigger: 'blur' }
+          { required: true, message: "Course Title is required", trigger: "blur" },
+          { min: 0, max: 35, message: "Length should be less than 35 characters", trigger: "blur" }
         ],
         url: [
-          { required: true, message: 'Course URL is required', trigger: 'blur' },
-          { type: "url" , message: 'Must be a valid URL', trigger: 'blur' }
-        ],
-
+          { required: true, message: "Course URL is required", trigger: "blur" },
+          { type: "url", message: "Must be a valid URL", trigger: "blur" }
+        ]
       }
     }
   },
   mixins: [saveState, mutations],
-  computed: {
-  },
+  computed: {},
   methods: {
-    getStarted(){
-      this.$router.push({path: '/home'});
+    getStarted() {
+      this.$router.push({ path: "/home" })
     },
-    getStartedModal(){
+    getStartedModal() {
       this.dialogFormVisible = false
-      this.$router.push({path: '/home'});
+      this.$router.push({ path: "/home" })
     },
-    confirmForm(){
-      this.$refs['ruleForm'].validate((valid) => {
+    confirmForm() {
+      this.$refs["ruleForm"].validate(valid => {
         if (valid) {
-          this.updateProp('title', this.ruleForm.title)
-          this.updateProp('url', this.ruleForm.url)
-          this.updateProp('classType', this.ruleForm.classType)
-          this.updateProp('isBlended', this.ruleForm.isBlended)
+          this.updateProp("title", this.ruleForm.title)
+          this.updateProp("url", this.ruleForm.url)
+          this.updateProp("classType", this.ruleForm.classType)
+          this.updateProp("isBlended", this.ruleForm.isBlended)
           this.theme = this.ruleForm.theme
           this.dialogFormVisible = false
 
-          this.$router.push({path: '/home'});
+          this.$router.push({ path: "/home" })
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log("error submit!!")
+          return false
         }
       })
     },
     getSaveStateConfig() {
       return {
-          'cacheKey': 'Splash',
-      };
+        cacheKey: "Splash"
+      }
     }
-  },
-
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .columbia-logo {
-    width: 400px;
-  }
-  .el-button--large {
-    padding: 21px 29px;
-    font-size: 24px;
-    border-radius: 4px;
-  }
+.columbia-logo {
+  width: 400px;
+}
+.el-button--large {
+  padding: 21px 29px;
+  font-size: 24px;
+  border-radius: 4px;
+}
 </style>

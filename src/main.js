@@ -7,7 +7,7 @@ import App from './App'
 import router from './router'
 import store from './store/store'
 
-// Outside frameworks/components
+// Outside frameworks/components 
 import VueResource from 'vue-resource'
 import Snotify from 'vue-snotify'
 import 'vue-snotify/styles/material.css'

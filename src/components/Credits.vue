@@ -91,20 +91,18 @@
 </template>
 
 <script>
-import { EventBus } from '../bus'
-import saveState from 'vue-save-state';
-import { quillEditor } from 'vue-quill-editor';
+import { EventBus } from "../bus"
+import saveState from "vue-save-state"
+import { quillEditor } from "vue-quill-editor"
 
 export default {
-  name: 'Home',
-  data () {
-    return {
-    }
+  name: "Home",
+  data() {
+    return {}
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

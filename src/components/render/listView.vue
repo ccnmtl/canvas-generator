@@ -38,9 +38,8 @@
 </template>
 
 <script>
-
-import mutations from '../../store/mutations'
-import WeeklyListItem from '../weekly/WeeklyListItem'
+import mutations from "../../store/mutations"
+import WeeklyListItem from "../weekly/WeeklyListItem"
 
 export default {
   data() {
@@ -55,41 +54,63 @@ export default {
       return this.info.classType.dateType == "Week" ? "Weekly" : "Daily"
     },
     // Changes the description wording so that it matches the current number of weeks on the page
-    numWeeks(){
+    numWeeks() {
       let num = this.weeks.length
 
-      var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
-      var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+      var a = [
+        "",
+        "one ",
+        "two ",
+        "three ",
+        "four ",
+        "five ",
+        "six ",
+        "seven ",
+        "eight ",
+        "nine ",
+        "ten ",
+        "eleven ",
+        "twelve ",
+        "thirteen ",
+        "fourteen ",
+        "fifteen ",
+        "sixteen ",
+        "seventeen ",
+        "eighteen ",
+        "nineteen "
+      ]
+      var b = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
 
-      if ((num = num.toString()).length > 9) return 'overflow';
-      let n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-      if (!n) return; var str = '';
-      str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
-      str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
-      str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
-      str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
-      str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
-      return str;
+      if ((num = num.toString()).length > 9) return "overflow"
+      let n = ("000000000" + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/)
+      if (!n) return
+      var str = ""
+      str += n[1] != 0 ? (a[Number(n[1])] || b[n[1][0]] + " " + a[n[1][1]]) + "crore " : ""
+      str += n[2] != 0 ? (a[Number(n[2])] || b[n[2][0]] + " " + a[n[2][1]]) + "lakh " : ""
+      str += n[3] != 0 ? (a[Number(n[3])] || b[n[3][0]] + " " + a[n[3][1]]) + "thousand " : ""
+      str += n[4] != 0 ? (a[Number(n[4])] || b[n[4][0]] + " " + a[n[4][1]]) + "hundred " : ""
+      str += n[5] != 0 ? (str != "" ? "and " : "") + (a[Number(n[5])] || b[n[5][0]] + " " + a[n[5][1]]) : ""
+      return str
     }
   },
   methods: {
-    returnCode(){
-      console.log('returning list code...')
-      this.updateProp('url', this.parseUrl(this.info.url))
-      let code = document.getElementById("list-code");
-      return code.innerHTML.replace(/\bdata-v-\S+\"/ig,"")
+    returnCode() {
+      console.log("returning list code...")
+      this.updateProp("url", this.parseUrl(this.info.url))
+      let code = document.getElementById("list-code")
+      return code.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
     },
-    clear(){
-      this.$emit('clearArr');
-      console.log('clearing...')
+    clear() {
+      this.$emit("clearArr")
+      console.log("clearing...")
     },
     capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  },
-    remove(){
-      this.content.splice(this.index - 1, 1);
+      return string.charAt(0).toUpperCase() + string.slice(1)
     },
-    modify(item, input, event){
+    remove() {
+      this.content.splice(this.index - 1, 1)
+    },
+    modify(item, input, event) {
       // let week = _.cloneDeep(this.$store.getters.getWeeks()[this.selected])
       let prop = _.cloneDeep(this.$store.getters.getWeeks[this.idx][this.property])
       prop[this.index - 1][input] = event.target.value
@@ -99,7 +120,7 @@ export default {
       this.updateWeek(this.idx, this.property, prop)
     }
   },
-  props: ['content', 'fn', 'inputs','property','idx'],
+  props: ["content", "fn", "inputs", "property", "idx"],
   components: {
     WeeklyListItem
   },
@@ -116,13 +137,12 @@ export default {
   margin-bottom: 10px;
 }
 
-textarea{
+textarea {
   margin-bottom: 10px;
   width: auto;
 }
 
-
-.alert{
+.alert {
   width: 50%;
   margin: auto;
   margin-bottom: 10px;
@@ -132,7 +152,7 @@ textarea {
   width: auto;
 }
 
-.quill{
+.quill {
   width: 700px;
   margin: auto;
 }
@@ -141,7 +161,7 @@ el-tab-pane {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: 'blue';
+  background-color: "blue";
 }
 
 .textbox-container {
@@ -150,7 +170,7 @@ el-tab-pane {
   justify-content: center;
 }
 
-.textbox{
+.textbox {
   margin-left: 40px;
 }
 
@@ -181,7 +201,4 @@ el-tab-pane {
 .STV1_Banner {
   height: 190px;
 }
-
-
-
 </style>
