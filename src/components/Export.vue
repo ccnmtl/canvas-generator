@@ -210,12 +210,32 @@ export default {
                   discussionTopicMeta.setAttribute("identifier", discussion.id + "-meta")
                   discussionTopicID.innerHTML = discussion.id
 
-                  console.log(discussionTemplate)
-
                   let discussionString = serializer.serializeToString(discussionTemplate)
                   let discussionMetaString = serializer.serializeToString(discussionMetaTemplate)
                   zip.file(discussion.id + ".xml", discussionString)
                   zip.file(discussion.id + "-meta" + ".xml", discussionMetaString)
+                })
+
+                week.assignments.forEach((assignment, assignmentIndex) => {
+                  addResource({
+                    xml: manifest,
+                    type: "assignment",
+                    iden: assignment.id
+                  })
+
+                  let assignmentHTML = document.implementation.createHTMLDocument()
+                  assignmentHTML.title = "Session " + (weekIndex + 1) + " - Assignment " + (assignmentIndex + 1)
+                  zip.file(assignment.id + "/" + assignment.id + ".html", assignmentHTML.documentElement.innerHTML)
+
+                  let assignmentSettings = this.readLocalXML("../../static/files/xml-templates/assignment_settings.xml")
+                  let assignmentTag = assignmentSettings.getElementsByTagName("assignment")[0]
+                  let assignmentTitle = assignmentSettings.getElementsByTagName("title")[0]
+
+                  assignmentTitle.innerHTML = "Session " + (weekIndex + 1) + " - Assignment " + (assignmentIndex + 1)
+                  assignmentTag.setAttribute("identifier", assignment.id)
+
+                  let assignmentSettingsString = serializer.serializeToString(assignmentSettings)
+                  zip.file(assignment.id + "/assignment_settings.xml", assignmentSettingsString)
                 })
               })
 
@@ -270,7 +290,12 @@ export default {
             break
           case "assignment":
             resource.setAttribute("type", "associatedcontent/imscc_xmlv1p1/learning-application-resource")
+            resource.setAttribute("href", iden + "/" + iden + ".html")
+            file.setAttribute("href", iden + "/" + iden + ".html")
 
+            let settingsFile = xml.createElement("file")
+            resource.appendChild(settingsFile)
+            settingsFile.setAttribute("href", iden + "/assignment_settings.xml")
             break
           default:
             break
@@ -370,7 +395,6 @@ export default {
 
       let files = changeEvent.target.files
       JSZip.loadAsync(files[0]).then(zip => {
-        console.log(zip)
         zip.file("wiki_content/home.html", homeHeading + this.$refs.home.returnCode() + homeFooter)
         zip.generateAsync({ type: "blob" }).then(blob => {
           saveFile({

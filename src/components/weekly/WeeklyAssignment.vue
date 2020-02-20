@@ -7,14 +7,14 @@
             <i class="icon-assignment"></i>
           </div>
           <div class="ig-info">
-            <a class="ig-title" :href="data.link" :data-api-endpoint="data.link" data-api-returntype="Assignment"> Assignment 1</a>
+            <a class="ig-title" :href="data.link" :data-api-endpoint="data.link" data-api-returntype="Assignment"> Assignment {{index}}</a>
           <div class="ig-details">
             <div class="ig-details__item">
               <strong>Due</strong> {{data.due}}
             </div>
-            <div class="ig-details__item">
+            <!-- <div class="ig-details__item">
               <strong>Available</strong> {{data.available}}
-            </div>
+            </div> -->
             <!-- <div class="ig-details__item">{{data.points}} pts</div> -->
           </div>
           </div>
