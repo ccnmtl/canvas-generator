@@ -169,16 +169,7 @@
 
       <weekly-video  v-for="(video, index) in weeks[selected].videos" :data="video" :index="index+1" :key="video.source"> </weekly-video>
 
-      <transition name="fade">
-      <div class="item-group-container" style="padding-bottom: 0;" v-if="weeks[selected].assignments.length > 0 || weeks[selected].discussions.length > 0">
-        <div class="item-group-condensed">
-          <ul id="cond_group_1" class="ig-list">
-          <weekly-discussion  v-for="(disc, index) in weeks[selected].discussions" :data="disc" :index="index+1" :key="disc.link"> </weekly-discussion>
-          <weekly-assignment  v-for="(assign, index) in weeks[selected].assignments" :data="assign" :index="index+1" :key="assign.link"> </weekly-assignment>
-          </ul>
-        </div>
-      </div>
-    </transition>
+
 
     <transition name="fade">
       <div  v-if="weeks[selected].cases.length > 0">
@@ -242,6 +233,17 @@
       </div>
     </transition>
 
+    <transition name="fade">
+      <div class="item-group-container" style="padding-bottom: 0;" v-if="weeks[selected].assignments.length > 0 || weeks[selected].discussions.length > 0">
+        <div class="item-group-condensed">
+          <ul id="cond_group_1" class="ig-list">
+          <weekly-discussion  v-for="(disc, index) in weeks[selected].discussions" :data="disc" :index="index+1" :key="disc.link"> </weekly-discussion>
+          <weekly-assignment  v-for="(assign, index) in weeks[selected].assignments" :data="assign" :index="index+1" :key="assign.link"> </weekly-assignment>
+          </ul>
+        </div>
+      </div>
+    </transition>
+
     </div>
 
   </div>
@@ -289,17 +291,17 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import mutations from "../store/mutations";
-import { EventBus } from "../bus";
-import { quillEditor } from "vue-quill-editor";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import WeeklyCodeModule from "./weekly/WeeklyCodeModule";
-import WeeklyVideo from "./weekly/WeeklyVideo";
-import WeeklyDiscussion from "./weekly/WeeklyDiscussion";
-import WeeklyAssignment from "./weekly/WeeklyAssignment";
-import saveState from "vue-save-state";
-import Home from "./Home";
+import { mapGetters, mapMutations } from "vuex"
+import mutations from "../store/mutations"
+import { EventBus } from "../bus"
+import { quillEditor } from "vue-quill-editor"
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+import WeeklyCodeModule from "./weekly/WeeklyCodeModule"
+import WeeklyVideo from "./weekly/WeeklyVideo"
+import WeeklyDiscussion from "./weekly/WeeklyDiscussion"
+import WeeklyAssignment from "./weekly/WeeklyAssignment"
+import saveState from "vue-save-state"
+import Home from "./Home"
 
 var toolbarOptions = [
   ["bold", "italic", "underline"],
@@ -315,7 +317,7 @@ var toolbarOptions = [
   [{ indent: "-1" }, { indent: "+1" }],
   [{ script: "sub" }, { script: "super" }],
   ["link", "clean"]
-];
+]
 
 export default {
   name: "weekly",
@@ -323,8 +325,7 @@ export default {
     return {
       userInput: {
         videoNumber: 1,
-        weekTitle:
-          "WEEK 1: Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
+        weekTitle: "WEEK 1: Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
         description:
           "We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss “The Big Picture,” starting with the historical context of the current global food system, including the “Green Revolution.” Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.",
         required:
@@ -344,7 +345,7 @@ export default {
           toolbar: toolbarOptions
         }
       }
-    };
+    }
   },
   components: {
     quillEditor,
@@ -357,50 +358,50 @@ export default {
   computed: {
     ...mapGetters(["getInfo", "dWeek", "getWeeks", "getCases"]),
     caseOptions() {
-      let cases = this.getCases;
-      let options = [];
+      let cases = this.getCases
+      let options = []
 
       cases.forEach(function(category, i) {
         options[i] = {
           value: category.category,
           label: category.category,
           children: []
-        };
+        }
 
         category.cases.forEach(function(caseChild, j) {
           options[i].children[j] = {
             value: caseChild.name,
             label: caseChild.name
-          };
-        });
-      });
+          }
+        })
+      })
 
-      return options;
+      return options
     }
   },
   methods: {
     addCase(caseStudy) {
-      let arr = _.cloneDeep(this.weeks[this.selected].cases);
+      let arr = _.cloneDeep(this.weeks[this.selected].cases)
 
-      let isUnique = true;
+      let isUnique = true
       arr.forEach(function(testCase) {
-        if (testCase.id == caseStudy.id) isUnique = false;
-      });
+        if (testCase.id == caseStudy.id) isUnique = false
+      })
 
-      if (isUnique) arr.push(caseStudy);
-      this.updateWeek(this.selected, "cases", arr);
+      if (isUnique) arr.push(caseStudy)
+      this.updateWeek(this.selected, "cases", arr)
     },
     removeCase(caseStudy) {
-      let arr = _.cloneDeep(this.weeks[this.selected].cases);
+      let arr = _.cloneDeep(this.weeks[this.selected].cases)
 
       arr.forEach(function(testCase, index, array) {
         if (testCase.id == caseStudy.id) {
-          console.log("splice");
-          arr.splice(index, 1);
+          console.log("splice")
+          arr.splice(index, 1)
         }
-      });
+      })
 
-      this.updateWeek(this.selected, "cases", arr);
+      this.updateWeek(this.selected, "cases", arr)
     },
     addVideo() {
       let tempVideo = {
@@ -408,23 +409,23 @@ export default {
         description:
           "‘All that Glitters is not Gold’ features various communities’ representatives concern about the introduction of genetically engineered ‘Golden’ rice in the Philippines.",
         source: "https://www.youtube.com/watch?v=GxSGKD50ioE"
-      };
-      let arr = _.cloneDeep(this.weeks[this.selected].videos);
-      arr.push(tempVideo);
-      this.updateWeek(this.selected, "videos", arr);
+      }
+      let arr = _.cloneDeep(this.weeks[this.selected].videos)
+      arr.push(tempVideo)
+      this.updateWeek(this.selected, "videos", arr)
     },
     addDiscussion() {
-
-      let manifestID = "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1)
+      let manifestID =
+        "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1)
       let tempDisc = {
         available: this.weeks[this.selected].date.format("dddd, MMMM Do"),
         id: manifestID,
-        link: "%24CANVAS_OBJECT_REFERENCE%24/discussion_topics/" + manifestID,
-      };
+        link: "%24CANVAS_OBJECT_REFERENCE%24/discussion_topics/" + manifestID
+      }
 
-      let arr = _.cloneDeep(this.weeks[this.selected].discussions);
-      arr.push(tempDisc);
-      this.updateWeek(this.selected, "discussions", arr);
+      let arr = _.cloneDeep(this.weeks[this.selected].discussions)
+      arr.push(tempDisc)
+      this.updateWeek(this.selected, "discussions", arr)
     },
     addAssignment() {
       let tempAssign = {
@@ -432,52 +433,43 @@ export default {
         available: "Jan 1",
         link: this.info.url + "assignments/",
         points: 10
-      };
+      }
 
-      let arr = _.cloneDeep(this.weeks[this.selected].assignments);
-      arr.push(tempAssign);
-      this.updateWeek(this.selected, "assignments", arr);
+      let arr = _.cloneDeep(this.weeks[this.selected].assignments)
+      arr.push(tempAssign)
+      this.updateWeek(this.selected, "assignments", arr)
     },
     setToDefault() {
-      console.log("resetting data...");
-      let dWeek = _.cloneDeep(this.$store.getters.dWeek);
-      let props = [
-        "description",
-        "title",
-        "body",
-        "required",
-        "videos",
-        "discussions",
-        "assignments",
-        "cases"
-      ];
+      console.log("resetting data...")
+      let dWeek = _.cloneDeep(this.$store.getters.dWeek)
+      let props = ["description", "title", "body", "required", "videos", "discussions", "assignments", "cases"]
 
       props.forEach(prop => {
-        this.updateWeek(this.selected, prop, dWeek[prop]);
-      });
+        this.updateWeek(this.selected, prop, dWeek[prop])
+      })
     },
     getSaveStateConfig() {
       return {
         cacheKey: "Weekly"
-      };
+      }
     }
   },
   mounted() {
-    this.updateCode();
+    this.updateCode()
   },
   beforeCreate() {
     EventBus.$on("set-default", response => {
-      this.setToDefault();
-      console.log(response);
-    });
+      this.setToDefault()
+      console.log(response)
+    })
 
     EventBus.$on("import-data", data => {
-      this.userInput = { ...data.weekly.userInput };
-      this.weeks[selected].videos = data.weekly.videos;
-      this.weeks[selected].assignments = data.weekly.assignments;
-      this.weeks[selected].discussions = data.weekly.discussions;
-      console.log("importing data to weekly...");
-    });
+      this.userInput = { ...data.weekly.userInput }
+      this.weeks[selected].videos = data.weekly.videos
+      this.weeks[selected].assignments = data.weekly.assignments
+      this.weeks[selected].discussions = data.weekly.discussions
+      console.log("importing data to weekly...")
+    })
 
     EventBus.$on("export-data", () => {
       // let weeklyList = {
@@ -485,13 +477,13 @@ export default {
       // }
       // EventBus.$emit('list-data', weeklyList)
 
-      let weekly = this.$data;
-      console.log("sending weekly");
-      EventBus.$emit("weekly-data", weekly);
-    });
+      let weekly = this.$data
+      console.log("sending weekly")
+      EventBus.$emit("weekly-data", weekly)
+    })
   },
   beforeUpdate() {}
-};
+}
 </script>
 
 
