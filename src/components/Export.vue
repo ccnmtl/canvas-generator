@@ -62,7 +62,7 @@
     <home-view v-show="false" ref="home"></home-view>
     <syllabus-view v-show="false" ref="syllabus"></syllabus-view>
     <list-view v-show="false" ref="list"></list-view>
-    <div v-for="n in (weeks.length)">
+    <div v-for="n in (weeks.length)" :key="n">
       <week-view v-show="false" :idx="n-1" :ref="'week'+ n"></week-view>
     </div>
 

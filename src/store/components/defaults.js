@@ -33,7 +33,7 @@ export default {
       sectionBox2: ['Grading', 'Resources', 'Integrity'],
 
 
-      classType: { option: "Executive Training", dateType: "Session" }, // { option: "Weekly Course", dateType: "Week" },
+      classType: { option: "Weekly Course", dateType: "Week" }, // { option: "Weekly Course", dateType: "Week" },
       classOptions: [
         { option: "Weekly Course", dateType: "Week" },
         { option: "Executive Training", dateType: "Session" },

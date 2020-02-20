@@ -28,10 +28,9 @@
     They are WeeklyDiscussion.vue, WeeklyAssignment.vue, and WeeklyVideo.vue respectively. -->
     <weekly-video  v-for="(video, index) in weeks[idx].videos" :data="video" :index="index+1" :key="video.source"> </weekly-video>
 
-        <transition name="fade">
-      <div  v-if="weeks[selected].cases.length > 0">
+     <div  v-if="weeks[idx].cases.length > 0">
 
-        <div v-for="caseStudy in weeks[selected].cases">
+        <div v-for="caseStudy in weeks[idx].cases">
         <div class="STV1_SlimBanner">
           <p>PICKER CENTER CASE COLLECTION</p>
         </div>
@@ -88,7 +87,6 @@
         </div>
         </div>
       </div>
-    </transition>
 
     <div class="item-group-container" style="padding-bottom: 0;" v-if="weeks[idx].assignments.length > 0 || weeks[idx].discussions.length > 0">
       <div class="item-group-condensed">
