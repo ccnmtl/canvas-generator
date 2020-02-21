@@ -15,7 +15,7 @@
         <strong>Start Date:</strong>
         <el-date-picker
           style="margin: 10px; margin-bottom:20px"
-          v-model="info.startDate"
+          :value="info.startDate"
           @input="updateProp('startDate', $event)"
           type="date"
           placeholder="Pick start date">
@@ -51,7 +51,7 @@
             <label >Date
             <el-date-picker
               style="margin: 10px; margin-bottom:20px"
-              v-model="weeks[userInput.weekNumber - 1].date"
+              :value="weeks[userInput.weekNumber - 1].date"
               @input="updateWeek(userInput.weekNumber - 1,'date', $event)"
               type="date"
               placeholder="Pick start date">
@@ -79,7 +79,7 @@
         <div class="center add-weekly">
           Links
           <el-switch
-            v-model="info.useLinks"
+            :value="info.useLinks"
             @input="updateProp('useLinks', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
@@ -87,7 +87,7 @@
 
           Dates
           <el-switch
-            v-model="info.useDates"
+            :value="info.useDates"
             @input="updateProp('useDates', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
@@ -96,7 +96,7 @@
         <div class="center add-weekly">
           Images
           <el-switch
-            v-model="info.useWeeklyImages"
+            :value="info.useWeeklyImages"
             @input="updateProp('useWeeklyImages', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">

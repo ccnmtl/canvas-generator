@@ -10,7 +10,7 @@
             <a class="ig-title" :href="data.link" :data-api-endpoint="data.link" data-api-returntype="Assignment"> Assignment {{index}}</a>
           <div class="ig-details">
             <div class="ig-details__item">
-              <strong>Due</strong> {{data.due}}
+              <strong>Due</strong> {{formatWeek(data.due)}}
             </div>
             <!-- <div class="ig-details__item">
               <strong>Available</strong> {{data.available}}
@@ -25,13 +25,20 @@
 </template>
 
 <script>
+var moment = require("moment")
+
 export default {
   data() {
     return {
       url: this.$store.state.info.url
     }
   },
-  props: ["data", "index"]
+  props: ["data", "index"],
+  methods: {
+    formatWeek(date) {
+      return moment(date).format("dddd, MMMM Do")
+    }
+  }
 }
 </script>
 

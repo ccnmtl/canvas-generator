@@ -418,7 +418,7 @@ export default {
       let manifestID =
         "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1)
       let tempDisc = {
-        due: this.weeks[this.selected].date.format("dddd, MMMM Do"),
+        due: this.weeks[this.selected].date,
         id: manifestID,
         link: "%24CANVAS_OBJECT_REFERENCE%24/discussion_topics/" + manifestID
       }
@@ -431,7 +431,7 @@ export default {
       let manifestID =
         "ccb-session-" + (this.selected + 1) + "-assignment-" + (this.weeks[this.selected].assignments.length + 1)
       let tempAssign = {
-        due: this.weeks[this.selected].date.format("dddd, MMMM Do"),
+        due: this.weeks[this.selected].date,
         id: manifestID,
         link: "%24CANVAS_OBJECT_REFERENCE%24/assignments/" + manifestID
       }

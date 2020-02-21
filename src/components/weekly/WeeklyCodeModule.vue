@@ -19,7 +19,16 @@
       <div v-show="editable">
         <div class="code-input center uk-margin-small-top" v-for = "input in inputs">
           <label for="text-area">{{capitalize(input)}}</label>
-          <textarea :value="currentItem[input]" @input="modify(currentItem, input, $event)" id="text-area" class="uk-textarea" rows="2" cols="50"></textarea> <br>
+          <el-date-picker
+            v-if = "input == 'due'"
+            style="margin: 10px; margin-bottom:20px"
+            :value="currentItem[input]"
+            @input="modify(currentItem, input, $event, true)"
+            type="date"
+            placeholder="Pick start date">
+          </el-date-picker>
+
+          <textarea v-else :value="currentItem[input]" @input="modify(currentItem, input, $event)" id="text-area" class="uk-textarea" rows="2" cols="50"></textarea> <br>
         </div>
       </div>
 
@@ -55,10 +64,11 @@ export default {
     remove() {
       this.content.splice(this.index - 1, 1)
     },
-    modify(item, input, event) {
+    modify(item, input, event, isDate = false) {
+      console.log(event)
       // let week = _.cloneDeep(this.$store.getters.getWeeks()[this.selected])
       let prop = _.cloneDeep(this.$store.getters.getWeeks[this.idx][this.property])
-      prop[this.index - 1][input] = event.target.value
+      prop[this.index - 1][input] = isDate ? event : event.target.value
 
       console.log(prop[this.index - 1][input])
       console.log(this.property)
