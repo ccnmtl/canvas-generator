@@ -302,6 +302,7 @@ import WeeklyDiscussion from "./weekly/WeeklyDiscussion"
 import WeeklyAssignment from "./weekly/WeeklyAssignment"
 import saveState from "vue-save-state"
 import Home from "./Home"
+import moment from "moment"
 
 var toolbarOptions = [
   ["bold", "italic", "underline"],
@@ -418,7 +419,7 @@ export default {
       let manifestID =
         "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1)
       let tempDisc = {
-        due: this.weeks[this.selected].date,
+        due: moment(this.weeks[this.selected].date).add(7, "d"),
         id: manifestID,
         link: "%24CANVAS_OBJECT_REFERENCE%24/discussion_topics/" + manifestID
       }
@@ -431,7 +432,7 @@ export default {
       let manifestID =
         "ccb-session-" + (this.selected + 1) + "-assignment-" + (this.weeks[this.selected].assignments.length + 1)
       let tempAssign = {
-        due: this.weeks[this.selected].date,
+        due: moment(this.weeks[this.selected].date).add(7, "d"),
         id: manifestID,
         link: "%24CANVAS_OBJECT_REFERENCE%24/assignments/" + manifestID
       }

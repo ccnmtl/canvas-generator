@@ -89,6 +89,7 @@ import weekView from "./render/weekView"
 import listView from "./render/listView"
 
 import headings from "../store/export-headings"
+import moment from "moment"
 
 export default {
   name: "Export",
@@ -230,9 +231,17 @@ export default {
                   let assignmentSettings = this.readLocalXML("../../static/files/xml-templates/assignment_settings.xml")
                   let assignmentTag = assignmentSettings.getElementsByTagName("assignment")[0]
                   let assignmentTitle = assignmentSettings.getElementsByTagName("title")[0]
+                  let assignmentDue = assignmentSettings.getElementsByTagName("due_at")[0]
+                  let assignmentLock = assignmentSettings.getElementsByTagName("lock_at")[0]
+                  let assignmentUnlock = assignmentSettings.getElementsByTagName("unlock_at")[0]
 
-                  assignmentTitle.innerHTML = "Session " + (weekIndex + 1) + " - Assignment " + (assignmentIndex + 1)
+                  console.log(assignmentUnlock)
+                  console.log(moment(week.date).format())
+
                   assignmentTag.setAttribute("identifier", assignment.id)
+                  assignmentTitle.innerHTML = "Session " + (weekIndex + 1) + " - Assignment " + (assignmentIndex + 1)
+                  assignmentDue.innerHTML = assignmentLock.innerHTML = moment(assignment.due).format()
+                  assignmentUnlock.innerHTML = moment(week.date).format()
 
                   let assignmentSettingsString = serializer.serializeToString(assignmentSettings)
                   zip.file(assignment.id + "/assignment_settings.xml", assignmentSettingsString)

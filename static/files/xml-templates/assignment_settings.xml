@@ -8,7 +8,7 @@
   <all_day_date>2017-05-08</all_day_date>
   <peer_reviews_due_at>2017-05-08T03:59:59</peer_reviews_due_at>
   <assignment_group_identifierref>iedee1b03c50c1dea2ff0069bea67f004</assignment_group_identifierref>
-  <workflow_state>unpublished</workflow_state>
+  <workflow_state>published</workflow_state>
   <assignment_overrides>
   </assignment_overrides>
   <allowed_extensions></allowed_extensions>

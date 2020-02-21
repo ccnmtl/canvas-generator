@@ -6,7 +6,7 @@
   <type>topic</type>
   <discussion_type>side_comment</discussion_type>
   <has_group_category>false</has_group_category>
-  <workflow_state>unpublished</workflow_state>
+  <workflow_state>published</workflow_state>
   <module_locked>false</module_locked>
   <allow_rating>false</allow_rating>
   <only_graders_can_rate>false</only_graders_can_rate>
