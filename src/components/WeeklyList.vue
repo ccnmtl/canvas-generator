@@ -16,7 +16,7 @@
         <el-date-picker
           style="margin: 10px; margin-bottom:20px"
           :value="info.startDate"
-          @input="updateProp('startDate', $event)"
+          @input="changeStartDate($event)"
           type="date"
           placeholder="Pick start date">
         </el-date-picker>
@@ -224,11 +224,8 @@ export default {
   },
   mixins: [saveState, mutations],
   watch: {
-    "info.startDate": function() {
-      this.updateDates()
-    },
+    "info.startDate": function() {},
     "info.classType": function() {
-      this.updateDates()
       this.updateImages()
     }
   },
@@ -294,6 +291,10 @@ export default {
         ? "Click to Upload Image from URL"
         : "Click to Upload Image from Computer"
     },
+    changeStartDate(event) {
+      this.updateProp("startDate", event)
+      this.updateDates()
+    },
     updateDates() {
       // right now do not update if in exec training mode
       if (true) {
@@ -348,7 +349,7 @@ export default {
         this.sliceWeek(num)
       }
 
-      this.updateDates()
+      //this.updateDates()
     },
     setToDefault() {
       this.$store.commit("updateWeeks", [])
