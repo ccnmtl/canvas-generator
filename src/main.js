@@ -15,7 +15,7 @@ import VueTippy from 'vue-tippy'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css' // Use this OR theme chalk in index.html
 import locale from 'element-ui/lib/locale/lang/en'
-import CKEditor from '@ckeditor/ckeditor5-vue';
+// import CKEditor from '@ckeditor/ckeditor5-vue';
 
 
 Vue.use(VueResource);
@@ -24,7 +24,7 @@ Vue.use(ElementUI, {
   locale
 })
 Vue.use(VueTippy)
-Vue.use(CKEditor);
+// Vue.use(CKEditor);
 
 
 /* eslint-disable no-new */

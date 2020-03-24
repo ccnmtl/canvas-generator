@@ -74,13 +74,13 @@
         </el-alert>
 
         <div class="quill">
-          <!-- <quill-editor ref="myTextEditor"
+          <quill-editor ref="myTextEditor"
                         v-model="weeks[selected].body"
                         @input="updateWeek(selected,'body', $event)"
                         :config="editorOption">
-          </quill-editor> -->
+          </quill-editor>
 
-          <ckeditor :editor="editor" @input="updateWeek(selected,'body', $event)" :value="weeks[selected].body" :config="editorConfig"></ckeditor>
+          <!-- <ckeditor :editor="editor" @input="updateWeek(selected,'body', $event)" :value="weeks[selected].body" :config="editorConfig"></ckeditor> -->
         </div>
 
         <!-- <div class="quill">
@@ -295,7 +295,7 @@ import { mapGetters, mapMutations } from "vuex"
 import mutations from "../store/mutations"
 import { EventBus } from "../bus"
 import { quillEditor } from "vue-quill-editor"
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 import WeeklyCodeModule from "./weekly/WeeklyCodeModule"
 import WeeklyVideo from "./weekly/WeeklyVideo"
 import WeeklyDiscussion from "./weekly/WeeklyDiscussion"
@@ -339,7 +339,7 @@ export default {
       discussions: [],
       assignments: [],
       outputCode: "",
-      editor: ClassicEditor,
+      // editor: ClassicEditor,
       editorConfig: {},
       editorOption: {
         modules: {
