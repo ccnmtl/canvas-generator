@@ -356,6 +356,11 @@ export default {
     performImport() {
       this.$store.commit("updateInfo", this.importData.store.info)
       this.$store.commit("updateTheme", this.importData.store.theme.theme)
+
+      this.importData.store.weeks.forEach(week => {
+        if (!week.cases) week.cases = []
+      })
+
       this.$store.commit("updateWeeks", this.importData.store.weeks)
       this.$router.push({ path: "/home" })
     },
