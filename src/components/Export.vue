@@ -1,39 +1,65 @@
 <template>
   <div id="app">
-    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center uk-grid-match" uk-grid>
       <div>
-        <div class="uk-background-primary uk-padding uk-light uk-height-large">
+        <div class="uk-background-primary uk-padding uk-light">
           <h1>IMPORT</h1>
           <p>
             If you have previously saved an export file from this version of Coursebuilder you can use the input below to import all of the data into this
             session. Warning! This will overwrite all information you have currently entered.
           </p>
-          <h4>Select a ".json" file from a previous data export</h4>
+              <div class="uk-box-shadow-large uk-padding-small uk-padding-remove-bottom">
+                    <h4>Select a ".json" file from a previous data export</h4>
+                      <form>
+                      <button
+                        class="uk-button uk-button-default"
+                        v-if="hasImportData"
+                        @click.prevent="performImport"
+                      >File read successfully! Click here to confirm import.</button>
+                      <div class="uk-margin" uk-margin>
+                        <input
+                          style="display:inline-block;"
+                          class="uk-padding"
+                          type="file"
+                          accept=".json"
+                          name="import-file"
+                          @change="onImportFileChange"
+                        />
+                        <!-- <input style="display:inline-block;" class="uk-padding" type="file" name="import-file2" @change="onImportFileChange2" /> -->
+                        <br />
+                        <br />
+                      </div>
+                    </form>
+              </div>
+               <div class="uk-box-shadow-large uk-padding-small uk-padding-remove-bottom" v-if="false">
+                    <h4>Select an ".imscc" file from a canvas course export</h4>
+                      <form>
+                      <button
+                        class="uk-button uk-button-default"
+                        v-if="hasPacakgeImportData"
+                        @click.prevent="performPackageImport"
+                      >File read successfully! Click here to confirm import.</button>
+                      <div class="uk-margin" uk-margin>
+                        <input
+                          style="display:inline-block;"
+                          class="uk-padding"
+                          type="file"
+                          accept=".imscc"
+                          name="import-file"
+                          @change="onImportPacakgeFileChange"
+                        />
+                        <!-- <input style="display:inline-block;" class="uk-padding" type="file" name="import-file2" @change="onImportFileChange2" /> -->
+                        <br />
+                        <br />
+                      </div>
+                    </form>
+              </div>
 
-          <form>
-            <button
-              class="uk-button uk-button-default"
-              v-if="hasImportData"
-              @click.prevent="performImport"
-            >File read successfully! Click here to confirm import.</button>
-            <div class="uk-margin" uk-margin>
-              <input
-                style="display:inline-block;"
-                class="uk-padding"
-                type="file"
-                accept=".json"
-                name="import-file"
-                @change="onImportFileChange"
-              />
-              <!-- <input style="display:inline-block;" class="uk-padding" type="file" name="import-file2" @change="onImportFileChange2" /> -->
-              <br />
-              <br />
-            </div>
-          </form>
+
         </div>
       </div>
       <div>
-        <div class="uk-background-secondary uk-padding uk-light uk-height-large">
+        <div class="uk-background-secondary uk-padding uk-light">
           <h1>EXPORT</h1>
           <p>
             If you have completed your class or want to save the data you have previously submitted, click the export button to
