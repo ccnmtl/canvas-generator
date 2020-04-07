@@ -92,8 +92,8 @@
 
     		<li class="uk-text-center">
           <button type="button" class="uk-button uk-button-primary " name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
-          <el-input autosize style="width: 400px;" v-show="this.info.isVideo" v-model="info.video" @input="updateProp('video', $event)" ></el-input>
-          <form  style="display: inline-block;"v-show="!this.info.isVideo" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
+          <el-input autosize style="width: 400px;" v-show="info.isVideo" v-model="info.video" @input="updateProp('video', $event)" ></el-input>
+          <form  style="display: inline-block;"v-show="!info.isVideo" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
             <input style="display: inline-block;" name="image" id="image-file" type="file">
             <input style="display: inline-block;" type="submit" class="uk-button uk-button-primary" value="Submit!">
           </form>
@@ -156,10 +156,10 @@
             <div class="grid-row">
               <div class="col-xs-6">
                 <div class="styleguide-section__grid-demo-element">
-                  <div v-if="!this.userInput.isVideo" >
-                    <img :src="this.info.image" class="STV1_WeeklyIconIMG" alt=""> </img>
+                  <div v-if="!info.isVideo" >
+                    <img :src="info.image" class="STV1_WeeklyIconIMG" alt=""> </img>
                   </div>
-                  <div v-if="this.userInput.isVideo" class="embed-container">
+                  <div v-if="info.isVideo" class="embed-container">
                     <iframe :src="this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen"
                     webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe>
                   </div>
@@ -243,29 +243,28 @@
 </template>
 
 <script>
+import { EventBus } from "../bus"
+import saveState from "vue-save-state"
+import { quillEditor } from "vue-quill-editor"
+import validator from "validator"
+import _ from "lodash"
+import mutations from "../store/mutations"
+import homeView from "./render/homeView"
 
-import { EventBus } from '../bus'
-import saveState from 'vue-save-state';
-import { quillEditor } from 'vue-quill-editor';
-import validator from 'validator';
-import _ from 'lodash'
-import mutations from '../store/mutations'
-import homeView from './render/homeView'
-
-import xml2js from 'xml2js'
-import JSZip from 'jszip'
-import JSZipUtils from 'jszip-utils'
+import xml2js from "xml2js"
+import JSZip from "jszip"
+import JSZipUtils from "jszip-utils"
 
 var toolbarOptions = [
-  ['bold', 'italic', 'underline'],
-  ['blockquote',{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  [{ 'header': [1, 2, 3, 4, 5, 6, false] },'clean'],
-  ['link']
-];
+  ["bold", "italic", "underline"],
+  ["blockquote", { list: "ordered" }, { list: "bullet" }],
+  [{ header: [1, 2, 3, 4, 5, 6, false] }, "clean"],
+  ["link"]
+]
 
 export default {
-  name: 'Home',
-  data () {
+  name: "Home",
+  data() {
     return {
       userInput: {
         themeOptions: this.$store.getters.getThemeOptions,
@@ -273,21 +272,23 @@ export default {
         professor: "Glenn Denning",
         pEmail: "professor@sipa.columbia.edu",
         ta: "Chandani Punia",
-        tEmail:"cp2868@columbia.edu",
+        tEmail: "cp2868@columbia.edu",
         office: "Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
         tOffice: "Tuesday 1:00-2:30 pm (Publique, IAB 6th floor)",
         meetings: "Tuesday 9:00-10:50 am (IAB Room 411)",
         discussions: "Thursday 9:00-10:50 am (IAB Room 411)",
-        video:"https://vimeo.com/199382848/1dd8fc0f31",
-        image:"http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg",
+        video: "https://vimeo.com/199382848/1dd8fc0f31",
+        image: "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg",
         isVideo: false,
         mediaSwitchText: "Toggle to input Video",
-        taInfo:"Instructor: \nProfessor Glenn Denning (gd2147@sipa.columbia.edu) Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
-        description: "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
+        taInfo:
+          "Instructor: \nProfessor Glenn Denning (gd2147@sipa.columbia.edu) Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
+        description:
+          "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
       },
-      activeName: '1',
+      activeName: "1",
       outputCode: "",
-      editorOption:{
+      editorOption: {
         modules: {
           toolbar: toolbarOptions
         }
@@ -295,181 +296,182 @@ export default {
     }
   },
   components: {
-    quillEditor, homeView
+    quillEditor,
+    homeView
   },
   mixins: [saveState, mutations],
   computed: {
     // Parses an inputted video link to output the correct embed link for the source
-    videoLink(){
-      let output;
-      let link = this.info.video;
-      let parts = link.split('/') || [];
-      if (parts[2].includes('vimeo.com')){
-        output = 'https://player.vimeo.com/video/' + parts[3]
+    videoLink() {
+      let output
+      let link = this.info.video
+      let parts = link.split("/") || []
+      if (parts[2].includes("vimeo.com")) {
+        output = "https://player.vimeo.com/video/" + parts[3]
+      } else if (parts[2].includes("youtube")) {
+        let split = link.split("=")
+        output = "https://www.youtube.com/embed/" + split[1]
+      } else {
+        output = link
       }
-      else if (parts[2].includes('youtube')){
-        let split = link.split('=')
-        output = 'https://www.youtube.com/embed/' + split[1]
-      }
-      else {
-        output = link;
-      }
-      return output;
+      return output
     },
-    checkTitle(){
+    checkTitle() {
       if (this.info.title.length < 1 || this.info.url.length < 1) return false
       return validator.isURL(this.info.url)
     },
-    weeklyUrl(){
-      let ending = 'pages/weekly-activities'
-      if (this.info.classType.dateType == "Session") ending = 'pages/session-activities'
+    weeklyUrl() {
+      let ending = "pages/weekly-activities"
+      if (this.info.classType.dateType == "Session") ending = "pages/session-activities"
       return this.info.url + ending
     }
   },
   methods: {
-    viewCode(){
-      console.log('firing')
+    viewCode() {
+      console.log("firing")
       this.updateCode()
     },
     // Toggles button to insert video or image
-    mediaSwitch(){
-      this.updateProp('isVideo', !this.info.isVideo)
+    mediaSwitch() {
+      console.log("switch media")
+      console.log(this.info.isVideo)
+      this.updateProp("isVideo", !this.info.isVideo)
+      console.log(this.info.isVideo)
       this.userInput.mediaSwitchText = this.info.isVideo ? "Toggle to input Image" : "Toggle to input Video"
     },
-    setToDefault(){
-      console.log('resetting data...')
+    setToDefault() {
+      console.log("resetting data...")
       let dInfo = _.cloneDeep(this.$store.getters.dInfo)
-      let props = ['description', 'title', 'url', 'video', 'image', 'meetings','discussions','semester']
+      let props = ["description", "title", "url", "video", "image", "meetings", "discussions", "semester"]
 
-      props.forEach( (prop) => {
+      props.forEach(prop => {
         this.updateProp(prop, dInfo[prop])
       })
     },
-    onFormSubmit (type, ev){
-      var formData = new FormData();
+    onFormSubmit(type, ev) {
+      var formData = new FormData()
 
-      if (type == 'url'){
-        console.log('uploading url...')
-        var imageurl = document.querySelector('#image-url'); // Gets form data in html
-        if (imagefile.files.length == 0) return;
-        formData.append("imageUrl", imageurl.value);  // Adds api header to tell server that it is a url
-      }
-      else {
-        console.log('uploading file...')
-        var imagefile = document.querySelector('#image-file');
-        if (imagefile.files.length == 0) return;
-        formData.append("image", imagefile.files[0]); // Adds api header to tell server that it is a file
+      if (type == "url") {
+        console.log("uploading url...")
+        var imageurl = document.querySelector("#image-url") // Gets form data in html
+        if (imagefile.files.length == 0) return
+        formData.append("imageUrl", imageurl.value) // Adds api header to tell server that it is a url
+      } else {
+        console.log("uploading file...")
+        var imagefile = document.querySelector("#image-file")
+        if (imagefile.files.length == 0) return
+        formData.append("image", imagefile.files[0]) // Adds api header to tell server that it is a file
       }
 
       // More api headers to tell the server the dimensions to crop
-      formData.append('imageWidth', 450)
-      formData.append('imageHeight', 250)
+      formData.append("imageWidth", 450)
+      formData.append("imageHeight", 250)
 
       // Send post request to Amazon server using vue-resource with form data
-      this.$http.post('http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image',formData).then( response => {
-        console.log('success')
-        let imageData = JSON.parse(response.bodyText);
-        this.updateProp('image', imageData.imageUrls[0])
-        // this.info.image = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
-      }, response => {
-        console.log(response)
-      });
+      this.$http.post("http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image", formData).then(
+        response => {
+          console.log("success")
+          let imageData = JSON.parse(response.bodyText)
+          this.updateProp("image", imageData.imageUrls[0])
+          // this.info.image = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
+        },
+        response => {
+          console.log(response)
+        }
+      )
     },
     getSaveStateConfig() {
       return {
-          'cacheKey': 'Home',
-      };
+        cacheKey: "Home"
+      }
     }
   },
-  mounted(){
+  mounted() {
     // Once the component is loaded, update the code text box
-    this.updateCode();
-    
-    JSZipUtils.getBinaryContent('static/files/test-course-2-export.imscc', (err, data) => {
-      if(err) {
-          throw err; // or handle err
+    this.updateCode()
+
+    JSZipUtils.getBinaryContent("static/files/test-course-2-export.imscc", (err, data) => {
+      if (err) {
+        throw err // or handle err
       }
 
+      JSZip.loadAsync(data).then(zip => {
+        zip
+          .file("imsmanifest.xml")
+          .async("string")
+          .then(function(data) {
+            let parser = new DOMParser()
+            let manifest = parser.parseFromString(data, "text/xml")
 
+            let resources = manifest.getElementsByTagName("resources")[0]
+            let sampleResource = manifest.getElementsByTagName("resource")[0]
+            let file = sampleResource.firstElementChild
+            //sampleResource.setAttribute("href", "testing.html");
 
-      JSZip.loadAsync(data).then((zip) => {
-        zip.file('imsmanifest.xml').async("string").then(function (data){
-        let parser = new DOMParser();
-        let manifest = parser.parseFromString(data, "text/xml")
+            addResource(manifest, "cc-syllabus-test", "syllabus.html", "page")
 
-        let resources = manifest.getElementsByTagName("resources")[0]
-        let sampleResource = manifest.getElementsByTagName("resource")[0]
-        let file = sampleResource.firstElementChild
-        //sampleResource.setAttribute("href", "testing.html");
+            console.log(resources)
 
-        addResource(manifest, "cc-syllabus-test", "syllabus.html", "page")
+            // let builder = new xml2js.Builder();
 
-        console.log(resources)
+            // xml2js.parseString(manifest, function (err, result) {
+            //     //result.questestinterop.assessment[0].$.ident = 'ccb-q2'
+            //     //result.questestinterop.assessment[0].$.title = 'Quiz 2'
+            //     //console.log(result.questestinterop.assessment[0].$.ident); // Output: Hello world!
 
-        // let builder = new xml2js.Builder();
+            //     console.log(result.manifest.resources[0].resource[0])
 
-        // xml2js.parseString(manifest, function (err, result) {
-        //     //result.questestinterop.assessment[0].$.ident = 'ccb-q2'
-        //     //result.questestinterop.assessment[0].$.title = 'Quiz 2'
-        //     //console.log(result.questestinterop.assessment[0].$.ident); // Output: Hello world!
-
-        //     console.log(result.manifest.resources[0].resource[0])
-
-        //     //var newxml = builder.buildObject(result);
-        //     //console.log(newxml)
-        // });
-        })
-
-      });
+            //     //var newxml = builder.buildObject(result);
+            //     //console.log(newxml)
+            // });
+          })
       })
+    })
 
-      function addResource(xml, iden, link, type="page", use=""){
-        let resource = xml.createElement("resource");
-        let file = xml.createElement("file");
-        resource.appendChild(file)
+    function addResource(xml, iden, link, type = "page", use = "") {
+      let resource = xml.createElement("resource")
+      let file = xml.createElement("file")
+      resource.appendChild(file)
 
-        let resourceList = xml.getElementsByTagName("resources")[0]
+      let resourceList = xml.getElementsByTagName("resources")[0]
 
-        resource.setAttribute("identifier", iden);
+      resource.setAttribute("identifier", iden)
 
-        switch(type){
-          case "page":
-            resource.setAttribute("type", "webcontent");
-            resource.setAttribute("href", link);
-            file.setAttribute("href", link);
-            break;
-          case "discusson":
-            break;
-          default:
-            break;
-        }
-
-        resourceList.appendChild(resource)
-
+      switch (type) {
+        case "page":
+          resource.setAttribute("type", "webcontent")
+          resource.setAttribute("href", link)
+          file.setAttribute("href", link)
+          break
+        case "discusson":
+          break
+        default:
+          break
       }
 
-
+      resourceList.appendChild(resource)
+    }
   },
-  beforeCreate(){
-    EventBus.$on('import-data', data => {
-      this.userInput = { ...data.home.userInput}
-      console.log('importing data to home...')
+  beforeCreate() {
+    EventBus.$on("import-data", data => {
+      this.userInput = { ...data.home.userInput }
+      console.log("importing data to home...")
     })
 
-    EventBus.$on('export-data', () => {
+    EventBus.$on("export-data", () => {
       let home = this.$data
-      console.log('sending home')
-      EventBus.$emit('home-data', home)
+      console.log("sending home")
+      EventBus.$emit("home-data", home)
     })
   },
-  beforeUpdate(){
-  }
+  beforeUpdate() {}
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 
@@ -478,7 +480,7 @@ ul {
   padding: 0;
 }
 
-.alert{
+.alert {
   width: 50%;
   margin: auto;
   margin-bottom: 10px;
@@ -488,7 +490,7 @@ textarea {
   width: auto;
 }
 
-.quill{
+.quill {
   width: 700px;
   margin: auto;
 }
@@ -497,7 +499,7 @@ el-tab-pane {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: 'blue';
+  background-color: "blue";
 }
 
 .textbox-container {
@@ -506,7 +508,7 @@ el-tab-pane {
   justify-content: center;
 }
 
-.textbox{
+.textbox {
   margin-left: 40px;
 }
 
@@ -543,5 +545,4 @@ el-tab-pane {
   height: 250px;
   object-fit: cover;
 }
-
 </style>

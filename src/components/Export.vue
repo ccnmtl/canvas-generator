@@ -8,7 +8,8 @@
             If you have previously saved an export file from this version of Coursebuilder you can use the input below to import all of the data into this
             session. Warning! This will overwrite all information you have currently entered.
           </p>
-              <div class="uk-box-shadow-large uk-padding-small uk-padding-remove-bottom">
+          <!-- uk-box-shadow-large if shadow needed -->
+              <div class=" uk-padding-small uk-padding-remove-bottom">
                     <h4>Select a ".json" file from a previous data export</h4>
                       <form>
                       <button
@@ -73,7 +74,7 @@
             type="button"
             name="button"
             @click="exportJSON"
-          >Export</button>
+          >JSON</button>
           <!-- <button class="uk-button-large uk-button-default" type="button" name="button" @click="testChildren">Test</button> -->
           <button
             class="uk-button-large uk-button-default"
