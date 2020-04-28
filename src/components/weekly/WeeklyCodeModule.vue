@@ -1,8 +1,8 @@
 <template lang="html">
   <div>
     <div class="center">
-      <button type="button" class="add-weekly uk-button uk-button-primary" name="button" @click="fn">Add New <slot></slot></button>
-      <button type="button" class="add-weekly uk-button uk-button-danger"  name="button" @click="clear">Clear</button>
+      <el-button  class="center" size="large" type="primary" style="display: inline-block; margin-top: 5px;" @click="fn">Add New <slot></slot></el-button>
+      <el-button  class="center" size="large" type="danger" style="display: inline-block; margin-top: 5px;" @click="clear">Clear</el-button>
     </div>
     <hr>
     <transition name="fade">
@@ -31,8 +31,11 @@
           <textarea v-else :value="currentItem[input]" @input="modify(currentItem, input, $event)" id="text-area" class="uk-textarea" rows="2" cols="50"></textarea> <br>
         </div>
       </div>
+          <hr>
+
 
     </div>
+
     </transition>
   </div>
 

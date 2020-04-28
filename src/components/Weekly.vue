@@ -32,9 +32,12 @@
           </div>
           <div class="col-xs-8">
             <div class="styleguide-section__grid-demo-element">
-              <div class="welcome" style="height:50px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}} 
+              <div v-if="caseStudy.name.length < 30" class="welcome" style="height:50px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}} 
               <el-button @click="removeCase(caseStudy)" size="small" type="danger" style="float: right;">Remove Case</el-button>
               <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right; margin-right: 5px">Add Case</el-button></div>
+              <div v-else class="welcome" style="height:75px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}} 
+              <el-button @click="removeCase(caseStudy)" size="small" type="danger" style="float: right; margin-top: 5px">Remove Case</el-button>
+              <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right; margin-top: 5px; margin-right: 5px">Add Case</el-button></div>
               <p>{{caseStudy.shortDescription}}</p>
             </div>
           </div>
@@ -49,20 +52,25 @@
   <div class="code-container">
     
     <div class="textbox-container">
-      <el-select v-model="selected" placeholder="Select" style="margin-right: 100px; margin-left:100px; margin-bottom:10px; width: 150px;">
+
+        <el-select v-model="selected" placeholder="Select" style="width: 150px; margin-left: 12vw; margin-right:12vw; margin-bottom: 15px;" class="input-element">
         <el-option
           v-for="(week, index) in weeks"
           :key=index
           :label="info.classType.dateType + ' ' + (index + 1)"
           :value="index">
         </el-option>
-      </el-select>
+        </el-select>
 
-      <el-input autosize class="code-input" style="width: 400px" placeholder="Please input week title" :value="weeks[selected].title"
-        @input="updateWeek(selected,'title', $event)"></el-input>
+
+     <div class=" input-element">
+      <el-input autosize class="code-inputt" style="width: 300px; margin-bottom: 15px;" placeholder="Please input week title" :value="weeks[selected].title"
+        @input="updateWeek(selected,'title', $event)"></el-input> 
+      </div>
+
       <!-- <button type="button" name="button" class="uk-button uk-button-primary" @click="setToDefault">Reset to Default</button> -->
-      <button type="button" name="button" class="show-editor center uk-button uk-button-primary" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</button>
-
+      <el-button type="primary" name="button" size="large" class="show-editor center" @click="showEditor = !showEditor" >{{showEditor ? "Hide Text Editor" : "Show Text Editor"}}</el-button>
+      <hr>
       <!-- This transition is defined as a css animations in the style section -->
       <transition name="fade"></transition>
       <div v-show="showEditor">
@@ -89,9 +97,10 @@
                         :config="editorOption">
           </quill-editor>
         </div> -->
-
+      <br>
       </div>
       </transition>
+      <div style="margin-top: 10px;"><br> <hr></div>
 
 
       <!-- This is a seperate component to handle adding new Acitivity Page elements abstractly. For more information check the WeeklyCodeModule.vue file. -->
@@ -127,14 +136,12 @@
         @clearArr="updateWeek(selected,'assignments', [])">
         Assignment
       </weekly-code-module>
-
-      <hr>
-
+      <div style="margin-left= 12vw; margin-right=12vw;">
       <a href="#case-slide" uk-toggle>
-        <el-button  class="center" size="large" style="display: inline-block;"> Add Case <i class="fas fa-info-circle"></i></el-button>
+        <el-button  class="center" size="large" style=" margin-right: 10px"> Add Case <i class="fas fa-info-circle"></i></el-button>
       </a>
-        <el-button  @click="updateWeek(selected,'cases', [])" class="center" size="large" type="danger" style="display: inline-block;"> Clear Cases <i class="fas fa-trash"></i></el-button>
-  
+        <el-button  @click="updateWeek(selected,'cases', [])" class="center" size="large" type="danger" style=""> Clear Cases <i class="fas fa-trash"></i></el-button>
+      </div>
 
     </div>
 
@@ -457,6 +464,7 @@ export default {
     }
   },
   mounted() {
+    if (!week.cases) week.cases = []
     this.updateCode()
   },
   beforeCreate() {
@@ -501,7 +509,7 @@ textarea {
 }
 
 .home-bar {
-  width: 45vw;
+  width: 50vw;
 }
 
 .code-module {
@@ -517,13 +525,13 @@ textarea {
 }
 
 .textbox-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   width: 40%;
-  margin: auto;
-  align-self: flex-start;
   margin-top: 20px;
+}
+
+.input-element {
+  clear: both;
+  display: block;
 }
 
 .code-input {
@@ -544,9 +552,6 @@ textarea {
 }
 
 .code-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: all 0.5s ease;
 }
 
