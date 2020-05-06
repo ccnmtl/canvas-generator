@@ -3,7 +3,20 @@
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center uk-grid-match" uk-grid>
       <div>
         <div class="uk-background-primary uk-padding uk-light">
-          <h1>IMPORT</h1>
+          <h1>IMPORT/EXPORT COURSEBUILDER</h1>
+          <hr>
+          <p>
+          If you have completed your class or want to save the data you have previously submitted into the coursebuilder, click the export button to
+          save a ".json" file that you can import at a later date (using the import section below).
+          </p>
+          <button
+            class="uk-button-large uk-button-default"
+            type="button"
+            name="button"
+            @click="exportJSON"
+          >Export Coursebuilder Data
+          </button>
+          <hr>
           <p>
             If you have previously saved an export file from this version of Coursebuilder you can use the input below to import all of the data into this
             session. Warning! This will overwrite all information you have currently entered.
@@ -56,32 +69,25 @@
                     </form>
               </div>
 
-
         </div>
       </div>
       <div>
         <div class="uk-background-secondary uk-padding uk-light">
-          <h1>EXPORT</h1>
+          <h1>EXPORT CANVAS</h1>
           <p>
-            If you have completed your class or want to save the data you have previously submitted, click the export button to
-            save a ".json" file that you can import at a later date (using the import section to the left).
+            If you have completed your class and would like to import it directly into Canvas as an ".imscc" file, use the button below
+            to generate an export of your class.
           </p>
           <br />
           <br />
           <br />
-          <button
-            class="uk-button-large uk-button-default"
-            type="button"
-            name="button"
-            @click="exportJSON"
-          >JSON</button>
           <!-- <button class="uk-button-large uk-button-default" type="button" name="button" @click="testChildren">Test</button> -->
           <button
             class="uk-button-large uk-button-default"
             type="button"
             name="button"
             @click="exportIMSCC"
-          >IMSCC</button>
+          >Export Canvas Package</button>
         </div>
       </div>
     </div>
@@ -172,6 +178,7 @@ export default {
       reader.readAsText(file)
     },
     exportIMSCC() {
+      this.exportJSON()
       let serializer = new XMLSerializer()
       let footer = "</body> </html>"
       this.updateProp("url", this.parseUrl(this.info.url))
