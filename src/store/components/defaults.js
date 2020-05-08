@@ -9,7 +9,6 @@ export default {
       title: "",
       url: "",
       semester: "U6411 // SPRING 2020",
-      classType: "default", // options are "default", "blended", "execEd",
       isBlended: false,
 
       //TIME INFO
@@ -36,7 +35,7 @@ export default {
       classType: { option: "Weekly Course", dateType: "Week" }, // { option: "Weekly Course", dateType: "Week" },
       classOptions: [
         { option: "Weekly Course", dateType: "Week" },
-        { option: "Executive Training", dateType: "Session" },
+        // { option: "Executive Training", dateType: "Session" },
         // { option: "Blended", dateType: "Week" },
       ],
 
