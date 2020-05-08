@@ -7,14 +7,16 @@
                   <h1 class="uk-heading uk-margin-medium-top">Guide</h1>
                   <hr style="width: 70%; margin-left: auto; margin-right: auto;">
                   <p class="uk-margin-auto-left uk-margin-auto-right">This website is designed to allow Professors and TA’s to quickly build beautiful and functional class websites on Columbia’s new Canvas/Courseworks platform.</p>
-                  <p class="uk-margin-auto-left uk-margin-auto-right">This website provides a standard template for a 12 week course.</p>
-                  <p class="uk-margin-auto-left uk-margin-auto-right">To build your course, watch the short training video, download the guide below, and click <strong> Get Started</strong></p>
+                  <p class="uk-margin-auto-left uk-margin-auto-right">For help using this website, download the guides below and click the "Help" button on the top right of your screen for page specific tips.</p>
+                  <p class="uk-margin-auto-left uk-margin-auto-right">To start building your course click <strong> Get Started</strong></p>
                   <hr style="width: 70%; margin-left: auto; margin-right: auto;">
                   <div class="uk-margin-medium-bottom uk-margin-auto-left uk-margin-auto-right">
-                    <a href="./static/files/CanvasCourseBuilderGuide.pdf" download><el-button type="primary" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Download the Guide</el-button></a>
-                    <el-button type="primary" style="display: inline-block; margin-right: 20px;" uk-toggle="target: #modal-media-video"><i class="fas fa-video"></i> Watch the Demo Video</el-button>
-                    <a href="./static/files/weekly-template.imscc" download><el-button type="success" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Weekly Course</el-button></a>
-                    <a href="./static/files/executive-template.imscc" download><el-button type="success" style="display: inline-block;"><i class="fas fa-download"></i> Executive Training</el-button></a>
+                    <a href="./static/files/CourseBuilderQuickstart.pdf" download><el-button type="success" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Quick Start Guide</el-button></a>
+                    <a href="./static/files/CourseBuilderTips.pdf" download><el-button type="success" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Class Build Tips</el-button></a>
+
+                    <!-- <el-button type="primary" style="display: inline-block; margin-right: 20px;" uk-toggle="target: #modal-media-video"><i class="fas fa-video"></i> Watch the Demo Video</el-button> -->
+                    <!-- <a href="./static/files/weekly-template.imscc" download><el-button type="success" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Weekly Course</el-button></a> -->
+                    <!-- <a href="./static/files/executive-template.imscc" download><el-button type="success" style="display: inline-block;"><i class="fas fa-download"></i> Executive Training</el-button></a> -->
                   </div>
                   <div class="uk-margin-medium-bottom uk-margin-auto-left uk-margin-auto-right">
                     <el-button type="primary" size="large" style="display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
