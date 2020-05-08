@@ -55,6 +55,16 @@ export default {
 
   <p>You may also add videos, discussins, or assignments by clicking the respective buttons, selecting "EDIT" and modifying the inputs shown.</p>
   `,
+  "Export":
+    `
+  <p>This page is used to export and import data from the Coursebuilder. On the left hand side you can select EXPORT COURSEBUILDER DATA to export a ".json" file that
+  stores all of the data you have input into the Coursebuilder. This can be uploaded in the section below to restore this data. This can be used to save data between sessions,
+  migrate data between computers, or keep a copy of a finished class to use in future semesters.</p>
+
+  <p>Once course building is complete and has been thoroughly double-checked, select the EXPORT CANVAS PACKAGE button on the right hand side of the page – t
+  his will export an .ISMCC file that can be uploaded to Canvas using its native import tool as well as a .JSON file that 
+  should be saved for future updates or future school terms.</p>
+  `,
   default:
     `
   `,
