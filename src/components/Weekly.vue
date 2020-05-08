@@ -464,7 +464,9 @@ export default {
     }
   },
   mounted() {
-    if (!week.cases) week.cases = []
+    this.weeks.forEach(week => {
+      if (!week.cases) week.cases = []
+    })
     this.updateCode()
   },
   beforeCreate() {
