@@ -74,13 +74,13 @@
       <div>
         <div class="uk-background-secondary uk-padding uk-light">
           <h1>EXPORT CANVAS</h1>
+           <hr>
+
           <p>
             If you have completed your class and would like to import it directly into Canvas as an ".imscc" file, use the button below
             to generate an export of your class.
           </p>
-          <br />
-          <br />
-          <br />
+
           <!-- <button class="uk-button-large uk-button-default" type="button" name="button" @click="testChildren">Test</button> -->
           <button
             class="uk-button-large uk-button-default"

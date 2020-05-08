@@ -29,8 +29,9 @@
         </div>
         <div>
             <div class="uk-background-default uk-padding uk-height-small">
-            	<h5>DESIGN</h5>
-            	<p class="uk-text-large">Siah Singh</p>
+              <h5>CODING</h5>
+            	<p class="uk-text-large">Bernhard Fasenfest</p>
+
             </div>
         </div>
     </div>
@@ -40,8 +41,8 @@
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
         <div>
             <div class="uk-background-default uk-padding uk-height-small">
-            	<h5>CODING</h5>
-            	<p class="uk-text-large">Bernhard Fasenfest</p>
+            	<h5>DESIGN</h5>
+            	<p class="uk-text-large">Siah Singh</p>
             </div>
         </div>
         <div>
@@ -58,28 +59,42 @@
         </div>
     </div>
 
-    <div class="cleafix"></div>
+     <div class="cleafix"></div>
 
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
         <div>
-            <div class="uk-background-default uk-padding uk-height-medium">
+            <div class="uk-background-default uk-padding uk-height-small">
               <h5>PROJECT LIAISON / CTL</h5>
-              <p class="uk-text-large">Andrew Flatgard</p>
+              <p class="uk-text-large">Andrew Corpuz</p>
             </div>
         </div>
         <div>
-            <div class="uk-background-default uk-padding uk-height-medium">
+            <div class="uk-background-default uk-padding uk-height-small">
               <h5>PROJECT LIAISON / CUIT</h5>
               <p class="uk-text-large">Douglas Ward</p>
             </div>
         </div>
         <div>
-            <div class="uk-background-default uk-padding uk-height-medium">
+            <div class="uk-background-default uk-padding uk-height-small">
               <h5>PROJECT COORDINATOR / PCDEG</h5>
-              <p class="uk-text-large">Agustin Rivero</p>
+              <p class="uk-text-large">Sean Steinberg</p>
             </div>
         </div>
     </div>
+
+    <div class="cleafix"></div>
+
+    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
+        <div>
+            <div class="uk-background-default uk-padding uk-height-medium">
+              <h5>ADDITIONAL SUPPORT</h5>
+              <p class="uk-text-large">Justin Saunders</p>
+            </div>
+        </div>
+
+    </div>
+
+    
 
 
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left" uk-grid>
