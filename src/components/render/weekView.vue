@@ -14,10 +14,10 @@
               </div>
               <div class="pad-box-mini border border-b border-t">
                 <p v-html="weeks[idx].body"></p>
-                <div class="pad-box-mini">
+                <!-- <div class="pad-box-mini">
                   <span v-html="weeks[idx].required" >
                   </span>
-                </div>
+                </div> -->
             </div>
           </div>
         </div>

@@ -178,7 +178,6 @@ export default {
       reader.readAsText(file)
     },
     exportIMSCC() {
-      this.exportJSON()
       let serializer = new XMLSerializer()
       let footer = "</body> </html>"
       this.updateProp("url", this.parseUrl(this.info.url))
@@ -286,9 +285,14 @@ export default {
               console.log(manifest)
               zip.file("imsmanifest.xml", manifestString)
 
+              let today = new Date()
+              let date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
+              let time = today.getHours() + "-" + today.getMinutes()
+              let dateTime = date + " " + time
+
               zip.generateAsync({ type: "blob" }).then(blob => {
                 saveFile({
-                  name: this.info.title + "_export.imscc",
+                  name: this.info.title + " (" + dateTime + ").imscc",
                   data: blob
                 })
               })
@@ -346,6 +350,11 @@ export default {
 
         resourceList.appendChild(resource)
       }
+
+      // add wait function?
+      setTimeout(() => {
+        this.exportJSON()
+      }, 1500)
     },
     // old imscc exporter
     exportIMSCCOld() {
@@ -378,9 +387,14 @@ export default {
             headings.redirect_top + redirect_url + headings.redirect_bottom
           )
 
+          let today = new Date()
+          let date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
+          let time = today.getHours() + "-" + today.getMinutes()
+          let dateTime = date + " " + time
+
           zip.generateAsync({ type: "blob" }).then(blob => {
             saveFile({
-              name: this.info.title + "_export.imscc",
+              name: this.info.title + " (" + dateTime + ").imscc",
               data: blob
             })
           })
@@ -407,19 +421,19 @@ export default {
 
       let waitTime = 0
 
+      // get store
+      this.exportData.store = this.$store.getters.getStore
+
       let today = new Date()
       let date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
       let time = today.getHours() + "-" + today.getMinutes()
       let dateTime = date + " " + time
 
-      // get store
-      this.exportData.store = this.$store.getters.getStore
-
       // save file as json
       console.log("exporting..")
       setTimeout(() => {
         saveFile({
-          name: this.$store.state.info.title + " " + dateTime + ".json",
+          name: this.$store.state.info.title + " (" + dateTime + ").json",
           data: JSON.stringify(this.exportData)
         })
       }, waitTime)
