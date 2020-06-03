@@ -252,6 +252,12 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
     background-color: #008ee2;
   }
 
+  .OGH {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/OGH_ThickBanner.png') no-repeat center center;
+	background-size: 1000px 200px;
+    background-color: #008ee2;
+  }
+
 	.STV1_Banner  p{
 		font-size: 21px;
 		font-weight: 200;
@@ -304,6 +310,12 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
 		background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/mailmanschool-bk-1200x60.jpg') no-repeat center center;
 		background-color: #008ee2;
 	}
+
+  .OGH_Slim {
+		background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/OGH_ThinBanner.png') no-repeat center center;
+		background-size: 1200px 120px;
+		background-color: #008ee2;
+    }
 
 	.STV1_SlimBanner p{
 		font-size: 18px;

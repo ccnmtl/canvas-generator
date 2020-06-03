@@ -67,7 +67,6 @@
         <div class="uk-offcanvas-bar uk-background">
     		<ul class="uk-nav uk-nav-default">
           <li class="uk-nav-header"><router-link class="router" to="/guide">USER GUIDE</router-link></li>
-          <li class="uk-nav-header uk-margin-remove"><router-link class="router" to="/home">GET STARTED</router-link></li>
     			<li class="uk-nav-header">TEMPLATES</li>
     			<li><router-link class="router" to="/home">Home Page</router-link></li>
           <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>

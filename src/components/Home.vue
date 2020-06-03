@@ -148,7 +148,8 @@
         <div class="">
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
           <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]">
-            <img :src="theme.logo"/>
+            <img v-if="theme.logo" :src="theme.logo"/>
+            <div v-if="!theme.logo"> <br> </div>
             <p>{{info.title.toUpperCase()}}</p>
             <p class="STV1_CourseCode">{{info.semester}}</p>
           </div>
@@ -330,6 +331,9 @@ export default {
     viewCode() {
       console.log("firing")
       this.updateCode()
+    },
+    log(input) {
+      console.log(input)
     },
     // Toggles button to insert video or image
     mediaSwitch() {

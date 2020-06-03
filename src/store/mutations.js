@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
+      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo', "updateTheme"
     ]),
     updateProp(prop, value) {
       this.$store.commit('updateProp', { prop, value })
