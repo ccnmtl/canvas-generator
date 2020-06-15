@@ -253,9 +253,13 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
   }
 
   .OGH {
-	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/OGH_ThickBanner.png') no-repeat center center;
-	background-size: 1000px 200px;
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/govhub_thick.png') no-repeat center center;
+	background-size: 1000px 190px;
     background-color: #008ee2;
+  }
+
+  .home-logo{
+	  width: 230px;
   }
 
 	.STV1_Banner  p{
@@ -312,9 +316,9 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
 	}
 
   .OGH_Slim {
-		background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/OGH_ThinBanner.png') no-repeat center center;
-		background-size: 1200px 120px;
-		background-color: #008ee2;
+		background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/govhub_thin.png') no-repeat center center;
+		background-size: 1015px 60px;
+		background-color: #FFFFFF;
     }
 
 	.STV1_SlimBanner p{
