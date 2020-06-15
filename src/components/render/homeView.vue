@@ -24,8 +24,9 @@
             <p class="html" v-html="info.description"></p>
             <p>&nbsp;</p>
             <p>
-              <a class="Button" v-if="info.sylButton" style="text-decoration: none;" :href="info.url + 'assignments/syllabus'" >Course Syllabus</a>
-              <a class="Button" v-if="info.weekButton" style="text-decoration: none;" :href="weeklyUrl" >Weekly Activites</a>
+                    <a class="Button" v-if="info.sylButton" style="text-decoration: none;" :href="info.url + 'assignments/syllabus'" >Course Syllabus</a>
+                    <a class="Button" v-if="info.weekButton" style="text-decoration: none;" :href="weeklyUrl" >Activites</a>
+                    <a class="Button" v-if="info.zoomButton && info.useZoom" style="text-decoration: none;" :href="info.url + 'pages/zoom'" >Zoom</a>
             </p>
           </div>
         </div>

@@ -43,11 +43,14 @@
         <resource identifier="ccb-syllabus" type="associatedcontent/imscc_xmlv1p1/learning-application-resource" href="course_settings/syllabus.html" intendeduse="syllabus">
       <file href="course_settings/syllabus.html"/>
     </resource>
-    <resource identifier="ccb-case-collection-redirect" type="imsbasiclti_xmlv1p0">
+    <!-- <resource identifier="ccb-case-collection-redirect" type="imsbasiclti_xmlv1p0">
       <file href="ccb-case-collection-redirect.xml"/>
-    </resource>
+    </resource> -->
     <resource identifier="ccb-weekly-redirect" type="imsbasiclti_xmlv1p0">
       <file href="ccb-weekly-redirect.xml"/>
+    </resource>
+    <resource identifier="ccb-zoom-redirect" type="imsbasiclti_xmlv1p0">
+      <file href="ccb-zoom-redirect.xml"/>
     </resource>
   </resources>
 </manifest>

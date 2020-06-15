@@ -93,6 +93,7 @@
     </div>
 
     <home-view v-show="false" ref="home"></home-view>
+    <zoom-view v-show="false" ref="zoom"></zoom-view>
     <syllabus-view v-show="false" ref="syllabus"></syllabus-view>
     <list-view v-show="false" ref="list"></list-view>
     <div v-for="n in (weeks.length)" :key="n">
@@ -117,6 +118,7 @@ import JSZip from "jszip"
 import JSZipUtils from "jszip-utils"
 
 import homeView from "./render/homeView"
+import zoomView from "./render/zoomView"
 import syllabusView from "./render/syllabusView"
 import weekView from "./render/weekView"
 import listView from "./render/listView"
@@ -143,7 +145,7 @@ export default {
       }
     }
   },
-  components: { homeView, syllabusView, weekView, listView },
+  components: { homeView, syllabusView, weekView, listView, zoomView },
   mixins: [mutations],
   mounted() {
     let manifest = this.readLocalXML("../../static/files/Clean Course/course_settings/course_settings.xml")
@@ -193,9 +195,16 @@ export default {
           zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode() + footer)
           zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer)
 
-          let redirect_url = '<lticm:property name="url">' + this.info.url + "pages/activities</lticm:property>"
+          if (this.info.useZoom)
+            zip.file("wiki_content/zoom.html", headings.zoom + this.$refs.zoom.returnCode() + footer)
 
-          zip.file("ccb-weekly-redirect.xml", headings.redirect_top + redirect_url + headings.redirect_bottom)
+          let weekly_redirect_url = '<lticm:property name="url">' + this.info.url + "pages/activities</lticm:property>"
+          let zoom_redirect_url = '<lticm:property name="url">' + this.info.url + "pages/zoom</lticm:property>"
+
+
+          zip.file("ccb-weekly-redirect.xml", headings.weekly_redirect_top + weekly_redirect_url + headings.redirect_bottom)
+          zip.file("ccb-zoom-redirect.xml", headings.zoom_redirect_top + zoom_redirect_url + headings.redirect_bottom)
+
 
           // Add info to manifest
           zip

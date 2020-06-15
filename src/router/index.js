@@ -5,6 +5,7 @@ import Home from 'components/Home'
 import Syllabus from 'components/Syllabus'
 import Program from 'components/ProgramOverview'
 import Weekly from 'components/Weekly'
+import Zoom from 'components/Zoom'
 import WeeklyList from 'components/WeeklyList'
 import Export from 'components/Export'
 import Guide from 'components/Guide'
@@ -43,6 +44,11 @@ export default new Router({
       path: '/activities',
       name: 'Activities',
       component: WeeklyList
+    },
+    {
+      path: '/zoom',
+      name: 'Zoom',
+      component: Zoom
     },
     {
       path: '/export',
