@@ -70,8 +70,7 @@ export default {
       return this.content[this.index - 1]
     },
     weeklyUrl() {
-      let ending = "pages/weekly-activities"
-      if (this.info.classType.dateType == "Session") ending = "pages/session-activities"
+      let ending = "pages/activities"
       return this.info.url + ending
     }
   },

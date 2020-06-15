@@ -148,7 +148,7 @@
         <div class="">
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
           <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]">
-            <img v-if="theme.logo" :src="theme.logo"/>
+            <img  v-if="theme.logo" :src="theme.logo"/>
             <div v-if="!theme.logo"> <br> </div>
             <p>{{info.title.toUpperCase()}}</p>
             <p class="STV1_CourseCode">{{info.semester}}</p>
@@ -173,7 +173,9 @@
                   <p>&nbsp;</p>
                   <p>
                     <a class="Button" v-if="info.sylButton" style="text-decoration: none;" :href="info.url + 'assignments/syllabus'" >Course Syllabus</a>
-                    <a class="Button" v-if="info.weekButton" style="text-decoration: none;" :href="weeklyUrl" >Weekly Activites</a>
+                    <a class="Button" v-if="info.weekButton" style="text-decoration: none;" :href="weeklyUrl" >Activites</a>
+                    <a class="Button" v-if="info.zoomButton && info.useZoom" style="text-decoration: none;" :href="info.url + 'pages/zoom'" >Zoom</a>
+
                   </p>
                 </div>
               </div>
@@ -322,8 +324,7 @@ export default {
       return validator.isURL(this.info.url)
     },
     weeklyUrl() {
-      let ending = "pages/weekly-activities"
-      if (this.info.classType.dateType == "Session") ending = "pages/session-activities"
+      let ending = "pages/activities"
       return this.info.url + ending
     }
   },

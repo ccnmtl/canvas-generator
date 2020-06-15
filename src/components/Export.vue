@@ -190,10 +190,10 @@ export default {
         JSZip.loadAsync(data).then(zip => {
           console.log(zip)
           zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
-          zip.file("wiki_content/weekly-activities.html", headings.list + this.$refs.list.returnCode() + footer)
+          zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode() + footer)
           zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer)
 
-          let redirect_url = '<lticm:property name="url">' + this.info.url + "pages/weekly-activities</lticm:property>"
+          let redirect_url = '<lticm:property name="url">' + this.info.url + "pages/activities</lticm:property>"
 
           zip.file("ccb-weekly-redirect.xml", headings.redirect_top + redirect_url + headings.redirect_bottom)
 
@@ -207,18 +207,18 @@ export default {
 
               //add weeks
               for (let i = 1; i <= this.weeks.length; i++) {
-                let title = "<title>Week " + i + "</title>"
-                let iden = '<meta name="identifier" content="ccb-week' + i + '"/>'
+                let title = "<title>Session " + i + "</title>"
+                let iden = '<meta name="identifier" content="ccb-session' + i + '"/>'
                 let el = document.getElementById("week-box" + (i - 1))
                 let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
                 zip.file(
-                  "wiki_content/week-" + i + ".html",
+                  "wiki_content/session-" + i + ".html",
                   headings.top + title + iden + headings.bottom + code + footer
                 )
                 addResource({
                   xml: manifest,
-                  iden: "ccb-week-" + i,
-                  link: "wiki_content/pages/week-" + i
+                  iden: "ccb-session-" + i,
+                  link: "wiki_content/pages/session-" + i
                 })
               }
 
@@ -369,7 +369,7 @@ export default {
 
         JSZip.loadAsync(data).then(zip => {
           zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
-          zip.file("wiki_content/weekly-activities.html", headings.list + this.$refs.list.returnCode() + footer)
+          zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode() + footer)
           zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer)
 
           for (let i = 1; i <= this.weeks.length; i++) {
@@ -377,10 +377,13 @@ export default {
             let iden = '<meta name="identifier" content="' + headings.week_ids[i - 1] + '"/>'
             let el = document.getElementById("week-box" + (i - 1))
             let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
-            zip.file("wiki_content/week-" + i + ".html", headings.top + title + iden + headings.bottom + code + footer)
+            zip.file(
+              "wiki_content/" + this.info.classType.dateType + "-" + i + ".html",
+              headings.top + title + iden + headings.bottom + code + footer
+            )
           }
 
-          let redirect_url = '<lticm:property name="url">' + this.info.url + "pages/weekly-activities</lticm:property>"
+          let redirect_url = '<lticm:property name="url">' + this.info.url + "pages/activities</lticm:property>"
 
           zip.file(
             "ic0780a1b3ec00e092caacf7b0d3865e4.xml",

@@ -10,6 +10,7 @@ export default {
       url: "",
       semester: "U6411 // SPRING 2020",
       isBlended: false,
+      useZoom: true,
 
       //TIME INFO
       startDate: moment().day(1),
@@ -34,7 +35,7 @@ export default {
 
       classType: { option: "Weekly Course", dateType: "Week" }, // { option: "Weekly Course", dateType: "Week" },
       classOptions: [
-        { option: "Weekly Course", dateType: "Week" },
+        { option: "Weekly Course", dateType: "Session" },
         // { option: "Executive Training", dateType: "Session" },
         // { option: "Blended", dateType: "Week" },
       ],
@@ -70,6 +71,7 @@ export default {
       image: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/campus.jpg",
       sylButton: true,
       weekButton: true,
+      zoomButton: true,
       meetings: "Tuesday 9:00-10:50 am (IAB Room 411)",
       discussions: "Thursday 9:00-10:50 am (IAB Room 411)",
       description: "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
@@ -79,7 +81,7 @@ export default {
       title: 'Lecture',
       date: moment(),
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec maximus odio id aliquam vestibulum.",
-      imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/week1' + '.png',
+      imgSrc: 'https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/session1' + '.png',
       body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec maximus odio id aliquam vestibulum. Ut vel porttitor nibh. Cras arcu nunc, vehicula in blandit ut, imperdiet sed arcu. Mauris at dolor enim. Quisque sagittis quam nec ornare egestas. Fusce sed quam tempor, rhoncus urna sed, porttitor mauris. Etiam ac efficitur odio. Curabitur sodales pharetra sem, sit amet egestas nulla placerat non. Phasellus ex orci, sagittis viverra accumsan ut, lobortis eget odio. Pellentesque pretium mauris ante, et sodales justo fermentum ac. Suspendisse sed ultrices libero. Etiam sollicitudin pharetra rutrum.",
       required: '<table class="ic-Table ic-Table--condensed"><thead><tr><th>Readings</th><th>Lecture Presentation</th><th></th><th></th></tr></thead><tbody><tr><td>Auftragstaktik</td><td>Managing to 2019</td></tr><tr><td>Drucker and Management </td><td>Memo Format</td></tr><tr><td>Action Verb List</td><td>Discussion</td></tr><tr><td>Memo Guide</td><td>Recitation</td></tr></tbody></table>',
       videos: [],

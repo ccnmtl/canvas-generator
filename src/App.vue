@@ -13,7 +13,7 @@
             <li><router-link class="router" to="/home">Home</router-link></li>
             <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
             <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program">Program Overview</router-link></li>
-            <li><router-link class="router" to="/weeklylist">Weekly List</router-link></li>
+            <li><router-link class="router" to="/activities">Activities</router-link></li>
             <li><router-link class="router" to="/weekly">Individual Activity</router-link></li>
             <li><router-link class="router" to="/export">Export</router-link></li>
           </ul>
@@ -71,7 +71,7 @@
     			<li><router-link class="router" to="/home">Home Page</router-link></li>
           <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
           <li v-show="info.classType.option == 'Executive Training'"><router-link class="router" to="/program">Program Overview</router-link></li>
-          <li><router-link class="router" to="/weeklylist">Weekly Activites</router-link></li>
+          <li><router-link class="router" to="/activities">Activites</router-link></li>
           <li ><router-link class="router" to="/weekly">Individual Activity</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/export">Export/Import Data</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/credits">CREDITS</router-link></li>

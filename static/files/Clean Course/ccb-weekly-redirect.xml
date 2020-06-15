@@ -9,7 +9,7 @@
     <lticp:name>unknown</lticp:name>
   </blti:vendor>
   <blti:custom>
-    <lticm:property name="url">https://courseworks2.columbia.edu/courses/66158/pages/weekly-activities</lticm:property>
+    <lticm:property name="url">https://courseworks2.columbia.edu/courses/66158/pages/activities</lticm:property>
   </blti:custom>
   <blti:extensions platform="canvas.instructure.com">
     <lticm:property name="tool_id">redirect</lticm:property>

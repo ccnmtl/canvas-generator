@@ -11,7 +11,7 @@
       <button type="button" class="add-weekly center uk-button uk-button-primary"
       name="button" @click="populateActivities(userInput.toChange)">Edit # of Activities</button>
 
-      <div v-if="info.classType.dateType == 'Week'" class="center">
+      <div v-if="info.classType.option == 'Weekly Course'" class="center">
         <strong>Start Date:</strong>
         <el-date-picker
           style="margin: 10px; margin-bottom:20px"
@@ -117,10 +117,10 @@
             <div class="ic-image-text-combo__text">
               <div class="pad-box-mini">
                 <h3 style="margin-bottom: 5px;">
-                  <i class="icon-clock"></i> {{activitiesTitle.toUpperCase()}} ACTIVITIES</h3>
+                  <i class="icon-clock"></i> ACTIVITIES</h3>
               </div>
               <div class="pad-box-mini border border-b border-t">
-                <p>Welcome to the {{activitiesTitle}} Activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{info.title}}. Clicking on a {{info.classType.dateType.toLowerCase()}} will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
+                <p>Welcome to the activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{info.title}}. Clicking on a {{info.classType.dateType.toLowerCase()}} will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
               </div>
             </div>
           </div>
@@ -300,7 +300,7 @@ export default {
       if (true) {
         //this.info.classType.dateType == "Week"
         this.weeks.forEach((week, index) => {
-          let interval = this.info.classType.dateType == "Week" ? "w" : "d"
+          let interval = this.info.classType.option == "Weekly Course" ? "w" : "d"
           let date = moment(this.info.startDate).add(index, interval)
           this.updateWeek(index, "date", date)
         })
@@ -403,6 +403,7 @@ export default {
       this.needsInit = false
     }
     this.updateCode()
+    this.updateImages()
   },
   beforeCreate() {
     EventBus.$on("import-data", data => {

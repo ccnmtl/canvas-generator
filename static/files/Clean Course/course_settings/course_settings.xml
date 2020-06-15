@@ -4,7 +4,7 @@
   <course_code>Course Code</course_code>
   <start_at>2016-12-30T17:24:00</start_at>
   <conclude_at/>
-  <tab_configuration>[{"id":0},{"id":1},{"id":"context_external_tool_ccb-weekly-redirect"},{"id":"context_external_tool_ccb-case-collection-redirect"},{"id":"context_external_tool_11343"},{"id":14},{"id":3},{"id":8},{"id":5},{"id":2},{"id":4},{"id":16},{"id":6}]</tab_configuration>
+  <tab_configuration>[{"id":0},{"id":1},{"id":"context_external_tool_ccb-weekly-redirect"},{"id":"context_external_tool_11343"},{"id":14},{"id":3},{"id":8},{"id":5},{"id":2},{"id":4},{"id":16},{"id":6}]</tab_configuration>
   <group_weighting_scheme>percent</group_weighting_scheme>
   <is_public>false</is_public>
   <is_public_to_auth_users>false</is_public_to_auth_users>

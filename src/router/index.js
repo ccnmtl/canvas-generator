@@ -40,8 +40,8 @@ export default new Router({
       component: Program
     },
     {
-      path: '/weeklylist',
-      name: 'Weekly Activities List',
+      path: '/activities',
+      name: 'Activities',
       component: WeeklyList
     },
     {
