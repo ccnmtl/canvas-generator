@@ -489,6 +489,15 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
     text-align: center;
   }
 
+  .color-columbia-blue {
+	background-color: #008EE2;
+	color: #FFFFFF;
+}
+.color-ogh-blue {
+	background-color: #6995c2;
+	color: #FFFFFF;
+}
+
   .STV1_SyllabusPhoto {
     /* reserved */
   }

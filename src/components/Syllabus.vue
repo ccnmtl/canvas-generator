@@ -144,7 +144,7 @@
 
               <!-- must have weeklyIconImg class for responsiveness -->
               <!-- landscape images work best. 350x200 seems ideal -->
-              <div class="STV1_ProfileBG" :style="{backgroundColor: getTheme.primary, color: '#FFFFFF'}">
+              <div :class="['STV1_ProfileBG', getTheme.primary]">
                 <img :src="prof.imgSrc" class="STV1_SyllabusPhoto" />
               </div>
 
@@ -160,7 +160,7 @@
 
               <!-- must have weeklyIconImg class for responsiveness -->
               <!-- landscape images work best. 350x200 seems ideal -->
-              <div class="STV1_ProfileBG" :style="{backgroundColor: getTheme.primary, color: '#FFFFFF'}">
+              <div :class="['STV1_ProfileBG', getTheme.primary]">
                 <img :src="ta.imgSrc" class="STV1_SyllabusPhoto" />
               </div>
 
