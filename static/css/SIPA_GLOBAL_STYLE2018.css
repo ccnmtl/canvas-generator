@@ -172,6 +172,10 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
 	margin-top: 10px;
 }
 
+#right-side-wrapper {
+	position: absolute;
+    right: -300px;
+}
 
 
 /* ----------------- 2017 SIPA GLOBAL THEME STYLES (STV1) ------------------- */
@@ -315,8 +319,7 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
 	}
 
   .OGH_Slim {
-		background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/govhub_thin.png') no-repeat center center;
-		background-size: 1054px 60px;
+		background: url('https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/govhub_thin.png') no-repeat center center;
 		background-color: #FFFFFF;
     }
 
@@ -480,8 +483,7 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
 		padding: 0 0 5px 0;
 	}
 
-  .STV1_BlueBG {
-    background-color: #008ee2;
+  .STV1_ProfileBG {
     min-height: 50px;
     max-width: 400px;
     text-align: center;

@@ -130,7 +130,7 @@
 
     <!-- Where the canvas code is stored -->
     <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
-      <div :class="['STV1_SlimBanner', this.$store.getters.getTheme.slim]">
+      <div :class="['STV1_SlimBanner', this.$store.getters.getTheme.slim]" style="width: 1054px;">
         <p>{{info.title.toUpperCase()}}</p>
       </div>
 
@@ -144,7 +144,7 @@
 
               <!-- must have weeklyIconImg class for responsiveness -->
               <!-- landscape images work best. 350x200 seems ideal -->
-              <div class="STV1_BlueBG">
+              <div class="STV1_ProfileBG" :style="{backgroundColor: getTheme.primary, color: '#FFFFFF'}">
                 <img :src="prof.imgSrc" class="STV1_SyllabusPhoto" />
               </div>
 
@@ -160,7 +160,7 @@
 
               <!-- must have weeklyIconImg class for responsiveness -->
               <!-- landscape images work best. 350x200 seems ideal -->
-              <div class="STV1_BlueBG">
+              <div class="STV1_ProfileBG" :style="{backgroundColor: getTheme.primary, color: '#FFFFFF'}">
                 <img :src="ta.imgSrc" class="STV1_SyllabusPhoto" />
               </div>
 
@@ -378,7 +378,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getInfo", "dProf", "dTA", "getWeeks"])
+    ...mapGetters(["getInfo", "dProf", "dTA", "getWeeks", "getTheme"])
   },
   methods: {
     formatDate(date) {
