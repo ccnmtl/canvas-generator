@@ -147,8 +147,9 @@
     <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
         <div class="">
         <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
-          <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]">
+          <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]" style="postition: relative">
             <img  v-if="theme.logo" :src="theme.logo"/>
+            <img  style="float: right; height: 100px; margin-top: 10px;" v-if="theme.rightLogo" :src="theme.rightLogo"/> 
             <div v-if="!theme.logo"> <br> </div>
             <p>{{info.title.toUpperCase()}}</p>
             <p class="STV1_CourseCode">{{info.semester}}</p>
