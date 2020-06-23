@@ -1,6 +1,6 @@
 <template lang="html">
      <div id="zoom-code">
-      <div :class="['STV1_SlimBanner', this.$store.getters.getTheme.slim]">
+      <div :class="['STV1_SlimBanner', this.$store.getters.getTheme.slim]"  style="width: 1054px;">
         <p>{{info.title.toUpperCase()}}</p>
       </div>
      
