@@ -4,50 +4,6 @@
 
   <hr>
   
-  <div id="case-slide" uk-offcanvas="">
-    <div class="uk-offcanvas-bar home-bar">
-      <button class="uk-offcanvas-close" type="button" uk-close></button>
-      <h3>Add Case</h3>
-
-      <!-- <el-cascader v-model="selectedCase" :options="caseOptions" @change="handleChange" size="large">
-      </el-cascader> -->
-
-
-      <div class="STV1_SlimBanner">
-        <p>PICKER CENTER CASE COLLECTION</p>
-      </div>
-
-      <div v-for="category in getCases">
-      <div class="pad-box-mini">
-        <h3 style="margin-bottom: 15px;"><i class="icon-folder"></i> {{category.category}}</h3>
-      </div>
-
-      <div v-for="caseStudy in category.cases" class="content-box">
-        <div class="grid-row top-xs">
-          <div class="col-xs-4">
-            <div class="styleguide-section__grid-demo-element">
-              <a @click="addCase(caseStudy)">
-                 <img class="weeklyIconImg" :src="caseStudy.thumbnail"/> </a>
-            </div>
-          </div>
-          <div class="col-xs-8">
-            <div class="styleguide-section__grid-demo-element">
-              <div v-if="caseStudy.name.length < 30" class="welcome" style="height:50px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}} 
-              <el-button @click="removeCase(caseStudy)" size="small" type="danger" style="float: right;">Remove Case</el-button>
-              <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right; margin-right: 5px">Add Case</el-button></div>
-              <div v-else class="welcome" style="height:75px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}} 
-              <el-button @click="removeCase(caseStudy)" size="small" type="danger" style="float: right; margin-top: 5px">Remove Case</el-button>
-              <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right; margin-top: 5px; margin-right: 5px">Add Case</el-button></div>
-              <p>{{caseStudy.shortDescription}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      </div>
-      
-    </div>
-  </div>
 
   <div class="code-container">
     
@@ -76,7 +32,7 @@
       <h3 style="margin-bottom: 5px;"><i class="icon-group"></i> Zoom Web-Conferencing Collaboration</h3>
       </div>
       <div class="pad-box-mini border border-b border-t">
-      <p>Using ZOOM technology, students are able to interact with classmates to discuss and collaborate. Please review the <a class="instructure_file_link instructure_scribd_file" title="Zoom Student Guide - 08.26.16.pdf" href="#" data-api-returntype="File">Zoom Student GuideView</a> and visit zoom.us to download the desktop client and create a free account.</p>
+      <p>Using ZOOM technology, students are able to interact with classmates to discuss and collaborate. Please review the <a class="instructure_file_link instructure_scribd_file" title="Zoom Student Guide - 08.26.16.pdf" href="https://sipa-canvas.s3.us-east-2.amazonaws.com/documents/A1.+Zoom+Student+Guide+-+EMPA.pdf" data-api-returntype="File">Zoom Student Guide</a> and visit <a href="https://zoom.us/">zoom.us</a> to download the desktop client and create a free account.</p>
       <p>Please mute your accounts when joining live streaming zoom sessions.</p>
       </div>
       </div>

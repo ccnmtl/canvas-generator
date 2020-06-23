@@ -13,7 +13,7 @@
       <h3 style="margin-bottom: 5px;"><i class="icon-group"></i> Zoom Web-Conferencing Collaboration</h3>
       </div>
       <div class="pad-box-mini border border-b border-t">
-      <p>Using ZOOM technology, students are able to interact with classmates to discuss and collaborate. Please review the <a class="instructure_file_link instructure_scribd_file" title="Zoom Student Guide - 08.26.16.pdf" href="#" data-api-returntype="File">Zoom Student GuideView</a> and visit zoom.us to download the desktop client and create a free account.</p>
+      <p>Using ZOOM technology, students are able to interact with classmates to discuss and collaborate. Please review the <a class="instructure_file_link instructure_scribd_file" title="Zoom Student Guide - 08.26.16.pdf" href="https://sipa-canvas.s3.us-east-2.amazonaws.com/documents/A1.+Zoom+Student+Guide+-+EMPA.pdf" data-api-returntype="File">Zoom Student Guide</a> and visit <a href="https://zoom.us/">zoom.us</a> to download the desktop client and create a free account.</p>
       <p>Please mute your accounts when joining live streaming zoom sessions.</p>
       </div>
       </div>
