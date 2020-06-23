@@ -192,19 +192,22 @@ export default {
         JSZip.loadAsync(data).then(zip => {
           console.log(zip)
           zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
-          zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode() + footer)
           zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer)
 
-          if (this.info.useZoom)
+          zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode() + footer)
+
+          if (this.info.useZoom) {
             zip.file("wiki_content/zoom.html", headings.zoom + this.$refs.zoom.returnCode() + footer)
+          }
 
           let weekly_redirect_url = '<lticm:property name="url">' + this.info.url + "pages/activities</lticm:property>"
           let zoom_redirect_url = '<lticm:property name="url">' + this.info.url + "pages/zoom</lticm:property>"
 
-
-          zip.file("ccb-weekly-redirect.xml", headings.weekly_redirect_top + weekly_redirect_url + headings.redirect_bottom)
+          zip.file(
+            "ccb-weekly-redirect.xml",
+            headings.weekly_redirect_top + weekly_redirect_url + headings.redirect_bottom
+          )
           zip.file("ccb-zoom-redirect.xml", headings.zoom_redirect_top + zoom_redirect_url + headings.redirect_bottom)
-
 
           // Add info to manifest
           zip
@@ -230,6 +233,9 @@ export default {
                   link: "wiki_content/pages/session-" + i
                 })
               }
+
+              addResource({ xml: manifest, iden: "ccb-zoom", link: "wiki_content/pages/zoom" })
+              addResource({ xml: manifest, iden: "ccb-weekly-list", link: "wiki_content/pages/activities" })
 
               this.weeks.forEach((week, weekIndex) => {
                 week.discussions.forEach((discussion, discussionIndex) => {
