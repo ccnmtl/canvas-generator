@@ -47,7 +47,7 @@ export default {
           name: 'Professor Name',
           email: 'professor@sipa.columbia.edu',
           office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
-          imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default_generic.png"
+          imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
         },
       ],
       tas: [
@@ -55,7 +55,7 @@ export default {
           name: 'TA Name',
           email: 'ta@sipa.columbia.edu',
           office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
-          imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default_generic.png",
+          imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
         },
       ],
 
@@ -112,13 +112,13 @@ export default {
       name: 'Professor Name',
       email: 'professor@sipa.columbia.edu',
       office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
-      imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
+      imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
     },
     taDefault: {
       name: 'TA Name',
       email: 'TA@sipa.columbia.edu',
       office: 'Office Hours: Tuesday 1:00-3:00 pm (IAB Room 1234)',
-      imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
+      imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
     },
     weeklyDefault: {
       title: "Global Food Systems",
