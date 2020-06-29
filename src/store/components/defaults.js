@@ -9,7 +9,7 @@ export default {
       title: "",
       url: "",
       semester: "U6411 // SPRING 2020",
-      isBlended: false,
+      isBlended: true,
       useZoom: true,
       zoomLink: "http://www.zoom.us",
 
@@ -31,10 +31,10 @@ export default {
 
       //SYLLABUS SECTIONS
       sectionBox1: ['Description', 'Objectives', 'Schedule'],
-      sectionBox2: ['Grading', 'Resources', 'Integrity'],
+      sectionBox2: [],
 
 
-      classType: { option: "Weekly Course", dateType: "Week" }, // { option: "Weekly Course", dateType: "Week" },
+      classType: { option: "Weekly Course", dateType: "Session" }, // { option: "Weekly Course", dateType: "Week" },
       classOptions: [
         { option: "Weekly Course", dateType: "Session" },
         // { option: "Executive Training", dateType: "Session" },
@@ -44,8 +44,8 @@ export default {
       //TEACHERS
       profs: [
         {
-          name: 'Professor Name',
-          email: 'professor@sipa.columbia.edu',
+          name: 'Instructor Name',
+          email: 'Instructor@sipa.columbia.edu',
           office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
           imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
         },

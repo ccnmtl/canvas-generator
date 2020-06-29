@@ -24,16 +24,16 @@
             <el-form-item label="Course URL" prop="url">
               <el-input autosize style="width: 80%" placeholder="Please input your Course URL" v-model="ruleForm.url"></el-input>
             </el-form-item>
-            <el-form-item label="School" prop="theme">
+            <el-form-item label="Organization" prop="theme">
               <select style="display: inline-block; width:150px" v-model="ruleForm.theme" name="Choose Banner" class="uk-select">
                 <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
               </select>
             </el-form-item>
-            <el-form-item label="Course Type" prop="classType">
+            <!-- <el-form-item label="Course Type" prop="classType">
               <select style="display: inline-block; width:150px" v-model="ruleForm.classType" name="Choose Banner" class="uk-select">
                 <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
               </select>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="Online Class" prop="isBlended">
               <el-switch
                 v-model="ruleForm.isBlended"

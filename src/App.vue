@@ -97,13 +97,14 @@
           <label for="courseurl" style="min-width: 90px">Course URL</label>
           <el-input name="courseurl" style="width: 400px" placeholder="Please input" v-model="info.url" @input="updateProp('url', $event)"></el-input>
         </p>
-        <p>
-          <label for="select" style="min-width: 90px">Class Type</label>
-          <select style="display: inline-block; width:150px" v-model="info.classType" @input="updateProp('classType', $event)" name="Choose Banner" class="uk-select">
+        <p></p>
+        <!-- Course Type is currently not an option -->
+          <!-- <label for="select" style="min-width: 90px;">Course Type</label>
+          <select style="display: inline-block; width:150px; margin-right: 30px;" v-model="info.classType" @input="updateProp('classType', $event)" name="Choose Banner" class="uk-select">
             <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
-          </select>
+          </select> -->
 
-          <label style="margin-left: 30px; min-width: 60px;">School </label>
+          <label style="min-width: 60px;">Organization </label>
           <select style="display: inline-block; width:150px" v-model="theme" name="Choose Banner" class="uk-select">
             <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
           </select>

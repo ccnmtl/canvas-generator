@@ -28,7 +28,7 @@
     	<ul class="uk-tab uk-flex-center" data-uk-tab="{connect:'#tab-content'}">
         <li class="uk-active"><a href="#">Course Info</a></li>
         <li><a href="#">Description</a></li>
-    		<li><a href="#">Professor</a></li>
+    		<li><a href="#">Instructor</a></li>
     		<li v-if="info.tas.length > 0"><a href="#">TA</a></li>
     		<li><a href="#">Meeting Times</a></li>
     		<li><a href="#">Video / Photo</a></li>
@@ -187,7 +187,7 @@
               <div class="col-xs-6">
                 <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
                   <p>Instructor:</p>
-                  <p v-for="prof in info.profs">Professor {{prof.name}} (<a :href="'mailto:' + prof.email">{{prof.email}}</a>) <br /> {{prof.office}}</p>
+                  <p v-for="prof in info.profs">{{prof.name}} (<a :href="'mailto:' + prof.email">{{prof.email}}</a>) <br /> {{prof.office}}</p>
                 </div>
               </div>
               <div class="col-xs-6" v-if="info.tas.length > 0">
