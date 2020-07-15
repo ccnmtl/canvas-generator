@@ -46,7 +46,7 @@
             v-show="!checkTitle">
           </el-alert>
           <el-alert
-            title="The length of the course title is longer than 35 characters and may not display properly. Please change the title or use a wide banner"
+            title="The length of the course title is longer than 35 characters and may not display properly. Please change the title."
             type="warning" class="alert" center show-icon
             v-show="info.title.length > 35 && !info.wideBanner">
           </el-alert>
@@ -107,7 +107,7 @@
               <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
             </select>
 
-              <el-checkbox v-if="theme.wide" v-model="info.wideBanner" @input="updateProp('wideBanner', $event)" >Use Wide Banner</el-checkbox>
+              <!-- <el-checkbox v-if="theme.wide" v-model="info.wideBanner" @input="updateProp('wideBanner', $event)" >Use Wide Banner</el-checkbox> -->
           </label>
 
           <!-- Old Logo select; may need for independant banner switching -->

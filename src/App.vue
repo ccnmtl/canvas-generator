@@ -80,7 +80,7 @@
           <li class="uk-nav-header"><router-link class="router" to="/credits">CREDITS</router-link></li>
     			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
     			<li><router-link to="/">Course Builder Home</router-link></li>
-    			<li><a href="https://courseworks2.columbia.edu/" target="_blank">Canvas Website</a></li>
+    			<li><a href="https://www.opengov.network/" target="_blank">Canvas Website</a></li>
     			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
     		</ul>
         </div>
