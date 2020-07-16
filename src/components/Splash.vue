@@ -34,13 +34,13 @@
                 <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
               </select>
             </el-form-item> -->
-            <el-form-item label="Online Class" prop="isBlended">
+            <!-- <el-form-item label="Online Class" prop="isBlended">
               <el-switch
                 v-model="ruleForm.isBlended"
                 active-color="#13ce66"
                 inactive-color="#ff4949">
               </el-switch>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="Use Zoom" prop="useZoom">
               <el-switch
                 v-model="ruleForm.useZoom"

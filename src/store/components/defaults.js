@@ -45,7 +45,7 @@ export default {
       profs: [
         {
           name: 'Instructor Name',
-          email: 'Instructor@sipa.columbia.edu',
+          email: 'Instructor@example.org',
           office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
           imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
         },
@@ -53,7 +53,7 @@ export default {
       tas: [
         {
           name: 'TA Name',
-          email: 'ta@sipa.columbia.edu',
+          email: 'ta@example.org',
           office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
           imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
         },
@@ -69,7 +69,7 @@ export default {
       // Home Page Paramaters
       video: "https://vimeo.com/199382848/1dd8fc0f31",
       isVideo: false,
-      image: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/campus.jpg",
+      image: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/Open-Gov-Hub-Logo-.png",
       sylButton: true,
       weekButton: true,
       zoomButton: true,

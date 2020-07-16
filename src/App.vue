@@ -109,7 +109,7 @@
             <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
           </select>
         </p>
-        <p>
+        <!-- <p>
           <label for="select" style="min-width: 110px">Blended Model</label>
           <el-switch
             v-model="info.isBlended"
@@ -117,7 +117,7 @@
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
-        </p>
+        </p> -->
          <p>
           <label for="select" style="min-width: 110px">Use Zoom</label>
           <el-switch
