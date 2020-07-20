@@ -519,7 +519,7 @@ el-tab-pane {
 }
 
 #canvas-code {
-  width: 1000px;
+  width: 1090px;
   margin: auto;
 }
 

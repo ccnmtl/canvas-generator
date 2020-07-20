@@ -261,6 +261,89 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
     background-color: #008ee2;
   }
 
+  .Banner_AL {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/AL_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+
+    .Banner_AL_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/AL_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_CODE {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/Code_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_CODE_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/Code_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_CORE {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/Core_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_CORE_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/Core_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_DOI {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/DOI_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_DOI_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/DOI_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_Feedback {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/Feedback_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_Feedback_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/Feedback_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_GI {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/GI_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_GI_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/GI_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_OGP {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/OGP_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_OGP_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/OGP_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_Pact {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/Pact_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_Pact_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/Pact_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_PSAM {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/PSAM_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_PSAM_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/PSAM_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_RRI {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/RRI_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_RRI_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/RRI_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+  
+
   .home-logo{
 	  width: 230px;
   }

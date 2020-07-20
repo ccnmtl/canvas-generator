@@ -547,7 +547,7 @@ textarea {
 }
 
 #canvas-code {
-  width: 1015px;
+  width: 1090px;
   margin: auto;
   margin-bottom: auto;
   align-self: flex-start;
