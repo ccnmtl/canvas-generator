@@ -1,8 +1,8 @@
-const IMAGE_SERVER = "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/"
+const IMAGE_SERVER = "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/"
 
 export default {
   state: {
-    theme: { option: "Open Gov Hub", banner: 'OGH', slim: 'OGH_Slim', logo: IMAGE_SERVER + "govhub_logo_small.png", rightLogo: IMAGE_SERVER + "govhub_bubbles70.png", primary: "color-ogh-blue" },
+    theme: { option: "Open Gov Hub", banner: 'OGH', slim: 'OGH_Slim', logo: IMAGE_SERVER + "govhub_logo_small.png", primary: "color-ogh-blue" },
 
     themeOptions: [
       // { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SipaLogo2.png", primary: "color-columbia-blue" },
