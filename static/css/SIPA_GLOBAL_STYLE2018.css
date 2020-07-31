@@ -343,6 +343,14 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
 	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/RRI_Thin.png') no-repeat center center;
     background-color: #008ee2;
   }
+    .Banner_DG {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/DG_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_DG_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/DG_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
   
 
   .home-logo{
@@ -377,7 +385,6 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
 	}
 
 	.STV1_SlimBanner {
-		background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/STV1_BannerSlim.jpg') no-repeat center center;
 		background-color: #008ee2;
 		height: 60px;
 	}

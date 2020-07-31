@@ -9,6 +9,7 @@ export default {
       { option: "Acountability Lab", banner: 'Banner_AL', slim: 'Banner_AL_Slim', logo: IMAGE_SERVER + "AL_Logo.png" },
       { option: "Center for Open Data Enterprise", banner: 'Banner_CODE', slim: 'Banner_CODE_Slim', logo: IMAGE_SERVER + "Code_Logo.png" },
       { option: "Collaborating for Resilience", banner: 'Banner_CORE', slim: 'Banner_CORE_Slim', logo: IMAGE_SERVER + "Core_Logo.png" },
+      { option: "Development Gateway", banner: 'Banner_DG', slim: 'Banner_DG_Slim', logo: IMAGE_SERVER + "DG_Logo.png" },
       { option: "Dullah Omar Institute", banner: 'Banner_DOI', slim: 'Banner_DOI_Slim', logo: IMAGE_SERVER + "DOI_Logo.png" },
       { option: "Feedback Labs", banner: 'Banner_Feedback', slim: 'Banner_Feedback_Slim', logo: IMAGE_SERVER + "Feedback_Logo.png" },
       { option: "Global Integrity", banner: 'Banner_GI', slim: 'Banner_GI_Slim', logo: IMAGE_SERVER + "GI_Logo.png" },
