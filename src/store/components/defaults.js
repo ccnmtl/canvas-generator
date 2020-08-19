@@ -69,7 +69,7 @@ export default {
       // Home Page Paramaters
       video: "https://vimeo.com/199382848/1dd8fc0f31",
       isVideo: false,
-      image: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/Open-Gov-Hub-Logo-.png",
+      image: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/OGH_LogoWide.png",
       sylButton: true,
       weekButton: true,
       zoomButton: true,

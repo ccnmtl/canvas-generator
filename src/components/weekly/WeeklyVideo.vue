@@ -30,9 +30,9 @@
         </div>
 
         <div class="col-xs-6">
-          <blockquote style="height: 281px; border-left: 4px solid #008ee2; font-weight: normal; font-size: 16px;">
+          <blockquote :style="{borderLeft: '4px solid' + primary}" style="height: 300px; font-weight: normal; font-size: 16px; font-style: inherit;">
           <div class="styleguide-section__grid-demo-element">
-            <div class="STV1_WelcomeAlt">{{data.title}}</div>
+            <div :style="{background: primary, fontSize: '14px', padding: '12px', color: '#FFFFFF'}" >{{data.title}}</div>
             <p>{{data.description}}</p>
           </div>
           </blockquote>
@@ -47,7 +47,9 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      primary: this.$store.getters.getTheme.primary
+    }
   },
   props: ["data", "index"],
   computed: {
