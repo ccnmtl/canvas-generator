@@ -8,9 +8,9 @@
                <img class="columbia-logo" src="https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/CCB_logo_ogh.png" />
                <br><br>
                <router-link class="router" to="/guide">
-               <el-button type="primary" size="large" style="display: inline-block; margin-left: 15px; margin-right: 20px;">View Guide</el-button>
+               <el-button type="plain" size="large" style="background-color: #1F1347; color: #FFFFFF; display: inline-block; margin-left: 15px; margin-right: 20px;">View Guide</el-button>
                </router-link>
-               <el-button type="primary" size="large" style="display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
+               <el-button type="plain" size="large" style="background-color: #1F1347; color: #FFFFFF; display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
             </div>
         </div>
     </div>

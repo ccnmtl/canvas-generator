@@ -2,10 +2,10 @@ const IMAGE_SERVER = "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-imag
 
 export default {
   state: {
-    theme: { option: "ISTARI", banner: 'Banner_Istari', slim: 'Banner_Istari_Slim', logo: '', primary: "#3C19CC" },
+    theme: { option: "ISTARI", banner: 'Banner_Istari', slim: 'Banner_Istari_Slim', logo: '', primary: "#1F1347" },
     themeOptions: [
       // { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SipaLogo2.png", primary: "#008EE2" },
-      { option: "ISTARI", banner: 'Banner_Istari', slim: 'Banner_Istari_Slim', logo: '', primary: "#3C19CC" },
+      { option: "Istari", banner: 'Banner_Istari', slim: 'Banner_Istari_Slim', logo: '', primary: "#1F1347" },
       { option: "Acountability Lab", banner: 'Banner_AL', slim: 'Banner_AL_Slim', logo: IMAGE_SERVER + "AL_Logo.png", primary: "#671E20" },
       { option: "Center for Open Data Enterprise", banner: 'Banner_CODE', slim: 'Banner_CODE_Slim', logo: IMAGE_SERVER + "Code_Logo.png", primary: "#0F084E" },
       { option: "Collaborating for Resilience", banner: 'Banner_CORE', slim: 'Banner_CORE_Slim', logo: IMAGE_SERVER + "Core_Logo.png", primary: "#483D69" },
