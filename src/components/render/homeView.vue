@@ -75,6 +75,20 @@ export default {
     weeklyUrl() {
       let ending = "pages/activities"
       return this.info.url + ending
+    },
+    videoLink() {
+      let output
+      let link = this.info.video
+      let parts = link.split("/") || []
+      if (parts[2].includes("vimeo.com")) {
+        output = "https://player.vimeo.com/video/" + parts[3]
+      } else if (parts[2].includes("youtube")) {
+        let split = link.split("=")
+        output = "https://www.youtube.com/embed/" + split[1]
+      } else {
+        output = link
+      }
+      return output
     }
   },
   methods: {
