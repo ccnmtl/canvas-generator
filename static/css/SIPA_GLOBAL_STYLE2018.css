@@ -351,6 +351,15 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
 	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/DG_Thin.png') no-repeat center center;
     background-color: #008ee2;
   }
+
+    .Banner_Istari {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/Istari_Thick.png') no-repeat center center;
+    background-color: #008ee2;
+  }
+    .Banner_Istari_Slim {
+	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/Istari_Thin.png') no-repeat center center;
+    background-color: #008ee2;
+  }
   
 
   .home-logo{
