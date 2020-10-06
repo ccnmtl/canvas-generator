@@ -5,7 +5,7 @@
             <div class="uk-background-cover uk-height-large uk-panel uk-text-center" style="background-image: url(static/images/cover01.jpg);">
                <p>&nbsp;</p>
                <p>&nbsp;</p>
-               <img class="columbia-logo" src="https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/CCB_logo_ogh.png" />
+               <img class="columbia-logo" src="https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/CCB_logo_istari.png" />
                <br><br>
                <router-link class="router" to="/guide">
                <el-button type="plain" size="large" style="background-color: #1F1347; color: #FFFFFF; display: inline-block; margin-left: 15px; margin-right: 20px;">View Guide</el-button>
