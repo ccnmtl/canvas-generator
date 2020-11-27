@@ -1,6 +1,6 @@
 <template lang="html">
 
-  <div id="weeklylist">
+  <div id="studentlist">
 
   <hr>
 
@@ -14,7 +14,7 @@
 
       </el-card>
 
-      <el-card class="card box-card" v-if="selected.list">
+      <el-card class="card box-card">
         <div slot="header" class="clearfix">
           <span class="big-text">Edit Info</span>
 
@@ -26,7 +26,7 @@
                 v-for="(student, index) in info.students"
                 :key="student.name"
                 :label="student.name"
-                :value="{index, list: 'students', key: student.name}">
+                :value="{index, key: student.name}">
               </el-option>
             </el-option-group>
 
@@ -37,18 +37,18 @@
         </div>
         <el-button style="float: right; margin-bottom: 10px;" type="danger" size="medium" @click="removeStudent">Remove</el-button>
 
-        <div v-show="iEditable" v-if="selected.list.length > 0" class="center">
-          <el-input style="width: 200px; float:left" class="e-input" v-model="info[selected.list][selected.index].name" @input="updateUser(info[selected.list][selected.index],'name', $event)"> </el-input>
-          <el-input class="e-input" v-if="selected.list" v-model="info[selected.list][selected.index].company" @input="updateUser(info[selected.list][selected.index],'company', $event)"> </el-input>
-          <el-input class="e-input" v-if="selected.list" type="textarea" autosize v-model="info[selected.list][selected.index].bio" @input="updateUser(info[selected.list][selected.index],'bio', $event)"> </el-input>
+        <div v-show="iEditable" v-if="info.students.length > 0" class="center">
+          <el-input style="width: 200px; float:left" class="e-input" :value="info.students[selected.index].name" @input="updateUser(info.students[selected.index],'name', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" type="textarea" autosize v-model="info.students[selected.index].bio" @input="updateUser(info.students[selected.index],'bio', $event)"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
-          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', info[selected.list][selected.index])">
+          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', info.students[selected.index])">
             <input name="image" id="image-file" type="file"> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
-          <form v-show="!this.userInput.isFile" v-if="selected.list" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', info[selected.list][selected.index])">
+          <form v-show="!this.userInput.isFile" v-if="info.students" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', info.students[selected.index])">
             <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
@@ -165,7 +165,7 @@ var toolbarOptions = [
 ]
 
 export default {
-  name: "Syllabus",
+  name: "StudentsList",
   data() {
     return {
       userInput: {
@@ -178,7 +178,7 @@ export default {
       tEditable: false,
       iEditable: true,
       outputCode: "",
-      selected: { index: 0, list: "students" },
+      selected: { index: 0 },
       editorOption: {
         modules: {
           toolbar: toolbarOptions
@@ -192,11 +192,6 @@ export default {
   mixins: [saveState, mutations],
   watch: {
     // Protects against selected.list becoming an object (need to track down why this happens)
-    selected: function() {
-      if (typeof this.selected.list !== "string") {
-        this.selected.list = "profs"
-      }
-    }
   },
   computed: {
     ...mapGetters(["getInfo", "dStudent", "getWeeks", "getTheme"])
@@ -248,14 +243,19 @@ export default {
     },
     addStudent() {
       let tempStudent = _.cloneDeep(this.dStudent)
-      this.info.students.push(tempStudent)
-      this.selected = { index: this.info.students.length - 1, list: "students" }
+      let users = _.cloneDeep(this.info.students)
+
+      users.push(tempStudent)
+      this.updateProp("students", users)
+
+      this.selected = { index: this.info.students.length - 1 }
+      console.log(this.selected)
       this.sortStudents()
     },
     removeStudent() {
       let { list, index } = this.selected
       console.log(list)
-      let users = _.cloneDeep(this.info[list])
+      let users = _.cloneDeep(this.info.students)
       users.splice(index, 1)
       if (index == 0) {
         if (list == "students") {
@@ -264,11 +264,11 @@ export default {
           console.log("after return")
         }
         console.log("deleting last ta")
-        this.selected = { index: 0, list: "students" }
+        this.selected = { index: 0 }
       } else {
-        this.selected = { index: index - 1, list }
+        this.selected = { index: index - 1 }
       }
-      this.updateProp(list, users)
+      this.updateProp(students, users)
     },
     clearStudents() {
       this.info.students = [this.dStudent]

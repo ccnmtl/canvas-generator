@@ -155,7 +155,7 @@ var toolbarOptions = [
 ]
 
 export default {
-  name: "Syllabus",
+  name: "Student",
   data() {
     return {
       userInput: {

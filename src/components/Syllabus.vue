@@ -427,12 +427,16 @@ export default {
     },
     addProf() {
       let tempProf = _.cloneDeep(this.dProf)
-      this.info.profs.push(tempProf)
+      let users = _.cloneDeep(this.info.profs)
+      users.push(tempProf)
+      this.updateProp("profs", users)
       this.selected = { index: this.info.profs.length - 1, list: "profs" }
     },
     addTA() {
       let tempTA = _.cloneDeep(this.dTA)
-      this.info.tas.push(tempTA)
+      let users = _.cloneDeep(this.info.tas)
+      users.push(tempTA)
+      this.updateProp("tas", users)
       this.selected = { index: this.info.tas.length - 1, list: "tas" }
     },
     removeProf() {
