@@ -99,6 +99,11 @@
     <div v-for="n in (weeks.length)" :key="n">
       <week-view v-show="false" :idx="n-1" :ref="'week'+ n"></week-view>
     </div>
+    <div v-for="n in (info.students.length)" :key="n">
+      <student-view v-show="false" :idx="n-1" :ref="'student'+ n"></student-view>
+    </div>
+    <students-list v-show="false" ref="studentsList"></students-list>
+
 
     <div class="clearfix"></div>
 
@@ -117,13 +122,12 @@ import mutations from "../store/mutations"
 import JSZip from "jszip"
 import JSZipUtils from "jszip-utils"
 
-import homeView from "./render/homeView"
-import zoomView from "./render/zoomView"
-import syllabusView from "./render/syllabusView"
 import weekView from "./render/weekView"
+import studentView from "./render/studentView"
 
 import zoom from "./Zoom"
 import list from "./WeeklyList"
+import studentsList from "./StudentsList"
 import syllabus from "./Syllabus"
 import home from "./Home"
 
@@ -149,7 +153,7 @@ export default {
       }
     }
   },
-  components: { home, syllabus, weekView, list, zoom },
+  components: { home, syllabus, weekView, list, zoom, studentView, studentsList },
   mixins: [mutations],
   mounted() {
     let manifest = this.readLocalXML("../../static/files/Clean Course/course_settings/course_settings.xml")
@@ -203,6 +207,11 @@ export default {
 
           zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode("list-code") + footer)
 
+          zip.file(
+            "wiki_content/students.html",
+            headings.studentList + this.$refs.studentsList.returnCode("student-list-code") + footer
+          )
+
           if (this.info.useZoom) {
             zip.file("wiki_content/zoom.html", headings.zoom + this.$refs.zoom.returnCode("zoom-code") + footer)
           }
@@ -241,8 +250,26 @@ export default {
                 })
               }
 
+              //add students
+              for (let i = 1; i <= this.info.students.length; i++) {
+                let title = "<title>Student " + i + "</title>"
+                let iden = '<meta name="identifier" content="ccb-student' + i + '"/>'
+                let el = document.getElementById("student-box" + (i - 1))
+                let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
+                zip.file(
+                  "wiki_content/student-" + i + ".html",
+                  headings.top + title + iden + headings.bottom + code + footer
+                )
+                addResource({
+                  xml: manifest,
+                  iden: "ccb-student-" + i,
+                  link: "wiki_content/pages/student-" + i
+                })
+              }
+
               addResource({ xml: manifest, iden: "ccb-zoom", link: "wiki_content/pages/zoom" })
               addResource({ xml: manifest, iden: "ccb-weekly-list", link: "wiki_content/pages/activities" })
+              addResource({ xml: manifest, iden: "ccb-student-list", link: "wiki_content/pages/students" })
 
               this.weeks.forEach((week, weekIndex) => {
                 week.discussions.forEach((discussion, discussionIndex) => {
