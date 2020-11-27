@@ -460,6 +460,8 @@ export default {
       this.$store.commit("updateInfo", this.importData.store.info)
       this.$store.commit("updateTheme", this.importData.store.theme.theme)
 
+      if (!this.info.students) this.info.students = []
+
       this.importData.store.weeks.forEach(week => {
         if (!week.cases) week.cases = []
       })
