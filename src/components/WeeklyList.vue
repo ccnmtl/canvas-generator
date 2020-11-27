@@ -198,7 +198,7 @@ var toolbarOptions = [
 ]
 
 export default {
-  name: "Weekly List",
+  name: "WeeklyList",
   data() {
     return {
       userInput: {

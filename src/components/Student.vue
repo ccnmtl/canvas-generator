@@ -9,7 +9,7 @@
     <div class="textbox-container">
 
 
-      <el-card class="card box-card" v-if="selected.list">
+      <el-card class="card box-card">
         <div slot="header" class="clearfix">
           <span class="big-text">Edit Info</span>
 
@@ -21,28 +21,27 @@
                 v-for="(student, index) in info.students"
                 :key="student.name"
                 :label="student.name"
-                :value="{index, list: 'students', key: student.name}">
+                :value="{index, key: student.name}">
               </el-option>
             </el-option-group>
 
           </el-select>
 
-          <el-button style="float: right; padding: 3px 0" type="text"@click="iEditable = !iEditable"> {{ iEditable ? "Save" : "Edit" }}</el-button>
 
         </div>
 
-        <div v-show="iEditable" v-if="selected.list.length > 0" class="center">
-          <el-input style="width: 200px; float:left" class="e-input" v-model="info[selected.list][selected.index].name" @input="updateUser(info[selected.list][selected.index],'name', $event)"> </el-input>
-          <el-input class="e-input" v-if="selected.list" v-model="info[selected.list][selected.index].company" @input="updateUser(info[selected.list][selected.index],'company', $event)"> </el-input>
-          <el-input class="e-input" v-if="selected.list" type="textarea" autosize v-model="info[selected.list][selected.index].bio" @input="updateUser(info[selected.list][selected.index],'bio', $event)"> </el-input>
+        <div v-show="iEditable" v-if="info.students.length > 0" class="center">
+          <el-input style="width: 200px; float:left" class="e-input" :value="info.students[selected.index].name" @input="updateUser(info.students[selected.index],'name', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" type="textarea" autosize v-model="info.students[selected.index].bio" @input="updateUser(info.students[selected.index],'bio', $event)"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
-          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', info[selected.list][selected.index])">
+          <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', info.students[selected.index])">
             <input name="image" id="image-file" type="file"> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
-          <form v-show="!this.userInput.isFile" v-if="selected.list" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', info[selected.list][selected.index])">
+          <form v-show="!this.userInput.isFile" v-if="info.students" class="your-form-class" v-on:submit.prevent="onFormSubmit('url', info.students[selected.index])">
             <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
             <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
           </form>
@@ -189,7 +188,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getInfo", "dStudent", "getWeeks", "getTheme"])
+    ...mapGetters(["getInfo", "dStudent", "getWeeks", "getTheme"]),
+    url() {
+      return this.info.url.replace(/\/?(\?|#|$)/, "/$1")
+    }
   },
   methods: {
     formatDate(date) {

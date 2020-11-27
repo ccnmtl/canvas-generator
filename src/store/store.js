@@ -9,7 +9,7 @@ import theme from './components/theme'
 import cases from './components/cases'
 
 const vuexLocal = new VuexPersistence({
-    storage: window.localStorage
+  storage: window.localStorage
 })
 
 Vue.use(Vuex);
@@ -39,19 +39,20 @@ export default new Vuex.Store({
     getInfo: state => state.info,
     loading: state => state.loading,
     getWeeks: state => state.weeks,
+    getStudents: state => state.weeks,
 
   },
   mutations: {
     updateInfo: (state, payload) => {
       state.info = payload
     },
-    updateProp: (state, {prop, value}) => {
+    updateProp: (state, { prop, value }) => {
       state.info[prop] = value
     },
-    updateUser: (state, {user, prop, value}) => {
+    updateUser: (state, { user, prop, value }) => {
       user[prop] = value
     },
-    updateWeek: (state, {index, prop, value}) => {
+    updateWeek: (state, { index, prop, value }) => {
       state.weeks[index][prop] = value
     },
     updateStore: (state, payload) => {
@@ -64,7 +65,7 @@ export default new Vuex.Store({
       state.weeks.push(payload)
     },
     sliceWeek: (state, num) => {
-      state.weeks = state.weeks.slice(0,num)
+      state.weeks = state.weeks.slice(0, num)
     },
     updateWeeks: (state, payload) => {
       state.weeks = payload

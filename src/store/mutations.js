@@ -8,7 +8,7 @@ import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(["getInfo", "dWeek", 'getWeeks', 'getTheme']),
+    ...mapGetters(["getInfo", "dWeek", 'getWeeks', 'getTheme', 'getStudents']),
     info() {
       return this.getInfo
     },
