@@ -7,6 +7,8 @@ import Program from 'components/ProgramOverview'
 import Weekly from 'components/Weekly'
 import Zoom from 'components/Zoom'
 import WeeklyList from 'components/WeeklyList'
+import StudentsList from 'components/StudentsList'
+import Student from 'components/Student'
 import Export from 'components/Export'
 import Guide from 'components/Guide'
 import Credits from 'components/Credits'
@@ -39,6 +41,16 @@ export default new Router({
       path: '/program',
       name: 'Program Overview',
       component: Program
+    },
+    {
+      path: '/studentlist',
+      name: 'Student List',
+      component: StudentsList
+    },
+    {
+      path: '/student',
+      name: 'Student',
+      component: Student
     },
     {
       path: '/activities',

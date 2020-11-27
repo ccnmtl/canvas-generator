@@ -59,6 +59,16 @@ export default {
         },
       ],
 
+      //Students
+      students: [
+        {
+          name: 'Student Name',
+          company: 'Company Name',
+          bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl ante, sollicitudin venenatis urna ut, pellentesque ultrices est. Phasellus eu urna ex. Integer sit amet euismod felis. Nam cursus rhoncus.',
+          imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
+        },
+      ],
+
       // Usage Options
       useDates: true,
       useWeeklyImages: true,
@@ -114,6 +124,12 @@ export default {
       office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
       imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
     },
+    studentDefault: {
+      name: 'Student Name',
+      company: 'Company Name',
+      bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl ante, sollicitudin venenatis urna ut, pellentesque ultrices est. Phasellus eu urna ex. Integer sit amet euismod felis. Nam cursus rhoncus.',
+      imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
+    },
     taDefault: {
       name: 'TA Name',
       email: 'TA@sipa.columbia.edu',
@@ -135,6 +151,7 @@ export default {
     dVideo: state => state.videoDefault,
     dInfo: state => state.infoDefault,
     dProf: state => state.profDefault,
+    dStudent: state => state.studentDefault,
     dTA: state => state.taDefault,
     dWeekly: state => state.weeklyDefault
   }
