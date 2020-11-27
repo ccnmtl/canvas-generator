@@ -231,6 +231,13 @@ html {
   font-size: 100%;
 }
 
+.canvas-code {
+  width: 1015px;
+  margin: auto;
+  margin-bottom: auto;
+  align-self: flex-start;
+}
+
 .help-bar {
   width: 500px;
 }

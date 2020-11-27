@@ -39,13 +39,14 @@ export default {
     },
     // Copies the text when user selects the code output area
     copyText(option) {
-      this.updateCode();
+      this.updateCode(option.div);
       this.updateProp('url', this.parseUrl(this.info.url))
 
       setTimeout(() => {
-        if (option == 'aux') {
+        if (option.elem == 'aux') {
           var aux = document.createElement("input");
           aux.setAttribute("value", this.outputCode);
+          aux.id = 'code-input-copy'
           document.body.appendChild(aux);
           aux.select();
           console.log('creating aux element..')
@@ -56,22 +57,30 @@ export default {
         document.execCommand('copy')
         console.log('copying text..')
 
-        if (option == 'aux') document.body.removeChild(aux);
+        if (option.elem == 'aux') {
+          aux.style.display = "none";
+        }
       }, 40)
       this.$snotify.success('Code has been copied', { showProgressBar: false });
 
 
     },
     // Parses the code from the canvas-code div and puts it in the output
-    updateCode() {
+    updateCode(div) {
       console.log('updating code..')
       if (this.$route.path == '/home') this.updateProp('url', this.parseUrl(this.info.url))
-      let code = document.getElementById("canvas-code");
+      let code = document.getElementById(div);
       setTimeout(() => {
         this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
       }, 30)
       this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
 
+    },
+    returnCode(div) {
+      console.log("week code..")
+      let code = document.getElementById(div)
+      console.log(code)
+      return code.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
     },
     // Parses the URL so that it always has a trailing backslash
     parseUrl(url) {

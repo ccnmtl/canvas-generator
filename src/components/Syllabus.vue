@@ -129,7 +129,7 @@
     </div>
 
     <!-- Where the canvas code is stored -->
-    <div id="canvas-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain'>
+    <div id="syllabus-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain canvas-code'>
       <div :class="['STV1_SlimBanner', this.$store.getters.getTheme.slim]" style="width: 1054px;">
         <p>{{info.title.toUpperCase()}}</p>
       </div>
@@ -278,7 +278,7 @@
 
   <div class="uk-float-right">
     <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a>
-    <button class="uk-button uk-button-primary" @click="copyText('aux')">Copy the Code</button>
+    <button class="uk-button uk-button-primary" @click="copyText({elem:'aux', div: 'syllabus-code'})">Copy the Code</button>
     <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
   </div>
 
@@ -473,7 +473,7 @@ export default {
     }
   },
   mounted() {
-    this.updateCode()
+    this.updateCode("syllabus-code")
   },
   beforeCreate() {
     EventBus.$on("set-default", response => {

@@ -146,7 +146,7 @@
     <!-- Where the code preview is displayed and where you change how the template parses the store info-->
     <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
         <div class="">
-        <div id="canvas-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain">
+        <div id="home-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain canvas-code">
           <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]" style="postition: relative">
             <img  v-if="theme.logo" :src="theme.logo" style="margin-top: -10px; margin-left: 10px" />
             <img  style="float: right; height: 100px; margin-top: 10px;" v-if="theme.rightLogo" :src="theme.rightLogo"/> 
@@ -209,7 +209,7 @@
 
     <div class="uk-float-right">
       <a class="uk-button uk-button-primary" href="#modal-overflow" @click="viewCode" uk-toggle>View the Code</a>
-      <button class="uk-button uk-button-primary" @click="copyText('aux')">Copy the Code</button>
+      <button class="uk-button uk-button-primary" @click="copyText({elem:'aux', div: 'home-code'})">Copy the Code</button>
       <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
     </div>
 
@@ -332,7 +332,7 @@ export default {
   methods: {
     viewCode() {
       console.log("firing")
-      this.updateCode()
+      this.updateCode("home-code")
     },
     log(input) {
       console.log(input)
@@ -394,7 +394,7 @@ export default {
   },
   mounted() {
     // Once the component is loaded, update the code text box
-    this.updateCode()
+    this.updateCode("home-code")
 
     JSZipUtils.getBinaryContent("static/files/test-course-2-export.imscc", (err, data) => {
       if (err) {

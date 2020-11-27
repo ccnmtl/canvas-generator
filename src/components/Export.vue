@@ -92,10 +92,10 @@
       </div>
     </div>
 
-    <home-view v-show="false" ref="home"></home-view>
-    <zoom-view v-show="false" ref="zoom"></zoom-view>
-    <syllabus-view v-show="false" ref="syllabus"></syllabus-view>
-    <list-view v-show="false" ref="list"></list-view>
+    <home v-show="false" ref="home"></home>
+    <zoom v-show="false" ref="zoom"></zoom>
+    <syllabus v-show="false" ref="syllabus"></syllabus>
+    <list v-show="false" ref="list"></list>
     <div v-for="n in (weeks.length)" :key="n">
       <week-view v-show="false" :idx="n-1" :ref="'week'+ n"></week-view>
     </div>
@@ -121,7 +121,11 @@ import homeView from "./render/homeView"
 import zoomView from "./render/zoomView"
 import syllabusView from "./render/syllabusView"
 import weekView from "./render/weekView"
-import listView from "./render/listView"
+
+import zoom from "./Zoom"
+import list from "./WeeklyList"
+import syllabus from "./Syllabus"
+import home from "./Home"
 
 import headings from "../store/export-headings"
 import moment from "moment"
@@ -145,7 +149,7 @@ export default {
       }
     }
   },
-  components: { homeView, syllabusView, weekView, listView, zoomView },
+  components: { home, syllabus, weekView, list, zoom },
   mixins: [mutations],
   mounted() {
     let manifest = this.readLocalXML("../../static/files/Clean Course/course_settings/course_settings.xml")
@@ -161,7 +165,7 @@ export default {
     testChildren() {
       this.updateProp("url", this.parseUrl(this.info.url))
       setTimeout(() => {
-        let code = this.$refs.home.returnCode()
+        let code = this.$refs.home.returnCode("home-code")
         console.log(code)
       }, 50)
     },
@@ -191,13 +195,16 @@ export default {
 
         JSZip.loadAsync(data).then(zip => {
           console.log(zip)
-          zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
-          zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer)
+          zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode("home-code") + footer)
+          zip.file(
+            "course_settings/syllabus.html",
+            headings.syllabus + this.$refs.syllabus.returnCode("syllabus-code") + footer
+          )
 
-          zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode() + footer)
+          zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode("list-code") + footer)
 
           if (this.info.useZoom) {
-            zip.file("wiki_content/zoom.html", headings.zoom + this.$refs.zoom.returnCode() + footer)
+            zip.file("wiki_content/zoom.html", headings.zoom + this.$refs.zoom.returnCode("zoom-code") + footer)
           }
 
           let weekly_redirect_url = '<lticm:property name="url">' + this.info.url + "pages/activities</lticm:property>"
@@ -383,9 +390,12 @@ export default {
         }
 
         JSZip.loadAsync(data).then(zip => {
-          zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
-          zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode() + footer)
-          zip.file("course_settings/syllabus.html", headings.syllabus + this.$refs.syllabus.returnCode() + footer)
+          zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode("home-code") + footer)
+          zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode("list-code") + footer)
+          zip.file(
+            "course_settings/syllabus.html",
+            headings.syllabus + this.$refs.syllabus.returnCode("syllabus-code") + footer
+          )
 
           for (let i = 1; i <= this.weeks.length; i++) {
             let title = "<title>Week " + i + "</title>"
@@ -475,7 +485,7 @@ export default {
 
       let files = changeEvent.target.files
       JSZip.loadAsync(files[0]).then(zip => {
-        zip.file("wiki_content/home.html", homeHeading + this.$refs.home.returnCode() + homeFooter)
+        zip.file("wiki_content/home.html", homeHeading + this.$refs.home.returnCode("home-code") + homeFooter)
         zip.generateAsync({ type: "blob" }).then(blob => {
           saveFile({
             name: this.info.title + "_export.imscc",
