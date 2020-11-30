@@ -11,16 +11,19 @@
       <div style="float: left; display: inline; width: 45%; height: auto; background-color: #f7f7f7; color: #333333; margin: 0 10px 10px 0; padding: 10px;">
         <a href='#'><img style="width: 100%; height: auto;" :src="info.students[idx].imgSrc" alt="" /></a>
       </div>
-
+      
       <div style="float: left; display: inline; width: 48%; height: auto; background-color: #f7f7f7; color: #333333; padding: 10px;">
         <p style="margin: 0 10px; color: #666666; font-size: 16px; font-weight: bold;">Name:</p>
-        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[idx].name}}</p>
+        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[selected.index].name}}</p>
         <p style="line-height: 18px; margin: 0;">&nbsp;</p>
         <p style="margin: 0 10px; color: #666666; font-size: 16px; font-weight: bold;">Company:</p>
-        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[idx].company}}</p>
+        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[selected.index].company}}</p>
+        <p style="line-height: 18px; margin: 0;">&nbsp;</p>
+        <p style="margin: 0 10px; color: #666666; font-size: 16px; font-weight: bold;">Title:</p>
+        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[selected.index].title}}</p>
         <p style="line-height: 18px; margin: 0;">&nbsp;</p>
         <p style="margin: 0 10px; color: #666666; font-size: 16px; font-weight: bold;">Bio:</p>
-        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[idx].bio}}</p>
+        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[selected.index].bio}}</p>
       </div>
   
 

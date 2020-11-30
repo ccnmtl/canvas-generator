@@ -65,6 +65,7 @@ export default {
           name: 'Student Name',
           company: 'Company Name',
           bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl ante, sollicitudin venenatis urna ut, pellentesque ultrices est. Phasellus eu urna ex. Integer sit amet euismod felis. Nam cursus rhoncus.',
+          title: 'Job Title',
           imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
         },
       ],
@@ -127,6 +128,7 @@ export default {
     studentDefault: {
       name: 'Student Name',
       company: 'Company Name',
+      title: 'Job Title',
       bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nisl ante, sollicitudin venenatis urna ut, pellentesque ultrices est. Phasellus eu urna ex. Integer sit amet euismod felis. Nam cursus rhoncus.',
       imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
     },

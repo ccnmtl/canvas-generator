@@ -33,8 +33,10 @@
         <div v-show="iEditable" v-if="info.students.length > 0" class="center">
           <el-input style="width: 200px; float:left" class="e-input" :value="info.students[selected.index].name" @input="updateUser(info.students[selected.index],'name', $event)"> </el-input>
           <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].title" @input="updateUser(info.students[selected.index],'title', $event)"> </el-input>
           <el-input class="e-input" v-if="info.students" type="textarea" autosize v-model="info.students[selected.index].bio" @input="updateUser(info.students[selected.index],'bio', $event)"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
+          <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
           <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', info.students[selected.index])">
@@ -72,6 +74,9 @@
         <p style="line-height: 18px; margin: 0;">&nbsp;</p>
         <p style="margin: 0 10px; color: #666666; font-size: 16px; font-weight: bold;">Company:</p>
         <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[selected.index].company}}</p>
+        <p style="line-height: 18px; margin: 0;">&nbsp;</p>
+        <p style="margin: 0 10px; color: #666666; font-size: 16px; font-weight: bold;">Title:</p>
+        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[selected.index].title}}</p>
         <p style="line-height: 18px; margin: 0;">&nbsp;</p>
         <p style="margin: 0 10px; color: #666666; font-size: 16px; font-weight: bold;">Bio:</p>
         <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[selected.index].bio}}</p>
