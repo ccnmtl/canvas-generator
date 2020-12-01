@@ -62,7 +62,7 @@
     </div>
 
     <!-- Where the canvas code is stored -->
-    <div id="student-list-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain canvas-code'>
+    <div id="students-list-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain canvas-code'>
       <div :class="['STV1_SlimBanner', this.$store.getters.getTheme.slim]" style="width: 1054px;">
         <p>STUDENTS</p>
       </div>
@@ -251,14 +251,14 @@ export default {
 
       users.push(tempStudent)
       this.updateProp("students", users)
-
-      this.selected = { index: this.info.students.length - 1 }
-      console.log(this.selected)
+      this.selected = {
+        index: this.info.students.length - 1,
+        key: this.info.students[this.info.students.length - 1].name
+      }
       this.sortStudents()
     },
     removeStudent() {
-      let { list, index } = this.selected
-      console.log(list)
+      let { key, index } = this.selected
       let users = _.cloneDeep(this.info.students)
       users.splice(index, 1)
       if (index == 0) {
@@ -268,11 +268,11 @@ export default {
           console.log("after return")
         }
         console.log("deleting last ta")
-        this.selected = { index: 0 }
+        this.selected = { index: 0, key: this.info.students[0].name }
       } else {
-        this.selected = { index: index - 1 }
+        this.selected = { index: index - 1, key: this.info.students[index - 1].name }
       }
-      this.updateProp(students, users)
+      this.updateProp("students", users)
     },
     clearStudents() {
       this.info.students = [this.dStudent]
@@ -300,6 +300,7 @@ export default {
     }
   },
   mounted() {
+    this.selected = { index: 0, key: this.info.students[0].name }
     this.updateCode("student-list-code")
   },
   beforeCreate() {

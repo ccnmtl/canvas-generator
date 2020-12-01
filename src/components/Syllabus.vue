@@ -477,6 +477,7 @@ export default {
     }
   },
   mounted() {
+    this.selected = { index: 0, key: this.info.profs[0].name, list: "profs" }
     this.updateCode("syllabus-code")
   },
   beforeCreate() {

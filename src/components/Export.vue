@@ -94,7 +94,7 @@
 
     <home v-show="false" ref="home"></home>
     <zoom v-show="false" ref="zoom"></zoom>
-    <syllabus v-show="false" ref="syllabus"></syllabus>
+    <syllabus v-show="false" ref="syllabus"></syllabus> 
     <list v-show="false" ref="list"></list>
     <div v-for="n in (weeks.length)" :key="n">
       <week-view v-show="false" :idx="n-1" :ref="'week'+ n"></week-view>
@@ -209,7 +209,7 @@ export default {
 
           zip.file(
             "wiki_content/students.html",
-            headings.studentList + this.$refs.studentsList.returnCode("student-list-code") + footer
+            headings.studentList + this.$refs.studentsList.returnCode("students-list-code") + footer
           )
 
           if (this.info.useZoom) {
