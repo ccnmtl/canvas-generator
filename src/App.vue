@@ -108,7 +108,7 @@
 
           <label style="min-width: 60px;">Organization </label>
           <select style="display: inline-block; width:150px" v-model="theme" name="Choose Banner" class="uk-select">
-            <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
+            <option v-for="theme in $store.getters.getThemeOptions" :value="theme" :key="theme.option">{{theme.option}}</option>
           </select>
         </p>
         <!-- <p>

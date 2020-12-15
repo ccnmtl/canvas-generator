@@ -26,7 +26,7 @@
             </el-form-item>
             <el-form-item label="Organization" prop="theme">
               <select style="display: inline-block; width:150px" v-model="ruleForm.theme" name="Choose Banner" class="uk-select">
-                <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
+                <option v-for="theme in $store.getters.getThemeOptions" :value="theme" :key="theme.option">{{theme.option}}</option>
               </select>
             </el-form-item>
             <!-- <el-form-item label="Course Type" prop="classType">
