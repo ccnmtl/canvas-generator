@@ -142,7 +142,6 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex"
-import { EventBus } from "../bus"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"
@@ -173,10 +172,6 @@ export default {
         isFile: true,
         uploadSwitchText: "Click to Upload Image from Url"
       },
-      sections: ["Description", "Objectives", "Schedule"],
-      sections2: ["Grading", "Resources", "Integrity"],
-      pEditable: false,
-      tEditable: false,
       iEditable: true,
       outputCode: "",
       selected: { index: 0 },
@@ -287,7 +282,7 @@ export default {
     setToDefault() {
       console.log("resetting data...")
       let dInfo = _.cloneDeep(this.$store.getters.dInfo)
-      let props = ["students", "tas", "sectionBox1", "sectionBox2"]
+      let props = ["students"]
 
       props.forEach(prop => {
         this.updateProp(prop, dInfo[prop])
@@ -295,7 +290,7 @@ export default {
     },
     getSaveStateConfig() {
       return {
-        cacheKey: "Syllabus"
+        cacheKey: "Student List"
       }
     }
   },
@@ -303,31 +298,7 @@ export default {
     this.selected = { index: 0, key: this.info.students[0].name }
     this.updateCode("student-list-code")
   },
-  beforeCreate() {
-    EventBus.$on("set-default", response => {
-      this.setToDefault()
-      console.log(response)
-    })
-
-    EventBus.$on("import-data", data => {
-      this.userInput = { ...data.weekly.userInput }
-      this.videos = data.weekly.videos
-      this.assignments = data.weekly.assignments
-      this.discussions = data.weekly.discussions
-      console.log("importing data to weekly...")
-    })
-
-    EventBus.$on("export-data", () => {
-      // let weeklyList = {
-      //   weeklyActivites: this.weeklyActivites
-      // }
-      // EventBus.$emit('list-data', weeklyList)
-
-      let syllabus = this.$data
-      console.log("sending syllabus")
-      EventBus.$emit("syllabus-data", syllabus)
-    })
-  },
+  beforeCreate() {},
   beforeUpdate() {}
 }
 </script>

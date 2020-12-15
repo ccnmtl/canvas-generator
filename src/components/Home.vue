@@ -70,7 +70,7 @@
 
     		<li class="uk-text-center">
 
-          <div v-for="prof in info.profs">
+          <div v-for="prof in info.profs" :key="prof.name">
           <el-input autosize v-model="prof.name" style="width: 150px;" @input="updateUser(prof, 'name', $event)"></el-input>
           <el-input autosize v-model="prof.email" style="width: 250px;" @input="updateUser(prof, 'email', $event)"></el-input>
           <el-input autosize v-model="prof.office" style="width: 400px;" @input="updateUser(prof, 'office', $event)"></el-input> <br>
@@ -78,7 +78,7 @@
         </li>
 
     		<li class="uk-text-center" v-if="info.tas.length > 0">
-          <div v-for="ta in info.tas">
+          <div v-for="ta in info.tas" :key="ta.name">
             <el-input autosize v-model="ta.name" style="width: 150px;" @input="updateUser(ta, 'name', $event)"></el-input>
             <el-input autosize v-model="ta.email" style="width: 250px;" @input="updateUser(ta, 'email', $event)"></el-input>
             <el-input autosize v-model="ta.office" style="width: 400px;" @input="updateUser(ta, 'office', $event)"></el-input> <br>
@@ -93,7 +93,7 @@
     		<li class="uk-text-center">
           <button type="button" class="uk-button uk-button-primary " name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
           <el-input autosize style="width: 400px;" v-show="info.isVideo" v-model="info.video" @input="updateProp('video', $event)" ></el-input>
-          <form  style="display: inline-block;"v-show="!info.isVideo" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
+          <form  style="display: inline-block;" v-show="!info.isVideo" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
             <input style="display: inline-block;" name="image" id="image-file" type="file">
             <input style="display: inline-block;" type="submit" class="uk-button uk-button-primary" value="Submit!">
           </form>
@@ -104,23 +104,11 @@
             Banner Image:
             <select style="display: inline-block; width:150px" v-model="theme" name="Choose Banner" class="uk-select">
               <option selected disabled>Choose Banner</option>
-              <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
+              <option v-for="theme in $store.getters.getThemeOptions" :value="theme" :key="theme.option">{{theme.option}}</option>
             </select>
 
               <!-- <el-checkbox v-if="theme.wide" v-model="info.wideBanner" @input="updateProp('wideBanner', $event)" >Use Wide Banner</el-checkbox> -->
           </label>
-
-          <!-- Old Logo select; may need for independant banner switching -->
-          <!-- <label>
-            Logo Image:
-            <select style="display: inline-block; width:150px" v-model="theme.logo" name="Choose Logo" class="uk-select">
-              <option selected disabled>Choose Logo</option>
-              <option :value="this.$store.state.imageServer + 'SipaLogo2.png'">SIPA</option>
-              <option :value="this.$store.state.imageServer + 'SSW_logo.png'">SSW</option>
-              <option :value="this.$store.state.imageServer + 'Mailman_logo.png'">Mailman</option>
-            </select>
-          </label> -->
-          <!-- <textarea v-show="!this.userInput.isVideo" v-model="userInput.image" class="code-input uk-input" rows="1" cols="50"></textarea> -->
 
     		</li>
         <li class="uk-text-center">
@@ -187,13 +175,13 @@
               <div class="col-xs-6">
                 <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
                   <p>Instructor:</p>
-                  <p v-for="prof in info.profs">{{prof.name}} (<a :href="'mailto:' + prof.email">{{prof.email}}</a>) <br /> {{prof.office}}</p>
+                  <p v-for="prof in info.profs" :key="prof.name">{{prof.name}} (<a :href="'mailto:' + prof.email">{{prof.email}}</a>) <br /> {{prof.office}}</p>
                 </div>
               </div>
               <div class="col-xs-6" v-if="info.tas.length > 0">
                 <div class="styleguide-section__grid-demo-element pad-box-mini border border-tbl">
                   <p>TA:</p>
-                  <p v-for="ta in info.tas"> {{ta.name}} (<a :href="'mailto:' + ta.email">{{ta.email}}</a>) <br /> {{ta.office}}</p>
+                  <p v-for="ta in info.tas" :key="ta.name"> {{ta.name}} (<a :href="'mailto:' + ta.email">{{ta.email}}</a>) <br /> {{ta.office}}</p>
                 </div>
               </div>
             </div>
@@ -203,7 +191,6 @@
             <p><strong>SPECIAL DISCUSSION FORUMS:</strong> {{info.discussions}}</p>
           </div>
         </div>
-        <!-- <home-view> </home-view> -->
       </div>
     </div>
 
@@ -247,7 +234,6 @@
 </template>
 
 <script>
-import { EventBus } from "../bus"
 import saveState from "vue-save-state"
 import { quillEditor } from "vue-quill-editor"
 import validator from "validator"
@@ -272,23 +258,8 @@ export default {
     return {
       userInput: {
         themeOptions: this.$store.getters.getThemeOptions,
-        semester: "U6411 // SPRING 2017",
-        professor: "Glenn Denning",
-        pEmail: "professor@sipa.columbia.edu",
-        ta: "Chandani Punia",
-        tEmail: "cp2868@columbia.edu",
-        office: "Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
-        tOffice: "Tuesday 1:00-2:30 pm (Publique, IAB 6th floor)",
-        meetings: "Tuesday 9:00-10:50 am (IAB Room 411)",
-        discussions: "Thursday 9:00-10:50 am (IAB Room 411)",
-        video: "https://vimeo.com/199382848/1dd8fc0f31",
-        image: "http://assets.ce.columbia.edu/i/ce/intl/intl-fp@2x.jpg",
         isVideo: false,
-        mediaSwitchText: "Toggle to input Video",
-        taInfo:
-          "Instructor: \nProfessor Glenn Denning (gd2147@sipa.columbia.edu) Office Hours: Monday 3:00-6:00 pm (IAB Room 1434)",
-        description:
-          "Here you’ll find course materials and a range of tools to help you get the most out of the class. \n Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
+        mediaSwitchText: "Toggle to input Video"
       },
       activeName: "1",
       outputCode: "",
@@ -395,80 +366,6 @@ export default {
   mounted() {
     // Once the component is loaded, update the code text box
     this.updateCode("home-code")
-
-    JSZipUtils.getBinaryContent("static/files/test-course-2-export.imscc", (err, data) => {
-      if (err) {
-        throw err // or handle err
-      }
-
-      JSZip.loadAsync(data).then(zip => {
-        zip
-          .file("imsmanifest.xml")
-          .async("string")
-          .then(function(data) {
-            let parser = new DOMParser()
-            let manifest = parser.parseFromString(data, "text/xml")
-
-            let resources = manifest.getElementsByTagName("resources")[0]
-            let sampleResource = manifest.getElementsByTagName("resource")[0]
-            let file = sampleResource.firstElementChild
-            //sampleResource.setAttribute("href", "testing.html");
-
-            addResource(manifest, "cc-syllabus-test", "syllabus.html", "page")
-
-            console.log(resources)
-
-            // let builder = new xml2js.Builder();
-
-            // xml2js.parseString(manifest, function (err, result) {
-            //     //result.questestinterop.assessment[0].$.ident = 'ccb-q2'
-            //     //result.questestinterop.assessment[0].$.title = 'Quiz 2'
-            //     //console.log(result.questestinterop.assessment[0].$.ident); // Output: Hello world!
-
-            //     console.log(result.manifest.resources[0].resource[0])
-
-            //     //var newxml = builder.buildObject(result);
-            //     //console.log(newxml)
-            // });
-          })
-      })
-    })
-
-    function addResource(xml, iden, link, type = "page", use = "") {
-      let resource = xml.createElement("resource")
-      let file = xml.createElement("file")
-      resource.appendChild(file)
-
-      let resourceList = xml.getElementsByTagName("resources")[0]
-
-      resource.setAttribute("identifier", iden)
-
-      switch (type) {
-        case "page":
-          resource.setAttribute("type", "webcontent")
-          resource.setAttribute("href", link)
-          file.setAttribute("href", link)
-          break
-        case "discusson":
-          break
-        default:
-          break
-      }
-
-      resourceList.appendChild(resource)
-    }
-  },
-  beforeCreate() {
-    EventBus.$on("import-data", data => {
-      this.userInput = { ...data.home.userInput }
-      console.log("importing data to home...")
-    })
-
-    EventBus.$on("export-data", () => {
-      let home = this.$data
-      console.log("sending home")
-      EventBus.$emit("home-data", home)
-    })
   },
   beforeUpdate() {}
 }

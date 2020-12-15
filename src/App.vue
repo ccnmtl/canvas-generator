@@ -159,7 +159,6 @@
 </template>
 
 <script>
-import { EventBus } from "./bus"
 import saveState from "vue-save-state"
 import { mapGetters, mapMutations } from "vuex"
 import help from "./store/help"

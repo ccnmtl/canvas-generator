@@ -9,10 +9,6 @@
       <button class="uk-offcanvas-close" type="button" uk-close></button>
       <h3>Add Case</h3>
 
-      <!-- <el-cascader v-model="selectedCase" :options="caseOptions" @change="handleChange" size="large">
-      </el-cascader> -->
-
-
       <div class="STV1_SlimBanner">
         <p>PICKER CENTER CASE COLLECTION</p>
       </div>
@@ -300,7 +296,6 @@
 <script>
 import { mapGetters, mapMutations } from "vuex"
 import mutations from "../store/mutations"
-import { EventBus } from "../bus"
 import { quillEditor } from "vue-quill-editor"
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 import WeeklyCodeModule from "./weekly/WeeklyCodeModule"
@@ -468,31 +463,6 @@ export default {
       if (!week.cases) week.cases = []
     })
     this.updateCode("week-code")
-  },
-  beforeCreate() {
-    EventBus.$on("set-default", response => {
-      this.setToDefault()
-      console.log(response)
-    })
-
-    EventBus.$on("import-data", data => {
-      this.userInput = { ...data.weekly.userInput }
-      this.weeks[selected].videos = data.weekly.videos
-      this.weeks[selected].assignments = data.weekly.assignments
-      this.weeks[selected].discussions = data.weekly.discussions
-      console.log("importing data to weekly...")
-    })
-
-    EventBus.$on("export-data", () => {
-      // let weeklyList = {
-      //   weeklyActivites: this.weeklyActivites
-      // }
-      // EventBus.$emit('list-data', weeklyList)
-
-      let weekly = this.$data
-      console.log("sending weekly")
-      EventBus.$emit("weekly-data", weekly)
-    })
   },
   beforeUpdate() {}
 }

@@ -120,7 +120,7 @@
                   <i class="icon-clock"></i> ACTIVITIES</h3>
               </div>
               <div class="pad-box-mini border border-b border-t">
-                <p>Welcome to the activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{info.title}}. Clicking on a {{info.classType.dateType.toLowerCase()}} will take you to a page where you can watch the entire lecture and complete the activities related to that lecture.</p>
+                <p>Welcome to the activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{info.title}}. Clicking on a {{info.classType.dateType.toLowerCase()}} will take you to a page where you can review the activities related to that session.</p>
               </div>
             </div>
           </div>
@@ -181,7 +181,6 @@
 <script>
 import { mapGetters, mapMutations } from "vuex"
 import mutations from "../store/mutations"
-import { EventBus } from "../bus"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import WeeklyListItem from "./weekly/WeeklyListItem"
@@ -404,18 +403,6 @@ export default {
     }
     this.updateCode("list-code")
     this.updateImages()
-  },
-  beforeCreate() {
-    EventBus.$on("import-data", data => {
-      this.weeks = data.weeklyList.weeks
-      console.log("importing data to weekly list...")
-    })
-
-    EventBus.$on("export-data", () => {
-      let weeklyList = this.$data
-      EventBus.$emit("list-data", weeklyList)
-      console.log("sending list")
-    })
   },
   beforeUpdate() {}
 }

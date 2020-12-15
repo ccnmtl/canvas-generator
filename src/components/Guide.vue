@@ -79,7 +79,6 @@
 </template>
 
 <script>
-import { EventBus } from "../bus"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"
 

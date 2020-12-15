@@ -81,7 +81,6 @@
             to generate an export of your class.
           </p>
 
-          <!-- <button class="uk-button-large uk-button-default" type="button" name="button" @click="testChildren">Test</button> -->
           <button
             class="uk-button-large uk-button-default"
             type="button"
@@ -116,7 +115,6 @@
 </template>
 
 <script>
-import { EventBus } from "../bus"
 import saveFile from "../util/save-file"
 import mutations from "../store/mutations"
 import JSZip from "jszip"
@@ -160,19 +158,6 @@ export default {
     console.log(manifest)
   },
   methods: {
-    // openFullScreen() {
-    //     this.fullscreenLoading = true;
-    //     setTimeout(() => {
-    //       this.fullscreenLoading = false;
-    //     }, 2000);
-    // },
-    testChildren() {
-      this.updateProp("url", this.parseUrl(this.info.url))
-      setTimeout(() => {
-        let code = this.$refs.home.returnCode("home-code")
-        console.log(code)
-      }, 50)
-    },
     onImportFileChange(changeEvent) {
       let file = changeEvent.target.files[0]
       if (!file) {
@@ -405,57 +390,6 @@ export default {
         this.exportJSON()
       }, 1500)
     },
-    // old imscc exporter
-    exportIMSCCOld() {
-      let footer = "</body> </html>"
-
-      this.updateProp("url", this.parseUrl(this.info.url))
-
-      JSZipUtils.getBinaryContent("static/files/weekly-template.imscc", (err, data) => {
-        if (err) {
-          throw err // or handle err
-        }
-
-        JSZip.loadAsync(data).then(zip => {
-          zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode("home-code") + footer)
-          zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode("list-code") + footer)
-          zip.file(
-            "course_settings/syllabus.html",
-            headings.syllabus + this.$refs.syllabus.returnCode("syllabus-code") + footer
-          )
-
-          for (let i = 1; i <= this.weeks.length; i++) {
-            let title = "<title>Week " + i + "</title>"
-            let iden = '<meta name="identifier" content="' + headings.week_ids[i - 1] + '"/>'
-            let el = document.getElementById("week-box" + (i - 1))
-            let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
-            zip.file(
-              "wiki_content/" + this.info.classType.dateType + "-" + i + ".html",
-              headings.top + title + iden + headings.bottom + code + footer
-            )
-          }
-
-          let redirect_url = '<lticm:property name="url">' + this.info.url + "pages/activities</lticm:property>"
-
-          zip.file(
-            "ic0780a1b3ec00e092caacf7b0d3865e4.xml",
-            headings.redirect_top + redirect_url + headings.redirect_bottom
-          )
-
-          let today = new Date()
-          let date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
-          let time = today.getHours() + "-" + today.getMinutes()
-          let dateTime = date + " " + time
-
-          zip.generateAsync({ type: "blob" }).then(blob => {
-            saveFile({
-              name: this.info.title + " (" + dateTime + ").imscc",
-              data: blob
-            })
-          })
-        })
-      })
-    },
     performImport() {
       this.$store.commit("updateInfo", this.importData.store.info)
       this.$store.commit("updateTheme", this.importData.store.theme.theme)
@@ -494,36 +428,6 @@ export default {
           data: JSON.stringify(this.exportData)
         })
       }, waitTime)
-    },
-    onImportFileChange2(changeEvent) {
-      let homeHeading = `
-      <html>
-      <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Home</title>
-        <meta name="identifier" content="i95bef606c8b4f001957aa6848c66310f" />
-        <meta name="editing_roles" content="teachers" />
-        <meta name="workflow_state" content="active" />
-        <meta name="front_page" content="true" />
-      </head>
-      <body>`
-
-      let homeFooter = "</body> </html>"
-
-      this.updateProp("url", this.parseUrl(this.info.url))
-
-      let files = changeEvent.target.files
-      JSZip.loadAsync(files[0]).then(zip => {
-        zip.file("wiki_content/home.html", homeHeading + this.$refs.home.returnCode("home-code") + homeFooter)
-        zip.generateAsync({ type: "blob" }).then(blob => {
-          saveFile({
-            name: this.info.title + "_export.imscc",
-            data: blob
-          })
-        })
-        // zip.forEach(function (relativePath, zipEntry) {  // 2) print entries
-        // });
-      })
     },
     readLocalXML(path) {
       var output = null

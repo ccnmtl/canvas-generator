@@ -320,7 +320,6 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex"
-import { EventBus } from "../bus"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"
@@ -480,31 +479,7 @@ export default {
     this.selected = { index: 0, key: this.info.profs[0].name, list: "profs" }
     this.updateCode("syllabus-code")
   },
-  beforeCreate() {
-    EventBus.$on("set-default", response => {
-      this.setToDefault()
-      console.log(response)
-    })
 
-    EventBus.$on("import-data", data => {
-      this.userInput = { ...data.weekly.userInput }
-      this.videos = data.weekly.videos
-      this.assignments = data.weekly.assignments
-      this.discussions = data.weekly.discussions
-      console.log("importing data to weekly...")
-    })
-
-    EventBus.$on("export-data", () => {
-      // let weeklyList = {
-      //   weeklyActivites: this.weeklyActivites
-      // }
-      // EventBus.$emit('list-data', weeklyList)
-
-      let syllabus = this.$data
-      console.log("sending syllabus")
-      EventBus.$emit("syllabus-data", syllabus)
-    })
-  },
   beforeUpdate() {}
 }
 </script>

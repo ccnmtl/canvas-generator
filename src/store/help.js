@@ -36,7 +36,7 @@ export default {
   If you see any errors in display or dates it is reccomended to open and close the "DAYS OF WEEK" dropdown as this will let the program recalculate the display.</p>
   <p> There are additional input sections to quickly change the title and date of each session manually and to modify whether there are two meetings times per day.
   `,
-  "Weekly Activities List":
+  "Activities":
     `
   <p>The Weekly Activities List shows all of the sessions in your course and links to their individual pages. At the top of the page
   you can select the number of lectures or sessions in your course and click te "EDIT # OF ACTIVITES" button to trim the amount of sessions shown.

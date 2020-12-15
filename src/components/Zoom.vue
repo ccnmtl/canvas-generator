@@ -119,166 +119,33 @@
 <script>
 import { mapGetters, mapMutations } from "vuex"
 import mutations from "../store/mutations"
-import { EventBus } from "../bus"
-import { quillEditor } from "vue-quill-editor"
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
-import WeeklyCodeModule from "./weekly/WeeklyCodeModule"
-import WeeklyVideo from "./weekly/WeeklyVideo"
-import WeeklyDiscussion from "./weekly/WeeklyDiscussion"
-import WeeklyAssignment from "./weekly/WeeklyAssignment"
 import saveState from "vue-save-state"
 import Home from "./Home"
 import moment from "moment"
 
-var toolbarOptions = [
-  ["bold", "italic", "underline"],
-  [
-    "blockquote",
-    {
-      list: "ordered"
-    },
-    {
-      list: "bullet"
-    }
-  ],
-  [{ indent: "-1" }, { indent: "+1" }],
-  [{ script: "sub" }, { script: "super" }],
-  ["link", "clean"]
-]
-
 export default {
-  name: "weekly",
+  name: "zoom",
   data() {
-    return {
-      userInput: {
-        videoNumber: 1,
-        weekTitle: "WEEK 1: Sustainable Agriculture and Food Systems: Key Concepts and Historical Perspective",
-        description:
-          "We will begin with an overview of the course objectives and content, the methods of instruction, the assignments, and the grading system. We will then present and discuss “The Big Picture,” starting with the historical context of the current global food system, including the “Green Revolution.” Which institutions have shaped and will shape global food systems? We will briefly discuss the concept of Sustainable Intensification. We will also consider the recently agreed SDGs and how they could contribute to more sustainable and equitable global food systems. And we will discuss some of the forces shaping food systems around the world.",
-        required:
-          '<span ><p><strong>Lecture Slides:</strong></p><p><strong>Download PDF:&nbsp;</strong><a href="https://courseworks2.columbia.edu/courses/29191/files/1032282/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">GFS Week 6 Africa (February 21, 2017) Final.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></p><p><strong>Required Readings / Viewings:</strong></p><ul><li>Sanchez, P.A. (2002) Soil fertility and hunger in Africa.&nbsp;<em>Science&nbsp;</em><strong>295</strong>: 2019-2020.</li><li>Download PDF:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/929036/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">Soil_Fertility_and_Hunger_in_Africa_2002.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li><li><strong>Familiarize yourself with the work of the Alliance for an African Green Revolution (AGRA):&nbsp;</strong><a href="http://www.agra.org/" target="_blank" style="color: rgb(0, 142, 226);">http://www.agra.org/&nbsp;(Links to an external site.)</a></li></ul><p><strong>Supplementary Resources</strong></p><ul><li>Listen: --“African Land Fertile Ground for Crops and Investors.” NPR. June 15, 2012.&nbsp;<a href="http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors" target="_blank" style="color: rgb(0, 142, 226);">http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors&nbsp;(Links to an external site.)</a></li><li>Download mp3:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/1009373/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">20120615_atc_06.mp3<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li></ul></span>'
-      },
-      selected: 0,
-      videoEditable: false,
-      showEditor: false,
-      videos: [],
-      discussions: [],
-      assignments: [],
-      outputCode: "",
-      // editor: ClassicEditor,
-      editorConfig: {},
-      editorOption: {
-        modules: {
-          toolbar: toolbarOptions
-        }
-      }
-    }
+    return {}
   },
-  components: {
-    quillEditor,
-    WeeklyVideo,
-    WeeklyCodeModule,
-    WeeklyDiscussion,
-    WeeklyAssignment
-  },
+  components: {},
   mixins: [mutations],
   computed: {
-    ...mapGetters(["getInfo", "dWeek", "getWeeks", "getCases"]),
-    caseOptions() {
-      let cases = this.getCases
-      let options = []
-
-      cases.forEach(function(category, i) {
-        options[i] = {
-          value: category.category,
-          label: category.category,
-          children: []
-        }
-
-        category.cases.forEach(function(caseChild, j) {
-          options[i].children[j] = {
-            value: caseChild.name,
-            label: caseChild.name
-          }
-        })
-      })
-
-      return options
-    }
+    ...mapGetters(["getInfo", "dWeek", "getWeeks"])
   },
   methods: {
-    addCase(caseStudy) {
-      let arr = _.cloneDeep(this.weeks[this.selected].cases)
-
-      let isUnique = true
-      arr.forEach(function(testCase) {
-        if (testCase.id == caseStudy.id) isUnique = false
-      })
-
-      if (isUnique) arr.push(caseStudy)
-      this.updateWeek(this.selected, "cases", arr)
-    },
-    removeCase(caseStudy) {
-      let arr = _.cloneDeep(this.weeks[this.selected].cases)
-
-      arr.forEach(function(testCase, index, array) {
-        if (testCase.id == caseStudy.id) {
-          console.log("splice")
-          arr.splice(index, 1)
-        }
-      })
-
-      this.updateWeek(this.selected, "cases", arr)
-    },
-    addVideo() {
-      let tempVideo = {
-        title: "All that Glitters is not Gold (18 minutes)",
-        description:
-          "‘All that Glitters is not Gold’ features various communities’ representatives concern about the introduction of genetically engineered ‘Golden’ rice in the Philippines.",
-        source: "https://www.youtube.com/watch?v=GxSGKD50ioE"
-      }
-      let arr = _.cloneDeep(this.weeks[this.selected].videos)
-      arr.push(tempVideo)
-      this.updateWeek(this.selected, "videos", arr)
-    },
-    addDiscussion() {
-      let manifestID =
-        "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1)
-      let tempDisc = {
-        due: moment(this.weeks[this.selected].date).add(7, "d"),
-        id: manifestID,
-        link: "%24CANVAS_OBJECT_REFERENCE%24/discussion_topics/" + manifestID
-      }
-
-      let arr = _.cloneDeep(this.weeks[this.selected].discussions)
-      arr.push(tempDisc)
-      this.updateWeek(this.selected, "discussions", arr)
-    },
-    addAssignment() {
-      let manifestID =
-        "ccb-session-" + (this.selected + 1) + "-assignment-" + (this.weeks[this.selected].assignments.length + 1)
-      let tempAssign = {
-        due: moment(this.weeks[this.selected].date).add(7, "d"),
-        id: manifestID,
-        link: "%24CANVAS_OBJECT_REFERENCE%24/assignments/" + manifestID
-      }
-
-      let arr = _.cloneDeep(this.weeks[this.selected].assignments)
-      arr.push(tempAssign)
-      this.updateWeek(this.selected, "assignments", arr)
-    },
     setToDefault() {
       console.log("resetting data...")
-      let dWeek = _.cloneDeep(this.$store.getters.dWeek)
-      let props = ["description", "title", "body", "required", "videos", "discussions", "assignments", "cases"]
+      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let props = ["zoomLink"]
 
       props.forEach(prop => {
-        this.updateWeek(this.selected, prop, dWeek[prop])
+        this.updateProp(prop, dInfo[prop])
       })
     },
     getSaveStateConfig() {
       return {
-        cacheKey: "Weekly"
+        cacheKey: "Zoom"
       }
     }
   },
@@ -287,31 +154,6 @@ export default {
       if (!week.cases) week.cases = []
     })
     this.updateCode("zoom-code")
-  },
-  beforeCreate() {
-    EventBus.$on("set-default", response => {
-      this.setToDefault()
-      console.log(response)
-    })
-
-    EventBus.$on("import-data", data => {
-      this.userInput = { ...data.weekly.userInput }
-      this.weeks[selected].videos = data.weekly.videos
-      this.weeks[selected].assignments = data.weekly.assignments
-      this.weeks[selected].discussions = data.weekly.discussions
-      console.log("importing data to weekly...")
-    })
-
-    EventBus.$on("export-data", () => {
-      // let weeklyList = {
-      //   weeklyActivites: this.weeklyActivites
-      // }
-      // EventBus.$emit('list-data', weeklyList)
-
-      let weekly = this.$data
-      console.log("sending weekly")
-      EventBus.$emit("weekly-data", weekly)
-    })
   },
   beforeUpdate() {}
 }
