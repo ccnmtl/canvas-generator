@@ -99,7 +99,7 @@
           <label for="courseurl" style="min-width: 90px">Course URL</label>
           <el-input name="courseurl" style="width: 400px" placeholder="Please input" v-model="info.url" @input="updateProp('url', $event)"></el-input>
         </p>
-        <p></p>
+        <p>
         <!-- Course Type is currently not an option -->
           <!-- <label for="select" style="min-width: 90px;">Course Type</label>
           <select style="display: inline-block; width:150px; margin-right: 30px;" v-model="info.classType" @input="updateProp('classType', $event)" name="Choose Banner" class="uk-select">
@@ -108,7 +108,7 @@
 
           <label style="min-width: 60px;">Organization </label>
           <select style="display: inline-block; width:150px" v-model="theme" name="Choose Banner" class="uk-select">
-            <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
+            <option v-for="theme in $store.getters.getThemeOptions" :key="theme.slim" :value="theme">{{theme.option}}</option>
           </select>
         </p>
         <!-- <p>
@@ -156,7 +156,7 @@
     </keep-alive>
 
     <el-dialog
-      title="Choose Slot Type"
+      :title="dialogData.title"
       :visible.sync="dialogVisible"
       width="30%">
       <span>This is a message</span>
@@ -215,6 +215,9 @@ export default {
       set: function(newValue) {
         this.$store.dispatch('setDialogVisibility', newValue)
       }
+    },
+    dialogData() {
+      return this.$store.getters.getDialogData
     }
   },
   mounted() {

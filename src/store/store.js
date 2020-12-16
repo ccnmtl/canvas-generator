@@ -35,7 +35,11 @@ export default new Vuex.Store({
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",
     rows: [],
     slots: [],
-    dialogVisible: false
+    dialogVisible: false,
+    dialogData: {
+      title: 'Choose Slot Type',
+      type: 'choose-slot'
+    }
   },
   getters: {
     getStore: state => state,
@@ -44,6 +48,7 @@ export default new Vuex.Store({
     getWeeks: state => state.weeks,
     getStudents: state => state.weeks,
     isDialogVisible: state => state.dialogVisible,
+    getDialogData: state => state.dialogData,
     getRowsByCID: state => {
       const res = {}
 
@@ -77,6 +82,11 @@ export default new Vuex.Store({
     addRow: (state, row) => {
       row.uid = _.uniqueId()
       state.rows.push(row)
+    },
+    deleteRow: (state, row) => {
+      _.remove(state.rows, {
+        id: row.id
+      })
     },
     setDialogVisibility: (state, visibility) => {
       state.dialogVisible = visibility
