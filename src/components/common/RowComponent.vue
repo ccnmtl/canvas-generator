@@ -17,8 +17,9 @@
     </div>
 
     <slot-component v-for="slot in slots"
-                    :key="slot.id"
-                    :sid="slot.id" />
+                    :key="slot.sid"
+                    :sid="slot.sid" />
+                    
   </div>
 </template>
 

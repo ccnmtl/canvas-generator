@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <banner-slot></banner-slot>
+
     <row-component v-for="row in rows"
                    :key="row.rid"
                    :rid="row.rid" />
@@ -12,10 +14,12 @@
 import { mapGetters } from "vuex"
 
 import RowComponent from "./RowComponent.vue"
+import BannerSlot from "../slots/BannerSlot.vue"
 
 export default {
   components: {
-    RowComponent
+    RowComponent,
+    BannerSlot
   },
   props: ["cid"],
   data() {
