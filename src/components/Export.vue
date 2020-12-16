@@ -237,18 +237,20 @@ export default {
 
               //add students
               for (let i = 1; i <= this.info.students.length; i++) {
-                let title = "<title>Student " + i + "</title>"
-                let iden = '<meta name="identifier" content="ccb-student' + i + '"/>'
+                let student = this.info.students[i - 1]
+                let id = student.id || i
+                let title = "<title>" + student.name + "</title>"
+                let iden = '<meta name="identifier" content="ccb-student' + id + '"/>'
                 let el = document.getElementById("student-box" + (i - 1))
                 let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
                 zip.file(
-                  "wiki_content/student-" + i + ".html",
+                  "wiki_content/student-" + id + ".html",
                   headings.top + title + iden + headings.bottom + code + footer
                 )
                 addResource({
                   xml: manifest,
-                  iden: "ccb-student-" + i,
-                  link: "wiki_content/pages/student-" + i
+                  iden: "ccb-student-" + id,
+                  link: "wiki_content/pages/student-" + id
                 })
               }
 

@@ -75,7 +75,7 @@
         <div class="grid-row">
 
         <div style="float: left; display: inline; width: 18%; height: auto; background-color: #f7f7f7; color: #333333; margin: 20px 20px 0; padding: 10px;" v-for="(student, index) in info.students">
-          <a :href='url + "pages/student-" + (index+1)'><img style="width: 200px; height: auto;" :src="student.imgSrc" alt="" /></a>
+          <a :href='url + "pages/student-" + student.id'><img style="width: 200px; height: auto;" :src="student.imgSrc" alt="" /></a>
           <p style="padding-top: 10px; margin: 0 10px; color: #666666; font-size: 14px; font-weight: bold;">{{student.name}}</p>
           <p style="margin: 0 10px; color: #999999; font-size: 12px; font-weight: normal;">{{student.company}}</p>
         </div>
@@ -243,6 +243,8 @@ export default {
     addStudent() {
       let tempStudent = _.cloneDeep(this.dStudent)
       let users = _.cloneDeep(this.info.students)
+
+      tempStudent.id = _.uniqueId()
 
       users.push(tempStudent)
       this.updateProp("students", users)

@@ -215,6 +215,15 @@ export default {
 
       this.updateWeeks(weeklyActivities)
     }
+    if (this.info.students.length < 1) {
+      let tempStudent = _.cloneDeep(this.$store.getters.dStudent)
+      let users = _.cloneDeep(this.info.students)
+
+      tempStudent.id = _.uniqueId()
+
+      users.push(tempStudent)
+      this.updateProp("students", users)
+    }
   }
 }
 </script>
