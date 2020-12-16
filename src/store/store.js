@@ -33,6 +33,9 @@ export default new Vuex.Store({
     prevPage: "/home",
     nextPage: "/weekly",
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",
+    rows: [],
+    slots: [],
+    dialogVisible: false
   },
   getters: {
     getStore: state => state,
@@ -40,9 +43,44 @@ export default new Vuex.Store({
     loading: state => state.loading,
     getWeeks: state => state.weeks,
     getStudents: state => state.weeks,
+    isDialogVisible: state => state.dialogVisible,
+    getRowsByCID: state => {
+      const res = {}
 
+      state.rows.forEach((row) => {
+        if(row.cid in res) res[row.cid].push(row)
+        else res[row.cid] = [row]
+      })
+
+      return res
+    },
+    getSlotsByRowID: state => {
+      const res = {}
+
+      state.slots.forEach((slot) => {
+        if(slot.rid in res) res[slot.rid].push(slot)
+        else res[slot.rid] = [slot]
+      })
+
+      return res
+    }
+  },
+  actions: {
+    addRow: ({commit}, row) => {
+      commit('addRow', row)
+    },
+    setDialogVisibility: ({commit}, visibility) => {
+      commit('setDialogVisibility', visibility)
+    },
   },
   mutations: {
+    addRow: (state, row) => {
+      row.uid = _.uniqueId()
+      state.rows.push(row)
+    },
+    setDialogVisibility: (state, visibility) => {
+      state.dialogVisible = visibility
+    },
     updateInfo: (state, payload) => {
       state.info = payload
     },

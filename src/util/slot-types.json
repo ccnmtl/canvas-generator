@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Title Slot"
+  },
+  {
+    "id": 2,
+    "name": "Banner Slot"
+  },
+  {
+    "id": 3,
+    "name": "Image Slot"
+  },
+  {
+    "id": 4,
+    "name": "Content Slot"
+  }
+]

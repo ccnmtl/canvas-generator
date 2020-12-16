@@ -5,7 +5,7 @@
       <!-- Off Canvas Menu Slide -->
       <el-col :span="6" style="padding: 20px;">
         <a href="#offcanvas-slide" class="uk-button uk-button-default noBorder" uk-toggle><span uk-icon="icon: table"></span> &nbsp;Menu</a>
-      </el-col> 
+      </el-col>
 
       <!-- Breadcrumb navigation bar -->
       <el-col :span="12" style="padding: 10px;">
@@ -155,6 +155,16 @@
       <router-view></router-view>
     </keep-alive>
 
+    <el-dialog
+      title="Choose Slot Type"
+      :visible.sync="dialogVisible"
+      width="30%">
+      <span>This is a message</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="closeDialog">Cancel</el-button>
+        <el-button type="primary" @click="closeDialog">Confirm</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -182,6 +192,9 @@ export default {
       return {
         cacheKey: "App"
       }
+    },
+    closeDialog() {
+      this.$store.dispatch('setDialogVisibility', false)
     }
   },
   mixins: [saveState, mutations],
@@ -194,6 +207,14 @@ export default {
       let body = help[path] || ""
       body = "<h5>" + path + "</h5>" + body
       return { body, exists: help[path] }
+    },
+    dialogVisible: {
+      get: function() {
+        return this.$store.getters.isDialogVisible
+      },
+      set: function(newValue) {
+        this.$store.dispatch('setDialogVisibility', newValue)
+      }
     }
   },
   mounted() {
