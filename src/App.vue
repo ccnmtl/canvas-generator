@@ -11,6 +11,7 @@
       <el-col :span="12" style="padding: 10px;">
           <ul class="bcTrail center">
             <li><router-link class="router" to="/home">Home</router-link></li>
+            <li><router-link class="router" to="/home-new">Home Prototype</router-link></li>
             <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
             <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program">Program Overview</router-link></li>
             <li><router-link class="router" to="/studentlist">Students List</router-link></li>
@@ -194,7 +195,7 @@ export default {
       }
     },
     closeDialog() {
-      this.$store.dispatch('setDialogVisibility', false)
+      this.$store.dispatch("setDialogVisibility", false)
     }
   },
   mixins: [saveState, mutations],
@@ -213,7 +214,7 @@ export default {
         return this.$store.getters.isDialogVisible
       },
       set: function(newValue) {
-        this.$store.dispatch('setDialogVisibility', newValue)
+        this.$store.dispatch("setDialogVisibility", newValue)
       }
     }
   },

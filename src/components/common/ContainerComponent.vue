@@ -1,46 +1,41 @@
 <template>
   <div class="container">
     <row-component v-for="row in rows"
-                   :key="row.id"
-                   :rid="row.id" />
+                   :key="row.rid"
+                   :rid="row.rid" />
 
     <button class="new-row" @click="addRow">Add new Row</button>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex"
 
-import RowComponent from './RowComponent.vue'
+import RowComponent from "./RowComponent.vue"
 
 export default {
   components: {
     RowComponent
   },
-  props: [
-    'cid'
-  ],
+  props: ["cid"],
   data() {
-    return {
-
-    }
+    return {}
   },
   computed: {
     ...mapGetters,
-    rows: function () {
+    rows: function() {
       return this.$store.getters.getRowsByCID[this.cid]
     }
   },
   methods: {
     addRow() {
-      this.$store.dispatch('addRow', { cid: this.cid })
+      this.$store.dispatch("addRow", { cid: this.cid })
     }
-  },
+  }
 }
 </script>
 
 <style scoped lang="scss">
-
 .container {
   padding: 25px 0;
 
@@ -50,8 +45,8 @@ export default {
     color: #555;
     padding: 7px 0;
     border-radius: 7px;
-    opacity: .5;
-    transition: all .43s;
+    opacity: 0.5;
+    transition: all 0.43s;
 
     &:hover {
       opacity: 1;

@@ -13,7 +13,7 @@
         <button @click="showSlotOptions" class="btn btn-primary btn-block">Add Slot</button>
       </div>
 
-      <div>You can also <a>delete</a> this row.</div>
+      <div>You can also <a @click="deleteRow">delete</a> this row.</div>
     </div>
 
     <slot-component v-for="slot in slots"
@@ -23,42 +23,40 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex"
 
-import SlotComponent from './SlotComponent.vue'
-import SlotTypes from '../../util/slot-types.json'
+import SlotComponent from "./SlotComponent.vue"
+import SlotTypes from "../../util/slot-types.json"
 
 export default {
   components: {
     SlotComponent
   },
-  props: [
-    'rid'
-  ],
+  props: ["rid"],
   data() {
-    return {
-
-    }
+    return {}
   },
   computed: {
     ...mapGetters,
-    slots: function () {
+    slots: function() {
       return this.$store.getters.getSlotsByRowID[this.rid]
     }
   },
   methods: {
     addSlot() {
-      this.$store.dispatch('addSlot', { cid: this.cid })
+      this.$store.dispatch("addSlot", { cid: this.cid })
+    },
+    deleteRow() {
+      this.$store.dispatch("deleteRow", this.rid)
     },
     showSlotOptions() {
-      this.$store.dispatch('setDialogVisibility', true)
+      this.$store.dispatch("setDialogVisibility", true)
     }
-  },
+  }
 }
 </script>
 
 <style scoped lang="scss">
-
 .row {
   margin-bottom: 10px;
   padding: 16px 0;
@@ -68,7 +66,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #EEE;
+    background: #eee;
 
     .empty-button {
       margin: 7px 0;
@@ -76,7 +74,7 @@ export default {
   }
 
   .options {
-    transition: all .43s;
+    transition: all 0.43s;
     width: 6vw;
     margin: 0 -3vw;
     float: right;
@@ -100,5 +98,4 @@ export default {
     }
   }
 }
-
 </style>

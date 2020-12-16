@@ -48,7 +48,7 @@ export default new Vuex.Store({
       const res = {}
 
       state.rows.forEach((row) => {
-        if(row.cid in res) res[row.cid].push(row)
+        if (row.cid in res) res[row.cid].push(row)
         else res[row.cid] = [row]
       })
 
@@ -58,7 +58,7 @@ export default new Vuex.Store({
       const res = {}
 
       state.slots.forEach((slot) => {
-        if(slot.rid in res) res[slot.rid].push(slot)
+        if (slot.rid in res) res[slot.rid].push(slot)
         else res[slot.rid] = [slot]
       })
 
@@ -66,17 +66,24 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    addRow: ({commit}, row) => {
+    addRow: ({ commit }, row) => {
       commit('addRow', row)
     },
-    setDialogVisibility: ({commit}, visibility) => {
+    deleteRow: ({ commit }, row) => {
+      commit('deleteRow', row)
+    },
+    setDialogVisibility: ({ commit }, visibility) => {
       commit('setDialogVisibility', visibility)
     },
   },
   mutations: {
     addRow: (state, row) => {
-      row.uid = _.uniqueId()
+      row.rid = _.uniqueId()
       state.rows.push(row)
+    },
+    deleteRow: (state, rid) => {
+      state.rows = state.rows.filter((row) => { return row.rid !== rid })
+
     },
     setDialogVisibility: (state, visibility) => {
       state.dialogVisible = visibility
