@@ -95,6 +95,22 @@ export default new Vuex.Store({
     updateSlotData: ({ commit }, slot) => {
       commit('updateSlotData', slot)
     },
+    addProf: ({ commit, getters }) => {
+      let prof = _.cloneDeep(getters.dProf)
+      prof.id = uuid.v1()
+      commit('addProf', prof)
+    },
+    deleteProf: ({ commit }, prof) => {
+      commit('deleteProf', prof)
+    },
+    addTA: ({ commit, getters }) => {
+      let ta = _.cloneDeep(getters.dTA)
+      ta.id = uuid.v1()
+      commit('addTA', ta)
+    },
+    deleteTA: ({ commit }, ta) => {
+      commit('deleteTA', ta)
+    },
   },
   mutations: {
     addRow: (state, row) => {
@@ -111,6 +127,22 @@ export default new Vuex.Store({
     deleteSlot: (state, slot) => {
       _.remove(state.slots, {
         sid: slot.sid
+      })
+    },
+    addProf: (state, prof) => {
+      state.info.profs.push(prof)
+    },
+    deleteProf: (state, prof) => {
+      _.remove(state.info.profs, {
+        id: prof.id
+      })
+    },
+    addTA: (state, ta) => {
+      state.info.tas.push(ta)
+    },
+    deleteTA: (state, ta) => {
+      _.remove(state.info.tas, {
+        id: ta.id
       })
     },
     setDialogVisibility: (state, visibility) => {
@@ -162,5 +194,5 @@ export default new Vuex.Store({
     theme,
     cases
   },
-  plugins: [createPersistedState()]
+  plugins: [] // [createPersistedState()]
 })

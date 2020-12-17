@@ -53,15 +53,15 @@
 
           <el-input style="width: 220px;" v-popover:titlepop placeholder="Please input your Course Title" :value="info.title" @input="updateProp('title', $event)"></el-input>
 
-          <el-input title="This is your Course ID" style="width: 200px;" v-model="info.semester" @input="updateProp('semester', $event)" v-tippy="{delay: [1000,200]}"></el-input>
-          <el-input style="width: 400px;" v-popover:urlpop placeholder="Please input your Course URL"  v-model="info.url" @input="updateProp('url', $event)"></el-input>
+          <el-input title="This is your Course ID" style="width: 200px;" :value="info.semester" @input="updateProp('semester', $event)" v-tippy="{delay: [1000,200]}"></el-input>
+          <el-input style="width: 400px;" v-popover:urlpop placeholder="Please input your Course URL"  :value="info.url" @input="updateProp('url', $event)"></el-input>
 
         </li>
 
     		<li class="uk-text-center">
           <div class='quill'>
             <quill-editor ref="myTextEditor"
-                          v-model="info.description"
+                          :value="info.description"
                           @input="updateProp('description', $event)"
                           :config="editorOption">
             </quill-editor>
@@ -70,29 +70,29 @@
 
     		<li class="uk-text-center">
 
-          <div v-for="prof in info.profs" :key="prof.name">
-          <el-input autosize v-model="prof.name" style="width: 150px;" @input="updateUser(prof, 'name', $event)"></el-input>
-          <el-input autosize v-model="prof.email" style="width: 250px;" @input="updateUser(prof, 'email', $event)"></el-input>
-          <el-input autosize v-model="prof.office" style="width: 400px;" @input="updateUser(prof, 'office', $event)"></el-input> <br>
+          <div v-for="prof in info.profs" :key="prof.id">
+          <el-input autosize :value="prof.name" style="width: 150px;" @input="updateUser(prof, 'name', $event)"></el-input>
+          <el-input autosize :value="prof.email" style="width: 250px;" @input="updateUser(prof, 'email', $event)"></el-input>
+          <el-input autosize :value="prof.office" style="width: 400px;" @input="updateUser(prof, 'office', $event)"></el-input> <br>
           </div>
         </li>
 
     		<li class="uk-text-center" v-if="info.tas.length > 0">
-          <div v-for="ta in info.tas" :key="ta.name">
-            <el-input autosize v-model="ta.name" style="width: 150px;" @input="updateUser(ta, 'name', $event)"></el-input>
-            <el-input autosize v-model="ta.email" style="width: 250px;" @input="updateUser(ta, 'email', $event)"></el-input>
-            <el-input autosize v-model="ta.office" style="width: 400px;" @input="updateUser(ta, 'office', $event)"></el-input> <br>
+          <div v-for="ta in info.tas" :key="ta.id">
+            <el-input autosize :value="ta.name" style="width: 150px;" @input="updateUser(ta, 'name', $event)"></el-input>
+            <el-input autosize :value="ta.email" style="width: 250px;" @input="updateUser(ta, 'email', $event)"></el-input>
+            <el-input autosize :value="ta.office" style="width: 400px;" @input="updateUser(ta, 'office', $event)"></el-input> <br>
           </div>
     		</li>
 
     		<li class="uk-text-center">
-          <el-input autosize style="width: 400px;" v-model="info.meetings" @input="updateProp('meetings', $event)"></el-input>
-          <el-input autosize style="width: 400px;" v-model="info.discussions" @input="updateProp('discussions', $event)"></el-input> <br>
+          <el-input autosize style="width: 400px;" :value="info.meetings" @input="updateProp('meetings', $event)"></el-input>
+          <el-input autosize style="width: 400px;" :value="info.discussions" @input="updateProp('discussions', $event)"></el-input> <br>
     		</li>
 
     		<li class="uk-text-center">
           <button type="button" class="uk-button uk-button-primary " name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
-          <el-input autosize style="width: 400px;" v-show="info.isVideo" v-model="info.video" @input="updateProp('video', $event)" ></el-input>
+          <el-input autosize style="width: 400px;" v-show="info.isVideo" :value="info.video" @input="updateProp('video', $event)" ></el-input>
           <form  style="display: inline-block;" v-show="!info.isVideo" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
             <input style="display: inline-block;" name="image" id="image-file" type="file">
             <input style="display: inline-block;" type="submit" class="uk-button uk-button-primary" value="Submit!">
@@ -114,13 +114,13 @@
         <li class="uk-text-center">
           Syllabus Button
           <el-switch
-            v-model="info.sylButton"
+            :value="info.sylButton"
             @input="updateProp('sylButton', $event)">
           </el-switch>
           <br>
           Activities Button
           <el-switch
-            v-model="info.weekButton"
+            :value="info.weekButton"
             @input="updateProp('weekButton', $event)">
           </el-switch>
         </li>

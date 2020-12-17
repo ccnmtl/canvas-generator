@@ -23,9 +23,9 @@
               label="Professors">
               <el-option
                 v-for="(prof, index) in info.profs"
-                :key="prof.name"
+                :key="prof.id"
                 :label="prof.name"
-                :value="{index, list: 'profs', key: prof.name}">
+                :value="{index, list: 'profs', key: prof.id}">
               </el-option>
             </el-option-group>
             <el-option-group
@@ -34,9 +34,9 @@
               label="TAs">
               <el-option
                 v-for="(ta, index) in info.tas"
-                :key="ta.name"
+                :key="ta.id"
                 :label="ta.name"
-                :value="{index, list: 'tas', key: ta.name}">
+                :value="{index, list: 'tas', key: ta.id}">
               </el-option>
             </el-option-group>
           </el-select>
@@ -44,13 +44,13 @@
           <el-button style="float: right; padding: 3px 0" type="text"@click="iEditable = !iEditable"> {{ iEditable ? "Save" : "Edit" }}</el-button>
 
         </div>
-        <el-button style="float: right; margin-bottom: 10px;" type="danger" size="medium" @click="removeProf">Remove</el-button>
+        <el-button style="float: right; margin-bottom: 10px;" type="danger" size="medium" @click="removeUser">Remove</el-button>
 
         <div v-show="iEditable" v-if="selected.list.length > 0" class="center">
-          <el-input style="width: 200px; float:left" class="e-input" v-model="info[selected.list][selected.index].name" @input="updateUser(info[selected.list][selected.index],'name', $event)"> </el-input>
+          <el-input style="width: 200px; float:left" class="e-input" :value="info[selected.list][selected.index].name" @input="updateUser(info[selected.list][selected.index],'name', $event)"> </el-input>
 
-          <el-input class="e-input" v-if="selected.list" v-model="info[selected.list][selected.index].email" @input="updateUser(info[selected.list][selected.index],'email', $event)"> </el-input>
-          <el-input class="e-input" v-if="selected.list" type="textarea" autosize v-model="info[selected.list][selected.index].office" @input="updateUser(info[selected.list][selected.index],'office', $event)"> </el-input>
+          <el-input class="e-input" v-if="selected.list" :value="info[selected.list][selected.index].email" @input="updateUser(info[selected.list][selected.index],'email', $event)"> </el-input>
+          <el-input class="e-input" v-if="selected.list" type="textarea" autosize :value="info[selected.list][selected.index].office" @input="updateUser(info[selected.list][selected.index],'office', $event)"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
@@ -69,26 +69,22 @@
         <div slot="header" class="clearfix">
           <span class="big-text">Edit Schedule Items</span>
         </div>
-        <div class="code-input center">
-          Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
-            controls-position="right" size="small" :label="'Edit ' + info.classType.dateType"></el-input-number>
-        </div>
-
         <select v-model="userInput.weekNumber" class="uk-select">
           <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
         </select>
         <div >
-          <div class="code-input center uk-margin-small-top" v-if="weeks[userInput.weekNumber - 1]">
-            <label for="text-area">Title</label> <br>
-            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title" @input="updateWeek(userInput.weekNumber - 1,'title', $event)"> </el-input>
+          <div class="uk-margin-small-top" v-if="weeks[userInput.weekNumber - 1]">
+            <label>Title
+            <el-input  style="width: 250px; margin: 10px; "  :value="weeks[userInput.weekNumber - 1].title" @input="updateWeek(userInput.weekNumber - 1,'title', $event)"> </el-input>
+            </label>
           </div>
         </div>
 
-        <div class="center" v-if="weeks[userInput.weekNumber - 1]">
+        <div class="" v-if="weeks[userInput.weekNumber - 1]">
           <label >Date
           <el-date-picker
             style="margin: 10px; margin-bottom:20px"
-            v-model="weeks[userInput.weekNumber - 1].date"
+            :value="weeks[userInput.weekNumber - 1].date"
             @input="updateWeek(userInput.weekNumber - 1,'date', $event)"
             type="date"
             placeholder="Pick start date">
@@ -104,10 +100,10 @@
 
         <div class="center">
           <strong>Syllabus Components:</strong>
-          <el-checkbox-group v-model="info.sectionBox1" @input="updateProp('sectionBox1', $event)">
+          <el-checkbox-group :value="info.sectionBox1" @input="updateProp('sectionBox1', $event)">
             <el-checkbox v-for="section in sections" :label="section" :key="section" border>{{section}}</el-checkbox>
           </el-checkbox-group>
-          <el-checkbox-group v-model="info.sectionBox2" @input="updateProp('sectionBox2', $event)">
+          <el-checkbox-group :value="info.sectionBox2" @input="updateProp('sectionBox2', $event)">
             <el-checkbox v-for="section in sections2" :label="section" :key="section">{{section}}</el-checkbox>
           </el-checkbox-group>
         </div>
@@ -115,7 +111,7 @@
         <div class="">
           Dates
           <el-switch
-            v-model="info.useDates"
+            :value="info.useDates"
             @input="updateProp('useDates', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
@@ -425,36 +421,30 @@ export default {
       )
     },
     addProf() {
-      let tempProf = _.cloneDeep(this.dProf)
-      let users = _.cloneDeep(this.info.profs)
-      users.push(tempProf)
-      this.updateProp("profs", users)
-      this.selected = { index: this.info.profs.length - 1, list: "profs" }
+      this.$store.dispatch("addProf")
+      let index = this.info.profs.length - 1
+      this.selected = { index, list: "profs", key: this.info.profs[index].id }
     },
     addTA() {
-      let tempTA = _.cloneDeep(this.dTA)
-      let users = _.cloneDeep(this.info.tas)
-      users.push(tempTA)
-      this.updateProp("tas", users)
-      this.selected = { index: this.info.tas.length - 1, list: "tas" }
+      this.$store.dispatch("addTA")
+      let index = this.info.tas.length - 1
+      this.selected = { index, list: "tas", key: this.info.tas[index].id }
     },
-    removeProf() {
+    removeUser() {
       let { list, index } = this.selected
-      console.log(list)
-      let users = _.cloneDeep(this.info[list])
-      users.splice(index, 1)
+      let user = this.info[list][index]
+
       if (index == 0) {
         if (list == "profs") {
-          console.log("tried to delete prof")
           return
-          console.log("after return")
         }
-        console.log("deleting last ta")
-        this.selected = { index: 0, list: "profs" }
+        this.selected = { index: 0, list: "profs", key: this.info.profs[0].id }
       } else {
-        this.selected = { index: index - 1, list }
+        this.selected = { index: index - 1, list, key: this.info[list][index - 1].id }
       }
-      this.updateProp(list, users)
+
+      if (list == "profs") this.$store.dispatch("deleteProf", user)
+      else this.$store.dispatch("deleteTA", user)
     },
     clearProfs() {
       this.info.profs = [this.dProf]
@@ -476,7 +466,7 @@ export default {
     }
   },
   mounted() {
-    this.selected = { index: 0, key: this.info.profs[0].name, list: "profs" }
+    this.selected = { list: "profs", index: 0, key: this.info.profs[0].id }
     this.updateCode("syllabus-code")
   },
 

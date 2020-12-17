@@ -45,6 +45,7 @@ export default {
       profs: [
         {
           name: 'Instructor Name',
+          id: 1,
           email: 'Instructor@example.org',
           office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
           imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
@@ -53,6 +54,7 @@ export default {
       tas: [
         {
           name: 'TA Name',
+          id: 2,
           email: 'ta@example.org',
           office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
           imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
@@ -113,6 +115,7 @@ export default {
     },
     profDefault: {
       name: 'Professor Name',
+      id: 1,
       email: 'professor@sipa.columbia.edu',
       office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
       imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
@@ -126,6 +129,7 @@ export default {
     },
     taDefault: {
       name: 'TA Name',
+      id: 1,
       email: 'TA@sipa.columbia.edu',
       office: 'Office Hours: Tuesday 1:00-3:00 pm (IAB Room 1234)',
       imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
