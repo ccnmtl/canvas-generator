@@ -167,13 +167,13 @@
 
 <script>
 import saveState from "vue-save-state"
-import { mapGetters, mapMutations } from "vuex"
+import { mapGetters, mapMutations, mapActions } from "vuex"
 import help from "./store/help"
 import mutations from "./store/mutations"
 
 // Dialog Types
-import ChooseSlot from './components/dialogs/ChooseSlot.vue'
-import DeleteSlot from './components/dialogs/DeleteSlot.vue'
+import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
+import DeleteSlot from "./components/dialogs/DeleteSlot.vue"
 
 var moment = require("moment")
 
@@ -192,6 +192,7 @@ export default {
   },
   methods: {
     ...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
+    ...mapActions(["updateWeek"]),
     getSaveStateConfig() {
       return {
         cacheKey: "App"
@@ -226,33 +227,20 @@ export default {
   },
   mounted() {
     if (this.weeks.length < 1) {
-      let weeklyActivities = []
-
       for (let i = 1; i <= 12; i++) {
-        let tempWeek = _.cloneDeep(this.$store.getters.dWeek)
-        tempWeek.imgSrc =
-          this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + ".png"
+        let tempWeek = {}
         tempWeek.title = "Lecture " + i
         tempWeek.secondTitle = "Lecture " + i + " II"
+        tempWeek.imgSrc =
+          this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + ".png"
+        tempWeek.date = moment().add((i-1), "w")
+        this.$store.dispatch("addWeek", tempWeek)
 
-        weeklyActivities.push(tempWeek)
       }
-
-      weeklyActivities.forEach((week, index) => {
-        week.date = moment().add(index, "w")
-      })
-
-      this.updateWeeks(weeklyActivities)
     }
-    if (this.info.students.length < 1) {
-      let tempStudent = _.cloneDeep(this.$store.getters.dStudent)
-      let users = _.cloneDeep(this.info.students)
-
-      tempStudent.id = _.uniqueId()
-
-      users.push(tempStudent)
-      this.updateProp("students", users)
-    }
+    if (this.info.students.length < 1) this.$store.dispatch("addStudent")
+    if (this.info.profs.length < 1) this.$store.dispatch("addProf")
+    if (this.info.tas.length < 1) this.$store.dispatch("addTA")
   }
 }
 </script>

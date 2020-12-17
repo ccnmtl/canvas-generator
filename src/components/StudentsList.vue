@@ -24,9 +24,9 @@
               label="Students">
               <el-option
                 v-for="(student, index) in info.students"
-                :key="student.name"
+                :key="student.id"
                 :label="student.name"
-                :value="{index, key: student.name}">
+                :value="{index, key: student.id}">
               </el-option>
             </el-option-group>
 
@@ -250,7 +250,7 @@ export default {
       this.updateProp("students", users)
       this.selected = {
         index: this.info.students.length - 1,
-        key: this.info.students[this.info.students.length - 1].name
+        key: this.info.students[this.info.students.length - 1].id
       }
       this.sortStudents()
     },
@@ -265,9 +265,9 @@ export default {
           console.log("after return")
         }
         console.log("deleting last ta")
-        this.selected = { index: 0, key: this.info.students[0].name }
+        this.selected = { index: 0, key: this.info.students[0].id }
       } else {
-        this.selected = { index: index - 1, key: this.info.students[index - 1].name }
+        this.selected = { index: index - 1, key: this.info.students[index - 1].id }
       }
       this.updateProp("students", users)
     },
@@ -297,7 +297,7 @@ export default {
     }
   },
   mounted() {
-    this.selected = { index: 0, key: this.info.students[0].name }
+    this.selected = { index: 0, key: this.info.students[0].id }
     this.updateCode("student-list-code")
   },
   beforeCreate() {},

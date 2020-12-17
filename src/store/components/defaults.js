@@ -43,22 +43,8 @@ export default {
 
       //TEACHERS
       profs: [
-        {
-          name: 'Instructor Name',
-          id: 1,
-          email: 'Instructor@example.org',
-          office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
-          imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
-        },
       ],
       tas: [
-        {
-          name: 'TA Name',
-          id: 2,
-          email: 'ta@example.org',
-          office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
-          imgSrc: "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/profile_default_generic.png" // Columbia Graphic "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/profile_default.png"
-        },
       ],
 
       //Students

@@ -19,9 +19,9 @@
               label="Students">
               <el-option
                 v-for="(student, index) in info.students"
-                :key="student.name"
-                :label="student.name"
-                :value="{index, key: student.name}">
+                :key="student.id"
+                :label="student.id"
+                :value="{index, key: student.id}">
               </el-option>
             </el-option-group>
 

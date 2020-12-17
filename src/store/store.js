@@ -111,6 +111,26 @@ export default new Vuex.Store({
     deleteTA: ({ commit }, ta) => {
       commit('deleteTA', ta)
     },
+    addStudent: ({ commit, getters }) => {
+      let student = _.cloneDeep(getters.dStudent)
+      student.id = _.uniqueId()
+      commit('addStudent', student)
+    },
+    deleteStudent: ({ commit }, student) => {
+      commit('deleteStudent', student)
+    },
+    addWeek: ({ commit, getters }, data = {}) => {
+      let dWeek = _.cloneDeep(getters.dWeek)
+      let week = {...dWeek, ...data}
+      week.id = uuid.v1()
+      commit('addWeek', week)
+    },
+    deleteWeek: ({ commit }, week) => {
+      commit('deleteWeek', week)
+    },
+    updateWeek: ({ commit }, data) => {
+      commit('updateWeek', data)
+    },
     updateSpecificInfo: ({ commit }, payload) => {
       commit('updateSpecificInfo', payload)
     },
@@ -140,12 +160,28 @@ export default new Vuex.Store({
         return user.id !== prof.id
       })
     },
+    addStudent: (state, student) => {
+      state.info.students.push(student)
+    },
+    deleteStudent: (state, student) => {
+      state.info.students = state.info.students.filter((user) => {
+        return user.id !== student.id
+      })
+    },
     addTA: (state, ta) => {
       state.info.tas.push(ta)
     },
     deleteTA: (state, ta) => {
       state.info.tas = state.info.tas.filter((user) => {
         return user.id !== ta.id
+      })
+    },
+    addWeek: (state, week) => {
+      state.info.weeks.push(week)
+    },
+    deleteWeek: (state, week) => {
+      state.info.weeks = state.info.weeks.filter((user) => {
+        return user.id !== week.id
       })
     },
     setDialogVisibility: (state, visibility) => {
