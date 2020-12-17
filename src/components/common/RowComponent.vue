@@ -2,8 +2,8 @@
   <div class="row" :class="{ empty: !slots }">
 
     <div class="options" v-if="slots">
-      <button class="add"></button>
-      <button class="delete"></button>
+      <button @click="showSlotOptions" class="btn add"></button>
+      <button class="btn delete"></button>
     </div>
 
     <div class="empty-text" v-if="!slots">
@@ -19,7 +19,8 @@
     <slot-component v-for="slot in slots"
                     :key="slot.sid"
                     :sid="slot.sid"
-                    :slotData="slot" />
+                    :slotData="slot"
+                    :colspan="24 / slots.length" />
 
   </div>
 </template>

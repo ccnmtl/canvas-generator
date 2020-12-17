@@ -160,7 +160,7 @@
       :title="dialogData.title"
       :visible.sync="dialogVisible"
       width="50%">
-        <component :is="dialogData.type" :dialogData="dialogData" />
+        <component :is="dialogData.type" :dialogData="dialogData" @cancelDialog="closeDialog" />
     </el-dialog>
   </div>
 </template>
@@ -172,13 +172,15 @@ import help from "./store/help"
 import mutations from "./store/mutations"
 
 // Dialog Types
-import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
+import ChooseSlot from './components/dialogs/ChooseSlot.vue'
+import DeleteSlot from './components/dialogs/DeleteSlot.vue'
 
 var moment = require("moment")
 
 export default {
   components: {
-    ChooseSlot
+    ChooseSlot,
+    DeleteSlot
   },
   name: "app",
   data() {
