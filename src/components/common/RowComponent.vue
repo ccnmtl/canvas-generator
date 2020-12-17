@@ -2,8 +2,8 @@
   <div class="row" :class="{ empty: !slots }">
 
     <div class="options" v-if="slots">
-      <button @click="showSlotOptions" class="btn add"></button>
-      <button class="btn delete"></button>
+      <button @click="showSlotOptions" class="btn add el-icon-plus"></button>
+      <button @click="deleteRow" class="btn delete el-icon-delete"></button>
     </div>
 
     <div class="empty-text" v-if="!slots">
@@ -81,7 +81,7 @@ export default {
   .options {
     transition: all 0.43s;
     width: 6vw;
-    margin: 0 -3vw;
+    margin: 0 -6vw;
     float: right;
     z-index: 100;
     text-align: center;
@@ -102,6 +102,7 @@ export default {
       margin-top: 16px;
       opacity: 1;
     }
+
   }
 }
 </style>
