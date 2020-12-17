@@ -173,7 +173,7 @@ import help from "./store/help"
 import mutations from "./store/mutations"
 
 // Dialog Types
-import ChooseSlot from './components/dialogs/ChooseSlot.vue'
+import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
 
 var moment = require("moment")
 
