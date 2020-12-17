@@ -114,90 +114,91 @@ export default new Vuex.Store({
     updateSpecificInfo: ({ commit }, payload) => {
       commit('updateSpecificInfo', payload)
     },
-    mutations: {
-      addRow: (state, row) => {
-        state.rows.push(row)
-      },
-      deleteRow: (state, rid) => {
-        state.rows = state.rows.filter((row) => {
-          return row.rid !== rid
-        })
-      },
-      addSlot: (state, slot) => {
-        state.slots.push(slot)
-      },
-      deleteSlot: (state, sid) => {
-        state.slots = state.slots.filter((slot) => {
-          return slot.sid !== sid
-        })
-      },
-      addProf: (state, prof) => {
-        state.info.profs.push(prof)
-      },
-      deleteProf: (state, prof) => {
-        state.info.profs = state.info.profs.filter((user) => {
-          return user.id !== prof.id
-        })
-      },
-      addTA: (state, ta) => {
-        state.info.tas.push(ta)
-      },
-      deleteTA: (state, ta) => {
-        state.info.tas = state.info.tas.filter((user) => {
-          return user.id !== ta.id
-        })
-      },
-      setDialogVisibility: (state, visibility) => {
-        state.dialogVisible = visibility
-      },
-      setDialogData: (state, data) => {
-        state.dialogData = data
-      },
-      updateSlotData: (state, slot) => {
-        const actualSlot = _.find(state.slots, { 'sid': slot.sid })
-        Vue.set(actualSlot, 'data', slot.data)
-      },
-      updateInfo: (state, payload) => {
-        state.info = payload
-      },
-      updateSpecificInfo: (state, payload) => {
-        Vue.set(state.info, payload.key, payload.value)
-      },
-      updateProp: (state, { prop, value }) => {
-        state.info[prop] = value
-      },
-      updateUser: (state, { user, prop, value }) => {
-        user[prop] = value
-      },
-      updateWeek: (state, { index, prop, value }) => {
-        state.weeks[index][prop] = value
-      },
-      updateStore: (state, payload) => {
-        state = payload
-      },
-      updateLoading: (state, payload) => {
-        state.loading = payload
-      },
-      addWeek: (state, payload) => {
-        state.weeks.push(payload)
-      },
-      sliceWeek: (state, num) => {
-        state.weeks = state.weeks.slice(0, num)
-      },
-      updateWeeks: (state, payload) => {
-        state.weeks = payload
-      },
-      refreshStore: (state) => {
-        state = state
-      },
-      // updateWeek: (state, index, field, value) => {
-      //   state.weeks[index][field] = value
-      // },
+  },
+  mutations: {
+    addRow: (state, row) => {
+      state.rows.push(row)
     },
-    modules: {
-      defaults,
-      theme,
-      cases
+    deleteRow: (state, rid) => {
+      state.rows = state.rows.filter((row) => {
+        return row.rid !== rid
+      })
     },
-    plugins: [] // [createPersistedState()]
-  })
+    addSlot: (state, slot) => {
+      state.slots.push(slot)
+    },
+    deleteSlot: (state, sid) => {
+      state.slots = state.slots.filter((slot) => {
+        return slot.sid !== sid
+      })
+    },
+    addProf: (state, prof) => {
+      state.info.profs.push(prof)
+    },
+    deleteProf: (state, prof) => {
+      state.info.profs = state.info.profs.filter((user) => {
+        return user.id !== prof.id
+      })
+    },
+    addTA: (state, ta) => {
+      state.info.tas.push(ta)
+    },
+    deleteTA: (state, ta) => {
+      state.info.tas = state.info.tas.filter((user) => {
+        return user.id !== ta.id
+      })
+    },
+    setDialogVisibility: (state, visibility) => {
+      state.dialogVisible = visibility
+    },
+    setDialogData: (state, data) => {
+      state.dialogData = data
+    },
+    updateSlotData: (state, slot) => {
+      const actualSlot = _.find(state.slots, { 'sid': slot.sid })
+      Vue.set(actualSlot, 'data', slot.data)
+    },
+    updateInfo: (state, payload) => {
+      state.info = payload
+    },
+    updateSpecificInfo: (state, payload) => {
+      Vue.set(state.info, payload.key, payload.value)
+    },
+    updateProp: (state, { prop, value }) => {
+      state.info[prop] = value
+    },
+    updateUser: (state, { user, prop, value }) => {
+      user[prop] = value
+    },
+    updateWeek: (state, { index, prop, value }) => {
+      state.weeks[index][prop] = value
+    },
+    updateStore: (state, payload) => {
+      state = payload
+    },
+    updateLoading: (state, payload) => {
+      state.loading = payload
+    },
+    addWeek: (state, payload) => {
+      state.weeks.push(payload)
+    },
+    sliceWeek: (state, num) => {
+      state.weeks = state.weeks.slice(0, num)
+    },
+    updateWeeks: (state, payload) => {
+      state.weeks = payload
+    },
+    refreshStore: (state) => {
+      state = state
+    },
+    // updateWeek: (state, index, field, value) => {
+    //   state.weeks[index][field] = value
+    // },
+  },
+  modules: {
+    defaults,
+    theme,
+    cases
+  },
+  plugins: [] // [createPersistedState()]
+})

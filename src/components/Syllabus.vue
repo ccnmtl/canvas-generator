@@ -454,6 +454,7 @@ export default {
         console.log(index)
         if (index > 0) this.$store.dispatch("deleteProf", prof)
       })
+      this.selected = { index: 0, list: "profs", key: this.info.profs[0].id }
     },
     setToDefault() {
       console.log("resetting data...")
