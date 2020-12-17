@@ -40,8 +40,8 @@ export default {
       selectedSlot: 1,
       isFile: true,
       uploadSwitchText: "Click to Upload Image from Url",
-      imgWidth: 300,
-      imgHeight: 300,
+      imgWidth: this.dialogData.defaultWidth,
+      imgHeight: this.dialogData.defaultHeight,
       imgLink: ""
     }
   },

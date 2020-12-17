@@ -1,6 +1,6 @@
 <template>
   <div :id="sid" class="col content-slot">
-    <img :src="slotData.imgSrc" :style="{width: slotData.width + 'px', height: slotData.height + 'px'}" alt="" @dblclick="openUploadDialog()"> </img>
+    <img :src="slotData.imgSrc" :style="[forceDimensions ? {width: slotData.width + 'px', height: slotData.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()"> </img>
     </div>
   </div>
 </template>
@@ -16,6 +16,7 @@ export default {
     return {
       editing: null,
       data: this.slotData,
+      forceDimensions: false,
       imgWidth: 300,
       imgHeight: 300,
     }
@@ -25,6 +26,8 @@ export default {
       this.$store.dispatch("setDialogData", {
         title: 'Upload Image',
         type: 'upload-image',
+        defaultWidth: 300,
+        defaultHeight: 300,
         sid: this.sid
       })
       this.$store.dispatch("setDialogVisibility", true)
