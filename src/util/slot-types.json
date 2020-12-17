@@ -26,7 +26,12 @@
     "name": "Image Slot",
     "type": "image-slot",
     "icon": "picture",
-    "colspan": 24
+    "colspan": 24,
+    "defaultData": {
+      "imgSrc": "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/OGH_LogoWide.png",
+      "width": "300",
+      "height": "300"
+    }
   },
   {
     "id": 4,

@@ -174,13 +174,16 @@ import mutations from "./store/mutations"
 // Dialog Types
 import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
 import DeleteSlot from "./components/dialogs/DeleteSlot.vue"
+import UploadImage from "./components/dialogs/UploadImage.vue"
+
 
 var moment = require("moment")
 
 export default {
   components: {
     ChooseSlot,
-    DeleteSlot
+    DeleteSlot,
+    UploadImage
   },
   name: "app",
   data() {

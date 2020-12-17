@@ -14,12 +14,14 @@ import SlotTypes from '../../util/slot-types.json'
 // Slot Types
 import BannerSlot from '../slots/BannerSlot.vue'
 import TitleSlot from '../slots/TitleSlot.vue'
+import ImageSlot from '../slots/ImageSlot.vue'
 import ContentSlot from '../slots/ContentSlot.vue'
 
 export default {
   components: {
     BannerSlot,
     TitleSlot,
+    ImageSlot,
     ContentSlot,
   },
   props: [ "sid", "slotData", "colspan" ],
