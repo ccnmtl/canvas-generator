@@ -10,7 +10,7 @@
       <el-card class="card">
           <el-button type="primary" @click="addProf">Add Professor</el-button>
           <el-button type="primary" @click="addTA">Add TA</el-button>
-          <el-button type="danger" @click="clearProfs">Clear</el-button>
+          <el-button type="danger" @click="clearTeachers">Clear</el-button>
       </el-card>
 
       <el-card class="card box-card" v-if="selected.list">
@@ -44,7 +44,7 @@
           <el-button style="float: right; padding: 3px 0" type="text"@click="iEditable = !iEditable"> {{ iEditable ? "Save" : "Edit" }}</el-button>
 
         </div>
-        <el-button style="float: right; margin-bottom: 10px;" type="danger" size="medium" @click="removeUser">Remove</el-button>
+        <el-button style="float: right; margin-bottom: 10px;" type="danger" size="medium" @click="removeTeacher">Remove</el-button>
 
         <div v-show="iEditable" v-if="selected.list.length > 0" class="center">
           <el-input style="width: 200px; float:left" class="e-input" :value="info[selected.list][selected.index].name" @input="updateUser(info[selected.list][selected.index],'name', $event)"> </el-input>
@@ -430,7 +430,7 @@ export default {
       let index = this.info.tas.length - 1
       this.selected = { index, list: "tas", key: this.info.tas[index].id }
     },
-    removeUser() {
+    removeTeacher() {
       let { list, index } = this.selected
       let user = this.info[list][index]
 
@@ -446,9 +446,14 @@ export default {
       if (list == "profs") this.$store.dispatch("deleteProf", user)
       else this.$store.dispatch("deleteTA", user)
     },
-    clearProfs() {
-      this.info.profs = [this.dProf]
-      this.info.tas = [this.dTA]
+    clearTeachers() {
+      this.info.tas.forEach(ta => {
+        this.$store.dispatch("deleteTA", ta)
+      })
+      this.info.profs.forEach((prof, index) => {
+        console.log(index)
+        if (index > 0) this.$store.dispatch("deleteProf", prof)
+      })
     },
     setToDefault() {
       console.log("resetting data...")
