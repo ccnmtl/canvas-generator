@@ -1,18 +1,18 @@
 <template>
   <div :id="sid" class="col">
-      <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]" style="postition: relative">
+      <div :class="['pad-box-mega','STV1_Banner', data.wideBanner ? theme.wide : theme.banner]" style="postition: relative">
 
         <img v-if="theme.logo" :src="theme.logo" class="logo left" />
         <img v-if="theme.rightLogo" :src="theme.rightLogo" class="logo right" />
 
         <p>
-          <span @dblclick="setEditing('title')" v-if="editing !== 'title'">{{ slotData.title.toUpperCase() }}</span>
+          <span @dblclick="setEditing('title')" v-if="editing !== 'title'">{{ data.title.toUpperCase() }}</span>
           <span v-else>
             <input ref="title" @blur="finishEditing('title')" v-model="data.title" />
           </span>
         </p>
         <p class="STV1_CourseCode">
-          <span @dblclick="setEditing('semester')" v-if="editing !== 'semester'">{{ slotData.semester }}</span>
+          <span @dblclick="setEditing('semester')" v-if="editing !== 'semester'">{{ data.semester }}</span>
           <span v-else>
             <input ref="semester" @blur="finishEditing('semester')" v-model="data.semester" />
           </span>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import mutations from "../../store/mutations"
+import { mapGetters } from 'vuex'
 
 export default {
   name: "BannerSlot",
@@ -30,10 +30,18 @@ export default {
   data() {
     return {
       editing: null,
-      data: this.slotData
+      data: {}
     }
   },
-  mixins: [mutations],
+  computed: {
+    ...mapGetters({
+      info: 'getInfo',
+      theme: 'getTheme'
+    })
+  },
+  beforeMount() {
+    this.data = this.info
+  },
   methods: {
     setEditing(field) {
       this.editing = field
@@ -42,8 +50,10 @@ export default {
       }, 200)
     },
     finishEditing(field) {
-      this.$store.dispatch("updateSlotData", { sid: this.sid, data: this.data })
-      this.editing = null
+      if(this.data[field]) {
+        this.$store.dispatch("updateSpecificInfo", { key: field, value: this.data[field] })
+        this.editing = null
+      }
     }
   }
 }

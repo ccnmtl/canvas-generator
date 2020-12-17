@@ -76,8 +76,8 @@ export default new Vuex.Store({
       row.rid = uuid.v1()
       commit('addRow', row)
     },
-    deleteRow: ({ commit }, row) => {
-      commit('deleteRow', row)
+    deleteRow: ({ commit }, rid) => {
+      commit('deleteRow', rid)
     },
     setDialogVisibility: ({ commit }, visibility) => {
       commit('setDialogVisibility', visibility)
@@ -89,28 +89,31 @@ export default new Vuex.Store({
       slot.sid = uuid.v1()
       commit('addSlot', slot)
     },
-    deleteSlot: ({ commit }, slot) => {
-      commit('deleteSlot', slot)
+    deleteSlot: ({ commit }, sid) => {
+      commit('deleteSlot', sid)
     },
     updateSlotData: ({ commit }, slot) => {
       commit('updateSlotData', slot)
+    },
+    updateSpecificInfo: ({ commit }, payload) => {
+      commit('updateSpecificInfo', payload)
     },
   },
   mutations: {
     addRow: (state, row) => {
       state.rows.push(row)
     },
-    deleteRow: (state, row) => {
-      _.remove(state.rows, {
-        rid: row.rid
+    deleteRow: (state, rid) => {
+      state.rows = state.rows.filter((row) => {
+        return row.rid !== rid
       })
     },
     addSlot: (state, slot) => {
       state.slots.push(slot)
     },
-    deleteSlot: (state, slot) => {
-      _.remove(state.slots, {
-        sid: slot.sid
+    deleteSlot: (state, sid) => {
+      state.slots = state.slots.filter((slot) => {
+        return slot.sid !== sid
       })
     },
     setDialogVisibility: (state, visibility) => {
@@ -125,6 +128,9 @@ export default new Vuex.Store({
     },
     updateInfo: (state, payload) => {
       state.info = payload
+    },
+    updateSpecificInfo: (state, payload) => {
+      Vue.set(state.info, payload.key, payload.value)
     },
     updateProp: (state, { prop, value }) => {
       state.info[prop] = value
