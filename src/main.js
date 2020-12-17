@@ -6,20 +6,21 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store/store'
+import UUID from "vue-uuid"
 
-// Outside frameworks/components 
+// Outside frameworks/components
 import VueResource from 'vue-resource'
 import Snotify from 'vue-snotify'
 import 'vue-snotify/styles/material.css'
 import VueTippy from 'vue-tippy'
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-default/index.css' // Use this OR theme chalk in index.html
+import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
 // import CKEditor from '@ckeditor/ckeditor5-vue';
 
-
-Vue.use(VueResource);
-Vue.use(Snotify);
+Vue.use(UUID)
+Vue.use(VueResource)
+Vue.use(Snotify)
 Vue.use(ElementUI, {
   locale
 })

@@ -5,12 +5,13 @@
       <!-- Off Canvas Menu Slide -->
       <el-col :span="6" style="padding: 20px;">
         <a href="#offcanvas-slide" class="uk-button uk-button-default noBorder" uk-toggle><span uk-icon="icon: table"></span> &nbsp;Menu</a>
-      </el-col> 
+      </el-col>
 
       <!-- Breadcrumb navigation bar -->
       <el-col :span="12" style="padding: 10px;">
           <ul class="bcTrail center">
             <li><router-link class="router" to="/home">Home</router-link></li>
+            <li><router-link class="router" to="/home-new">Home Prototype</router-link></li>
             <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
             <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program">Program Overview</router-link></li>
             <li><router-link class="router" to="/studentlist">Students List</router-link></li>
@@ -99,7 +100,7 @@
           <label for="courseurl" style="min-width: 90px">Course URL</label>
           <el-input name="courseurl" style="width: 400px" placeholder="Please input" v-model="info.url" @input="updateProp('url', $event)"></el-input>
         </p>
-        <p></p>
+        <p>
         <!-- Course Type is currently not an option -->
           <!-- <label for="select" style="min-width: 90px;">Course Type</label>
           <select style="display: inline-block; width:150px; margin-right: 30px;" v-model="info.classType" @input="updateProp('classType', $event)" name="Choose Banner" class="uk-select">
@@ -155,6 +156,12 @@
       <router-view></router-view>
     </keep-alive>
 
+    <el-dialog
+      :title="dialogData.title"
+      :visible.sync="dialogVisible"
+      width="50%">
+        <component :is="dialogData.type" :dialogData="dialogData" />
+    </el-dialog>
   </div>
 </template>
 
@@ -164,9 +171,15 @@ import { mapGetters, mapMutations } from "vuex"
 import help from "./store/help"
 import mutations from "./store/mutations"
 
+// Dialog Types
+import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
+
 var moment = require("moment")
 
 export default {
+  components: {
+    ChooseSlot
+  },
   name: "app",
   data() {
     return {
@@ -181,6 +194,9 @@ export default {
       return {
         cacheKey: "App"
       }
+    },
+    closeDialog() {
+      this.$store.dispatch("setDialogVisibility", false)
     }
   },
   mixins: [saveState, mutations],
@@ -193,6 +209,17 @@ export default {
       let body = help[path] || ""
       body = "<h5>" + path + "</h5>" + body
       return { body, exists: help[path] }
+    },
+    dialogVisible: {
+      get: function() {
+        return this.$store.getters.isDialogVisible
+      },
+      set: function(newValue) {
+        this.$store.dispatch("setDialogVisibility", newValue)
+      }
+    },
+    dialogData() {
+      return this.$store.getters.getDialogData
     }
   },
   mounted() {
@@ -257,11 +284,6 @@ html {
 
 .center {
   text-align: center;
-}
-
-.router {
-  /*margin: 30px;
-  font-size: 20px;*/
 }
 
 .nav-text {
