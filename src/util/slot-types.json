@@ -1,18 +1,34 @@
 [
   {
     "id": 1,
-    "name": "Title Slot"
+    "name": "Title Slot",
+    "type": "title-slot",
+    "icon": "edit",
+    "colspan": 24
   },
   {
     "id": 2,
-    "name": "Banner Slot"
+    "name": "Banner Slot",
+    "type": "banner-slot",
+    "icon": "s-platform",
+    "colspan": 24,
+    "defaultData": {
+      "title": "Default Title",
+      "semester": "U6411 // SPRING 2020"
+    }
   },
   {
     "id": 3,
-    "name": "Image Slot"
+    "name": "Image Slot",
+    "type": "image-slot",
+    "icon": "picture",
+    "colspan": 24
   },
   {
     "id": 4,
-    "name": "Content Slot"
+    "name": "Content Slot",
+    "type": "content-slot",
+    "icon": "menu",
+    "colspan": 24
   }
 ]

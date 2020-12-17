@@ -35,6 +35,7 @@
     "vue-select-image": "^1.7.0",
     "vue-snotify": "^3.0.3",
     "vue-tippy": "^2.0.10",
+    "vue-uuid": "^2.0.2",
     "vue2-editor": "^1.1.12",
     "vuejs-datepicker": "^0.8.3",
     "vuelidate": "^0.6.1",

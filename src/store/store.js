@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { uuid } from "vue-uuid"
 import createPersistedState from 'vuex-persistedstate'
 import VuexPersistence from 'vuex-persist'
 import _ from 'lodash'
@@ -53,7 +54,7 @@ export default new Vuex.Store({
       const res = {}
 
       state.rows.forEach((row) => {
-        if(row.cid in res) res[row.cid].push(row)
+        if (row.cid in res) res[row.cid].push(row)
         else res[row.cid] = [row]
       })
 
@@ -63,7 +64,7 @@ export default new Vuex.Store({
       const res = {}
 
       state.slots.forEach((slot) => {
-        if(slot.rid in res) res[slot.rid].push(slot)
+        if (slot.rid in res) res[slot.rid].push(slot)
         else res[slot.rid] = [slot]
       })
 
@@ -71,25 +72,56 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    addRow: ({commit}, row) => {
+    addRow: ({ commit }, row) => {
+      row.rid = uuid.v1()
       commit('addRow', row)
     },
-    setDialogVisibility: ({commit}, visibility) => {
+    deleteRow: ({ commit }, row) => {
+      commit('deleteRow', row)
+    },
+    setDialogVisibility: ({ commit }, visibility) => {
       commit('setDialogVisibility', visibility)
+    },
+    setDialogData: ({ commit }, data) => {
+      commit('setDialogData', data)
+    },
+    addSlot: ({ commit }, slot) => {
+      slot.sid = uuid.v1()
+      commit('addSlot', slot)
+    },
+    deleteSlot: ({ commit }, slot) => {
+      commit('deleteSlot', slot)
+    },
+    updateSlotData: ({ commit }, slot) => {
+      commit('updateSlotData', slot)
     },
   },
   mutations: {
     addRow: (state, row) => {
-      row.uid = _.uniqueId()
       state.rows.push(row)
     },
     deleteRow: (state, row) => {
       _.remove(state.rows, {
-        id: row.id
+        rid: row.rid
+      })
+    },
+    addSlot: (state, slot) => {
+      state.slots.push(slot)
+    },
+    deleteSlot: (state, slot) => {
+      _.remove(state.slots, {
+        sid: slot.sid
       })
     },
     setDialogVisibility: (state, visibility) => {
       state.dialogVisible = visibility
+    },
+    setDialogData: (state, data) => {
+      state.dialogData = data
+    },
+    updateSlotData: (state, slot) => {
+      const actualSlot = _.find(state.slots, { 'sid': slot.sid })
+      Vue.set(actualSlot, 'data', slot.data)
     },
     updateInfo: (state, payload) => {
       state.info = payload

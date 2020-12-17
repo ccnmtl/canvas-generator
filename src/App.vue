@@ -11,6 +11,7 @@
       <el-col :span="12" style="padding: 10px;">
           <ul class="bcTrail center">
             <li><router-link class="router" to="/home">Home</router-link></li>
+            <li><router-link class="router" to="/home-new">Home Prototype</router-link></li>
             <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
             <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program">Program Overview</router-link></li>
             <li><router-link class="router" to="/studentlist">Students List</router-link></li>
@@ -158,12 +159,8 @@
     <el-dialog
       :title="dialogData.title"
       :visible.sync="dialogVisible"
-      width="30%">
-      <span>This is a message</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="closeDialog">Cancel</el-button>
-        <el-button type="primary" @click="closeDialog">Confirm</el-button>
-      </span>
+      width="50%">
+        <component :is="dialogData.type" :dialogData="dialogData" />
     </el-dialog>
   </div>
 </template>
@@ -175,9 +172,15 @@ import { mapGetters, mapMutations } from "vuex"
 import help from "./store/help"
 import mutations from "./store/mutations"
 
+// Dialog Types
+import ChooseSlot from './components/dialogs/ChooseSlot.vue'
+
 var moment = require("moment")
 
 export default {
+  components: {
+    ChooseSlot
+  },
   name: "app",
   data() {
     return {
@@ -194,7 +197,7 @@ export default {
       }
     },
     closeDialog() {
-      this.$store.dispatch('setDialogVisibility', false)
+      this.$store.dispatch("setDialogVisibility", false)
     }
   },
   mixins: [saveState, mutations],
@@ -213,7 +216,7 @@ export default {
         return this.$store.getters.isDialogVisible
       },
       set: function(newValue) {
-        this.$store.dispatch('setDialogVisibility', newValue)
+        this.$store.dispatch("setDialogVisibility", newValue)
       }
     },
     dialogData() {
@@ -273,11 +276,6 @@ html {
 
 .center {
   text-align: center;
-}
-
-.router {
-  /*margin: 30px;
-  font-size: 20px;*/
 }
 
 .nav-text {
