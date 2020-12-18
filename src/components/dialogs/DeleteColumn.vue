@@ -4,28 +4,25 @@
 
     <footer>
       <el-button @click="$emit('cancelDialog')">Cancel</el-button>
-      <el-button type="danger" @click="deleteSlot">Delete Slot</el-button>
+      <el-button type="danger" @click="deleteColumn">Delete Column</el-button>
     </footer>
   </div>
 </template>
 
 <script>
-
 export default {
   props: [
     'dialogData'
   ],
-  name: 'DeleteSlot',
+  name: 'DeleteColumn',
   data() {
     return {
       selectedSlot: 1
     }
   },
   methods: {
-    deleteSlot() {
-      const actualSlotType = _.find(SlotTypes, { 'id': this.selectedSlot })
-
-      this.$store.dispatch('deleteSlot', this.dialogData.sid)
+    deleteColumn() {
+      this.$store.dispatch('deleteColumn', this.dialogData.colid)
       this.$store.dispatch("setDialogVisibility", false)
     }
   }

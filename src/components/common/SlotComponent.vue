@@ -1,7 +1,11 @@
 <template>
-  <el-col :span="colspan">
-    <component :is="type" :slotData="slotData.data" :sid="sid" />
-  </el-col>
+  <div class="slot-outer">
+    <component :is="type"
+               :slotData="slotData.data"
+               :slotItem="slotData"
+               :sid="sid"
+               :class="{ small: colspan < 24 }" />
+  </div>
 </template>
 
 <script>

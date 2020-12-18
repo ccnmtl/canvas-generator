@@ -1,6 +1,6 @@
 <template>
-  <div :id="sid" class="col">
-    <div v-html="header" v-if="editing !== 'title'" @dblclick="setEditing('title')" />
+  <div :id="sid" ref="slotcontainer" class="col">
+    <div class="heading" v-html="header" v-if="editing !== 'title'" @dblclick="setEditing('title')" />
     <span v-else>
       <input ref="title" v-model="data.title" :class="'font-' + data.type" />
       <select v-model="data.type" :class="'font-' + data.type">
@@ -27,7 +27,7 @@ import mutations from "../../store/mutations"
 
 export default {
   name: "TitleSlot",
-  props: [ "sid", "slotData" ],
+  props: [ "sid", "slotData", "slotItem" ],
   data() {
     return {
       editing: null,
@@ -48,7 +48,13 @@ export default {
     },
     finishEditing() {
       if(this.data.title) {
-        this.$store.dispatch("updateSlotData", { sid: this.sid, data: this.data })
+        this.$store.dispatch("updateSlotData", {
+          sid: this.sid,
+          rid: this.slotItem.rid,
+          cid: this.slotItem.cid,
+          colid: this.slotItem.colid,
+          data: this.data
+        })
         this.editing = null
       }
     },
@@ -65,6 +71,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.heading {
+  padding-left: 16px;
+}
+
+input {
+  margin-bottom: 12px;
+}
 
 input, select {
     padding: 0 12px;
@@ -123,6 +137,36 @@ select {
   option {
     font-size: 16px;
     background: #FFF;
+  }
+}
+
+.small {
+  input {
+    width: 100%;
+    display: block;
+    margin-bottom: 12px;
+
+    &.font-h4, &.font-h5, &.font-h6 {
+      display: inline-block;
+      width: 48%;
+      margin-right: 1%;
+    }
+  }
+
+  select {
+    width: 100%;
+    display: block;
+    margin: 0 0 12px;
+
+    &.font-h4, &.font-h5, &.font-h6 {
+      display: inline-block;
+      width: 48%;
+    }
+  }
+
+  button {
+    height: 44px;
+    margin-right: 7px;
   }
 }
 

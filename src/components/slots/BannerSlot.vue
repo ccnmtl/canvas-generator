@@ -61,6 +61,10 @@ export default {
 
 <style scoped lang="scss">
 
+.pad-box-mega {
+  margin: 0 -10px 12px;
+}
+
 .logo {
   &.left {
     margin: -10px 0 7px 10px;

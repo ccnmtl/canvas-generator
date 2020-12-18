@@ -36,6 +36,7 @@ export default new Vuex.Store({
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",
     rows: [],
     slots: [],
+    columns: [],
     dialogVisible: false,
     dialogData: {
       title: 'Choose Slot Type',
@@ -60,12 +61,22 @@ export default new Vuex.Store({
 
       return res
     },
-    getSlotsByRowID: state => {
+    getSlotsByColID: state => {
       const res = {}
 
       state.slots.forEach((slot) => {
-        if (slot.rid in res) res[slot.rid].push(slot)
-        else res[slot.rid] = [slot]
+        if (slot.colid in res) res[slot.colid].push(slot)
+        else res[slot.colid] = [slot]
+      })
+
+      return res
+    },
+    getColumnsByRowID: state => {
+      const res = {}
+
+      state.columns.forEach((column) => {
+        if (column.rid in res) res[column.rid].push(column)
+        else res[column.rid] = [column]
       })
 
       return res
@@ -78,6 +89,13 @@ export default new Vuex.Store({
     },
     deleteRow: ({ commit }, rid) => {
       commit('deleteRow', rid)
+    },
+    addColumn: ({ commit }, column) => {
+      column.colid = uuid.v1()
+      commit('addColumn', column)
+    },
+    deleteColumn: ({ commit }, colid) => {
+      commit('deleteColumn', colid)
     },
     setDialogVisibility: ({ commit }, visibility) => {
       commit('setDialogVisibility', visibility)
@@ -108,6 +126,14 @@ export default new Vuex.Store({
         return row.rid !== rid
       })
     },
+    addColumn: (state, column) => {
+      state.columns.push(column)
+    },
+    deleteColumn: (state, colid) => {
+      state.columns = state.columns.filter((column) => {
+        return column.colid !== colid
+      })
+    },
     addSlot: (state, slot) => {
       state.slots.push(slot)
     },
@@ -123,7 +149,12 @@ export default new Vuex.Store({
       state.dialogData = data
     },
     updateSlotData: (state, slot) => {
-      const actualSlot = _.find(state.slots, { 'sid': slot.sid })
+      const actualSlot = _.find(state.slots, {
+        'sid': slot.sid,
+        'rid': slot.rid,
+        'cid': slot.cid,
+        'colid': slot.colid,
+      })
       Vue.set(actualSlot, 'data', slot.data)
     },
     updateInfo: (state, payload) => {
