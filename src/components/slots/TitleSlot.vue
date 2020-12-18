@@ -1,7 +1,7 @@
 <template>
   <div :id="sid" ref="slotcontainer" class="col">
-    <div class="heading" v-html="header" v-if="editing !== 'title'" @dblclick="setEditing('title')" />
-    <span v-else>
+    <div class="heading uk-margin-small-top" v-html="header" v-if="editing !== 'title'" @dblclick="setEditing('title')" />
+    <span data-hidden v-else>
       <input ref="title" v-model="data.title" :class="'font-' + data.type" />
       <select v-model="data.type" :class="'font-' + data.type">
         <option value="h1">H1</option>
@@ -49,10 +49,7 @@ export default {
     finishEditing() {
       if(this.data.title) {
         this.$store.dispatch("updateSlotData", {
-          sid: this.sid,
-          rid: this.slotItem.rid,
-          cid: this.slotItem.cid,
-          colid: this.slotItem.colid,
+          item: this.slotItem,
           data: this.data
         })
         this.editing = null

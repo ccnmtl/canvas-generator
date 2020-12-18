@@ -2,7 +2,7 @@
   <div :id="sid" class="col content-slot">
     <div v-html="slotData.content" v-if="editing !== 'content'" @dblclick="setEditing('content')" />
 
-    <div v-else>
+    <div data-hidden v-else>
       <quill-editor ref="content"
                     v-model="data.content"
                     :config="editorOption" />
@@ -34,7 +34,7 @@ export default {
     quillEditor
   },
   name: "ContentSlot",
-  props: [ "sid", "slotData" ],
+  props: [ "sid", "slotData", "slotItem" ],
   data() {
     return {
       editing: null,
@@ -52,7 +52,10 @@ export default {
     },
     finishEditing() {
       if(this.data.content) {
-        this.$store.dispatch("updateSlotData", { sid: this.sid, data: this.data })
+        this.$store.dispatch("updateSlotData", {
+          item: this.slotItem,
+          data: this.data
+        })
         this.editing = null
       }
     },

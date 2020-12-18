@@ -1,6 +1,6 @@
 <template>
   <div class="row" :class="{ empty: !columns }">
-    <div class="empty-text" v-if="!columns">
+    <div data-hidden class="empty-text" v-if="!columns">
       Start adding columns to this row!
 
       <div class="empty-button">
@@ -10,7 +10,7 @@
       <div>You can also <a @click="deleteRow">delete</a> this row.</div>
     </div>
 
-    <div class="actions" v-else-if="columns.length < 3">
+    <div data-hidden class="actions" v-else-if="columns.length < 3">
       <button @click="addColumn" class="btn btn-primary float">
         <i class="el-icon-plus"></i>
         <span>Add Column</span>

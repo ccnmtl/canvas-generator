@@ -150,10 +150,10 @@ export default new Vuex.Store({
     },
     updateSlotData: (state, slot) => {
       const actualSlot = _.find(state.slots, {
-        'sid': slot.sid,
-        'rid': slot.rid,
-        'cid': slot.cid,
-        'colid': slot.colid,
+        'sid': slot.item.sid,
+        'rid': slot.item.rid,
+        'cid': slot.item.cid,
+        'colid': slot.item.colid,
       })
       Vue.set(actualSlot, 'data', slot.data)
     },

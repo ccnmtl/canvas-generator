@@ -1,11 +1,17 @@
 <template>
-  <div class="canvas-code">
+  <div class="canvas-code" ref="canvascode">
+    <div class="preview-page" id="previewpage">
+      <button @click="previewPage" v-if="!previewing" class="btn btn-primary">Preview this Page</button>
+      <button @click="stopPreview" v-else class="btn btn-secondary">Stop Preview</button>
+    </div>
+
     <row-component v-for="row in rows"
                    :key="row.rid"
                    :rid="row.rid"
                    :row="row" />
 
-    <button class="new-row" @click="addRow">Add new Row</button>
+    <button data-hidden class="new-row" @click="addRow">Add new Row</button>
+    <button data-hidden class="new-row" @click="getHTMLCode">get HTML</button>
   </div>
 </template>
 
@@ -20,7 +26,9 @@ export default {
   },
   props: [ "cid" ],
   data() {
-    return {}
+    return {
+      previewing: false,
+    }
   },
   computed: {
     ...mapGetters,
@@ -31,12 +39,38 @@ export default {
   methods: {
     addRow() {
       this.$store.dispatch("addRow", { cid: this.cid })
+    },
+    getHTMLCode() {
+      console.log(this.$refs.canvascode)
+      let html = document.createElement("div")
+      html.innerHTML = this.$refs.canvascode.outerHTML.replace(/data-v[^ ]*?>/g, ">").replace(/(<\!--.*?-->|data-v[^>]*? )/g, "")
+
+      html.querySelectorAll('[data-hidden], #previewpage').forEach(element => {
+        element.remove()
+      })
+      console.log(html)
+    },
+    previewPage() {
+      let html = this.$refs.canvascode
+
+      html.querySelectorAll('[data-hidden]').forEach(element => {
+        element.style.display = 'none'
+      })
+      this.previewing = true
+    },
+    stopPreview() {
+      let html = this.$refs.canvascode
+
+      html.querySelectorAll('[data-hidden]').forEach(element => {
+        element.style.display = null
+      })
+      this.previewing = false
     }
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .canvas-code {
   padding: 25px 0;
 
@@ -49,10 +83,17 @@ export default {
     opacity: 0.5;
     transition: all 0.43s;
     font-size: 16px;
+    margin-bottom: 12px;
 
     &:hover {
       opacity: 1;
     }
   }
+
+  .preview-page {
+    margin-bottom: 12px;
+    text-align: right;
+  }
+
 }
 </style>

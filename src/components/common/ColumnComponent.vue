@@ -1,6 +1,6 @@
 <template>
   <el-col :class="{ empty: !slots }" :span="colspan">
-    <div class="empty-text" v-if="!slots">
+    <div data-hidden class="empty-text" v-if="!slots">
       Start adding slots to this column!
 
       <div class="empty-button">
@@ -16,7 +16,7 @@
                     :colspan="colspan"
                     :slotData="slot" />
 
-    <div class="actions" v-if="slots">
+    <div data-hidden class="actions" v-if="slots">
       <button @click="deleteColumn" class="btn btn-danger">Delete Column</button>
       <button @click="showSlotOptions" class="btn btn-primary">Add Slot</button>
     </div>
@@ -68,11 +68,7 @@ export default {
 
 <style scoped lang="scss">
 .el-col {
-  padding: 10px;
-
-  &:hover {
-    background-color: #00000007;
-  }
+  padding: 0 10px;
 
   &.empty {
     padding: 16px 0;
@@ -81,7 +77,6 @@ export default {
     align-items: center;
     justify-content: center;
     background: #eee;
-    margin-top: 10px;
 
     .empty-button {
       margin: 7px 0;
@@ -92,6 +87,7 @@ export default {
     text-align: center;
     opacity: .34;
     transition: all 0.43s;
+    margin-bottom: 12px;
 
     &:hover {
       opacity: 1;

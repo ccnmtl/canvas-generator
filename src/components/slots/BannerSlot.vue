@@ -7,13 +7,13 @@
 
         <p>
           <span @dblclick="setEditing('title')" v-if="editing !== 'title'">{{ data.title.toUpperCase() }}</span>
-          <span v-else>
+          <span data-hidden v-else>
             <input ref="title" @blur="finishEditing('title')" v-model="data.title" />
           </span>
         </p>
         <p class="STV1_CourseCode">
           <span @dblclick="setEditing('semester')" v-if="editing !== 'semester'">{{ data.semester }}</span>
-          <span v-else>
+          <span data-hidden v-else>
             <input ref="semester" @blur="finishEditing('semester')" v-model="data.semester" />
           </span>
         </p>
@@ -26,7 +26,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: "BannerSlot",
-  props: [ "sid", "slotData" ],
+  props: [ "sid", "slotData", "slotItem" ],
   data() {
     return {
       editing: null,
@@ -62,7 +62,7 @@ export default {
 <style scoped lang="scss">
 
 .pad-box-mega {
-  margin: 0 -10px 12px;
+  margin: 0 -10px;
 }
 
 .logo {
