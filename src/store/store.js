@@ -41,7 +41,9 @@ export default new Vuex.Store({
     dialogData: {
       title: 'Choose Slot Type',
       type: 'choose-slot'
-    }
+    },
+    editingFields: [],
+    pagesSet: []
   },
   getters: {
     getStore: state => state,
@@ -50,6 +52,7 @@ export default new Vuex.Store({
     getWeeks: state => state.weeks,
     getStudents: state => state.weeks,
     isDialogVisible: state => state.dialogVisible,
+    getPagesSet: state => state.pagesSet,
     getDialogData: state => state.dialogData,
     getRowsByCID: state => {
       const res = {}
@@ -84,15 +87,17 @@ export default new Vuex.Store({
   },
   actions: {
     addRow: ({ commit }, row) => {
-      row.rid = uuid.v1()
+      if(!row.rid) row.rid = uuid.v1()
       commit('addRow', row)
+      return row
     },
     deleteRow: ({ commit }, rid) => {
       commit('deleteRow', rid)
     },
     addColumn: ({ commit }, column) => {
-      column.colid = uuid.v1()
+      if(!column.colid) column.colid = uuid.v1()
       commit('addColumn', column)
+      return column
     },
     deleteColumn: ({ commit }, colid) => {
       commit('deleteColumn', colid)
@@ -104,8 +109,9 @@ export default new Vuex.Store({
       commit('setDialogData', data)
     },
     addSlot: ({ commit }, slot) => {
-      slot.sid = uuid.v1()
+      if(!slot.sid) slot.sid = uuid.v1()
       commit('addSlot', slot)
+      return slot
     },
     deleteSlot: ({ commit }, sid) => {
       commit('deleteSlot', sid)
@@ -115,6 +121,9 @@ export default new Vuex.Store({
     },
     updateSpecificInfo: ({ commit }, payload) => {
       commit('updateSpecificInfo', payload)
+    },
+    setPageData: ({ commit }, page) => {
+      commit('setPageData', page)
     },
   },
   mutations: {
@@ -147,6 +156,9 @@ export default new Vuex.Store({
     },
     setDialogData: (state, data) => {
       state.dialogData = data
+    },
+    setPageData: (state, page) => {
+      state.pagesSet.push(page)
     },
     updateSlotData: (state, slot) => {
       const actualSlot = _.find(state.slots, {

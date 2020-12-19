@@ -45,6 +45,7 @@ export default {
   methods: {
     setEditing(field) {
       this.editing = field
+
       setTimeout(() => {
         this.$refs[field].focus()
       }, 200)
