@@ -32,7 +32,7 @@
         </div>
 
         <select v-model="userInput.weekNumber" class="uk-select" >
-          <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
+          <option v-for="n in weeks.length" :value="n" :key="n">{{info.classType.dateType}} {{n}}</option>
         </select>
 
         <div v-if="weeks.length > 0">
@@ -134,7 +134,8 @@
         v-for="(activity, index) in weeks"
         :data="activity"
         :linked="info.useLinks"
-        :index="index+1">
+        :index="index+1"
+        :key="index">
       </weekly-list-item>
 
     </div>

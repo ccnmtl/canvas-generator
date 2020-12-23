@@ -52,7 +52,7 @@
       </div>
       </div>
       </li>
-      <li v-for="(week, index) in weeks">
+      <li v-for="(week, index) in weeks" :key="index">
       <div class="ig-row">
       <div class="ig-row__layout">
       <div class="ig-type-icon" aria-hidden="true"><i class="icon-group"></i></div>

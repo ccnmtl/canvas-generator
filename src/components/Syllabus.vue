@@ -135,7 +135,7 @@
         <div class="grid-row">
 
           <!-- Professor Info Box -->
-          <div class="col-xs-6 col-md-6" v-for="prof in info.profs">
+          <div class="col-xs-6 col-md-6" v-for="prof in info.profs" :key="prof.id">
             <div class="styleguide-section__grid-demo-element pad-box-mini border border-tl">
 
               <!-- must have weeklyIconImg class for responsiveness -->
@@ -151,7 +151,7 @@
           <!-- End Professor Info Box -->
 
           <!-- Professor Info Box -->
-          <div class="col-xs-6 col-md-6" v-for="ta in info.tas">
+          <div class="col-xs-6 col-md-6" v-for="ta in info.tas" :key="ta.id">
             <div class="styleguide-section__grid-demo-element pad-box-mini border border-tl">
 
               <!-- must have weeklyIconImg class for responsiveness -->

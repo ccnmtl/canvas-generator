@@ -55,7 +55,7 @@
       </div>
 
       <select v-model="userInput.weekNumber" class="uk-select">
-        <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
+        <option v-for="n in weeks.length" :value="n" :key="n">{{info.classType.dateType}} {{n}}</option>
       </select>
 
         <div class="code-input center uk-margin-small-top" v-if="weeks[userInput.weekNumber - 1]">
@@ -137,7 +137,7 @@
           </div>
         </div>
       </div>
-      <div v-for="week in info.execWeeks">
+      <div v-for="week in info.execWeeks" :key="">
         <div class="content-box">
           <div :class="'STV1_CC_Banner0' + (week + 2)">
             <p class="STV1_CC_BannerTitle">SCHEDULE // WEEK {{week}}</p>
@@ -156,11 +156,11 @@
                         {{incrementDate(info.startDate, week - 1, info.weekDays[index])}}
                       </th>
                       <th style="width: 74px;" v-if="week == 1"
-                      v-for="(day, index) in (info.execWeekLength - info.weekOffset)">
+                      v-for="(day, index) in (info.execWeekLength - info.weekOffset)" :key="index">
                         {{parseDate((day - 1) + (week - 1) * info.execWeekLength)}}
                       </th>
                       <th v-if="week > 1"
-                      style="width: 74px;" v-for="(day, index) in (info.execWeekLength)">
+                      style="width: 74px;" v-for="(day, index) in (info.execWeekLength)" :key="index">
                         {{parseDate((day - 1) + (week - 1) * info.execWeekLength - info.weekOffset)}}
                       </th>
                     </tr>

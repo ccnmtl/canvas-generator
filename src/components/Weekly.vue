@@ -13,12 +13,12 @@
         <p>PICKER CENTER CASE COLLECTION</p>
       </div>
 
-      <div v-for="category in getCases">
+      <div v-for="category in getCases" :key="category">
       <div class="pad-box-mini">
         <h3 style="margin-bottom: 15px;"><i class="icon-folder"></i> {{category.category}}</h3>
       </div>
 
-      <div v-for="caseStudy in category.cases" class="content-box">
+      <div v-for="caseStudy in category.cases" class="content-box" :key="caseStudy.videoCase">
         <div class="grid-row top-xs">
           <div class="col-xs-4">
             <div class="styleguide-section__grid-demo-element">
@@ -177,7 +177,7 @@
     <transition name="fade">
       <div  v-if="weeks[selected].cases.length > 0">
 
-        <div v-for="caseStudy in weeks[selected].cases">
+        <div v-for="caseStudy in weeks[selected].cases" :key="caseStudy.videoCase">
         <div class="STV1_SlimBanner">
           <p>PICKER CENTER CASE COLLECTION</p>
         </div>
@@ -222,7 +222,7 @@
         </div>
         <div class="content-box">
           <div class="grid-row">
-            <div class="col-xs-12 col-lg-4" v-for="interview in caseStudy.aditionalInterviews">
+            <div class="col-xs-12 col-lg-4" v-for="interview in caseStudy.aditionalInterviews" :key="interview">
               <div class="styleguide-section__grid-demo-element">
                 <div class="embed-container"><iframe :src="interview" width="300" height="150"
                     allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen"
