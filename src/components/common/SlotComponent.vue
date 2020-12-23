@@ -1,10 +1,14 @@
 <template>
-  <el-col :span="colspan">
+  <div class="slot-outer">
     <div class="delete-options">
       <el-button @click="showDeleteSlot" type="danger" icon="el-icon-delete" circle></el-button>
     </div>
-    <component :is="type" :slotData="slotData.data" :sid="sid" />
-  </el-col>
+    <component :is="type"
+               :slotData="slotData.data"
+               :slotItem="slotData"
+               :sid="sid"
+               :class="{ small: colspan < 24 }" />
+  </div>
 </template>
 
 <script>

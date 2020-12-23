@@ -36,11 +36,14 @@ export default new Vuex.Store({
     imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",
     rows: [],
     slots: [],
+    columns: [],
     dialogVisible: false,
     dialogData: {
       title: 'Choose Slot Type',
       type: 'choose-slot'
-    }
+    },
+    editingFields: [],
+    pagesSet: []
   },
   getters: {
     getStore: state => state,
@@ -49,6 +52,7 @@ export default new Vuex.Store({
     getWeeks: state => state.weeks,
     getStudents: state => state.weeks,
     isDialogVisible: state => state.dialogVisible,
+    getPagesSet: state => state.pagesSet,
     getDialogData: state => state.dialogData,
     getRowsByCID: state => {
       const res = {}
@@ -60,12 +64,22 @@ export default new Vuex.Store({
 
       return res
     },
-    getSlotsByRowID: state => {
+    getSlotsByColID: state => {
       const res = {}
 
       state.slots.forEach((slot) => {
-        if (slot.rid in res) res[slot.rid].push(slot)
-        else res[slot.rid] = [slot]
+        if (slot.colid in res) res[slot.colid].push(slot)
+        else res[slot.colid] = [slot]
+      })
+
+      return res
+    },
+    getColumnsByRowID: state => {
+      const res = {}
+
+      state.columns.forEach((column) => {
+        if (column.rid in res) res[column.rid].push(column)
+        else res[column.rid] = [column]
       })
 
       return res
@@ -73,11 +87,20 @@ export default new Vuex.Store({
   },
   actions: {
     addRow: ({ commit }, row) => {
-      row.rid = uuid.v1()
+      if(!row.rid) row.rid = uuid.v1()
       commit('addRow', row)
+      return row
     },
     deleteRow: ({ commit }, rid) => {
       commit('deleteRow', rid)
+    },
+    addColumn: ({ commit }, column) => {
+      if(!column.colid) column.colid = uuid.v1()
+      commit('addColumn', column)
+      return column
+    },
+    deleteColumn: ({ commit }, colid) => {
+      commit('deleteColumn', colid)
     },
     setDialogVisibility: ({ commit }, visibility) => {
       commit('setDialogVisibility', visibility)
@@ -86,8 +109,9 @@ export default new Vuex.Store({
       commit('setDialogData', data)
     },
     addSlot: ({ commit }, slot) => {
-      slot.sid = uuid.v1()
+      if(!slot.sid) slot.sid = uuid.v1()
       commit('addSlot', slot)
+      return slot
     },
     deleteSlot: ({ commit }, sid) => {
       commit('deleteSlot', sid)
@@ -134,6 +158,9 @@ export default new Vuex.Store({
     updateSpecificInfo: ({ commit }, payload) => {
       commit('updateSpecificInfo', payload)
     },
+    setPageData: ({ commit }, page) => {
+      commit('setPageData', page)
+    },
   },
   mutations: {
     addRow: (state, row) => {
@@ -142,6 +169,24 @@ export default new Vuex.Store({
     deleteRow: (state, rid) => {
       state.rows = state.rows.filter((row) => {
         return row.rid !== rid
+      })
+      state.columns = state.columns.filter((column) => {
+        return column.rid !== rid
+      })
+      state.slots = state.slots.filter((slot) => {
+        return slot.rid !== rid
+      })
+    },
+    addColumn: (state, column) => {
+      state.columns.push(column)
+    },
+    deleteColumn: (state, colid) => {
+      state.columns = state.columns.filter((column) => {
+        return column.colid !== colid
+      })
+
+      state.slots = state.slots.filter((slot) => {
+        return slot.colid !== colid
       })
     },
     addSlot: (state, slot) => {
@@ -190,8 +235,16 @@ export default new Vuex.Store({
     setDialogData: (state, data) => {
       state.dialogData = data
     },
+    setPageData: (state, page) => {
+      state.pagesSet.push(page)
+    },
     updateSlotData: (state, slot) => {
-      const actualSlot = _.find(state.slots, { 'sid': slot.sid })
+      const actualSlot = _.find(state.slots, {
+        'sid': slot.item.sid,
+        'rid': slot.item.rid,
+        'cid': slot.item.cid,
+        'colid': slot.item.colid,
+      })
       Vue.set(actualSlot, 'data', slot.data)
     },
     updateInfo: (state, payload) => {

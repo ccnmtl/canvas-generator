@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import _ from "lodash"
 import ContainerComponent from './common/ContainerComponent.vue'
 
 export default {

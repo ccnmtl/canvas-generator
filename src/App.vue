@@ -176,6 +176,10 @@ import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
 import DeleteSlot from "./components/dialogs/DeleteSlot.vue"
 import UploadImage from "./components/dialogs/UploadImage.vue"
 
+import ChooseSlot from './components/dialogs/ChooseSlot.vue'
+import DeleteSlot from './components/dialogs/DeleteSlot.vue'
+import DeleteRow from './components/dialogs/DeleteRow.vue'
+import DeleteColumn from './components/dialogs/DeleteColumn.vue'
 
 var moment = require("moment")
 
@@ -183,7 +187,9 @@ export default {
   components: {
     ChooseSlot,
     DeleteSlot,
-    UploadImage
+    UploadImage,
+    DeleteRow,
+    DeleteColumn
   },
   name: "app",
   data() {

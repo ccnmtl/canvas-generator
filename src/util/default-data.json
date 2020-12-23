@@ -1,0 +1,33 @@
+{
+  "pages": [
+    {
+      "cid": "home",
+      "rows": [
+        {
+          "columns": [
+            {
+              "slots": [
+                "banner-slot"
+              ]
+            }
+          ]
+        },
+        {
+          "columns": [
+            {
+              "slots": [
+                "title-slot",
+                "content-slot"
+              ]
+            },
+            {
+              "slots": [
+                "banner-slot"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
