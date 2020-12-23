@@ -79,7 +79,7 @@
 
         <div class="quill">
           <quill-editor ref="myTextEditor"
-                        v-model="weeks[selected].body"
+                        :value="weeks[selected].body"
                         @input="updateWeek(selected,'body', $event)"
                         :config="editorOption">
           </quill-editor>

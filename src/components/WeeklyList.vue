@@ -38,13 +38,13 @@
         <div v-if="weeks.length > 0">
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Title</label> <br>
-            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"
+            <el-input type="textarea" autosize :value="weeks[userInput.weekNumber - 1].title"
             @input="updateWeek(userInput.weekNumber - 1,'title', $event)"> </el-input>
           </div>
 
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Description</label>
-            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].description"
+            <el-input type="textarea" autosize :value="weeks[userInput.weekNumber - 1].description"
             @input="updateWeek(userInput.weekNumber - 1,'description', $event)"> </el-input>
           </div>
           <div class="center">

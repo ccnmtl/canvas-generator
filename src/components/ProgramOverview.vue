@@ -9,7 +9,7 @@
     <div class="textbox-container">
       <el-card class="card center" style="width:325px;">
         How Many Weeks: <br>
-        <el-input-number  style="margin: 10px;" v-model="info.execWeeks" @input="updateProp('execWeeks', $event)" :min="1" :max="4"></el-input-number>
+        <el-input-number  style="margin: 10px;" :value="info.execWeeks" @input="updateProp('execWeeks', $event)" :min="1" :max="4"></el-input-number>
 
         <br> Start Week <br>
         <el-date-picker
@@ -23,7 +23,7 @@
         </el-date-picker>
 
         <br> Days of Week<br>
-        <el-select v-model="info.weekDays"
+        <el-select :value="info.weekDays"
           @input="updateProp('weekDays', $event)"
           multiple placeholder="Select"
           style="margin: 10px; width: 270px"
@@ -95,7 +95,7 @@
             <br>
             Auto Title Second Session
             <el-switch
-              v-model="info.autoSessionTitle"
+              :value="info.autoSessionTitle"
               @input="updateProp('autoSessionTitle', $event)"
               active-color="#13ce66"
               inactive-color="#ff4949">
@@ -104,7 +104,7 @@
           <br>
           Use Professor Name
           <el-switch
-            v-model="info.useProfName"
+            :value="info.useProfName"
             @input="updateProp('useProfName', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
@@ -112,11 +112,11 @@
           <br> <br>
 
           <label for="text-area">First Session Time</label> <br>
-          <el-input type="textarea" autosize v-model="info.sessionOneTime" @input="updateProp('sessionOneTime', $event)"> </el-input>
+          <el-input type="textarea" autosize :value="info.sessionOneTime" @input="updateProp('sessionOneTime', $event)"> </el-input>
           <br>
           <div v-if="info.multipleSessions">
             <label for="text-area">Second Session Time</label> <br>
-            <el-input type="textarea" autosize v-model="info.sessionTwoTime" @input="updateProp('sessionTwoTime', $event)"> </el-input>
+            <el-input type="textarea" autosize :value="info.sessionTwoTime" @input="updateProp('sessionTwoTime', $event)"> </el-input>
           </div>
       </el-card>
 

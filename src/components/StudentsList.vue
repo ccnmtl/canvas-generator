@@ -39,9 +39,9 @@
 
         <div v-show="iEditable" v-if="info.students.length > 0" class="center">
           <el-input style="width: 200px; float:left" class="e-input" :value="info.students[selected.index].name" @input="updateUser(info.students[selected.index],'name', $event)"> </el-input>
-          <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
-          <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].title" @input="updateUser(info.students[selected.index],'title', $event)"> </el-input>
-          <el-input class="e-input" v-if="info.students" type="textarea" autosize v-model="info.students[selected.index].bio" @input="updateUser(info.students[selected.index],'bio', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" :value = "info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" :value="info.students[selected.index].title" @input="updateUser(info.students[selected.index],'title', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" type="textarea" autosize :value="info.students[selected.index].bio" @input="updateUser(info.students[selected.index],'bio', $event)"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
