@@ -57,7 +57,7 @@ export default {
     getHTMLCode() {
       console.log(this.$refs.canvascode)
       let html = document.createElement("div")
-      html.innerHTML = this.$refs.canvascode.outerHTML.replace(/data-v[^ ]*?>/g, ">").replace(/(<\!--.*?-->|data-v[^>]*? )/g, "")
+      html.innerHTML = this.$refs.canvascode.outerHTML.replace(/data-v[^ ]*?>/g, ">").replace(/(<!--.*?-->|data-v[^>]*? )/g, "")
 
       html.querySelectorAll('[data-hidden], #previewpage').forEach(element => {
         element.remove()

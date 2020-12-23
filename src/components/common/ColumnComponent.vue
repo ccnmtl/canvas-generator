@@ -25,10 +25,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
 
 import SlotComponent from "./SlotComponent.vue"
-import SlotTypes from "../../util/slot-types.json"
 
 export default {
   components: {
