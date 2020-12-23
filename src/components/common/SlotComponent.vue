@@ -56,7 +56,7 @@ export default {
 .delete-options {
   transition: all 0.43s;
   width: 3vw;
-  float: right;
+  float: left;
   z-index: 100;
   text-align: center;
   position: relative;

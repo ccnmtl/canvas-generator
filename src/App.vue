@@ -175,9 +175,6 @@ import mutations from "./store/mutations"
 import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
 import DeleteSlot from "./components/dialogs/DeleteSlot.vue"
 import UploadImage from "./components/dialogs/UploadImage.vue"
-
-import ChooseSlot from './components/dialogs/ChooseSlot.vue'
-import DeleteSlot from './components/dialogs/DeleteSlot.vue'
 import DeleteRow from './components/dialogs/DeleteRow.vue'
 import DeleteColumn from './components/dialogs/DeleteColumn.vue'
 
