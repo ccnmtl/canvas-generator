@@ -10,8 +10,8 @@
       <div>You can also <a @click="deleteRow">delete</a> this row.</div>
     </div>
 
-    <div data-hidden class="actions" v-else-if="columns.length < 3">
-      <button @click="addColumn" class="btn btn-primary float">
+    <div data-hidden class="actions" v-else>
+      <button v-if="columns.length < 3" @click="addColumn" class="btn btn-primary float">
         <i class="el-icon-plus"></i>
         <span>Add Column</span>
       </button>

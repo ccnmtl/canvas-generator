@@ -134,6 +134,12 @@ export default new Vuex.Store({
       state.rows = state.rows.filter((row) => {
         return row.rid !== rid
       })
+      state.columns = state.columns.filter((column) => {
+        return column.rid !== rid
+      })
+      state.slots = state.slots.filter((slot) => {
+        return slot.rid !== rid
+      })
     },
     addColumn: (state, column) => {
       state.columns.push(column)
@@ -141,6 +147,10 @@ export default new Vuex.Store({
     deleteColumn: (state, colid) => {
       state.columns = state.columns.filter((column) => {
         return column.colid !== colid
+      })
+
+      state.slots = state.slots.filter((slot) => {
+        return slot.colid !== colid
       })
     },
     addSlot: (state, slot) => {

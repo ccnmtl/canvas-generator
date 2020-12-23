@@ -23,8 +23,6 @@ export default {
   },
   methods: {
     deleteSlot() {
-      const actualSlotType = _.find(SlotTypes, { 'id': this.selectedSlot })
-
       this.$store.dispatch('deleteSlot', this.dialogData.sid)
       this.$store.dispatch("setDialogVisibility", false)
     }
