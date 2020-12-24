@@ -41,7 +41,7 @@
         <br>
 
         Offset Class Start: <br>
-        <el-input-number  style="margin: 5px;" v-model="info.weekOffset" @input="updateProp('weekOffset', $event)" :min="0" :max="info.execWeekLength - 1"></el-input-number>
+        <el-input-number  style="margin: 5px;" :value="info.weekOffset" @input="updateProp('weekOffset', $event)" :min="0" :max="info.execWeekLength - 1"></el-input-number>
 
         <button type="button" class="add-weekly center uk-button uk-button-primary"
         name="button" @click="populateActivities(info.execWeeks * info.execWeekLength - info.weekOffset)">Edit # of Sessions</button>
@@ -65,14 +65,14 @@
 
         <div v-if="info.multipleSessions && !info.autoSessionTitle" class="code-input center uk-margin-small-top">
           <label for="text-area">Second Session Title</label> <br>
-          <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].secondTitle" @input="updateWeek(userInput.weekNumber - 1, 'secondTitle', $event)"> </el-input>
+          <el-input type="textarea" autosize :value="weeks[userInput.weekNumber - 1].secondTitle" @input="updateWeek(userInput.weekNumber - 1, 'secondTitle', $event)"> </el-input>
         </div>
 
       <div class="center" v-if="weeks[userInput.weekNumber - 1]">
         <label >Date
         <el-date-picker
           style="margin: 10px; margin-bottom:20px"
-          v-model="weeks[userInput.weekNumber - 1].date"
+          :value="weeks[userInput.weekNumber - 1].date"
           @input="updateWeek(userInput.weekNumber - 1, 'date', $event)"
           type="date"
           placeholder="Pick start date">
@@ -85,7 +85,7 @@
 
           Two-Sessions per Day
           <el-switch
-            v-model="info.multipleSessions"
+            :value="info.multipleSessions"
             @input="updateProp('multipleSessions', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">

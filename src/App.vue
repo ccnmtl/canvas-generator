@@ -94,11 +94,11 @@
       <div class="left">
         <p>
           <label for="coursetitle" style="min-width: 90px">Course Title</label>
-          <el-input name="coursetitle" style="width: 400px" placeholder="Please input" v-model="info.title" @input="updateProp('title', $event)"></el-input>
+          <el-input name="coursetitle" style="width: 400px" placeholder="Please input" :value="info.title" @input="updateProp('title', $event)"></el-input>
         </p>
         <p>
           <label for="courseurl" style="min-width: 90px">Course URL</label>
-          <el-input name="courseurl" style="width: 400px" placeholder="Please input" v-model="info.url" @input="updateProp('url', $event)"></el-input>
+          <el-input name="courseurl" style="width: 400px" placeholder="Please input" :value="info.url" @input="updateProp('url', $event)"></el-input>
         </p>
         <p>
         <!-- Course Type is currently not an option -->
@@ -124,7 +124,7 @@
          <p>
           <label for="select" style="min-width: 110px">Use Zoom</label>
           <el-switch
-            v-model="info.useZoom"
+            :value="info.useZoom"
             @input="updateProp('useZoom', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
@@ -133,7 +133,7 @@
         <p>
           <label for="select" style="min-width: 110px">Help Tooltips</label>
           <el-switch
-            v-model="info.usePops"
+            :value="info.usePops"
             @input="updateProp('usePops', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
