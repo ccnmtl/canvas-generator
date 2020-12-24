@@ -231,14 +231,14 @@
   <div id="modal-overflow" uk-modal>
       <div class="uk-modal-dialog">
 
-          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <button class="uk-modal-close-default" type="button" uk-close />
 
           <div class="uk-modal-header">
               <h2 class="uk-modal-title">Canvas Code</h2>
           </div>
 
           <div class="uk-modal-body" uk-overflow-auto>
-            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea>
+            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120" />
           </div>
 
           <div class="uk-modal-footer uk-text-right">

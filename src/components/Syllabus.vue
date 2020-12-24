@@ -180,7 +180,7 @@
       <!-- Course Description -->
       <div v-if="info.sectionBox1.includes('Description')" class="content-box pad-box-mini border border-b">
         <h2>Course Description</h2>
-        <div v-html="info.description"></div>
+        <div v-html="info.description" />
       </div>
       <!-- End Course Description -->
 
@@ -218,7 +218,7 @@
           </thead>
           <tbody>
 
-             <tr v-for="(week, index) in weeks">
+             <tr v-for="(week, index) in weeks" :key="index">
               <td>{{index + 1}}</td>
               <td v-if="info.useDates" >{{formatDate(week.date)}}</td>
               <td>{{week.title}}</td>
@@ -281,14 +281,14 @@
   <div id="modal-overflow" uk-modal>
       <div class="uk-modal-dialog">
 
-          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <button class="uk-modal-close-default" type="button" uk-close />
 
           <div class="uk-modal-header">
               <h2 class="uk-modal-title">Canvas Code</h2>
           </div>
 
           <div class="uk-modal-body" uk-overflow-auto>
-            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea>
+            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120" />
           </div>
 
           <div class="uk-modal-footer uk-text-right">

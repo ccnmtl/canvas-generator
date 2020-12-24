@@ -6,7 +6,7 @@
 
     <!-- The user inputs are located in this div -->
     <div class="textbox-container">
-      <el-input-number  style="margin: 10px;" v-model="userInput.toChange" :min="1" :max="20"></el-input-number>
+      <el-input-number  style="margin: 10px;" v-model="userInput.toChange" :min="1" :max="20" />
 
       <button type="button" class="add-weekly center uk-button uk-button-primary"
       name="button" @click="populateActivities(userInput.toChange)">Edit # of Activities</button>
@@ -28,7 +28,7 @@
         <el-card>
         <div class="code-input center">
           Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
-            controls-position="right" size="small" :label="'Edit ' + info.classType.dateType"></el-input-number>
+            controls-position="right" size="small" :label="'Edit ' + info.classType.dateType" />
         </div>
 
         <select v-model="userInput.weekNumber" class="uk-select" >
@@ -117,7 +117,7 @@
             <div class="ic-image-text-combo__text">
               <div class="pad-box-mini">
                 <h3 style="margin-bottom: 5px;">
-                  <i class="icon-clock"></i> ACTIVITIES</h3>
+                  <i class="icon-clock" /> ACTIVITIES</h3>
               </div>
               <div class="pad-box-mini border border-b border-t">
                 <p>Welcome to the activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{info.title}}. Clicking on a {{info.classType.dateType.toLowerCase()}} will take you to a page where you can review the activities related to that session.</p>
@@ -131,12 +131,12 @@
       See the WeeklyListItem.vue file in components for the html and styling. -->
 
       <weekly-list-item v-if="weeks.length > 0"
-        v-for="(activity, index) in weeks"
-        :data="activity"
+        v-for="(week, index) in weeks"
+        :data="week"
         :linked="info.useLinks"
         :index="index+1"
-        :key="index">
-      </weekly-list-item>
+        :key="week.id" />
+      
 
     </div>
 
@@ -151,14 +151,14 @@
   <div id="modal-overflow" uk-modal>
       <div class="uk-modal-dialog">
 
-          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <button class="uk-modal-close-default" type="button" uk-close />
 
           <div class="uk-modal-header">
               <h2 class="uk-modal-title">Canvas Code</h2>
           </div>
 
           <div class="uk-modal-body" uk-overflow-auto>
-            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea>
+            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120" />
           </div>
 
           <div class="uk-modal-footer uk-text-right">

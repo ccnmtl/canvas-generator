@@ -254,13 +254,13 @@ export default new Vuex.Store({
       Vue.set(state.info, payload.key, payload.value)
     },
     updateProp: (state, { prop, value }) => {
-      state.info[prop] = value
+      Vue.set(state.info, prop, value)
     },
     updateUser: (state, { user, prop, value }) => {
-      user[prop] = value
+      Vue.set(user, prop, value)
     },
     updateWeek: (state, { index, prop, value }) => {
-      state.weeks[index][prop] = value
+      Vue.set(state.weeks[index], prop, value)
     },
     updateStore: (state, payload) => {
       state = payload

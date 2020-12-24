@@ -47,7 +47,7 @@
       <li>
       <div class="ig-row">
       <div class="ig-row__layout">
-      <div class="ig-type-icon" aria-hidden="true"><i class="icon-group"></i></div>
+      <div class="ig-type-icon" aria-hidden="true"> <i class="icon-group" /> </div>
       <div class="ig-info"><a class="ig-title" :href="info.zoomLink" target="_blank" rel="noopener"> LAUNCH ZOOM SESSION</a><a class="ig-title" href="#" target="_blank" rel="noopener"></a></div>
       </div>
       </div>
@@ -55,7 +55,7 @@
       <li v-for="(week, index) in weeks" :key="index">
       <div class="ig-row">
       <div class="ig-row__layout">
-      <div class="ig-type-icon" aria-hidden="true"><i class="icon-group"></i></div>
+      <div class="ig-type-icon" aria-hidden="true"><i class="icon-group" /> </div>
       <div class="ig-info"><a href=""> Class Session {{index+1}} Recording</a></div>
       </div>
       </div>
