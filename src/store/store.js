@@ -161,7 +161,35 @@ export default new Vuex.Store({
     setPageData: ({ commit }, page) => {
       commit('setPageData', page)
     },
+    updateProp: ({ commit }, prop) => {
+      commit('updateProp', prop)
+    },
+    updateInfo: ({ commit }, payload) => {
+      commit('updateInfo', payload)
+    },
+    updateUser: ({ commit }, user) => {
+      commit('updateUser', user)
+    },
+    updateWeek: ({ commit }, week) => {
+      commit('updateWeek', week)
+    },
+    updateStore: ({ commit }, payload) => {
+      commit('updateStore', payload)
+    },
+    updateLoading: ({ commit }, payload) => {
+      commit('updateLoading', payload)
+    },
+    sliceWeek: ({ commit }, week) => {
+      commit('sliceWeek',week)
+    },
+    updateWeeks: ({ commit }, week) => {
+      commit('updateWeeks', week)
+    },
+    refreshStore: ({ commit }, payload) => {
+      commit('refreshStore', payload)
+    },
   },
+
   mutations: {
     addRow: (state, row) => {
       state.rows.push(row)
