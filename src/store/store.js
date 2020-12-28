@@ -149,6 +149,12 @@ export default new Vuex.Store({
       week.id = uuid.v1()
       commit('addWeek', week)
     },
+    addVideo: ({ commit, getters }, index, data = {}) => {
+      let dVideo= _.cloneDeep(getters.dVideo)
+      let video = {...dVideo, ...data}
+      video.id = uuid.v1()
+      commit('addVideo', { video, index })
+    },
     deleteWeek: ({ commit }, week) => {
       commit('deleteWeek', week)
     },
@@ -185,12 +191,10 @@ export default new Vuex.Store({
     updateWeeks: ({ commit }, week) => {
       commit('updateWeeks', week)
     },
-    refreshStore: ({ commit }, payload) => {
-      commit('refreshStore', payload)
-    },
   },
 
   mutations: {
+    // Slot Mutations
     addRow: (state, row) => {
       state.rows.push(row)
     },
@@ -225,6 +229,8 @@ export default new Vuex.Store({
         return slot.sid !== sid
       })
     },
+
+    // User Mutations
     addProf: (state, prof) => {
       state.info.profs.push(prof)
     },
@@ -251,6 +257,9 @@ export default new Vuex.Store({
     },
     addWeek: (state, week) => {
       state.weeks.push(week)
+    },
+    addVideo: (state, {video, index}) => {
+      state.weeks[index].videos.push(video)
     },
     deleteWeek: (state, week) => {
       state.weeks = state.info.weeks.filter((user) => {
@@ -302,12 +311,6 @@ export default new Vuex.Store({
     updateWeeks: (state, payload) => {
       state.weeks = payload
     },
-    refreshStore: (state) => {
-      state = state
-    },
-    // updateWeek: (state, index, field, value) => {
-    //   state.weeks[index][field] = value
-    // },
   },
   modules: {
     defaults,

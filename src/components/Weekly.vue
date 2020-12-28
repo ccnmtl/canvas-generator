@@ -407,15 +407,7 @@ export default {
       this.updateWeek(this.selected, "cases", arr)
     },
     addVideo() {
-      let tempVideo = {
-        title: "All that Glitters is not Gold (18 minutes)",
-        description:
-          "‘All that Glitters is not Gold’ features various communities’ representatives concern about the introduction of genetically engineered ‘Golden’ rice in the Philippines.",
-        source: "https://www.youtube.com/watch?v=GxSGKD50ioE"
-      }
-      let arr = _.cloneDeep(this.weeks[this.selected].videos)
-      arr.push(tempVideo)
-      this.updateWeek(this.selected, "videos", arr)
+       this.$store.dispatch("addVideo", this.selected)
     },
     addDiscussion() {
       let manifestID =
