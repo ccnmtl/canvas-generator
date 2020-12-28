@@ -250,10 +250,10 @@ export default new Vuex.Store({
       })
     },
     addWeek: (state, week) => {
-      state.info.weeks.push(week)
+      state.weeks.push(week)
     },
     deleteWeek: (state, week) => {
-      state.info.weeks = state.info.weeks.filter((user) => {
+      state.weeks = state.info.weeks.filter((user) => {
         return user.id !== week.id
       })
     },
@@ -295,9 +295,6 @@ export default new Vuex.Store({
     },
     updateLoading: (state, payload) => {
       state.loading = payload
-    },
-    addWeek: (state, payload) => {
-      state.weeks.push(payload)
     },
     sliceWeek: (state, num) => {
       state.weeks = state.weeks.slice(0, num)
