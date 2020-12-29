@@ -109,8 +109,6 @@ export default new Vuex.Store({
     setDialogData: ({ commit }, data) => {
       commit('setDialogData', data)
     },
-
-    //Slot Actions
     addSlot: ({ commit }, slot) => {
       if(!slot.sid) slot.sid = uuid.v1()
       commit('addSlot', slot)

@@ -32,9 +32,8 @@
 
           <el-option
             v-for="(day, index) in days"
-            :key="index"
             :label="day"
-            :value="index">
+            :value="index" :key="day">
           </el-option>
         </el-select>
 
@@ -55,7 +54,7 @@
       </div>
 
       <select v-model="userInput.weekNumber" class="uk-select">
-        <option v-for="n in weeks.length" :value="n" :key="n">{{info.classType.dateType}} {{n}}</option>
+        <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
       </select>
 
         <div class="code-input center uk-margin-small-top" v-if="weeks[userInput.weekNumber - 1]">
@@ -137,7 +136,7 @@
           </div>
         </div>
       </div>
-      <div v-for="week in info.execWeeks" :key="">
+      <div v-for="week in info.execWeeks" :key="week.title">
         <div class="content-box">
           <div :class="'STV1_CC_Banner0' + (week + 2)">
             <p class="STV1_CC_BannerTitle">SCHEDULE // WEEK {{week}}</p>
@@ -156,11 +155,11 @@
                         {{incrementDate(info.startDate, week - 1, info.weekDays[index])}}
                       </th>
                       <th style="width: 74px;" v-if="week == 1"
-                      v-for="(day, index) in (info.execWeekLength - info.weekOffset)" :key="index">
+                      v-for="(day, index) in (info.execWeekLength - info.weekOffset)">
                         {{parseDate((day - 1) + (week - 1) * info.execWeekLength)}}
                       </th>
                       <th v-if="week > 1"
-                      style="width: 74px;" v-for="(day, index) in (info.execWeekLength)" :key="index">
+                      style="width: 74px;" v-for="(day, index) in (info.execWeekLength)">
                         {{parseDate((day - 1) + (week - 1) * info.execWeekLength - info.weekOffset)}}
                       </th>
                     </tr>
@@ -259,7 +258,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"
+import { mapActions, mapGetters, mapMutations } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"
@@ -317,7 +316,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
+    //...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
+    ...mapActions(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
     formatDate(date) {
       if (!date) date = moment()
       return moment(date).format("dddd Do")
@@ -386,7 +386,8 @@ export default {
       // let tempWeek = this.dWeek
       // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
 
-      this.addWeek(tempWeek)
+      //this.addWeek(tempWeek)
+      addWeek(tempWeek)
     },
     // Adds a user inputted number of activities
     populateActivities(num) {

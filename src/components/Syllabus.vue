@@ -218,7 +218,7 @@
           </thead>
           <tbody>
 
-             <tr v-for="(week, index) in weeks" :key="index">
+             <tr v-for="(week, index) in weeks" :key="week.title">
               <td>{{index + 1}}</td>
               <td v-if="info.useDates" >{{formatDate(week.date)}}</td>
               <td>{{week.title}}</td>

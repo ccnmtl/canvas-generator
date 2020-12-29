@@ -197,8 +197,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
-    ...mapActions(["updateWeek"]),
+    //...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
+    ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
     getSaveStateConfig() {
       return {
         cacheKey: "App"
@@ -240,7 +240,8 @@ export default {
         tempWeek.imgSrc =
           this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + ".png"
         tempWeek.date = moment().add((i-1), "w")
-        this.$store.dispatch("addWeek", tempWeek)
+        //this.$store.dispatch("addWeek", tempWeek)
+        this.addWeek(tempWeek)
 
       }
     }

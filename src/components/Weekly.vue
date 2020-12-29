@@ -52,9 +52,8 @@
         <el-select v-model="selected" placeholder="Select" style="width: 150px; margin-left: 12vw; margin-right:12vw; margin-bottom: 15px;" class="input-element">
         <el-option
           v-for="(week, index) in weeks"
-          :key=index
           :label="info.classType.dateType + ' ' + (index + 1)"
-          :value="index">
+          :value="index" :key="week.title">
         </el-option>
         </el-select>
 
