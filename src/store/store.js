@@ -86,6 +86,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    //Slot Actions
     addRow: ({ commit }, row) => {
       if(!row.rid) row.rid = uuid.v1()
       commit('addRow', row)
@@ -108,6 +109,8 @@ export default new Vuex.Store({
     setDialogData: ({ commit }, data) => {
       commit('setDialogData', data)
     },
+
+    //Slot Actions
     addSlot: ({ commit }, slot) => {
       if(!slot.sid) slot.sid = uuid.v1()
       commit('addSlot', slot)
@@ -119,6 +122,8 @@ export default new Vuex.Store({
     updateSlotData: ({ commit }, slot) => {
       commit('updateSlotData', slot)
     },
+
+    //User Actions
     addProf: ({ commit, getters }) => {
       let prof = _.cloneDeep(getters.dProf)
       prof.id = uuid.v1()
@@ -229,6 +234,15 @@ export default new Vuex.Store({
         return slot.sid !== sid
       })
     },
+    updateSlotData: (state, slot) => {
+      const actualSlot = _.find(state.slots, {
+        'sid': slot.item.sid,
+        'rid': slot.item.rid,
+        'cid': slot.item.cid,
+        'colid': slot.item.colid,
+      })
+      Vue.set(actualSlot, 'data', slot.data)
+    },    
 
     // User Mutations
     addProf: (state, prof) => {
@@ -274,15 +288,6 @@ export default new Vuex.Store({
     },
     setPageData: (state, page) => {
       state.pagesSet.push(page)
-    },
-    updateSlotData: (state, slot) => {
-      const actualSlot = _.find(state.slots, {
-        'sid': slot.item.sid,
-        'rid': slot.item.rid,
-        'cid': slot.item.cid,
-        'colid': slot.item.colid,
-      })
-      Vue.set(actualSlot, 'data', slot.data)
     },
     updateInfo: (state, payload) => {
       state.info = payload
