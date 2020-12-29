@@ -142,14 +142,6 @@ export default {
     }
   },
   computed: {
-    loading: {
-      get() {
-        return this.$store.getters.loading
-      },
-      set(payload) {
-        this.$store.commit("updateLoading", payload)
-      }
-    }
   },
   components: { home, syllabus, weekView, list, zoom, studentView, studentsList },
   mixins: [mutations],

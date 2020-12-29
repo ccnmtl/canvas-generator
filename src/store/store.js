@@ -86,6 +86,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
+
     //Slot Actions
     addRow: ({ commit }, row) => {
       if(!row.rid) row.rid = uuid.v1()
@@ -146,17 +147,16 @@ export default new Vuex.Store({
     deleteStudent: ({ commit }, student) => {
       commit('deleteStudent', student)
     },
+    updateUser: ({ commit }, user) => {
+      commit('updateUser', user)
+    },
+
+    //Week Actions
     addWeek: ({ commit, getters }, data = {}) => {
       let dWeek = _.cloneDeep(getters.dWeek)
       let week = {...dWeek, ...data}
       week.id = uuid.v1()
       commit('addWeek', week)
-    },
-    addVideo: ({ commit, getters }, index, data = {}) => {
-      let dVideo= _.cloneDeep(getters.dVideo)
-      let video = {...dVideo, ...data}
-      video.id = uuid.v1()
-      commit('addVideo', { video, index })
     },
     deleteWeek: ({ commit }, week) => {
       commit('deleteWeek', week)
@@ -164,35 +164,38 @@ export default new Vuex.Store({
     updateWeek: ({ commit }, data) => {
       commit('updateWeek', data)
     },
-    updateSpecificInfo: ({ commit }, payload) => {
-      commit('updateSpecificInfo', payload)
+    sliceWeek: ({ commit }, week) => {
+      commit('sliceWeek', week)
     },
+    updateWeeks: ({ commit }, week) => {
+      commit('updateWeeks', week)
+    },
+
+    //Week Element Actions
+    addVideo: ({ commit, getters }, index, data = {}) => {
+      let dVideo= _.cloneDeep(getters.dVideo)
+      let video = {...dVideo, ...data}
+      video.id = uuid.v1()
+      commit('addVideo', { video, index })
+    },
+
+    //Page Actions
     setPageData: ({ commit }, page) => {
       commit('setPageData', page)
     },
+
+    //Info Actions
     updateProp: ({ commit }, prop) => {
       commit('updateProp', prop)
+    },
+    updateSpecificInfo: ({ commit }, payload) => {
+      commit('updateSpecificInfo', payload)
     },
     updateInfo: ({ commit }, payload) => {
       commit('updateInfo', payload)
     },
-    updateUser: ({ commit }, user) => {
-      commit('updateUser', user)
-    },
-    updateWeek: ({ commit }, week) => {
-      commit('updateWeek', week)
-    },
     updateStore: ({ commit }, payload) => {
       commit('updateStore', payload)
-    },
-    updateLoading: ({ commit }, payload) => {
-      commit('updateLoading', payload)
-    },
-    sliceWeek: ({ commit }, week) => {
-      commit('sliceWeek',week)
-    },
-    updateWeeks: ({ commit }, week) => {
-      commit('updateWeeks', week)
     },
   },
 
@@ -274,8 +277,8 @@ export default new Vuex.Store({
       state.weeks[index].videos.push(video)
     },
     deleteWeek: (state, week) => {
-      state.weeks = state.info.weeks.filter((user) => {
-        return user.id !== week.id
+      state.weeks = state.info.weeks.filter((item) => {
+        return item.id !== week.id
       })
     },
     setDialogVisibility: (state, visibility) => {
@@ -304,9 +307,6 @@ export default new Vuex.Store({
     },
     updateStore: (state, payload) => {
       state = payload
-    },
-    updateLoading: (state, payload) => {
-      state.loading = payload
     },
     sliceWeek: (state, num) => {
       state.weeks = state.weeks.slice(0, num)
