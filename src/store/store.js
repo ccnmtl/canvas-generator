@@ -200,6 +200,7 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    
     // Slot Mutations
     addRow: (state, row) => {
       state.rows.push(row)
@@ -307,7 +308,8 @@ export default new Vuex.Store({
     },
     setPageData: (state, page) => {
       state.pagesSet.push(page)
-    },    
+    },
+
     //Info Mutations
     updateInfo: (state, payload) => {
       state.info = payload

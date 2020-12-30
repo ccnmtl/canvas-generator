@@ -238,11 +238,13 @@ export default {
         }
       )
     },
+
     addStudent() {
       let tempStudent = _.cloneDeep(this.dStudent)
       this.info.students.push(tempStudent)
       this.selected = { index: this.info.students.length - 1, list: "students" }
     },
+    
     removeStudent() {
       let { list, index } = this.selected
       console.log(list)
@@ -261,9 +263,11 @@ export default {
       }
       this.updateProp(list, users)
     },
+
     clearStudents() {
       this.info.students = [this.dStudent]
     },
+
     setToDefault() {
       console.log("resetting data...")
       let dInfo = _.cloneDeep(this.$store.getters.dInfo)
@@ -273,6 +277,7 @@ export default {
         this.updateProp(prop, dInfo[prop])
       })
     },
+    
     getSaveStateConfig() {
       return {
         cacheKey: "Student"

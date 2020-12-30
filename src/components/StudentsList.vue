@@ -8,7 +8,7 @@
 
     <div class="textbox-container">
       <el-card class="card">
-          <el-button type="primary" @click="addStudent">Add Student</el-button>
+          <el-button type="primary" @click="_addStudent">Add Student</el-button>
           <el-button type="danger" @click="clearStudents">Clear</el-button>
           <el-button type="success" @click="sortStudents">Sort</el-button>
 
@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapActions, mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"
@@ -196,6 +196,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["addStudent"]),
     formatDate(date) {
       return moment(date).format("MMMM Do")
     },
@@ -240,14 +241,18 @@ export default {
         }
       )
     },
-    addStudent() {
+    _addStudent() {
+
       let tempStudent = _.cloneDeep(this.dStudent)
-      let users = _.cloneDeep(this.info.students)
+      //let users = _.cloneDeep(this.info.students)
 
       tempStudent.id = _.uniqueId()
 
-      users.push(tempStudent)
-      this.updateProp("students", users)
+      // users.push(tempStudent)
+      // this.updateProp("students", users)
+      this.addStudent(tempStudent)
+      this.updateProp()
+
       this.selected = {
         index: this.info.students.length - 1,
         key: this.info.students[this.info.students.length - 1].id
@@ -255,6 +260,7 @@ export default {
       this.sortStudents()
     },
     removeStudent() {
+
       let { key, index } = this.selected
       let users = _.cloneDeep(this.info.students)
       users.splice(index, 1)
@@ -270,10 +276,13 @@ export default {
         this.selected = { index: index - 1, key: this.info.students[index - 1].id }
       }
       this.updateProp("students", users)
+
     },
+
     clearStudents() {
       this.info.students = [this.dStudent]
     },
+
     sortStudents() {
       this.info.students.sort(function(a, b) {
         var textA = a.name.toUpperCase()
@@ -281,6 +290,7 @@ export default {
         return textA < textB ? -1 : textA > textB ? 1 : 0
       })
     },
+
     setToDefault() {
       console.log("resetting data...")
       let dInfo = _.cloneDeep(this.$store.getters.dInfo)
@@ -290,16 +300,19 @@ export default {
         this.updateProp(prop, dInfo[prop])
       })
     },
+
     getSaveStateConfig() {
       return {
         cacheKey: "Student List"
       }
     }
   },
+
   mounted() {
     this.selected = { index: 0, key: this.info.students[0].id }
     this.updateCode("student-list-code")
   },
+
   beforeCreate() {},
   beforeUpdate() {}
 }

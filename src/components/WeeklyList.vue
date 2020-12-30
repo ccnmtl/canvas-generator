@@ -352,7 +352,8 @@ export default {
       //this.updateDates()
     },
     setToDefault() {
-      this.$store.commit("updateWeeks", [])
+      //this.$store.commit("updateWeeks", [])
+      this.updateWeeks([])
       this.populateActivities(12)
     },
     // Handles uploading the file or url to Amazon EC2 via POST request, which subsequently uploads the image to S3

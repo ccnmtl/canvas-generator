@@ -8,8 +8,8 @@
 
     <div class="textbox-container">
       <el-card class="card">
-          <el-button type="primary" @click="addProf">Add Professor</el-button>
-          <el-button type="primary" @click="addTA">Add TA</el-button>
+          <el-button type="primary" @click="_addProf">Add Professor</el-button>
+          <el-button type="primary" @click="_addTA">Add TA</el-button>
           <el-button type="danger" @click="clearTeachers">Clear</el-button>
       </el-card>
 
@@ -315,7 +315,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapActions, mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"
@@ -376,6 +376,8 @@ export default {
     ...mapGetters(["getInfo", "dProf", "dTA", "getWeeks", "getTheme"])
   },
   methods: {
+    ...mapActions(["addProf", "addTA", "deleteTA", "deleteProf"]),
+
     formatDate(date) {
       return moment(date).format("MMMM Do")
     },
@@ -420,17 +422,23 @@ export default {
         }
       )
     },
-    addProf() {
-      this.$store.dispatch("addProf")
+    _addProf() {
+
+      this.addProf()
+      console.log("Adding prof")
       let index = this.info.profs.length - 1
       this.selected = { index, list: "profs", key: this.info.profs[index].id }
+
     },
-    addTA() {
-      this.$store.dispatch("addTA")
+    _addTA() {
+
+      this.addTA()
       let index = this.info.tas.length - 1
       this.selected = { index, list: "tas", key: this.info.tas[index].id }
+
     },
     removeTeacher() {
+      
       let { list, index } = this.selected
       let user = this.info[list][index]
 
@@ -443,19 +451,21 @@ export default {
         this.selected = { index: index - 1, list, key: this.info[list][index - 1].id }
       }
 
-      if (list == "profs") this.$store.dispatch("deleteProf", user)
-      else this.$store.dispatch("deleteTA", user)
+      if (list == "profs") this.deleteProf(user)
+      else this.deleteTA(user)
     },
+
     clearTeachers() {
       this.info.tas.forEach(ta => {
-        this.$store.dispatch("deleteTA", ta)
+        this.deleteTA(ta)
       })
       this.info.profs.forEach((prof, index) => {
         console.log(index)
-        if (index > 0) this.$store.dispatch("deleteProf", prof)
+        if (index > 0) this.deleteProf(prof)
       })
       this.selected = { index: 0, list: "profs", key: this.info.profs[0].id }
     },
+
     setToDefault() {
       console.log("resetting data...")
       let dInfo = _.cloneDeep(this.$store.getters.dInfo)
@@ -465,12 +475,14 @@ export default {
         this.updateProp(prop, dInfo[prop])
       })
     },
+
     getSaveStateConfig() {
       return {
         cacheKey: "Syllabus"
       }
     }
   },
+  
   mounted() {
     this.selected = { list: "profs", index: 0, key: this.info.profs[0].id }
     this.updateCode("syllabus-code")
