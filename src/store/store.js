@@ -161,6 +161,12 @@ export default new Vuex.Store({
     setPageData: ({ commit }, page) => {
       commit('setPageData', page)
     },
+    setSlotStyles: ({ commit }, payload) => {
+      commit('setSlotStyles', payload)
+    },
+    setSlotClasses: ({ commit }, payload) => {
+      commit('setSlotClasses', payload)
+    },
   },
   mutations: {
     addRow: (state, row) => {
@@ -237,6 +243,24 @@ export default new Vuex.Store({
     },
     setPageData: (state, page) => {
       state.pagesSet.push(page)
+    },
+    setSlotStyles: (state, payload) => {
+      const actualSlot = _.find(state.slots, {
+        'sid': payload.slot.sid,
+        'rid': payload.slot.rid,
+        'cid': payload.slot.cid,
+        'colid': payload.slot.colid,
+      })
+      Vue.set(actualSlot, 'styles', payload.styles)
+    },
+    setSlotClasses: (state, payload) => {
+      const actualSlot = _.find(state.slots, {
+        'sid': payload.slot.sid,
+        'rid': payload.slot.rid,
+        'cid': payload.slot.cid,
+        'colid': payload.slot.colid,
+      })
+      Vue.set(actualSlot, 'classes', payload.classes)
     },
     updateSlotData: (state, slot) => {
       const actualSlot = _.find(state.slots, {

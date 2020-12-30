@@ -1,13 +1,19 @@
 <template>
   <div class="slot-outer">
     <div class="delete-options">
-      <el-button @click="showDeleteSlot" type="danger" icon="el-icon-delete" circle></el-button>
+      <el-button @click="showConfigSlot"
+                 type="secondary"
+                 icon="el-icon-s-tools"
+                 circle>
+        <span>Slot Options</span>
+      </el-button>
     </div>
     <component :is="type"
                :slotData="slotData.data"
                :slotItem="slotData"
                :sid="sid"
-               :class="{ small: colspan < 24 }" />
+               :class="[{ small: colspan < 24 }, ...slotData.classes]"
+               :style="slotData.styles" />
   </div>
 </template>
 
@@ -47,32 +53,64 @@ export default {
         sid: this.sid
       })
       this.$store.dispatch("setDialogVisibility", true)
+    },
+    showConfigSlot() {
+      this.$store.dispatch("setDialogData", {
+        title: 'Config Slot',
+        type: 'config-slot',
+        slotData: this.slotData
+      })
+      this.$store.dispatch("setDialogVisibility", true)      
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.delete-options {
-  transition: all 0.43s;
-  width: 3vw;
-  float: left;
-  z-index: 100;
-  text-align: center;
-  position: relative;
-  margin-top: 5px;
-  opacity: 0;
-  margin-bottom: -100%;
+.slot-outer {
+  .delete-options {
+    transition: all 0.43s;
+    width: 3vw;
+    float: left;
+    z-index: 100;
+    text-align: center;
+    position: relative;
+    margin-top: -25px;
+    margin-left: -20px;
+    opacity: 0;
+    margin-bottom: -100%;
 
-  button {
-    margin: 4px 0;
+    button {
+      transition: all 0.43s;
+      margin: 4px 0;
+      border-radius: 20px;
+      box-shadow: 1px 1px 3px 0 #00000044;
+      padding: 10px 6px 10px 11px;
+
+      span {
+        transition: all 0.43s;
+        display: inline-block;
+        width: 0;
+        overflow: hidden;
+        margin-left: 0;
+        vertical-align: text-top;
+      }
+
+      &:hover {
+        padding: 10px 11px;
+        
+        span {
+          width: 77px;
+        }
+      }
+    }
   }
 
   &:hover {
-    margin-top: 10px;
-    opacity: 1;
+    .delete-options {
+      margin-top: -16px;
+      opacity: 1;
+    }
   }
-
 }
-
 </style>

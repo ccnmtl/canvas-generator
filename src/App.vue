@@ -26,7 +26,7 @@
       <!-- Top Right Dialog Buttons -->
       <el-col :span="6">
         <div class="uk-float-right uk-padding-small">
-          <a href="#" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true">
+          <a href="#" v-loading.fullscreen.lock="loading" @click="openDialog">
             <el-button type="primary" style="display: inline-block;">Course Info: <i class="fas fa-cog"></i></el-button>
           </a>
 
@@ -172,6 +172,7 @@ import help from "./store/help"
 import mutations from "./store/mutations"
 
 // Dialog Types
+import ConfigSlot from "./components/dialogs/ConfigSlot.vue"
 import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
 import DeleteSlot from "./components/dialogs/DeleteSlot.vue"
 import UploadImage from "./components/dialogs/UploadImage.vue"
@@ -182,6 +183,7 @@ var moment = require("moment")
 
 export default {
   components: {
+    ConfigSlot,
     ChooseSlot,
     DeleteSlot,
     UploadImage,
@@ -206,6 +208,10 @@ export default {
     },
     closeDialog() {
       this.$store.dispatch("setDialogVisibility", false)
+    },
+    openDialog(e) {
+      e.preventDefault();
+      this.dialogFormVisible = true
     }
   },
   mixins: [saveState, mutations],
@@ -319,5 +325,10 @@ html {
 .bcTrail li a:hover {
   text-decoration: none;
   color: #39f;
+}
+
+.el-dialog__body {
+  max-height: 52vh;
+  overflow: auto;
 }
 </style>

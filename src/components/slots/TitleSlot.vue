@@ -14,10 +14,6 @@
       <button class="btn btn-primary" :class="'font-' + data.type" @click="finishEditing">
         Save changes
       </button>
-
-      <button class="btn btn-danger" :class="'font-' + data.type" @click="deleteSlot">
-        Delete Slot
-      </button>
     </span>
   </div>
 </template>
@@ -54,14 +50,6 @@ export default {
         })
         this.editing = null
       }
-    },
-    deleteSlot() {
-      this.$store.dispatch("setDialogData", {
-        title: 'Are you sure you want to delete this slot?',
-        type: 'delete-slot',
-        sid: this.sid
-      })
-      this.$store.dispatch("setDialogVisibility", true)
     }
   }
 }
