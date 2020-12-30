@@ -147,7 +147,7 @@
               <div class="col-xs-6">
                 <div class="styleguide-section__grid-demo-element">
                   <div v-if="!info.isVideo" >
-                    <img :src="info.image" class="STV1_WeeklyIconIMG" alt=""> </img>
+                    <img :src="info.image" class="STV1_WeeklyIconIMG" alt=""/>
                   </div>
                   <div v-if="info.isVideo" class="embed-container">
                     <iframe :src="this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen"
