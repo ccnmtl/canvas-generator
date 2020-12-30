@@ -6,7 +6,7 @@
 
   <div class="code-container">
 
-    <div class="textbox-container">
+    <div class="textbox-container" v-if="info.students.length > 0">
       <el-card class="card">
           <el-button type="primary" @click="addStudent">Add Student</el-button>
           <el-button type="danger" @click="clearStudents">Clear</el-button>
@@ -74,7 +74,7 @@
       <div class="content-box">
         <div class="grid-row">
 
-        <div style="float: left; display: inline; width: 18%; height: auto; background-color: #f7f7f7; color: #333333; margin: 20px 20px 0; padding: 10px;" v-for="(student, index) in info.students" :key="student.id">
+        <div style="float: left; display: inline; width: 18%; height: auto; background-color: #f7f7f7; color: #333333; margin: 20px 20px 0; padding: 10px;" v-if="info.students.length > 0" v-for="(student, index) in info.students" :key="student.id">
           <a :href='url + "pages/student-" + student.id'><img style="width: 200px; height: auto;" :src="student.imgSrc" alt="" /></a>
           <p style="padding-top: 10px; margin: 0 10px; color: #666666; font-size: 14px; font-weight: bold;">{{student.name}}</p>
           <p style="margin: 0 10px; color: #999999; font-size: 12px; font-weight: normal;">{{student.company}}</p>
@@ -293,6 +293,7 @@ export default {
   },
 
   mounted() {
+    if (this.info.students.length < 1) this.addStudent()
     this.selected = { index: 0, key: this.info.students[0].id }
     this.updateCode("student-list-code")
   },
