@@ -180,7 +180,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex"
+import { mapActions, mapGetters } from "vuex"
 import mutations from "../store/mutations"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
@@ -284,7 +284,6 @@ export default {
     }
   },
   methods: {
-    //...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
     ...mapActions(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
     updateSwitch() {
       this.userInput.isFile = !this.userInput.isFile

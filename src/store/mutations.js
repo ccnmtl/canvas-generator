@@ -4,7 +4,7 @@
 
 // TODO Refactor more of the shared functions here (or to a seperate mixin file)
 
-import { mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   computed: {
@@ -25,9 +25,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations([
-      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo', "updateTheme"
-    ]),
+    ...mapActions(['addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo', "updateTheme"]),
     updateProp(prop, value) {
       this.$store.commit('updateProp', { prop, value })
     },

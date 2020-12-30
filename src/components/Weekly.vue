@@ -53,7 +53,7 @@
         <el-option
           v-for="(week, index) in weeks"
           :label="info.classType.dateType + ' ' + (index + 1)"
-          :value="index" :key="week.title">
+          :value="index" :key="week.id">
         </el-option>
         </el-select>
 
@@ -293,7 +293,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"
+import { mapGetters } from "vuex"
 import mutations from "../store/mutations"
 import { quillEditor } from "vue-quill-editor"
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic"

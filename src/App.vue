@@ -167,7 +167,7 @@
 
 <script>
 import saveState from "vue-save-state"
-import { mapGetters, mapMutations, mapActions } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 import help from "./store/help"
 import mutations from "./store/mutations"
 
@@ -197,8 +197,9 @@ export default {
     }
   },
   methods: {
-    //...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
-    ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
+    ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo", "addTA",
+                  "addProf", "addStudent"
+                  ]),
     getSaveStateConfig() {
       return {
         cacheKey: "App"
@@ -240,14 +241,13 @@ export default {
         tempWeek.imgSrc =
           this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + ".png"
         tempWeek.date = moment().add((i-1), "w")
-        //this.$store.dispatch("addWeek", tempWeek)
         this.addWeek(tempWeek)
 
       }
     }
-    if (this.info.students.length < 1) this.$store.dispatch("addStudent")
-    if (this.info.profs.length < 1) this.$store.dispatch("addProf")
-    if (this.info.tas.length < 1) this.$store.dispatch("addTA")
+    if (this.info.students.length < 1) this.addStudent()
+    if (this.info.profs.length < 1) this.addProf()
+    if (this.info.tas.length < 1) this.addTA()
   }
 }
 </script>

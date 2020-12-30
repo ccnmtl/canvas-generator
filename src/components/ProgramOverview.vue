@@ -136,7 +136,7 @@
           </div>
         </div>
       </div>
-      <div v-for="week in info.execWeeks" :key="week.title">
+      <div v-for="week in info.execWeeks" :key="week.id">
         <div class="content-box">
           <div :class="'STV1_CC_Banner0' + (week + 2)">
             <p class="STV1_CC_BannerTitle">SCHEDULE // WEEK {{week}}</p>
@@ -258,7 +258,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex"
+import { mapActions, mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"
@@ -316,7 +316,6 @@ export default {
     }
   },
   methods: {
-    //...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
     ...mapActions(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
     formatDate(date) {
       if (!date) date = moment()

@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"
+import { mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"

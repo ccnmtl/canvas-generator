@@ -218,7 +218,7 @@
           </thead>
           <tbody>
 
-             <tr v-for="(week, index) in weeks" :key="week.title">
+             <tr v-for="(week, index) in weeks" :key="week.id">
               <td>{{index + 1}}</td>
               <td v-if="info.useDates" >{{formatDate(week.date)}}</td>
               <td>{{week.title}}</td>
@@ -315,7 +315,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"
+import { mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"

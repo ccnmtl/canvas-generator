@@ -52,7 +52,7 @@
       </div>
       </div>
       </li>
-      <li v-for="(week, index) in weeks" :key="week.title">
+      <li v-for="(week, index) in weeks" :key="week.id">
       <div class="ig-row">
       <div class="ig-row__layout">
       <div class="ig-type-icon" aria-hidden="true"><i class="icon-group" /> </div>
@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"
+import { mapGetters } from "vuex"
 import mutations from "../store/mutations"
 import saveState from "vue-save-state"
 import Home from "./Home"

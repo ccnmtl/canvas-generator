@@ -270,17 +270,35 @@ export default new Vuex.Store({
         return user.id !== ta.id
       })
     },
+    updateUser: (state, { user, prop, value }) => {
+      Vue.set(user, prop, value)
+    },
+
+    //Week Mutations
     addWeek: (state, week) => {
       state.weeks.push(week)
-    },
-    addVideo: (state, {video, index}) => {
-      state.weeks[index].videos.push(video)
     },
     deleteWeek: (state, week) => {
       state.weeks = state.info.weeks.filter((item) => {
         return item.id !== week.id
       })
+    },    
+    updateWeek: (state, { index, prop, value }) => {
+      Vue.set(state.weeks[index], prop, value)
     },
+    sliceWeek: (state, num) => {
+      state.weeks = state.weeks.slice(0, num)
+    },
+    updateWeeks: (state, payload) => {
+      state.weeks = payload
+    },
+
+    //Week Element Mutations
+    addVideo: (state, {video, index}) => {
+      state.weeks[index].videos.push(video)
+    },
+    
+    //Page Mutations
     setDialogVisibility: (state, visibility) => {
       state.dialogVisible = visibility
     },
@@ -289,7 +307,8 @@ export default new Vuex.Store({
     },
     setPageData: (state, page) => {
       state.pagesSet.push(page)
-    },
+    },    
+    //Info Mutations
     updateInfo: (state, payload) => {
       state.info = payload
     },
@@ -298,22 +317,10 @@ export default new Vuex.Store({
     },
     updateProp: (state, { prop, value }) => {
       Vue.set(state.info, prop, value)
-    },
-    updateUser: (state, { user, prop, value }) => {
-      Vue.set(user, prop, value)
-    },
-    updateWeek: (state, { index, prop, value }) => {
-      Vue.set(state.weeks[index], prop, value)
-    },
+    },        
     updateStore: (state, payload) => {
       state = payload
-    },
-    sliceWeek: (state, num) => {
-      state.weeks = state.weeks.slice(0, num)
-    },
-    updateWeeks: (state, payload) => {
-      state.weeks = payload
-    },
+    },    
   },
   modules: {
     defaults,
