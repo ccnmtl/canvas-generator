@@ -190,7 +190,7 @@ export default {
     // Protects against selected.list becoming an object (need to track down why this happens)
   },
   computed: {
-    ...mapGetters(["getInfo", "dStudent", "getWeeks", "getTheme"]),
+    ...mapGetters(["getInfo", "getDStudent", "getWeeks", "getTheme"]),
     url() {
       return this.info.url.replace(/\/?(\?|#|$)/, "/$1")
     }
@@ -264,7 +264,7 @@ export default {
     },
 
     clearStudents() {
-      this.info.students = [this.dStudent]
+      this.info.students = [this.getDStudent]
     },
 
     sortStudents() {
@@ -277,7 +277,7 @@ export default {
 
     setToDefault() {
       console.log("resetting data...")
-      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let dInfo = _.cloneDeep(this.$store.getters.getDInfo)
       let props = ["students"]
 
       props.forEach(prop => {

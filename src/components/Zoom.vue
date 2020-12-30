@@ -131,12 +131,12 @@ export default {
   components: {},
   mixins: [mutations],
   computed: {
-    ...mapGetters(["getInfo", "dWeek", "getWeeks"])
+    ...mapGetters(["getInfo", "getDWeek", "getWeeks"])
   },
   methods: {
     setToDefault() {
       console.log("resetting data...")
-      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let dInfo = _.cloneDeep(this.$store.getters.getDInfo)
       let props = ["zoomLink"]
 
       props.forEach(prop => {

@@ -188,7 +188,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getInfo", "dStudent", "getWeeks", "getTheme"]),
+    ...mapGetters(["getInfo", "getDStudent", "getWeeks", "getTheme"]),
     url() {
       return this.info.url.replace(/\/?(\?|#|$)/, "/$1")
     }
@@ -240,11 +240,11 @@ export default {
     },
 
     addStudent() {
-      let tempStudent = _.cloneDeep(this.dStudent)
+      let tempStudent = _.cloneDeep(this.getDStudent)
       this.info.students.push(tempStudent)
       this.selected = { index: this.info.students.length - 1, list: "students" }
     },
-    
+
     removeStudent() {
       let { list, index } = this.selected
       console.log(list)
@@ -265,12 +265,12 @@ export default {
     },
 
     clearStudents() {
-      this.info.students = [this.dStudent]
+      this.info.students = [this.getDStudent]
     },
 
     setToDefault() {
       console.log("resetting data...")
-      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let dInfo = _.cloneDeep(this.$store.getters.getDInfo)
       let props = ["students"]
 
       props.forEach(prop => {

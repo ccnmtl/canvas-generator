@@ -358,7 +358,7 @@ export default {
   },
   mixins: [mutations],
   computed: {
-    ...mapGetters(["getInfo", "dWeek", "getWeeks", "getCases"]),
+    ...mapGetters(["getInfo", "getDWeek", "getWeeks", "getCases"]),
     caseOptions() {
       let cases = this.getCases
       let options = []
@@ -436,7 +436,7 @@ export default {
     },
     setToDefault() {
       console.log("resetting data...")
-      let dWeek = _.cloneDeep(this.$store.getters.dWeek)
+      let dWeek = _.cloneDeep(this.$store.getters.getDWeek)
       let props = ["description", "title", "body", "required", "videos", "discussions", "assignments", "cases"]
 
       props.forEach(prop => {

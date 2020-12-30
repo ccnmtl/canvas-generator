@@ -318,7 +318,7 @@ export default {
     },
     setToDefault() {
       console.log("resetting data...")
-      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let dInfo = _.cloneDeep(this.$store.getters.getDInfo)
       let props = ["description", "title", "url", "video", "image", "meetings", "discussions", "semester"]
 
       props.forEach(prop => {

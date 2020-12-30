@@ -8,8 +8,8 @@
 
     <div class="textbox-container">
       <el-card class="card">
-          <el-button type="primary" @click="_addProf">Add Professor</el-button>
-          <el-button type="primary" @click="_addTA">Add TA</el-button>
+          <el-button type="primary" @click="addProf">Add Professor</el-button>
+          <el-button type="primary" @click="addTA">Add TA</el-button>
           <el-button type="danger" @click="clearTeachers">Clear</el-button>
       </el-card>
 
@@ -373,7 +373,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getInfo", "dProf", "dTA", "getWeeks", "getTheme"])
+    ...mapGetters(["getInfo", "getDProf", "getDTA", "getWeeks", "getTheme"])
   },
   methods: {
     ...mapActions(["addProf", "addTA", "deleteTA", "deleteProf"]),
@@ -422,17 +422,16 @@ export default {
         }
       )
     },
-    _addProf() {
+    addProf() {
 
-      this.addProf()
-      console.log("Adding prof")
+      this.$store.dispatch("addProf")
       let index = this.info.profs.length - 1
       this.selected = { index, list: "profs", key: this.info.profs[index].id }
 
     },
-    _addTA() {
+    addTA() {
 
-      this.addTA()
+      this.$store.dispatch("addTA")
       let index = this.info.tas.length - 1
       this.selected = { index, list: "tas", key: this.info.tas[index].id }
 
@@ -468,7 +467,7 @@ export default {
 
     setToDefault() {
       console.log("resetting data...")
-      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let dInfo = _.cloneDeep(this.$store.getters.getDInfo)
       let props = ["profs", "tas", "sectionBox1", "sectionBox2"]
 
       props.forEach(prop => {

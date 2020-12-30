@@ -124,7 +124,7 @@ export default new Vuex.Store({
 
     //User Actions
     addProf: ({ commit, getters }) => {
-      let prof = _.cloneDeep(getters.dProf)
+      let prof = _.cloneDeep(getters.getDProf)
       prof.id = uuid.v1()
       commit('addProf', prof)
     },
@@ -132,7 +132,7 @@ export default new Vuex.Store({
       commit('deleteProf', prof)
     },
     addTA: ({ commit, getters }) => {
-      let ta = _.cloneDeep(getters.dTA)
+      let ta = _.cloneDeep(getters.getDTA)
       ta.id = uuid.v1()
       commit('addTA', ta)
     },
@@ -140,7 +140,7 @@ export default new Vuex.Store({
       commit('deleteTA', ta)
     },
     addStudent: ({ commit, getters }) => {
-      let student = _.cloneDeep(getters.dStudent)
+      let student = _.cloneDeep(getters.getDStudent)
       student.id = _.uniqueId()
       commit('addStudent', student)
     },
@@ -153,7 +153,7 @@ export default new Vuex.Store({
 
     //Week Actions
     addWeek: ({ commit, getters }, data = {}) => {
-      let dWeek = _.cloneDeep(getters.dWeek)
+      let dWeek = _.cloneDeep(getters.getDWeek)
       let week = {...dWeek, ...data}
       week.id = uuid.v1()
       commit('addWeek', week)
@@ -173,7 +173,7 @@ export default new Vuex.Store({
 
     //Week Element Actions
     addVideo: ({ commit, getters }, index, data = {}) => {
-      let dVideo= _.cloneDeep(getters.dVideo)
+      let dVideo= _.cloneDeep(getters.getDVideo)
       let video = {...dVideo, ...data}
       video.id = uuid.v1()
       commit('addVideo', { video, index })

@@ -8,7 +8,7 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(["getInfo", "dWeek", 'getWeeks', 'getTheme', 'getStudents']),
+    ...mapGetters(["getInfo", "getDWeek", 'getWeeks', 'getTheme', 'getStudents']),
     info() {
       return this.getInfo
     },

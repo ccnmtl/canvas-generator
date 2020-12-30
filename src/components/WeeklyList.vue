@@ -230,7 +230,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getInfo", "dWeek", "getWeeks"]),
+    ...mapGetters(["getInfo", "getDWeek", "getWeeks"]),
     day() {
       return moment(this.info.startDate).format("dddd, MMMM Do")
     },
@@ -323,7 +323,7 @@ export default {
 
       if (index > 15 && this.info.classType.dateType == "Week") index = 15
 
-      let tempWeek = _.cloneDeep(this.dWeek)
+      let tempWeek = _.cloneDeep(this.getDWeek)
       tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + ".png"
       tempWeek.date = moment()
       tempWeek.title = "Lecture " + index

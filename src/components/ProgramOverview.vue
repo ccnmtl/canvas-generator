@@ -308,7 +308,7 @@ export default {
   },
   mixins: [saveState, mutations],
   computed: {
-    ...mapGetters(["getInfo", "dWeek", "getWeeks"])
+    ...mapGetters(["getInfo", "getDWeek", "getWeeks"])
   },
   watch: {
     "info.weekOffset": function() {
@@ -376,7 +376,7 @@ export default {
 
       if (index > 15 && this.info.classType.dateType == "Week") index = 15
 
-      let tempWeek = _.cloneDeep(this.dWeek)
+      let tempWeek = _.cloneDeep(this.getDWeek)
       tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + ".png"
       tempWeek.date = moment()
       tempWeek.title = "Lecture " + index
@@ -448,7 +448,7 @@ export default {
     },
     setToDefault() {
       console.log("resetting data...")
-      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let dInfo = _.cloneDeep(this.$store.getters.getDInfo)
       let props = [
         "execWeeks",
         "weekDays",
