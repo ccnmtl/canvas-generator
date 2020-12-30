@@ -198,8 +198,7 @@ export default {
   },
   methods: {
     ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo", "addTA",
-                  "addProf", "addStudent"
-                  ]),
+                  "addProf", "addStudent"]),
     getSaveStateConfig() {
       return {
         cacheKey: "App"

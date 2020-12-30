@@ -8,7 +8,7 @@
 
     <div class="textbox-container">
       <el-card class="card">
-          <el-button type="primary" @click="_addStudent">Add Student</el-button>
+          <el-button type="primary" @click="addStudent">Add Student</el-button>
           <el-button type="danger" @click="clearStudents">Clear</el-button>
           <el-button type="success" @click="sortStudents">Sort</el-button>
 
@@ -196,7 +196,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["addStudent"]),
+    ...mapActions([""]),
     formatDate(date) {
       return moment(date).format("MMMM Do")
     },
@@ -241,17 +241,8 @@ export default {
         }
       )
     },
-    _addStudent() {
-
-      let tempStudent = _.cloneDeep(this.dStudent)
-      //let users = _.cloneDeep(this.info.students)
-
-      tempStudent.id = _.uniqueId()
-
-      // users.push(tempStudent)
-      // this.updateProp("students", users)
-      this.addStudent(tempStudent)
-      this.updateProp()
+    addStudent() {
+      this.$store.dispatch("addStudent")
 
       this.selected = {
         index: this.info.students.length - 1,
@@ -262,21 +253,14 @@ export default {
     removeStudent() {
 
       let { key, index } = this.selected
-      let users = _.cloneDeep(this.info.students)
-      users.splice(index, 1)
+      let student = this.info.students[index]
+
       if (index == 0) {
-        if (list == "students") {
-          console.log("tried to delete student")
-          return
-          console.log("after return")
-        }
-        console.log("deleting last ta")
         this.selected = { index: 0, key: this.info.students[0].id }
       } else {
+        this.$store.dispatch("deleteStudent", student)
         this.selected = { index: index - 1, key: this.info.students[index - 1].id }
       }
-      this.updateProp("students", users)
-
     },
 
     clearStudents() {
