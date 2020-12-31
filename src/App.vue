@@ -159,6 +159,7 @@
     <el-dialog
       :title="dialogData.title"
       :visible.sync="dialogVisible"
+      v-if="dialogVisible"
       width="50%">
         <component :is="dialogData.type" :dialogData="dialogData" @cancelDialog="closeDialog" />
     </el-dialog>

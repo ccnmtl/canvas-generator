@@ -22,6 +22,8 @@
 </template>
 
 <script>
+
+import Vue from 'vue'
 import _ from "lodash"
 import { uuid } from "vue-uuid"
 import { mapGetters } from "vuex"
@@ -144,6 +146,14 @@ export default {
         })
       })
     }
+  },
+  beforeMount() { 
+    let page = _.find(DefaultData.pages, { cid: this.cid })
+
+    this.$store.dispatch('createRowsFromArray', {
+      cid: 'home',
+      rows: Vue.jsonToArray(page.rows)
+    })
   }
 }
 </script>

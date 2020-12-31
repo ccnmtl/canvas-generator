@@ -9,11 +9,11 @@
       </el-button>
     </div>
     <component :is="type"
-               :slotData="slotData.data"
-               :slotItem="slotData"
+               :slotData="data.data"
+               :slotItem="data"
                :sid="sid"
-               :class="[{ small: colspan < 24 }, ...slotData.classes]"
-               :style="slotData.styles" />
+               :class="[{ small: colspan < 24 }, ...data.classes]"
+               :style="data.styles" />
   </div>
 </template>
 
@@ -37,12 +37,20 @@ export default {
   props: [ "sid", "slotData", "colspan" ],
   data() {
     return {
-
+      data: {}
+    }
+  },
+  beforeMount() {
+    this.data = _.cloneDeep(this.slotData)
+  },
+  watch: {
+    slotData(val, oldVal) {
+      this.data = _.cloneDeep(val)
     }
   },
   computed: {
     type() {
-      return _.find(SlotTypes, { 'id': this.slotData.type }).type
+      return _.find(SlotTypes, { 'id': this.data.type }).type
     },
   },
   methods: {
@@ -58,7 +66,7 @@ export default {
       this.$store.dispatch("setDialogData", {
         title: 'Config Slot',
         type: 'config-slot',
-        slotData: this.slotData
+        slotData: this.data
       })
       this.$store.dispatch("setDialogVisibility", true)      
     }

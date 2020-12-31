@@ -8,6 +8,7 @@ import _ from 'lodash'
 import defaults from './components/defaults'
 import theme from './components/theme'
 import cases from './components/cases'
+import SlotTypes from '../util/slot-types.json'
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage
@@ -167,6 +168,49 @@ export default new Vuex.Store({
     setSlotClasses: ({ commit }, payload) => {
       commit('setSlotClasses', payload)
     },
+    createRowsFromArray({ dispatch, state }, payload) {
+      payload.rows.forEach(row => {
+        dispatch('addRow', {
+          cid: payload.cid
+        }).then(res => {
+          dispatch('createColumnsFromArray', {
+            columns: row,
+            rid: res.rid
+          })
+        })
+      })
+    },
+    createColumnsFromArray({ dispatch, state }, payload) {
+      const row = _.find(state.rows, { rid: payload.rid })
+
+      payload.columns.forEach(column => {
+        dispatch('addColumn', {
+          rid: row.rid,
+          cid: row.cid
+        }).then(res => {
+          dispatch('createSlotsFromArray', {
+            slots: column,
+            colid: res.colid
+          })
+        })
+      })
+    },
+    createSlotsFromArray({ state, dispatch }, payload) {
+      const column = _.find(state.columns, { colid: payload.colid })
+      let actualSlotType
+
+      payload.slots.forEach(slot => {
+        actualSlotType = _.find(SlotTypes, { 'type': slot })
+
+        dispatch('addSlot', {
+          type: actualSlotType.id,
+          rid: column.rid,
+          cid: column.cid,
+          colid: column.colid,
+          data: actualSlotType.defaultData
+        })
+      })
+    }
   },
   mutations: {
     addRow: (state, row) => {
@@ -245,31 +289,31 @@ export default new Vuex.Store({
       state.pagesSet.push(page)
     },
     setSlotStyles: (state, payload) => {
-      const actualSlot = _.find(state.slots, {
+      const actualSlot = _.findIndex(state.slots, {
         'sid': payload.slot.sid,
         'rid': payload.slot.rid,
         'cid': payload.slot.cid,
         'colid': payload.slot.colid,
       })
-      Vue.set(actualSlot, 'styles', payload.styles)
+      Vue.set(state.slots[actualSlot], 'styles', payload.styles)
     },
     setSlotClasses: (state, payload) => {
-      const actualSlot = _.find(state.slots, {
+      const actualSlot = _.findIndex(state.slots, {
         'sid': payload.slot.sid,
         'rid': payload.slot.rid,
         'cid': payload.slot.cid,
         'colid': payload.slot.colid,
       })
-      Vue.set(actualSlot, 'classes', payload.classes)
+      Vue.set(state.slots[actualSlot], 'classes', payload.classes)
     },
     updateSlotData: (state, slot) => {
-      const actualSlot = _.find(state.slots, {
+      const actualSlot = _.findIndex(state.slots, {
         'sid': slot.item.sid,
         'rid': slot.item.rid,
         'cid': slot.item.cid,
         'colid': slot.item.colid,
       })
-      Vue.set(actualSlot, 'data', slot.data)
+      Vue.set(state.slots[actualSlot], 'data', slot.data)
     },
     updateInfo: (state, payload) => {
       state.info = payload
