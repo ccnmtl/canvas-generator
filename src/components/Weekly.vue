@@ -382,58 +382,39 @@ export default {
     }
   },
   methods: {
+
     addCase(caseStudy) {
-      let arr = _.cloneDeep(this.weeks[this.selected].cases)
-
-      let isUnique = true
-      arr.forEach(function(testCase) {
-        if (testCase.id == caseStudy.id) isUnique = false
-      })
-
-      if (isUnique) arr.push(caseStudy)
-      this.updateWeek(this.selected, "cases", arr)
+      let index = this.selected
+      this.$store.dispatch("addCase", {index, caseStudy})
     },
+
     removeCase(caseStudy) {
-      let arr = _.cloneDeep(this.weeks[this.selected].cases)
+      let index = this.selected
+      this.$store.dispatch("removeCase", {index, caseStudy})
+      // let arr = _.cloneDeep(this.weeks[this.selected].cases)
 
-      arr.forEach(function(testCase, index, array) {
-        if (testCase.id == caseStudy.id) {
-          console.log("splice")
-          arr.splice(index, 1)
-        }
-      })
+      // arr.forEach(function(testCase, index, array) {
+      //   if (testCase.id == caseStudy.id) {
+      //     console.log("splice")
+      //     arr.splice(index, 1)
+      //   }
+      // })
 
-      this.updateWeek(this.selected, "cases", arr)
+      // this.updateWeek(this.selected, "cases", arr)
     },
+
     addVideo() {
        this.$store.dispatch("addVideo", this.selected)
     },
+
     addDiscussion() {
-      let manifestID =
-        "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1)
-      let tempDisc = {
-        due: moment(this.weeks[this.selected].date).add(7, "d"),
-        id: manifestID,
-        link: "%24CANVAS_OBJECT_REFERENCE%24/discussion_topics/" + manifestID
-      }
-
-      let arr = _.cloneDeep(this.weeks[this.selected].discussions)
-      arr.push(tempDisc)
-      this.updateWeek(this.selected, "discussions", arr)
+      this.$store.dispatch("addDiscussion", this.selected)
     },
+
     addAssignment() {
-      let manifestID =
-        "ccb-session-" + (this.selected + 1) + "-assignment-" + (this.weeks[this.selected].assignments.length + 1)
-      let tempAssign = {
-        due: moment(this.weeks[this.selected].date).add(7, "d"),
-        id: manifestID,
-        link: "%24CANVAS_OBJECT_REFERENCE%24/assignments/" + manifestID
-      }
-
-      let arr = _.cloneDeep(this.weeks[this.selected].assignments)
-      arr.push(tempAssign)
-      this.updateWeek(this.selected, "assignments", arr)
+      this.$store.dispatch("addAssignment", this.selected)
     },
+
     setToDefault() {
       console.log("resetting data...")
       let dWeek = _.cloneDeep(this.$store.getters.getDWeek)

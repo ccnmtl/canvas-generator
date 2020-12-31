@@ -179,6 +179,36 @@ export default new Vuex.Store({
       commit('addVideo', { video, index })
     },
 
+    addCase: ({ commit, state }, {index, caseStudy}) => {
+    
+      let week = state.weeks[index]
+      if(!week.cases) week.cases = []
+      week.cases.push(caseStudy)
+      let arr = state.weeks[index].cases
+
+      let isUnique = true
+      arr.forEach(function(testCase) {
+        if (testCase.id == caseStudy.id) isUnique = false
+      })
+      
+      if (isUnique)       
+      commit('addCase', { index, caseStudy })
+    },
+
+    addAssignment:({ commit, getters }, index, data = {}) => {
+      let dAssignment = _.cloneDeep(getters.getDAssignment)
+      let assignment = {...dAssignment, ...data}
+      assignment.id = uuid.v1()
+      commit('addAssignment', { assignment, index })
+    },
+
+    addDiscussion: ({ commit, getters }, index, data = {}) => {
+      let dDiscussion = _.cloneDeep(getters.getDDiscussion)
+      let discussion = {...dDiscussion, ...data}
+      discussion.id = uuid.v1()
+      commit('addDiscussion', {discussion, index})
+    },
+
     //Page Actions
     setPageData: ({ commit }, page) => {
       commit('setPageData', page)
@@ -297,6 +327,24 @@ export default new Vuex.Store({
     //Week Element Mutations
     addVideo: (state, {video, index}) => {
       state.weeks[index].videos.push(video)
+    },
+
+    addCase: (state, index, caseStudy) => {
+      state.weeks[index].cases.push(caseStudy) 
+    },
+
+    removeCase: (state, {index, caseStudy}) => {
+      state.weeks[index].cases = state.weeks[index].filter((item) => {
+        return item.id !== caseStudy.id
+      }) 
+    },
+    
+    addAssignment: (state, { assignment, index }) => {
+      state.weeks[index].assignments.push(assignment)
+    },
+
+    addDiscussion: (state, {discussion, index}) => {
+      state.weeks[index].discussions.push(discussion)
     },
     
     //Page Mutations

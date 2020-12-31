@@ -133,6 +133,8 @@ export default {
   getters: {
     getDWeek: state => state.weekDefault,
     getDVideo: state => state.videoDefault,
+    getDAssignment: state => state.assignmentDefault,
+    getDDiscussion: state => state.discussionDefault,
     getDInfo: state => state.infoDefault,
     getDProf: state => state.profDefault,
     getDStudent: state => state.studentDefault,
