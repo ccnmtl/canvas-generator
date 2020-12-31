@@ -16,7 +16,10 @@
           "columns": [
             {
               "slots": [
-                "title-slot",
+                {
+                  "type": "title-slot",
+                  "getter": "info.title"
+                },
                 "content-slot"
               ]
             },

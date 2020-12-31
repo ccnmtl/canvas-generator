@@ -84,6 +84,14 @@ export default new Vuex.Store({
       })
 
       return res
+    },
+    getFromGetter: (state) => (getter) => {
+      let items = getter.split('.')
+      let res = state
+      items.forEach(item => {
+        res = res[item]
+      })
+      return res
     }
   },
   actions: {
@@ -119,6 +127,13 @@ export default new Vuex.Store({
     },
     updateSlotData: ({ commit }, slot) => {
       commit('updateSlotData', slot)
+    },
+    updateSlotDataWithSetter: ({ commit }, payload) => {
+      let res = payload.setter.split('.')
+      payload.base = res[0]
+      payload.field = res[1]
+      payload.value = payload.data
+      commit('setStateFieldWithBase', payload)
     },
     addProf: ({ commit, getters }) => {
       let prof = _.cloneDeep(getters.dProf)
@@ -200,15 +215,29 @@ export default new Vuex.Store({
       let actualSlotType
 
       payload.slots.forEach(slot => {
-        actualSlotType = _.find(SlotTypes, { 'type': slot })
+        if(typeof slot == 'string') {
+          actualSlotType = _.find(SlotTypes, { 'type': slot })
 
-        dispatch('addSlot', {
-          type: actualSlotType.id,
-          rid: column.rid,
-          cid: column.cid,
-          colid: column.colid,
-          data: actualSlotType.defaultData
-        })
+          dispatch('addSlot', {
+            type: actualSlotType.id,
+            rid: column.rid,
+            cid: column.cid,
+            colid: column.colid,
+            data: actualSlotType.defaultData
+          })
+        }
+        else {
+          actualSlotType = _.find(SlotTypes, { 'type': slot.type })
+
+          dispatch('addSlot', {
+            type: actualSlotType.id,
+            rid: column.rid,
+            cid: column.cid,
+            colid: column.colid,
+            data: slot.data ? slot.data : actualSlotType.defaultData,
+            getter: slot.getter
+          })          
+        }
       })
     }
   },
@@ -347,6 +376,12 @@ export default new Vuex.Store({
     },
     refreshStore: (state) => {
       state = state
+    },
+    setStateField: (state, payload) => {
+      Vue.set(state, payload.field, payload.value)
+    },
+    setStateFieldWithBase: (state, payload) => {
+      Vue.set(state[payload.base], payload.field, payload.value)
     },
     // updateWeek: (state, index, field, value) => {
     //   state.weeks[index][field] = value

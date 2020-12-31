@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import _ from 'lodash'
 import mutations from "../../store/mutations"
 
 export default {
@@ -27,12 +29,34 @@ export default {
   data() {
     return {
       editing: null,
-      data: this.slotData
+      data: this.slotData ? this.slotData : {
+        title: '',
+        type: 'h1'
+      }
     }
   },
   computed: {
     header: function () {
-      return `<${this.slotData.type}>${this.slotData.title}</${this.slotData.type}>`
+      return `<${this.data.type}>${this.data.title}</${this.data.type}>`
+    },
+    getterData: function () {
+      if(!this.slotItem.getter) return null
+      return this.$store.getters.getFromGetter(this.slotItem.getter)
+    }
+  },
+  watch: {
+    getterData: {
+      handler(newVal, oldVal) {
+        if (newVal !== null) {
+          if(!this.data) {
+            this.data = {}
+            this.data.type = this.slotData ? this.slotData.type : "h1"
+          }
+
+          Vue.set(this.data, 'title', newVal ? newVal : 'No title')
+        }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -44,10 +68,18 @@ export default {
     },
     finishEditing() {
       if(this.data.title) {
+        if(this.slotItem.getter) {
+          this.$store.dispatch("updateSlotDataWithSetter", {
+            data: this.data.title,
+            setter: this.slotItem.getter
+          })
+        }
+        
         this.$store.dispatch("updateSlotData", {
           item: this.slotItem,
           data: this.data
         })
+
         this.editing = null
       }
     }
