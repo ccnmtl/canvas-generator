@@ -320,19 +320,8 @@ export default {
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
     AddActivity() {
       let index = this.weeks.length + 1
+      this.$store.dispatch("addActivity", index)
 
-      if (index > 15 && this.info.classType.dateType == "Week") index = 15
-
-      let tempWeek = _.cloneDeep(this.getDWeek)
-      tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + ".png"
-      tempWeek.date = moment()
-      tempWeek.title = "Lecture " + index
-      tempWeek.secondTitle = "Lecture " + index + " II"
-
-      // let tempWeek = this.dWeek
-      // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
-      //
-      this.addWeek(tempWeek)
     },
     // Adds a user inputted number of activities
     populateActivities(num) {

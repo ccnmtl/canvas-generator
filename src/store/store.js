@@ -150,6 +150,10 @@ export default new Vuex.Store({
     updateUser: ({ commit }, user) => {
       commit('updateUser', user)
     },
+    clearStudents: ({ commit, getters }) => {
+      let blank = _.cloneDeep(getters.getDStudent)
+      commit('clearStudents', { blank })
+    },
 
     //Week Actions
     addWeek: ({ commit, getters }, data = {}) => {
@@ -190,7 +194,7 @@ export default new Vuex.Store({
       arr.forEach(function(testCase) {
         if (testCase.id == caseStudy.id) isUnique = false
       })
-      
+
       if (isUnique)       
       commit('addCase', { index, caseStudy })
     },
@@ -207,6 +211,15 @@ export default new Vuex.Store({
       let discussion = {...dDiscussion, ...data}
       discussion.id = uuid.v1()
       commit('addDiscussion', {discussion, index})
+    },
+
+    addActivity: ({ commit, getters }, index) => {
+      let tempWeek = _.cloneDeep(getters.getDWeek)
+      commit('addActivity', {index, tempWeek})
+    },
+
+    removeCase: ({ commit }, {index, caseStudy}) => {
+      commit('removeCase', {index, caseStudy})
     },
 
     //Page Actions
@@ -304,6 +317,9 @@ export default new Vuex.Store({
     updateUser: (state, { user, prop, value }) => {
       Vue.set(user, prop, value)
     },
+    clearStudents: (state, {blank}) => {
+      state.info.students = [blank]
+    },
 
     //Week Mutations
     addWeek: (state, week) => {
@@ -334,7 +350,7 @@ export default new Vuex.Store({
     },
 
     removeCase: (state, {index, caseStudy}) => {
-      state.weeks[index].cases = state.weeks[index].filter((item) => {
+      state.weeks[index].cases = state.weeks[index].cases.filter((item) => {
         return item.id !== caseStudy.id
       }) 
     },
@@ -345,6 +361,22 @@ export default new Vuex.Store({
 
     addDiscussion: (state, {discussion, index}) => {
       state.weeks[index].discussions.push(discussion)
+    },
+
+    addActivity: (state,{index, tempWeek}) => {
+
+      if (index > 15 && state.info.classType.dateType == "Week") index = 15
+
+      tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + ".png"
+      tempWeek.date = moment()
+      tempWeek.title = "Lecture " + index
+      tempWeek.secondTitle = "Lecture " + index + " II"
+
+      // let tempWeek = this.dWeek
+      // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
+      //
+      state.weeks.push(tempWeek)
+
     },
     
     //Page Mutations

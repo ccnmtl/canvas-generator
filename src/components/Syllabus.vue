@@ -459,7 +459,6 @@ export default {
         this.deleteTA(ta)
       })
       this.info.profs.forEach((prof, index) => {
-        console.log(index)
         if (index > 0) this.deleteProf(prof)
       })
       this.selected = { index: 0, list: "profs", key: this.info.profs[0].id }

@@ -391,16 +391,6 @@ export default {
     removeCase(caseStudy) {
       let index = this.selected
       this.$store.dispatch("removeCase", {index, caseStudy})
-      // let arr = _.cloneDeep(this.weeks[this.selected].cases)
-
-      // arr.forEach(function(testCase, index, array) {
-      //   if (testCase.id == caseStudy.id) {
-      //     console.log("splice")
-      //     arr.splice(index, 1)
-      //   }
-      // })
-
-      // this.updateWeek(this.selected, "cases", arr)
     },
 
     addVideo() {

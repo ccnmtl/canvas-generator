@@ -196,7 +196,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions([""]),
+    ...mapActions(["deleteStudent"]),
+    ...mapGetters(["getDStudent"]),
     formatDate(date) {
       return moment(date).format("MMMM Do")
     },
@@ -264,7 +265,7 @@ export default {
     },
 
     clearStudents() {
-      this.info.students = [this.getDStudent]
+      this.$store.dispatch("clearStudents")
     },
 
     sortStudents() {
