@@ -20,7 +20,7 @@
               <el-option
                 v-for="(student, index) in info.students"
                 :key="student.id"
-                :label="student.id"
+                :label="student.name"
                 :value="{index, key: student.id}">
               </el-option>
             </el-option-group>

@@ -6,7 +6,7 @@
 
   <div class="code-container">
 
-    <div class="textbox-container" v-if="info.students.length > 0">
+    <div class="textbox-container">
       <el-card class="card">
           <el-button type="primary" @click="addStudent">Add Student</el-button>
           <el-button type="danger" @click="clearStudents">Clear</el-button>
@@ -197,7 +197,6 @@ export default {
   },
   methods: {
     ...mapActions(["deleteStudent"]),
-    ...mapGetters(["getDStudent"]),
     formatDate(date) {
       return moment(date).format("MMMM Do")
     },

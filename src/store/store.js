@@ -151,8 +151,11 @@ export default new Vuex.Store({
       commit('updateUser', user)
     },
     clearStudents: ({ commit, getters }) => {
-      let blank = _.cloneDeep(getters.getDStudent)
-      commit('clearStudents', { blank })
+      commit('clearStudents')
+      let student = _.cloneDeep(getters.getDStudent)
+      student.id = _.uniqueId()
+      commit('addStudent', student)
+
     },
 
     //Week Actions
@@ -317,8 +320,8 @@ export default new Vuex.Store({
     updateUser: (state, { user, prop, value }) => {
       Vue.set(user, prop, value)
     },
-    clearStudents: (state, {blank}) => {
-      state.info.students = [blank]
+    clearStudents: (state) => {
+      state.info.students = []
     },
 
     //Week Mutations
