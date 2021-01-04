@@ -10,10 +10,6 @@
       <button class="btn btn-primary" @click="finishEditing">
         Save changes
       </button>
-
-      <button class="btn btn-danger" @click="deleteSlot">
-        Delete Slot
-      </button>
     </div>
   </div>
 </template>

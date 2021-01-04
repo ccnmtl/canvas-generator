@@ -1,16 +1,19 @@
 <template>
-  <div class="slot-outer" :class="{ 'settings-open' : showSettings }">
-    <component :is="type"
-               :slotData="slotData.data"
-               :slotItem="slotData"
-               :sid="sid"
-               :class="{ small: colspan < 24 }" />
-
-    <div data-hidden class="actions">
-      <button @click="showSlotSettings" class="btn btn-secondary">
-        <i class="el-icon-edit" /> Slot Options
-      </button>
+  <div class="slot-outer">
+    <div class="delete-options">
+      <el-button @click="showConfigSlot"
+                 type="secondary"
+                 icon="el-icon-s-tools"
+                 circle>
+        <span>Slot Options</span>
+      </el-button>
     </div>
+    <component :is="type"
+               :slotData="data.data"
+               :slotItem="data"
+               :sid="sid"
+               :class="[{ small: colspan < 24 }, ...data.classes]"
+               :style="data.styles" />
   </div>
 </template>
 
@@ -37,12 +40,20 @@ export default {
   props: [ "sid", "slotData", "colspan" ],
   data() {
     return {
-      showSettings: false
+      data: {}
+    }
+  },
+  watch: {
+    slotData: {
+      handler(val) {
+        this.data = _.cloneDeep(val)
+      },
+      immediate: true
     }
   },
   computed: {
     type() {
-      return _.find(SlotTypes, { 'id': this.slotData.type }).type
+      return _.find(SlotTypes, { 'id': this.data.type }).type
     },
   },
   methods: {
@@ -54,8 +65,13 @@ export default {
       })
       this.$store.dispatch("setDialogVisibility", true)
     },
-    showSlotSettings() {
-      this.$store.dispatch("setSettingsVisibility", true)
+    showConfigSlot() {
+      this.$store.dispatch("setDialogData", {
+        title: 'Config Slot',
+        type: 'config-slot',
+        slotData: this.data
+      })
+      this.$store.dispatch("setDialogVisibility", true)
     }
   }
 }
@@ -64,16 +80,49 @@ export default {
 <style scoped lang="scss">
 
 .slot-outer {
-  .actions {
+  .delete-options {
     transition: all 0.43s;
-    z-index: 99;
-    padding-top: 3px;
-    margin-bottom: 0px;
-    opacity: 1;
-    height: 45px;
+    width: 3vw;
+    float: left;
+    z-index: 100;
+    text-align: center;
     position: relative;
-    text-align: left;
+    margin-top: -25px;
+    margin-left: -20px;
+    opacity: 0;
+    margin-bottom: -100%;
+
+    button {
+      transition: all 0.43s;
+      margin: 4px 0;
+      border-radius: 20px;
+      box-shadow: 1px 1px 3px 0 #00000044;
+      padding: 10px 6px 10px 11px;
+
+      span {
+        transition: all 0.43s;
+        display: inline-block;
+        width: 0;
+        overflow: hidden;
+        margin-left: 0;
+        vertical-align: text-top;
+      }
+
+      &:hover {
+        padding: 10px 11px;
+
+        span {
+          width: 77px;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    .delete-options {
+      margin-top: -16px;
+      opacity: 1;
+    }
   }
 }
-
 </style>

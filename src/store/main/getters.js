@@ -39,5 +39,13 @@ export default {
     })
 
     return res
+  },
+  getFromGetter: (state) => (getter) => {
+    let items = getter.split('.')
+    let res = state
+    items.forEach(item => {
+      res = res[item]
+    })
+    return res
   }
 }

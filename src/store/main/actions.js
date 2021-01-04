@@ -1,5 +1,6 @@
 import { uuid } from "vue-uuid"
 import SavedFields from '../../util/saved-fields.json'
+import SlotTypes from '../../util/slot-types.json'
 import _ from 'lodash'
 
 export default {
@@ -35,6 +36,13 @@ export default {
     },
     updateSlotData: ({ commit }, slot) => {
       commit('updateSlotData', slot)
+    },
+    updateSlotDataWithSetter: ({ commit }, payload) => {
+      let res = payload.setter.split('.')
+      payload.base = res[0]
+      payload.field = res[1]
+      payload.value = payload.data
+      commit('setStateFieldWithBase', payload)
     },
     addProf: ({ commit, getters }) => {
       let prof = _.cloneDeep(getters.dProf)
@@ -117,6 +125,69 @@ export default {
           value: JSON.parse(current[field]),
           field: field
         })
+      })
+    },
+    setSlotStyles: ({ commit }, payload) => {
+      commit('setSlotStyles', payload)
+    },
+    setSlotClasses: ({ commit }, payload) => {
+      commit('setSlotClasses', payload)
+    },
+    createRowsFromArray({ dispatch }, payload) {
+      payload.rows.forEach(row => {
+        dispatch('addRow', {
+          cid: payload.cid
+        }).then(res => {
+          dispatch('createColumnsFromArray', {
+            columns: row,
+            rid: res.rid
+          })
+        })
+      })
+    },
+    createColumnsFromArray({ dispatch, state }, payload) {
+      const row = _.find(state.rows, { rid: payload.rid })
+
+      payload.columns.forEach(column => {
+        dispatch('addColumn', {
+          rid: row.rid,
+          cid: row.cid
+        }).then(res => {
+          dispatch('createSlotsFromArray', {
+            slots: column,
+            colid: res.colid
+          })
+        })
+      })
+    },
+    createSlotsFromArray({ state, dispatch }, payload) {
+      const column = _.find(state.columns, { colid: payload.colid })
+      let actualSlotType
+
+      payload.slots.forEach(slot => {
+        if(typeof slot == 'string') {
+          actualSlotType = _.find(SlotTypes, { 'type': slot })
+
+          dispatch('addSlot', {
+            type: actualSlotType.id,
+            rid: column.rid,
+            cid: column.cid,
+            colid: column.colid,
+            data: actualSlotType.defaultData
+          })
+        }
+        else {
+          actualSlotType = _.find(SlotTypes, { 'type': slot.type })
+
+          dispatch('addSlot', {
+            type: actualSlotType.id,
+            rid: column.rid,
+            cid: column.cid,
+            colid: column.colid,
+            data: slot.data ? slot.data : actualSlotType.defaultData,
+            getter: slot.getter
+          })
+        }
       })
     }
 }

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import _ from 'lodash'
 
 export default {
   addRow: (state, row) => {
@@ -76,14 +77,32 @@ export default {
   setPageData: (state, page) => {
     state.pagesSet.push(page)
   },
+  setSlotStyles: (state, payload) => {
+    const actualSlot = _.findIndex(state.slots, {
+      'sid': payload.slot.sid,
+      'rid': payload.slot.rid,
+      'cid': payload.slot.cid,
+      'colid': payload.slot.colid,
+    })
+    Vue.set(state.slots[actualSlot], 'styles', payload.styles)
+  },
+  setSlotClasses: (state, payload) => {
+    const actualSlot = _.findIndex(state.slots, {
+      'sid': payload.slot.sid,
+      'rid': payload.slot.rid,
+      'cid': payload.slot.cid,
+      'colid': payload.slot.colid,
+    })
+    Vue.set(state.slots[actualSlot], 'classes', payload.classes)
+  },
   updateSlotData: (state, slot) => {
-    const actualSlot = _.find(state.slots, {
+    const actualSlot = _.findIndex(state.slots, {
       'sid': slot.item.sid,
       'rid': slot.item.rid,
       'cid': slot.item.cid,
       'colid': slot.item.colid,
     })
-    Vue.set(actualSlot, 'data', slot.data)
+    Vue.set(state.slots[actualSlot], 'data', slot.data)
   },
   updateInfo: (state, payload) => {
     state.info = payload
@@ -132,5 +151,8 @@ export default {
   },
   setStateField: (state, payload) => {
     Vue.set(state, payload.field, payload.value)
+  },
+  setStateFieldWithBase: (state, payload) => {
+    Vue.set(state[payload.base], payload.field, payload.value)
   },
 }

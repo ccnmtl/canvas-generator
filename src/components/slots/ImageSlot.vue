@@ -1,7 +1,6 @@
 <template>
   <div :id="sid" class="col content-slot">
-    <img :src="slotData.imgSrc" :style="[forceDimensions ? {width: slotData.width + 'px', height: slotData.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()"> </img>
-    </div>
+    <img :src="slotData.imgSrc" :style="[forceDimensions ? {width: slotData.width + 'px', height: slotData.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()" />
   </div>
 </template>
 
