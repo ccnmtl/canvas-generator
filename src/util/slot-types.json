@@ -4,7 +4,7 @@
     "name": "Title Slot",
     "type": "title-slot",
     "icon": "edit",
-    "colspan": 24,
+    "colspan": 8,
     "defaultData": {
       "title": "Default Title",
       "type": "h1"
@@ -26,7 +26,7 @@
     "name": "Image Slot",
     "type": "image-slot",
     "icon": "picture",
-    "colspan": 24,
+    "colspan": 12,
     "defaultData": {
       "imgSrc": "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/OGH_LogoWide.png",
       "width": "300",
@@ -38,7 +38,7 @@
     "name": "Content Slot",
     "type": "content-slot",
     "icon": "menu",
-    "colspan": 24,
+    "colspan": 8,
     "defaultData": {
       "content": "Here you’ll find course materials and a range of tools to help you get the most out of the class. Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
     }

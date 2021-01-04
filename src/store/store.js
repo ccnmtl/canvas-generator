@@ -75,6 +75,16 @@ export default new Vuex.Store({
 
       return res
     },
+    getSlotsByRowID: state => {
+      const res = {}
+
+      state.slots.forEach((slot) => {
+        if (slot.rid in res) res[slot.rid].push(slot)
+        else res[slot.rid] = [slot]
+      })
+
+      return res
+    },
     getColumnsByRowID: state => {
       const res = {}
 

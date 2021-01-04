@@ -1,0 +1,32 @@
+[
+    {
+        "id": 0,
+        "name": "Blank Row",
+        "type": "blank_row",
+        "icon": "blank"
+    },
+    {
+        "id": 1,
+        "name": "Banner Row",
+        "type": "banner_row",
+        "icon": "image"
+    },
+    {
+        "id": 2,
+        "name": "Welcome Row",
+        "type": "welcome_row",
+        "icon": "image"
+    },
+    {
+        "id": 3,
+        "name": "Instructor/TA Row",
+        "type": "instructor_ta_row",
+        "icon": "image"
+    },
+    {
+        "id": 4,
+        "name": "Dates/Times Row",
+        "type": "dates_times_row",
+        "icon": "image"
+    }
+]

@@ -11,7 +11,7 @@
                     :rid="row.rid"
                     :row="row" />
 
-      <button data-hidden class="new-row" @click="addRow">Add new Row</button>
+      <button data-hidden class="new-row" @click="chooseRow">Add new Row</button>
       <button data-hidden class="new-row" @click="getHTMLCode">get HTML</button>
     </div>
 
@@ -55,6 +55,14 @@ export default {
   methods: {
     addRow() {
       this.$store.dispatch("addRow", { cid: this.cid })
+    },
+    chooseRow(){
+      this.$store.dispatch("setDialogData", {
+        title: 'Choose Row Type',
+        type: 'choose-row',
+        cid: this.cid,
+      })
+      this.$store.dispatch("setDialogVisibility", true)
     },
     getHTMLCode() {
       console.log(this.$refs.canvascode)
