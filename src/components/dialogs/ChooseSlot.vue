@@ -56,6 +56,7 @@ export default {
 .slot {
   text-align: center;
   padding: 0 12px;
+  margin-bottom: 16px;
 
   .slot-content {
     transition: all 0.43s;

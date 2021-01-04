@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import mutations from "../../store/mutations"
 
 export default {
   name: "TitleSlot",

@@ -69,10 +69,10 @@
     <!-- MENU CONTENT -->
     <div id="offcanvas-slide" uk-offcanvas>
         <div class="uk-offcanvas-bar uk-background">
-    		<ul class="uk-nav uk-nav-default">
+        <ul class="uk-nav uk-nav-default">
           <li class="uk-nav-header"><router-link class="router" to="/guide">USER GUIDE</router-link></li>
-    			<li class="uk-nav-header">TEMPLATES</li>
-    			<li><router-link class="router" to="/home">Home Page</router-link></li>
+          <li class="uk-nav-header">TEMPLATES</li>
+          <li><router-link class="router" to="/home">Home Page</router-link></li>
           <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
           <li v-show="info.classType.option == 'Executive Training'"><router-link class="router" to="/program">Program Overview</router-link></li>
           <li><router-link class="router" to="/activities">Activites</router-link></li>
@@ -81,16 +81,18 @@
 
           <li class="uk-nav-header"><router-link class="router" to="/export">Export/Import Data</router-link></li>
           <li class="uk-nav-header"><router-link class="router" to="/credits">CREDITS</router-link></li>
-    			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
-    			<li><router-link to="/">Course Builder Home</router-link></li>
-    			<li><a href="https://www.opengov.network/" target="_blank">Canvas Website</a></li>
-    			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
-    		</ul>
+          <li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
+          <li><router-link to="/">Course Builder Home</router-link></li>
+          <li><a href="https://www.opengov.network/" target="_blank">Canvas Website</a></li>
+          <li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
+        </ul>
         </div>
     </div>
 
     <!-- COURSE INFO DIALOG -->
-    <el-dialog title="Course Info" :visible.sync="dialogFormVisible" style="width: 80%; margin:auto;">
+    <el-dialog title="Course Info"
+               :visible.sync="dialogFormVisible"
+               style="width: 80%; margin:auto;">
       <div class="left">
         <p>
           <label for="coursetitle" style="min-width: 90px">Course Title</label>
@@ -140,9 +142,41 @@
           </el-switch>
         </p>
       </div>
+
+      <el-button @click="showingCourses = true">Show all courses</el-button>
+
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
         <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- ALL COURSES DIALOG -->
+    <el-dialog title="All Courses"
+               :visible.sync="showingCourses"
+               style="width: 80%; margin:auto;">
+
+      <div class="courses">
+        <div class="course"
+             v-for="course in $store.getters.getSavedStates"
+             :key="course.uuid"
+             :class="{ active: course.uuid == currentCourse }"
+             @click="currentCourse = course.uuid">
+          <h3>{{ JSON.parse(course.info).title }}</h3>
+          <small>{{ course.uuid }}</small>
+        </div>
+      </div>
+
+      <div class="add-new">
+        <label>Add new course</label>
+        <input class="form-control" v-model="newCourseName" placeholder="New course name" />
+        <el-button type="primary" :disabled="!newCourseName" @click="addNewCourse('default')">Save from default</el-button>
+        <el-button type="primary" :disabled="!newCourseName" @click="addNewCourse('current')">Save from current state</el-button>
+      </div>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="showingCourses = false">Cancel</el-button>
+        <el-button type="primary" @click="chooseCourse">Choose</el-button>
       </span>
     </el-dialog>
 
@@ -162,6 +196,10 @@
       width="50%">
         <component :is="dialogData.type" :dialogData="dialogData" @cancelDialog="closeDialog" />
     </el-dialog>
+
+    <transition name="fade" appear>
+      <settings v-show="isSettingsVisible" />
+    </transition>
   </div>
 </template>
 
@@ -170,6 +208,7 @@ import saveState from "vue-save-state"
 import { mapGetters, mapMutations, mapActions } from "vuex"
 import help from "./store/help"
 import mutations from "./store/mutations"
+import Settings from "./components/common/Settings.vue"
 
 // Dialog Types
 import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
@@ -178,10 +217,11 @@ import UploadImage from "./components/dialogs/UploadImage.vue"
 import DeleteRow from './components/dialogs/DeleteRow.vue'
 import DeleteColumn from './components/dialogs/DeleteColumn.vue'
 
-var moment = require("moment")
+import moment from "moment"
 
 export default {
   components: {
+    Settings,
     ChooseSlot,
     DeleteSlot,
     UploadImage,
@@ -193,12 +233,60 @@ export default {
     return {
       hasImportData: false,
       dialogFormVisible: false,
-      exportData: {}
+      exportData: {},
+      showingCourses: false,
+      newCourseName: '',
+      currentCourse: null
+    }
+  },
+  created() {
+    const self = this
+
+    if(self.getCurrentCourse == null) {
+      self.$store.dispatch('addSavedState')
+      .then(current => {
+        self.$store.dispatch('setCurrentCourse', current)
+        self.currentCourse = current
+      })
+    }
+
+    else {
+      self.currentCourse = self.getCurrentCourse
     }
   },
   methods: {
     ...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
     ...mapActions(["updateWeek"]),
+    addNewCourse(from) {
+      const self = this
+      if(from === 'current') {
+
+        self.$store.dispatch('setSavedState', self.getCurrentCourse)
+        .then(() => {
+          self.$store.dispatch('setInfoField', {
+            field: 'title',
+            value: self.newCourseName
+          })
+          setTimeout(() => {
+            self.$store.dispatch('addSavedState')
+            .then(current => {
+              self.$store.dispatch('setCurrentCourse', current)
+              self.currentCourse = current
+              self.newCourseName = ''
+            })
+          }, 500)
+        })
+      }
+    },
+    chooseCourse() {
+      const self = this
+      self.$store.dispatch('setSavedState', self.getCurrentCourse)
+      .then(() => {
+        self.$store.dispatch('chooseSavedState', self.currentCourse)
+        self.$store.dispatch('setCurrentCourse', self.currentCourse)
+        self.showingCourses = false
+      })
+    },
     getSaveStateConfig() {
       return {
         cacheKey: "App"
@@ -210,6 +298,7 @@ export default {
   },
   mixins: [saveState, mutations],
   computed: {
+    ...mapGetters([ 'isSettingsVisible', 'getCurrentCourse', 'getSavedStates' ]),
     loading() {
       return this.$store.getters.loading
     },
@@ -251,7 +340,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 *,
 *::before,
 *::after {
@@ -319,5 +408,51 @@ html {
 .bcTrail li a:hover {
   text-decoration: none;
   color: #39f;
+}
+
+.courses {
+  overflow: auto;
+  max-height: 40vh;
+
+  .course {
+    border: 1px solid #CCC;
+    padding: 16px;
+    margin-bottom: 7px;
+    cursor: pointer;
+
+    h3 {
+      margin-bottom: 1px;
+    }
+
+    small {
+      color: #777;
+    }
+
+    &.active {
+      border-color: #409EFF;
+      background-color: #eff5fc;
+      cursor: default;
+
+      h3, small {
+        color: #409EFF;
+      }
+    }
+  }
+}
+
+.add-new {
+  margin: 25px 0 7px;
+
+  button {
+    margin-top: 12px;
+    padding: 12px 25px;
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
