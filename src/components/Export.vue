@@ -131,6 +131,7 @@ import home from "./Home"
 
 import headings from "../store/export-headings"
 import moment from "moment"
+import { mapActions } from 'vuex'
 
 export default {
   name: "Export",
@@ -150,6 +151,8 @@ export default {
     console.log(manifest)
   },
   methods: {
+    ...mapActions(['updateInfo','updateTheme','updateWeeks']),
+
     onImportFileChange(changeEvent) {
       let file = changeEvent.target.files[0]
       if (!file) {
@@ -385,8 +388,8 @@ export default {
       }, 1500)
     },
     performImport() {
-      this.$store.commit("updateInfo", this.importData.store.info)
-      this.$store.commit("updateTheme", this.importData.store.theme.theme)
+      this.updateInfo(this.importData.store.info)
+      this.updateTheme(this.importData.store.theme.theme)
 
       if (!this.info.students) this.info.students = []
 
@@ -394,7 +397,7 @@ export default {
         if (!week.cases) week.cases = []
       })
 
-      this.$store.commit("updateWeeks", this.importData.store.weeks)
+      this.updateWeeks(this.importData.store.weeks)
       this.$router.push({ path: "/home" })
     },
     exportJSON() {

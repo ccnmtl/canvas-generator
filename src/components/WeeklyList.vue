@@ -341,7 +341,6 @@ export default {
       //this.updateDates()
     },
     setToDefault() {
-      //this.$store.commit("updateWeeks", [])
       this.updateWeeks([])
       this.populateActivities(12)
     },

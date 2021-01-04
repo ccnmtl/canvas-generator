@@ -37,7 +37,6 @@ export default {
         return this.$store.getters.getInfo
       },
       set(payload) {
-        //this.$store.commit("updateInfo", payload)
         this.updateInfo(payload)
       }
     },
