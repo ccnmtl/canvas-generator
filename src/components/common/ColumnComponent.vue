@@ -25,10 +25,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
 
 import SlotComponent from "./SlotComponent.vue"
-import SlotTypes from "../../util/slot-types.json"
 
 export default {
   components: {
@@ -71,6 +69,13 @@ export default {
 .el-col {
   padding: 0 10px;
 
+  &:hover {
+    .actions {
+      height: 50px;
+      margin-bottom: 20px;
+    }
+  }
+
   &.empty {
     padding: 16px 0;
     min-height: 20vh;
@@ -85,18 +90,19 @@ export default {
   }
 
   .actions {
-    text-align: center;
+    transition: all 0.43s;
+    text-align: right;
     opacity: .34;
     transition: all 0.43s;
-    margin-bottom: 12px;
+    margin-bottom: 0px;
+    overflow: hidden;
+    height: 0;
 
     &:hover {
       opacity: 1;
     }
 
     .btn {
-      width: 40%;
-      max-width: 205px;
       margin: 12px 3px 0;
     }
   }

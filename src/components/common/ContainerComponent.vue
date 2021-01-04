@@ -25,12 +25,10 @@
 
 import Vue from 'vue'
 import _ from "lodash"
-import { uuid } from "vue-uuid"
 import { mapGetters } from "vuex"
 
 import RowComponent from "./RowComponent.vue"
 import DefaultData from '../../util/default-data.json'
-import SlotTypes from '../../util/slot-types.json'
 
 export default {
   components: {
@@ -67,7 +65,7 @@ export default {
     getHTMLCode() {
       console.log(this.$refs.canvascode)
       let html = document.createElement("div")
-      html.innerHTML = this.$refs.canvascode.outerHTML.replace(/data-v[^ ]*?>/g, ">").replace(/(<\!--.*?-->|data-v[^>]*? )/g, "")
+      html.innerHTML = this.$refs.canvascode.outerHTML.replace(/data-v[^ ]*?>/g, ">").replace(/(<!--.*?-->|data-v[^>]*? )/g, "")
 
       html.querySelectorAll('[data-hidden], #previewpage').forEach(element => {
         element.remove()
@@ -91,7 +89,7 @@ export default {
       this.previewing = false
     }
   },
-  beforeMount() { 
+  beforeMount() {
     let page = _.find(DefaultData.pages, { cid: this.cid })
 
     this.$store.dispatch('createRowsFromArray', {

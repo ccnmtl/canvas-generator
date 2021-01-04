@@ -19,6 +19,7 @@
 
 <script>
 
+import _ from 'lodash'
 import SlotTypes from '../../util/slot-types.json'
 
 // Slot Types
@@ -26,6 +27,7 @@ import BannerSlot from '../slots/BannerSlot.vue'
 import TitleSlot from '../slots/TitleSlot.vue'
 import ImageSlot from '../slots/ImageSlot.vue'
 import ContentSlot from '../slots/ContentSlot.vue'
+import SpacerSlot from '../slots/SpacerSlot.vue'
 
 export default {
   components: {
@@ -33,6 +35,7 @@ export default {
     TitleSlot,
     ImageSlot,
     ContentSlot,
+    SpacerSlot,
   },
   props: [ "sid", "slotData", "colspan" ],
   data() {
@@ -40,12 +43,12 @@ export default {
       data: {}
     }
   },
-  beforeMount() {
-    this.data = _.cloneDeep(this.slotData)
-  },
   watch: {
-    slotData(val, oldVal) {
-      this.data = _.cloneDeep(val)
+    slotData: {
+      handler(val) {
+        this.data = _.cloneDeep(val)
+      },
+      immediate: true
     }
   },
   computed: {
@@ -68,13 +71,14 @@ export default {
         type: 'config-slot',
         slotData: this.data
       })
-      this.$store.dispatch("setDialogVisibility", true)      
+      this.$store.dispatch("setDialogVisibility", true)
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
+
 .slot-outer {
   .delete-options {
     transition: all 0.43s;
@@ -106,7 +110,7 @@ export default {
 
       &:hover {
         padding: 10px 11px;
-        
+
         span {
           width: 77px;
         }

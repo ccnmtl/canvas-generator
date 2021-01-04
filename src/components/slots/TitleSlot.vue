@@ -20,8 +20,6 @@
 
 <script>
 import Vue from 'vue'
-import _ from 'lodash'
-import mutations from "../../store/mutations"
 
 export default {
   name: "TitleSlot",
@@ -46,7 +44,7 @@ export default {
   },
   watch: {
     getterData: {
-      handler(newVal, oldVal) {
+      handler(newVal) {
         if (newVal !== null) {
           if(!this.data) {
             this.data = {}
@@ -74,7 +72,7 @@ export default {
             setter: this.slotItem.getter
           })
         }
-        
+
         this.$store.dispatch("updateSlotData", {
           item: this.slotItem,
           data: this.data
