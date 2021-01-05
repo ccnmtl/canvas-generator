@@ -27,13 +27,13 @@ export default {
   methods: {
     ...mapActions(['addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo', "updateTheme"]),
     updateProp(prop, value) {
-      this.$store.commit('updateProp', { prop, value })
+      this.$store.dispatch('updateProp', { prop, value })
     },
     updateUser(user, prop, value) {
-      this.$store.commit('updateUser', { user, prop, value })
+      this.$store.dispatch('updateUser', {user, prop, value})
     },
     updateWeek(index, prop, value) {
-      this.$store.commit('updateWeek', { index, prop, value })
+      this.$store.dispatch('updateWeek', { index, prop, value })
     },
     // Copies the text when user selects the code output area
     copyText(option) {

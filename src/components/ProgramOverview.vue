@@ -373,20 +373,7 @@ export default {
     },
     AddActivity() {
       let index = this.weeks.length + 1
-
-      if (index > 15 && this.info.classType.dateType == "Week") index = 15
-
-      let tempWeek = _.cloneDeep(this.getDWeek)
-      tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + ".png"
-      tempWeek.date = moment()
-      tempWeek.title = "Lecture " + index
-      tempWeek.secondTitle = "Lecture " + index + " II"
-
-      // let tempWeek = this.dWeek
-      // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
-
-      //this.addWeek(tempWeek)
-      addWeek(tempWeek)
+      this.addWeek(index)
     },
     // Adds a user inputted number of activities
     populateActivities(num) {

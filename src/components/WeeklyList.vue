@@ -320,14 +320,11 @@ export default {
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
     AddActivity() {
       let index = this.weeks.length + 1
-      this.$store.dispatch("addActivity", index)
-
+      this.addWeek(index)
     },
     // Adds a user inputted number of activities
     populateActivities(num) {
       let diff = num - this.weeks.length
-
-      console.log(diff)
 
       if (diff > 0) {
         for (let i = 0; i < diff; i++) this.AddActivity()
@@ -338,7 +335,6 @@ export default {
         this.sliceWeek(num)
       }
 
-      //this.updateDates()
     },
     setToDefault() {
       this.updateWeeks([])
@@ -388,7 +384,6 @@ export default {
   mounted() {
     if (this.needsInit) {
       console.log("populating...")
-      // this.populateActivities(12)
       this.needsInit = false
     }
     this.updateCode("list-code")

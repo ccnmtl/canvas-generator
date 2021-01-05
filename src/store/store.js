@@ -147,8 +147,8 @@ export default new Vuex.Store({
     deleteStudent: ({ commit }, student) => {
       commit('deleteStudent', student)
     },
-    updateUser: ({ commit }, user) => {
-      commit('updateUser', user)
+    updateUser: ({ commit }, { user, prop, value }) => {
+      commit('updateUser', { user, prop, value })
     },
     clearStudents: ({ commit, getters }) => {
       commit('clearStudents')
@@ -159,17 +159,33 @@ export default new Vuex.Store({
     },
 
     //Week Actions
-    addWeek: ({ commit, getters }, data = {}) => {
+    addWeek: ({ commit, getters, state }, data = {}) => {
+
       let dWeek = _.cloneDeep(getters.getDWeek)
-      let week = {...dWeek, ...data}
-      week.id = uuid.v1()
-      commit('addWeek', week)
+
+      if (typeof(data) == "number"){
+        let index = data
+        if (index > 15 && state.info.classType.dateType == "Week") index = 15
+
+        dWeek.imgSrc = state.imageServer + state.info.classType.dateType.toLowerCase() + index + ".png"
+        dWeek.date = moment()
+        dWeek.title = "Lecture " + index
+        dWeek.secondTitle = "Lecture " + index + " II"
+
+        commit('addWeek', dWeek)
+      }
+      else{
+        let week = {...dWeek, ...data}
+        week.id = uuid.v1()
+        commit('addWeek', week)
+      }
+
     },
     deleteWeek: ({ commit }, week) => {
       commit('deleteWeek', week)
     },
-    updateWeek: ({ commit }, data) => {
-      commit('updateWeek', data)
+    updateWeek: ({ commit }, { index, prop, value }) => {
+      commit('updateWeek', { index, prop, value })
     },
     sliceWeek: ({ commit }, week) => {
       commit('sliceWeek', week)
@@ -198,8 +214,7 @@ export default new Vuex.Store({
         if (testCase.id == caseStudy.id) isUnique = false
       })
 
-      if (isUnique)       
-      commit('addCase', { index, caseStudy })
+      if (isUnique) commit('addCase', { index, caseStudy })
     },
 
     addAssignment:({ commit, getters }, index, data = {}) => {
@@ -231,8 +246,8 @@ export default new Vuex.Store({
     },
 
     //Info Actions
-    updateProp: ({ commit }, prop) => {
-      commit('updateProp', prop)
+    updateProp: ({ commit }, { prop, value }) => {
+      commit('updateProp', { prop, value })
     },
     updateSpecificInfo: ({ commit }, payload) => {
       commit('updateSpecificInfo', payload)
@@ -375,9 +390,6 @@ export default new Vuex.Store({
       tempWeek.title = "Lecture " + index
       tempWeek.secondTitle = "Lecture " + index + " II"
 
-      // let tempWeek = this.dWeek
-      // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
-      //
       state.weeks.push(tempWeek)
 
     },
