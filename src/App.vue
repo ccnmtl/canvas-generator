@@ -208,7 +208,10 @@ import mutations from "./store/mutations"
 
 // Dialog Types
 import ConfigSlot from "./components/dialogs/ConfigSlot.vue"
+
+import ChooseRow from "./components/dialogs/ChooseRow.vue"
 import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
+
 import DeleteSlot from "./components/dialogs/DeleteSlot.vue"
 import UploadImage from "./components/dialogs/UploadImage.vue"
 import DeleteRow from './components/dialogs/DeleteRow.vue'
@@ -219,6 +222,7 @@ import moment from "moment"
 export default {
   components: {
     ConfigSlot,
+    ChooseRow,
     ChooseSlot,
     DeleteSlot,
     UploadImage,

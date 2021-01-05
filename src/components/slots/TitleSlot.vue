@@ -1,6 +1,8 @@
 <template>
   <div :id="sid" ref="slotcontainer" class="col">
-    <div class="heading uk-margin-small-top" v-html="header" v-if="editing !== 'title'" @dblclick="setEditing('title')" />
+    <div :class="data.type" v-if="editing !== 'title'" @dblclick="setEditing('title')">
+      {{ data.title }}
+    </div>
     <span data-hidden v-else>
       <input ref="title" v-model="data.title" :class="'font-' + data.type" />
       <select v-model="data.type" :class="'font-' + data.type">
@@ -10,6 +12,7 @@
         <option value="h4">H4</option>
         <option value="h5">H5</option>
         <option value="h6">H6</option>
+        <option value="custom">Custom</option>
       </select>
       <button class="btn btn-primary" :class="'font-' + data.type" @click="finishEditing">
         Save changes
@@ -34,9 +37,6 @@ export default {
     }
   },
   computed: {
-    header: function () {
-      return `<${this.data.type}>${this.data.title}</${this.data.type}>`
-    },
     getterData: function () {
       if(!this.slotItem.getter) return null
       return this.$store.getters.getFromGetter(this.slotItem.getter)
@@ -86,10 +86,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-.heading {
-  padding-left: 16px;
-}
 
 input {
   margin-bottom: 12px;
@@ -155,7 +151,7 @@ select {
   }
 }
 
-.small {
+.small-col {
   input {
     width: 100%;
     display: block;

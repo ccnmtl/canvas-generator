@@ -11,7 +11,7 @@
                     :rid="row.rid"
                     :row="row" />
 
-      <button data-hidden class="new-row" @click="addRow">Add new Row</button>
+      <button data-hidden class="new-row" @click="chooseRow">Add new Row</button>
       <button data-hidden class="new-row" @click="getHTMLCode">get HTML</button>
     </div>
 
@@ -23,12 +23,11 @@
 
 <script>
 
-import Vue from 'vue'
 import _ from "lodash"
 import { mapGetters } from "vuex"
 
 import RowComponent from "./RowComponent.vue"
-import DefaultData from '../../util/default-data.json'
+import RowTypes from '../../util/row-types.json'
 
 export default {
   components: {
@@ -53,6 +52,14 @@ export default {
   methods: {
     addRow() {
       this.$store.dispatch("addRow", { cid: this.cid })
+    },
+    chooseRow(){
+      this.$store.dispatch("setDialogData", {
+        title: 'Choose Row Type',
+        type: 'choose-row',
+        cid: this.cid,
+      })
+      this.$store.dispatch("setDialogVisibility", true)
     },
     getHTMLCode() {
       console.log(this.$refs.canvascode)
@@ -82,11 +89,22 @@ export default {
     }
   },
   beforeMount() {
-    let page = _.find(DefaultData.pages, { cid: this.cid })
+    const self = this
 
-    this.$store.dispatch('createRowsFromArray', {
-      cid: 'home',
-      rows: Vue.jsonToArray(page.rows)
+    const rows = [
+      'banner-row',
+      'welcome-row',
+      'instructor-ta-row',
+      'dates-times-row'
+    ]
+
+    rows.forEach(row => {
+      const actualRowType = _.find(RowTypes, { 'type': row })
+      self.$store.dispatch('createRowsFromArray', {
+        cid: self.cid,
+        rows: actualRowType.array
+      })
+
     })
   }
 }
@@ -95,6 +113,7 @@ export default {
 <style lang="scss">
 .canvas-code {
   padding: 25px 0;
+  font-size: 14px;
 
   &.blocked {
     .row {

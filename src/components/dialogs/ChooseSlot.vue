@@ -3,8 +3,9 @@
     <div class="row">
       <el-col v-for="slot in slotTypes" :key="slot.id" :span="6" class="slot">
         <div class="slot-content"
-             :class="{ selected: slot.id === selectedSlot }"
-             @click="selectedSlot = slot.id">
+             :class="[{ selected: slot.id === selectedSlot }, 
+                      { disabled: slot.colspan > dialogData.space }]"
+             @click="slot.colspan <= dialogData.space ? selectedSlot = slot.id : null">
           <div class="slot-icon">
             <i :class="'el-icon-' + slot.icon"></i>
           </div>
@@ -81,6 +82,13 @@ export default {
       border-color: #20a0ff;
       color: #20a0ff;
       cursor: default;
+    }
+
+    &.disabled {
+      background-color: #CCC;
+      cursor: not-allowed;
+      border-color: #999;
+      opacity: .52;
     }
   }
 }

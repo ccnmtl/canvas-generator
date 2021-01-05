@@ -64,6 +64,7 @@ export default {
 
 .pad-box-mega {
   margin: 0 -10px;
+  height: auto;
 }
 
 .logo {

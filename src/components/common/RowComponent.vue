@@ -11,7 +11,7 @@
     </div>
 
     <div data-hidden class="actions" v-else>
-      <button v-if="columns.length < 3" @click="addColumn" class="btn btn-primary float">
+      <button v-if="columns.length < 3 && totalWidth < 24" @click="addColumn" class="btn btn-primary float">
         <i class="el-icon-plus"></i>
         <span>Add Column</span>
       </button>
@@ -27,7 +27,8 @@
                       :col="column"
                       :rid="rid"
                       :cid="row.cid"
-                      :colspan="24 / columns.length" />
+                      :colspan="24 / columns.length"
+                      :space="24 - totalWidth" />
 
   </div>
 </template>
@@ -47,6 +48,19 @@ export default {
   computed: {
     columns: function() {
       return this.$store.getters.getColumnsByRowID[this.rid]
+    }, 
+    slots() {
+      return this.$store.getters.getSlotsByRowID[this.rid]
+    },
+    totalWidth() {
+      if(!this.slots) return 0
+
+      let res = 0
+      this.slots.forEach(slot => {
+        let type = _.find(SlotTypes, { id: slot.type })
+        res += type.colspan 
+      });
+      return res
     }
   },
   methods: {

@@ -173,7 +173,7 @@ export default {
             rid: column.rid,
             cid: column.cid,
             colid: column.colid,
-            data: actualSlotType.defaultData
+            data: slot.data ? slot.data : actualSlotType.defaultData
           })
         }
         else {
@@ -185,6 +185,8 @@ export default {
             cid: column.cid,
             colid: column.colid,
             data: slot.data ? slot.data : actualSlotType.defaultData,
+            classes: slot.classes ? slot.classes : [],
+            styles: slot.styles ? slot.styles : [],
             getter: slot.getter
           })
         }

@@ -12,7 +12,7 @@
                :slotData="data.data"
                :slotItem="data"
                :sid="sid"
-               :class="[{ small: colspan < 24 }, ...data.classes]"
+               :class="[{ 'small-col': colspan < 24 }, ...data.classes]"
                :style="data.styles" />
   </div>
 </template>
@@ -24,18 +24,24 @@ import SlotTypes from '../../util/slot-types.json'
 
 // Slot Types
 import BannerSlot from '../slots/BannerSlot.vue'
+import ButtonsSlot from '../slots/ButtonsSlot.vue'
 import TitleSlot from '../slots/TitleSlot.vue'
 import ImageSlot from '../slots/ImageSlot.vue'
 import ContentSlot from '../slots/ContentSlot.vue'
 import SpacerSlot from '../slots/SpacerSlot.vue'
+import SimpleListSlot from '../slots/SimpleListSlot.vue'
+import NameValueSlot from '../slots/NameValueSlot.vue'
 
 export default {
   components: {
     BannerSlot,
+    ButtonsSlot,
     TitleSlot,
     ImageSlot,
     ContentSlot,
     SpacerSlot,
+    SimpleListSlot,
+    NameValueSlot,
   },
   props: [ "sid", "slotData", "colspan" ],
   data() {

@@ -25,18 +25,18 @@
     </el-popover>
 
     <div>
-    	<ul class="uk-tab uk-flex-center" data-uk-tab="{connect:'#tab-content'}">
+      <ul class="uk-tab uk-flex-center" data-uk-tab="{connect:'#tab-content'}">
         <li class="uk-active"><a href="#">Course Info</a></li>
         <li><a href="#">Description</a></li>
-    		<li><a href="#">Instructor</a></li>
-    		<li v-if="info.tas.length > 0"><a href="#">TA</a></li>
-    		<li><a href="#">Meeting Times</a></li>
-    		<li><a href="#">Video / Photo</a></li>
+        <li><a href="#">Instructor</a></li>
+        <li v-if="info.tas.length > 0"><a href="#">TA</a></li>
+        <li><a href="#">Meeting Times</a></li>
+        <li><a href="#">Video / Photo</a></li>
         <li><a href="#">Banner</a></li>
         <li><a href="#">Buttons</a></li>
-    	</ul>
-    	<ul id="tab-content" class="uk-switcher uk-margin">
-    		<li class="uk-active uk-text-center">
+      </ul>
+      <ul id="tab-content" class="uk-switcher uk-margin">
+        <li class="uk-active uk-text-center">
 
           <!-- Alerts based on validation of course title and url -->
           <el-alert
@@ -58,7 +58,7 @@
 
         </li>
 
-    		<li class="uk-text-center">
+        <li class="uk-text-center">
           <div class='quill'>
             <quill-editor ref="myTextEditor"
                           :value="info.description"
@@ -66,9 +66,9 @@
                           :config="editorOption">
             </quill-editor>
           </div>
-    		</li>
+        </li>
 
-    		<li class="uk-text-center">
+        <li class="uk-text-center">
 
           <div v-for="prof in info.profs" :key="prof.id">
           <el-input autosize :value="prof.name" style="width: 150px;" @input="updateUser(prof, 'name', $event)"></el-input>
@@ -77,20 +77,20 @@
           </div>
         </li>
 
-    		<li class="uk-text-center" v-if="info.tas.length > 0">
+        <li class="uk-text-center" v-if="info.tas.length > 0">
           <div v-for="ta in info.tas" :key="ta.id">
             <el-input autosize :value="ta.name" style="width: 150px;" @input="updateUser(ta, 'name', $event)"></el-input>
             <el-input autosize :value="ta.email" style="width: 250px;" @input="updateUser(ta, 'email', $event)"></el-input>
             <el-input autosize :value="ta.office" style="width: 400px;" @input="updateUser(ta, 'office', $event)"></el-input> <br>
           </div>
-    		</li>
+        </li>
 
-    		<li class="uk-text-center">
+        <li class="uk-text-center">
           <el-input autosize style="width: 400px;" :value="info.meetings" @input="updateProp('meetings', $event)"></el-input>
           <el-input autosize style="width: 400px;" :value="info.discussions" @input="updateProp('discussions', $event)"></el-input> <br>
-    		</li>
+        </li>
 
-    		<li class="uk-text-center">
+        <li class="uk-text-center">
           <button type="button" class="uk-button uk-button-primary " name="button" @click="mediaSwitch">{{userInput.mediaSwitchText}}</button>
           <el-input autosize style="width: 400px;" v-show="info.isVideo" :value="info.video" @input="updateProp('video', $event)" ></el-input>
           <form  style="display: inline-block;" v-show="!info.isVideo" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
@@ -110,7 +110,7 @@
               <!-- <el-checkbox v-if="theme.wide" v-model="info.wideBanner" @input="updateProp('wideBanner', $event)" >Use Wide Banner</el-checkbox> -->
           </label>
 
-    		</li>
+        </li>
         <li class="uk-text-center">
           Syllabus Button
           <el-switch
@@ -124,7 +124,7 @@
             @input="updateProp('weekButton', $event)">
           </el-switch>
         </li>
-    	</ul>
+      </ul>
     </div>
 
     <hr />
@@ -137,7 +137,7 @@
         <div id="home-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain canvas-code">
           <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]" style="postition: relative">
             <img  v-if="theme.logo" :src="theme.logo" style="margin-top: -10px; margin-left: 10px" />
-            <img  style="float: right; height: 100px; margin-top: 10px;" v-if="theme.rightLogo" :src="theme.rightLogo"/> 
+            <img  style="float: right; height: 100px; margin-top: 10px;" v-if="theme.rightLogo" :src="theme.rightLogo"/>
             <div v-if="!theme.logo"> <br> </div>
             <p>{{info.title.toUpperCase()}}</p>
             <p class="STV1_CourseCode">{{info.semester}}</p>
@@ -147,7 +147,7 @@
               <div class="col-xs-6">
                 <div class="styleguide-section__grid-demo-element">
                   <div v-if="!info.isVideo" >
-                    <img :src="info.image" class="STV1_WeeklyIconIMG" alt=""> </img>
+                    <img :src="info.image" class="STV1_WeeklyIconIMG" alt="" />
                   </div>
                   <div v-if="info.isVideo" class="embed-container">
                     <iframe :src="this.videoLink" width="300" height="150" allowfullscreen="allowfullscreen"
@@ -223,8 +223,8 @@
 
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
         <div class="uk-background-muted uk-padding">
-    		<p>Copyright © Columbia University. All rights reserved.</p>
-       	</div>
+        <p>Copyright © Columbia University. All rights reserved.</p>
+        </div>
     </div>
 
 
@@ -239,11 +239,6 @@ import { quillEditor } from "vue-quill-editor"
 import validator from "validator"
 import _ from "lodash"
 import mutations from "../store/mutations"
-import homeView from "./render/homeView"
-
-import xml2js from "xml2js"
-import JSZip from "jszip"
-import JSZipUtils from "jszip-utils"
 
 var toolbarOptions = [
   ["bold", "italic", "underline"],
@@ -271,8 +266,7 @@ export default {
     }
   },
   components: {
-    quillEditor,
-    homeView
+    quillEditor
   },
   mixins: [saveState, mutations],
   computed: {
@@ -325,7 +319,7 @@ export default {
         this.updateProp(prop, dInfo[prop])
       })
     },
-    onFormSubmit(type, ev) {
+    onFormSubmit(type) {
       var formData = new FormData()
 
       if (type == "url") {

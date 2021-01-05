@@ -32,7 +32,7 @@ export default {
   components: {
     SlotComponent
   },
-  props: [ "col", "cid", "rid", "colspan" ],
+  props: [ "col", "cid", "rid", "colspan", "space" ],
   data() {
     return {}
   },
@@ -56,7 +56,8 @@ export default {
         type: 'choose-slot',
         cid: this.cid,
         rid: this.rid,
-        colid: this.col.colid
+        colid: this.col.colid,
+        space: this.space
       })
       this.$store.dispatch("setDialogVisibility", true)
     }

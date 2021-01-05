@@ -36,9 +36,8 @@ GlobalMethods.install = function (Vue, options) {
     Object.values(json).forEach(row => {
       let last = (array.push([])) - 1;
       row.columns.forEach(column => {
-        array[last].push(column.slots)
-      })
-      
+        array[last].push(column.slots);
+      });      
     });
     return array;
   };
