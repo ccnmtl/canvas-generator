@@ -75,7 +75,8 @@ export default {
         response => {
           console.log("success")
           let imageData = JSON.parse(response.bodyText)
-          this.$store.dispatch("updateSlotData", { sid: this.dialogData.sid, data: {imgSrc: imageData.imageUrls[0], width: this.imgWidth, height: this.imgHeight} })
+          console.log(this.dialogData)
+          this.$store.dispatch("updateSlotData", { item: this.dialogData.item , data: {imgSrc: imageData.imageUrls[0], width: this.imgWidth, height: this.imgHeight} })
           // this.info.image = imageData.imageUrls[0] // Change requisite weekly activity image src to the hosted file
           this.$emit('cancelDialog')
         },

@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <container-component cid="home" defaultRows="defRows"/>
+    <container-component cid="home" :defaultRows="defRows"/>
   </div>
 
 </template>
