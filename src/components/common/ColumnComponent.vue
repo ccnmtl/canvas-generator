@@ -1,5 +1,5 @@
 <template>
-  <el-col :class="{ empty: !slots }" :span="colspan">
+  <div :class="[{ empty: !slots}, 'col-xs-'+colspan, 'el-col']" >
     <div data-hidden class="empty-text" v-if="!slots">
       Start adding slots to this column!
 
@@ -21,7 +21,7 @@
       <button @click="showSlotOptions" class="btn btn-primary">Add Slot</button>
     </div>
 
-  </el-col>
+  </div>
 </template>
 
 <script>
