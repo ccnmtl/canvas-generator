@@ -40,7 +40,7 @@ export default {
     saveChoice() {
       const actualRowType = _.find(RowTypes, { 'id': this.selectedRow })
 
-      if(actualRowType.type === 'blank_row') {
+      if(actualRowType.type === 'blank-row') {
         this.$store.dispatch('addRow', {
           cid: this.dialogData.cid,
         })
