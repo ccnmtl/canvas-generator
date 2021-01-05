@@ -33,7 +33,7 @@ export default {
   components: {
     RowComponent
   },
-  props: [ "cid" ],
+  props: [ "cid", "defaultRows" ],
   data() {
     return {
       previewing: false,
@@ -103,16 +103,9 @@ export default {
   beforeMount() {
     const self = this
 
-    const rows = [
-      'banner-row',
-      'welcome-row',
-      'instructor-ta-row',
-      'dates-times-row'
-    ]
-
     // If no rows exist in the current container, build using default
     if (!this.rows) {
-      rows.forEach(row => {
+      this.defaultRows.forEach(row => {
         const actualRowType = _.find(RowTypes, { 'type': row })
         self.$store.dispatch('createRowsFromArray', {
           cid: self.cid,
