@@ -110,14 +110,17 @@ export default {
       'dates-times-row'
     ]
 
-    rows.forEach(row => {
-      const actualRowType = _.find(RowTypes, { 'type': row })
-      self.$store.dispatch('createRowsFromArray', {
-        cid: self.cid,
-        rows: actualRowType.array
-      })
+    // If no rows exist in the current container, build using default
+    if (!this.rows) {
+      rows.forEach(row => {
+        const actualRowType = _.find(RowTypes, { 'type': row })
+        self.$store.dispatch('createRowsFromArray', {
+          cid: self.cid,
+          rows: actualRowType.array
+        })
 
-    })
+      })
+    }
   }
 }
 </script>
