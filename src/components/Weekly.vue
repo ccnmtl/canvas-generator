@@ -18,7 +18,7 @@
         <h3 style="margin-bottom: 15px;"><i class="icon-folder"></i> {{category.category}}</h3>
       </div>
 
-      <div v-for="caseStudy in category.cases" class="content-box" :key="caseStudy.videoCase">
+      <div v-for="caseStudy in category.cases" class="content-box" :key="caseStudy.id">
         <div class="grid-row top-xs">
           <div class="col-xs-4">
             <div class="styleguide-section__grid-demo-element">
@@ -176,7 +176,7 @@
     <transition name="fade">
       <div  v-if="weeks[selected].cases.length > 0">
 
-        <div v-for="caseStudy in weeks[selected].cases" :key="caseStudy.videoCase">
+        <div v-for="caseStudy in weeks[selected].cases" :key="caseStudy.id">
         <div class="STV1_SlimBanner">
           <p>PICKER CENTER CASE COLLECTION</p>
         </div>

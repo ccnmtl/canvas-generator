@@ -205,16 +205,19 @@ export default new Vuex.Store({
     addCase: ({ commit, state }, {index, caseStudy}) => {
     
       let week = state.weeks[index]
-      if(!week.cases) week.cases = []
-      week.cases.push(caseStudy)
-      let arr = state.weeks[index].cases
 
-      let isUnique = true
-      arr.forEach(function(testCase) {
-        if (testCase.id == caseStudy.id) isUnique = false
-      })
-
-      if (isUnique) commit('addCase', { index, caseStudy })
+      if(week.cases.length == 0){
+        commit('addCase', { index, caseStudy })
+      }
+      else{
+        let arr = week.cases
+        let isUnique = true
+        arr.forEach(function(testCase) {
+          if (testCase.id == caseStudy.id) isUnique = false
+        })
+  
+        if (isUnique) commit('addCase', { index, caseStudy })        
+      }
     },
 
     addAssignment:({ commit, getters }, index, data = {}) => {
@@ -363,7 +366,7 @@ export default new Vuex.Store({
       state.weeks[index].videos.push(video)
     },
 
-    addCase: (state, index, caseStudy) => {
+    addCase: (state, { index, caseStudy }) => {
       state.weeks[index].cases.push(caseStudy) 
     },
 
