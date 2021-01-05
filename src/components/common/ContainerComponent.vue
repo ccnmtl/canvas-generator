@@ -69,7 +69,19 @@ export default {
       html.querySelectorAll('[data-hidden], #previewpage').forEach(element => {
         element.remove()
       })
-      console.log(html)
+      setTimeout(() => {
+        var aux = document.createElement("input");
+        aux.setAttribute("value", html.outerHTML);
+        aux.id = 'code-input-copy'
+        document.body.appendChild(aux);
+        aux.select();
+        console.log('creating aux element..')
+        document.execCommand('copy')
+        console.log('copying text..')
+          aux.style.display = "none";
+          
+      }, 40)
+      this.$snotify.success('Code has been copied', { showProgressBar: false });
     },
     previewPage() {
       let html = this.$refs.canvascode
