@@ -84,7 +84,7 @@ export default {
   methods: {
     ...mapActions(['createColumnsFromArray']),
     buildHomeSidebar(options){
-      let column = this.colTypes.homeSidebar
+      let column = _.cloneDeep(this.colTypes.homeSidebar)
       let {cid, rid} = options
 
       // overwrite data with anything specifically added to the options parameter, initally for the title
@@ -96,7 +96,7 @@ export default {
       this.createColumnsFromArray({columns, rid})
     },
     buildInstructorList(options){
-      let column = this.colTypes.instructorList
+      let column = _.cloneDeep(this.colTypes.instructorList)
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.list)

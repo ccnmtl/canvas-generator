@@ -27,7 +27,7 @@ export default {
   methods: {
     ...mapActions(['createRowsFromArray']),
     buildHomeWelcomeRow(options){
-      let row = this.rowTypes.homeWelcome
+      let row = _.cloneDeep(this.rowTypes.homeWelcome)
       let cid = options.cid
 
       let rows = [row]
