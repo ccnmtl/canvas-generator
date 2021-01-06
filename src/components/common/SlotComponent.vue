@@ -1,6 +1,6 @@
 <template>
   <div class="slot-outer">
-    <div data-hidden class="delete-options">
+    <div  class="delete-options">
       <el-button @click="showConfigSlot"
                  type="secondary"
                  icon="el-icon-s-tools"
@@ -20,7 +20,10 @@
 <script>
 
 import _ from 'lodash'
-import SlotTypes from '../../util/slot-types.json'
+import SlotTypesComponent from '../../util/slot-types.js'
+const SlotTypes = SlotTypesComponent.computed.SlotTypes()
+
+console.log(SlotTypes)
 
 // Slot Types
 import BannerSlot from '../slots/BannerSlot.vue'
