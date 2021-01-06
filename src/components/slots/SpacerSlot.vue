@@ -1,5 +1,8 @@
 <template>
-  <div :id="sid" class="col spacer-slot"></div>
+  <div :id="sid" class="col spacer-slot">
+    <span v-if="data.useHR" > <hr> </span>
+    <span v-for="n in data.size" :key="n"> <br> </span>
+  </div>
 </template>
 
 <script>

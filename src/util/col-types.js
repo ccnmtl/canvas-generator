@@ -5,16 +5,15 @@ import _ from 'lodash'
 export default {
 
   computed: {
-    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID'])
-  },
-  data() {
-    return {
-      colTypes: {
+    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo']),
+    colTypes(){
+      console.log(this.getInfo)
+      let res = {
         homeSidebar: [
           {
             type: "title-slot",
             data: {
-              title: "Welcome to",
+              title: "WELCOME TO " + this.getInfo.title.toUpperCase(),
               type: "custom"
             },
             classes: ["STV1_Welcome"],
@@ -79,6 +78,11 @@ export default {
         ],
 
       }
+      return res
+    }
+  },
+  data() {
+    return {
     }
   },
   methods: {
@@ -88,9 +92,9 @@ export default {
       let {cid, rid} = options
 
       // overwrite data with anything specifically added to the options parameter, initally for the title
-      column[0] = _merge(column[0], options.title)
-      column[1] = _merge(column[1], options.content)
-      column[2] = _merge(column[2], options.button)
+      column[0] = _.merge(column[0], options.title)
+      column[1] = _.merge(column[1], options.content)
+      column[2] = _.merge(column[2], options.button)
 
       let columns = [column]
       this.createColumnsFromArray({columns, rid})

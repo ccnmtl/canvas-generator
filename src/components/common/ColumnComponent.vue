@@ -5,6 +5,7 @@
 
       <div class="empty-button">
         <button @click="showSlotOptions" class="btn btn-primary btn-block">Add Slot</button>
+        <button @click="buildHomeSidebar({rid})" class="btn btn-primary btn-block">Add Custom Col</button>
       </div>
 
       <div>You can also <a @click="deleteColumn">delete</a> this column.</div>
@@ -27,11 +28,13 @@
 <script>
 
 import SlotComponent from "./SlotComponent.vue"
+import ColumnTypes from "../../util/col-types"
 
 export default {
   components: {
     SlotComponent
   },
+  mixins: [ColumnTypes],
   props: [ "col", "cid", "rid", "colspan", "space" ],
   data() {
     return {}
