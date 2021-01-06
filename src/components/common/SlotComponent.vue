@@ -1,42 +1,68 @@
 <template>
   <div class="slot-outer">
-    <div class="delete-options">
-      <el-button @click="showDeleteSlot" type="danger" icon="el-icon-delete" circle></el-button>
+    <div  class="delete-options">
+      <el-button @click="showConfigSlot"
+                 type="secondary"
+                 icon="el-icon-s-tools"
+                 circle>
+        <span>Slot Options</span>
+      </el-button>
     </div>
     <component :is="type"
-               :slotData="slotData.data"
-               :slotItem="slotData"
+               :slotData="data.data"
+               :slotItem="data"
                :sid="sid"
-               :class="{ small: colspan < 24 }" />
+               :class="[{ 'small-col': colspan < 24 }, ...data.classes]"
+               :style="data.styles" />
   </div>
 </template>
 
 <script>
 
-import SlotTypes from '../../util/slot-types.json'
+import _ from 'lodash'
+import SlotTypesComponent from '../../util/slot-types.js'
+const SlotTypes = SlotTypesComponent.computed.SlotTypes()
+
+console.log(SlotTypes)
 
 // Slot Types
 import BannerSlot from '../slots/BannerSlot.vue'
+import ButtonsSlot from '../slots/ButtonsSlot.vue'
 import TitleSlot from '../slots/TitleSlot.vue'
 import ImageSlot from '../slots/ImageSlot.vue'
 import ContentSlot from '../slots/ContentSlot.vue'
+import SpacerSlot from '../slots/SpacerSlot.vue'
+import SimpleListSlot from '../slots/SimpleListSlot.vue'
+import NameValueSlot from '../slots/NameValueSlot.vue'
 
 export default {
   components: {
     BannerSlot,
+    ButtonsSlot,
     TitleSlot,
     ImageSlot,
     ContentSlot,
+    SpacerSlot,
+    SimpleListSlot,
+    NameValueSlot,
   },
   props: [ "sid", "slotData", "colspan" ],
   data() {
     return {
-
+      data: {}
+    }
+  },
+  watch: {
+    slotData: {
+      handler(val) {
+        this.data = _.cloneDeep(val)
+      },
+      immediate: true
     }
   },
   computed: {
     type() {
-      return _.find(SlotTypes, { 'id': this.slotData.type }).type
+      return _.find(SlotTypes, { 'id': this.data.type }).type
     },
   },
   methods: {
@@ -47,32 +73,65 @@ export default {
         sid: this.sid
       })
       this.$store.dispatch("setDialogVisibility", true)
+    },
+    showConfigSlot() {
+      this.$store.dispatch("setDialogData", {
+        title: 'Config Slot',
+        type: 'config-slot',
+        slotData: this.data
+      })
+      this.$store.dispatch("setDialogVisibility", true)
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.delete-options {
-  transition: all 0.43s;
-  width: 3vw;
-  float: left;
-  z-index: 100;
-  text-align: center;
-  position: relative;
-  margin-top: 5px;
-  opacity: 0;
-  margin-bottom: -100%;
 
-  button {
-    margin: 4px 0;
+.slot-outer {
+  .delete-options {
+    transition: all 0.43s;
+    width: 3vw;
+    float: left;
+    z-index: 100;
+    text-align: center;
+    position: relative;
+    margin-top: -25px;
+    margin-left: -20px;
+    opacity: 0;
+    margin-bottom: -100%;
+
+    button {
+      transition: all 0.43s;
+      margin: 4px 0;
+      border-radius: 20px;
+      box-shadow: 1px 1px 3px 0 #00000044;
+      padding: 10px 6px 10px 11px;
+
+      span {
+        transition: all 0.43s;
+        display: inline-block;
+        width: 0;
+        overflow: hidden;
+        margin-left: 0;
+        vertical-align: text-top;
+      }
+
+      &:hover {
+        padding: 10px 11px;
+
+        span {
+          width: 77px;
+        }
+      }
+    }
   }
 
   &:hover {
-    margin-top: 10px;
-    opacity: 1;
+    .delete-options {
+      margin-top: -16px;
+      opacity: 1;
+    }
   }
-
 }
-
 </style>

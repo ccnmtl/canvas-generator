@@ -1,35 +1,33 @@
 <template>
-  <div :id="sid" class="col content-slot">
-    <img :src="data.imgSrc" :style="[forceDimensions ? {width: data.width + 'px', height: data.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()" />
+  <div :id="sid" class="col spacer-slot">
+    <span v-if="data.useHR" > <hr> </span>
+    <span v-for="n in data.size" :key="n"> <br> </span>
   </div>
 </template>
 
 <script>
 
-
-
 export default {
-  name: "ImageSlot",
+  name: "SpacerSlot",
   props: [ "sid", "slotData", "slotItem" ],
   data() {
     return {
       editing: null,
       data: this.slotData,
-      forceDimensions: false,
-      imgWidth: 300,
-      imgHeight: 300,
     }
   },
   methods: {
-    openUploadDialog(){
-      this.$store.dispatch("setDialogData", {
-        title: 'Upload Image',
-        type: 'upload-image',
-        defaultWidth: 300,
-        defaultHeight: 300,
-        item: this.slotItem
-      })
-      this.$store.dispatch("setDialogVisibility", true)
+    setEditing(field) {
+      this.editing = field
+    },
+    finishEditing() {
+      if(this.data.content) {
+        this.$store.dispatch("updateSlotData", {
+          item: this.slotItem,
+          data: this.data
+        })
+        this.editing = null
+      }
     },
     deleteSlot() {
       this.$store.dispatch("setDialogData", {
@@ -46,7 +44,7 @@ export default {
 <style scoped lang="scss">
 
 .content-slot {
-  padding: 12px;
+  padding: 16px;
   color: #333;
 }
 

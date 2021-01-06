@@ -1,0 +1,34 @@
+
+import _ from 'lodash'
+import defaults from '../components/defaults'
+
+export default {
+
+  //DEFAULTS AND THEME ALSO INJECTED HERE THROUGH MODULES
+
+  //GENERAL COURSE INFO
+  info: _.cloneDeep(defaults.state.infoDefault),
+
+  // Where the weeks are stored
+  weeks: [],
+
+  // UTILS
+  loading: false,
+  settingsFormVisible: false,
+  prevPage: "/home",
+  nextPage: "/weekly",
+  imageServer: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/",
+  rows: [],
+  slots: [],
+  columns: [],
+  dialogVisible: false,
+  settingsVisible: false,
+  dialogData: {
+    title: 'Choose Slot Type',
+    type: 'choose-slot'
+  },
+  editingFields: [],
+  pagesSet: [],
+  savedStates: [],
+  currentCourse: null
+}

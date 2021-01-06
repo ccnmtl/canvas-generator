@@ -1,23 +1,21 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { uuid } from "vue-uuid"
-import createPersistedState from 'vuex-persistedstate'
-import VuexPersistence from 'vuex-persist'
-import _ from 'lodash'
+import createPersistedState from 'vuex-persistedstate';
 
-import defaults from './components/defaults'
-import theme from './components/theme'
-import cases from './components/cases'
+import defaults from './components/defaults';
+import theme from './components/theme';
+import cases from './components/cases';
 
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage
-})
+// import Vuex elements
+import state from './main/state';
+import actions from './main/actions';
+import getters from './main/getters';
+import mutations from './main/mutations';
 
 Vue.use(Vuex);
 
-var moment = require('moment');
-
 export default new Vuex.Store({
+<<<<<<< HEAD
   state: {
 
     //DEFAULTS AND THEME ALSO INJECTED HERE THROUGH MODULES
@@ -422,10 +420,16 @@ export default new Vuex.Store({
       state = payload
     },    
   },
+=======
+  state,
+  getters,
+  actions,
+  mutations,
+>>>>>>> d8a8778930a4ca474f6b1f42ef8216cc968c013e
   modules: {
     defaults,
     theme,
     cases
   },
-  plugins: [] // [createPersistedState()]
-})
+  plugins: [createPersistedState()]
+});

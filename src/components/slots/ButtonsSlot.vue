@@ -1,36 +1,28 @@
 <template>
-  <div :id="sid" class="col content-slot">
-    <img :src="data.imgSrc" :style="[forceDimensions ? {width: data.width + 'px', height: data.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()" />
+  <div :id="sid" class="col button-slot">
+    <template v-for="button in data.buttons">
+      <button class="Button" v-if="button.type == 'button'" :key="button.label">{{ button.label }}</button>
+      <router-link class="Button"
+         style="margin-right: 5px"
+         v-else
+         :key="button.label"
+         :to="button.to ? button.to : '/'">{{ button.label }}</router-link>
+    </template>
   </div>
 </template>
 
 <script>
 
-
-
 export default {
-  name: "ImageSlot",
+  name: "ButtonsSlot",
   props: [ "sid", "slotData", "slotItem" ],
   data() {
     return {
       editing: null,
       data: this.slotData,
-      forceDimensions: false,
-      imgWidth: 300,
-      imgHeight: 300,
     }
   },
   methods: {
-    openUploadDialog(){
-      this.$store.dispatch("setDialogData", {
-        title: 'Upload Image',
-        type: 'upload-image',
-        defaultWidth: 300,
-        defaultHeight: 300,
-        item: this.slotItem
-      })
-      this.$store.dispatch("setDialogVisibility", true)
-    },
     deleteSlot() {
       this.$store.dispatch("setDialogData", {
         title: 'Are you sure you want to delete this slot?',

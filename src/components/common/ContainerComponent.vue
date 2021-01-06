@@ -11,7 +11,7 @@
                     :rid="row.rid"
                     :row="row" />
 
-      <button data-hidden class="new-row" @click="addRow">Add new Row</button>
+      <button data-hidden class="new-row" @click="chooseRow">Add new Row</button>
       <button data-hidden class="new-row" @click="getHTMLCode">get HTML</button>
     </div>
 
@@ -22,19 +22,18 @@
 </template>
 
 <script>
+
 import _ from "lodash"
-import { uuid } from "vue-uuid"
 import { mapGetters } from "vuex"
 
 import RowComponent from "./RowComponent.vue"
-import DefaultData from '../../util/default-data.json'
-import SlotTypes from '../../util/slot-types.json'
+import RowTypes from '../../util/row-types.json'
 
 export default {
   components: {
     RowComponent
   },
-  props: [ "cid" ],
+  props: [ "cid", "defaultRows" ],
   data() {
     return {
       previewing: false,
@@ -54,15 +53,35 @@ export default {
     addRow() {
       this.$store.dispatch("addRow", { cid: this.cid })
     },
+    chooseRow(){
+      this.$store.dispatch("setDialogData", {
+        title: 'Choose Row Type',
+        type: 'choose-row',
+        cid: this.cid,
+      })
+      this.$store.dispatch("setDialogVisibility", true)
+    },
     getHTMLCode() {
       console.log(this.$refs.canvascode)
       let html = document.createElement("div")
-      html.innerHTML = this.$refs.canvascode.outerHTML.replace(/data-v[^ ]*?>/g, ">").replace(/(<\!--.*?-->|data-v[^>]*? )/g, "")
+      html.innerHTML = this.$refs.canvascode.outerHTML.replace(/data-v[^ ]*?>/g, ">").replace(/(<!--.*?-->|data-v[^>]*? )/g, "")
 
       html.querySelectorAll('[data-hidden], #previewpage').forEach(element => {
         element.remove()
       })
-      console.log(html)
+      setTimeout(() => {
+        var aux = document.createElement("input");
+        aux.setAttribute("value", html.outerHTML);
+        aux.id = 'code-input-copy'
+        document.body.appendChild(aux);
+        aux.select();
+        console.log('creating aux element..')
+        document.execCommand('copy')
+        console.log('copying text..')
+          aux.style.display = "none";
+          
+      }, 40)
+      this.$snotify.success('Code has been copied', { showProgressBar: false });
     },
     previewPage() {
       let html = this.$refs.canvascode
@@ -81,67 +100,18 @@ export default {
       this.previewing = false
     }
   },
-  created() {
+  beforeMount() {
     const self = this
-    let page = _.find(DefaultData.pages, { cid: self.cid })
 
-    function dispatchSlots() {
-      let totalSlots = 0
-      page.rows.forEach((row) => {
-        row.columns.forEach((column) => {
-          totalSlots += column.slots.length
-
-          column.slots.forEach((slot) => {
-            let data = _.find(self.columnsDone, { colid: column.colid })
-
-            self.$store.dispatch("addSlot", {
-              cid: self.cid,
-              rid: data.rid,
-              colid: data.colid,
-              type: _.find(SlotTypes, { type: slot }).id,
-              data: _.find(SlotTypes, { type: slot }).defaultData
-            })
-            .then(res => {
-              self.slotsDone.push(res)
-              if(self.slotsDone.length === totalSlots) {
-                self.loading = false
-                self.$store.dispatch('setPageData', self.cid)
-              }
-            })
-          })
+    // If no rows exist in the current container, build using default
+    if (!this.rows) {
+      this.defaultRows.forEach(row => {
+        const actualRowType = _.find(RowTypes, { 'type': row })
+        self.$store.dispatch('createRowsFromArray', {
+          cid: self.cid,
+          rows: actualRowType.array
         })
-      })
-    }
 
-    function dispatchColumns() {
-      let totalColumns = 0
-      page.rows.forEach((row) => {
-        totalColumns += row.columns.length
-
-        row.columns.forEach((column) => {
-          column.colid = uuid.v1()
-          self.$store.dispatch("addColumn", { cid: self.cid, rid: row.rid , colid: column.colid })
-          .then(res => {
-            self.columnsDone.push(res)
-            if(self.columnsDone.length === totalColumns) dispatchSlots()
-          })
-        })
-      })
-    }
-
-    if(!this.$store.getters.getPagesSet.includes(self.cid)) {
-      self.loading = true
-
-      page.rows.forEach((row, rowIndex, rowArr) => {
-        row.rid = uuid.v1()
-
-        self.$store.dispatch("addRow", { cid: self.cid, rid: row.rid })
-        .then(res => {
-          self.rowsDone.push(res)
-          if(self.rowsDone.length === rowArr.length) {
-            dispatchColumns()
-          }
-        })
       })
     }
   }
@@ -151,6 +121,7 @@ export default {
 <style lang="scss">
 .canvas-code {
   padding: 25px 0;
+  font-size: 14px;
 
   &.blocked {
     .row {

@@ -3,8 +3,9 @@
     <div class="row">
       <el-col v-for="slot in slotTypes" :key="slot.id" :span="6" class="slot">
         <div class="slot-content"
-             :class="{ selected: slot.id === selectedSlot }"
-             @click="selectedSlot = slot.id">
+             :class="[{ selected: slot.id === selectedSlot }, 
+                      { disabled: slot.colspan > dialogData.space }]"
+             @click="slot.colspan <= dialogData.space ? selectedSlot = slot.id : null">
           <div class="slot-icon">
             <i :class="'el-icon-' + slot.icon"></i>
           </div>
@@ -21,7 +22,8 @@
 
 <script>
 
-import SlotTypes from '../../util/slot-types.json'
+import SlotTypesComponent from '../../util/slot-types.js'
+const SlotTypes = SlotTypesComponent.computed.SlotTypes()
 
 export default {
   props: [
@@ -56,6 +58,7 @@ export default {
 .slot {
   text-align: center;
   padding: 0 12px;
+  margin-bottom: 16px;
 
   .slot-content {
     transition: all 0.43s;
@@ -80,6 +83,13 @@ export default {
       border-color: #20a0ff;
       color: #20a0ff;
       cursor: default;
+    }
+
+    &.disabled {
+      background-color: #CCC;
+      cursor: not-allowed;
+      border-color: #999;
+      opacity: .52;
     }
   }
 }

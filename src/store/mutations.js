@@ -69,21 +69,21 @@ export default {
       if (this.$route.path == '/home') this.updateProp('url', this.parseUrl(this.info.url))
       let code = document.getElementById(div);
       setTimeout(() => {
-        this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
+        this.outputCode = code.innerHTML.replace(/\bdata-v-\S+"/ig, "")
       }, 30)
-      this.outputCode = code.innerHTML.replace(/\bdata-v-\S+\"/ig, "")
+      this.outputCode = code.innerHTML.replace(/\bdata-v-\S+"/ig, "")
 
     },
     returnCode(div) {
       console.log("week code..")
       let code = document.getElementById(div)
       console.log(code)
-      return code.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
+      return code.innerHTML.replace(/\bdata-v-\S+"/gi, "")
     },
     // Parses the URL so that it always has a trailing backslash
     parseUrl(url) {
       url = url.replace(/\/?(\?|#|$)/, '/$1')
       return url
-    }
+    },
   },
 }

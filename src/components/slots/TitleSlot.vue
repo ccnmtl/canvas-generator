@@ -1,6 +1,8 @@
 <template>
   <div :id="sid" ref="slotcontainer" class="col">
-    <div class="heading uk-margin-small-top" v-html="header" v-if="editing !== 'title'" @dblclick="setEditing('title')" />
+    <div :class="data.type" v-if="editing !== 'title'" @dblclick="setEditing('title')">
+      {{ data.title }}
+    </div>
     <span data-hidden v-else>
       <input ref="title" v-model="data.title" :class="'font-' + data.type" />
       <select v-model="data.type" :class="'font-' + data.type">
@@ -10,20 +12,17 @@
         <option value="h4">H4</option>
         <option value="h5">H5</option>
         <option value="h6">H6</option>
+        <option value="custom">Custom</option>
       </select>
       <button class="btn btn-primary" :class="'font-' + data.type" @click="finishEditing">
         Save changes
-      </button>
-
-      <button class="btn btn-danger" :class="'font-' + data.type" @click="deleteSlot">
-        Delete Slot
       </button>
     </span>
   </div>
 </template>
 
 <script>
-import mutations from "../../store/mutations"
+import Vue from 'vue'
 
 export default {
   name: "TitleSlot",
@@ -31,12 +30,31 @@ export default {
   data() {
     return {
       editing: null,
-      data: this.slotData
+      data: this.slotData ? this.slotData : {
+        title: '',
+        type: 'h1'
+      }
     }
   },
   computed: {
-    header: function () {
-      return `<${this.slotData.type}>${this.slotData.title}</${this.slotData.type}>`
+    getterData: function () {
+      if(!this.slotItem.getter) return null
+      return this.$store.getters.getFromGetter(this.slotItem.getter)
+    }
+  },
+  watch: {
+    getterData: {
+      handler(newVal) {
+        if (newVal !== null) {
+          if(!this.data) {
+            this.data = {}
+            this.data.type = this.slotData ? this.slotData.type : "h1"
+          }
+
+          Vue.set(this.data, 'title', newVal ? newVal : 'No title')
+        }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -48,30 +66,26 @@ export default {
     },
     finishEditing() {
       if(this.data.title) {
+        if(this.slotItem.getter) {
+          this.$store.dispatch("updateSlotDataWithSetter", {
+            data: this.data.title,
+            setter: this.slotItem.getter
+          })
+        }
+
         this.$store.dispatch("updateSlotData", {
           item: this.slotItem,
           data: this.data
         })
+
         this.editing = null
       }
-    },
-    deleteSlot() {
-      this.$store.dispatch("setDialogData", {
-        title: 'Are you sure you want to delete this slot?',
-        type: 'delete-slot',
-        sid: this.sid
-      })
-      this.$store.dispatch("setDialogVisibility", true)
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-
-.heading {
-  padding-left: 16px;
-}
 
 input {
   margin-bottom: 12px;
@@ -137,7 +151,7 @@ select {
   }
 }
 
-.small {
+.small-col {
   input {
     width: 100%;
     display: block;

@@ -1,17 +1,18 @@
 <template>
-  <div class="row" :class="{ empty: !columns }">
+  <div class="row content-box" :class="{ empty: !columns }">
     <div data-hidden class="empty-text" v-if="!columns">
       Start adding columns to this row!
 
       <div class="empty-button">
         <button @click="addColumn" class="btn btn-primary btn-block">Add Column</button>
+        <button @click="buildHomeWelcomeRow({cid: row.cid})" class="btn btn-primary btn-block">Add Custom Row</button>
       </div>
 
       <div>You can also <a @click="deleteRow">delete</a> this row.</div>
     </div>
 
     <div data-hidden class="actions" v-else>
-      <button v-if="columns.length < 3" @click="addColumn" class="btn btn-primary float">
+      <button v-if="columns.length < 3 && totalWidth < 24" @click="addColumn" class="btn btn-primary float">
         <i class="el-icon-plus"></i>
         <span>Add Column</span>
       </button>
@@ -21,25 +22,31 @@
         <span>Delete Row</span>
       </button>
     </div>
+    <div class="grid-row">
+      <column-component v-for="column in columns"
+                          :key="column.colid"
+                          :col="column"
+                          :rid="rid"
+                          :cid="row.cid"
+                          :colspan="column.colspan || 12 / columns.length"
+                          :space="24 - totalWidth" />
 
-    <column-component v-for="column in columns"
-                      :key="column.colid"
-                      :col="column"
-                      :rid="rid"
-                      :cid="row.cid"
-                      :colspan="24 / columns.length" />
+    </div>
+    </div>
 
-  </div>
 </template>
 
 <script>
 import ColumnComponent from "./ColumnComponent.vue"
-import SlotTypes from "../../util/slot-types.json"
+import RowTypeMixin from "../../util/row-types"
+import SlotTypesComponent from '../../util/slot-types.js'
+const SlotTypes = SlotTypesComponent.computed.SlotTypes()
 
 export default {
   components: {
     ColumnComponent
   },
+  mixins: [RowTypeMixin],
   props: [ "rid", "row" ],
   data() {
     return {}
@@ -47,6 +54,19 @@ export default {
   computed: {
     columns: function() {
       return this.$store.getters.getColumnsByRowID[this.rid]
+    }, 
+    slots() {
+      return this.$store.getters.getSlotsByRowID[this.rid]
+    },
+    totalWidth() {
+      if(!this.slots) return 0
+
+      let res = 0
+      this.slots.forEach(slot => {
+        let type = _.find(SlotTypes, { id: slot.type })
+        res += type.colspan 
+      });
+      return res
     }
   },
   methods: {
@@ -96,10 +116,11 @@ export default {
     opacity: 0;
     float: right;
     position: relative;
-    margin: -7px -7px -38px;
+    margin: -7px -30px -38px;
+    z-index: 10;
 
     &.delete {
-      margin: 43px -7px -88px;
+      margin: 43px -30px -88px;
     }
 
     span {
@@ -120,4 +141,5 @@ export default {
 
   }
 }
+
 </style>

@@ -1,10 +1,11 @@
 <template>
-  <el-col :class="{ empty: !slots }" :span="colspan">
+  <div :class="[{ empty: !slots}, 'col-xs-'+colspan, 'el-col']" >
     <div data-hidden class="empty-text" v-if="!slots">
       Start adding slots to this column!
 
       <div class="empty-button">
         <button @click="showSlotOptions" class="btn btn-primary btn-block">Add Slot</button>
+        <button @click="buildHomeSidebar({rid})" class="btn btn-primary btn-block">Add Custom Col</button>
       </div>
 
       <div>You can also <a @click="deleteColumn">delete</a> this column.</div>
@@ -21,20 +22,20 @@
       <button @click="showSlotOptions" class="btn btn-primary">Add Slot</button>
     </div>
 
-  </el-col>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex"
 
 import SlotComponent from "./SlotComponent.vue"
-import SlotTypes from "../../util/slot-types.json"
+import ColumnTypes from "../../util/col-types"
 
 export default {
   components: {
     SlotComponent
   },
-  props: [ "col", "cid", "rid", "colspan" ],
+  mixins: [ColumnTypes],
+  props: [ "col", "cid", "rid", "colspan", "space" ],
   data() {
     return {}
   },
@@ -58,7 +59,8 @@ export default {
         type: 'choose-slot',
         cid: this.cid,
         rid: this.rid,
-        colid: this.col.colid
+        colid: this.col.colid,
+        space: this.space
       })
       this.$store.dispatch("setDialogVisibility", true)
     }
@@ -69,6 +71,13 @@ export default {
 <style scoped lang="scss">
 .el-col {
   padding: 0 10px;
+
+  &:hover {
+    .actions {
+      height: 50px;
+      margin-bottom: 20px;
+    }
+  }
 
   &.empty {
     padding: 16px 0;
@@ -84,18 +93,19 @@ export default {
   }
 
   .actions {
-    text-align: center;
+    transition: all 0.43s;
+    text-align: right;
     opacity: .34;
     transition: all 0.43s;
-    margin-bottom: 12px;
+    margin-bottom: 0px;
+    overflow: hidden;
+    height: 0;
 
     &:hover {
       opacity: 1;
     }
 
     .btn {
-      width: 40%;
-      max-width: 205px;
       margin: 12px 3px 0;
     }
   }
