@@ -7,7 +7,6 @@ export default {
   computed: {
     ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo']),
     colTypes(){
-      console.log(this.getInfo)
       let res = {
         homeSidebar: [
           {
@@ -55,6 +54,35 @@ export default {
               ]
             }
           }
+        ],
+        simpleBanner: [
+          {
+            type: "banner-slot",
+            data: {
+              useWideBanner: false
+            }
+          }
+        ],
+        syllabusComponent: [
+          {
+            type: "title-slot",
+          },
+          {
+            type: "content-slot",
+            data: {
+              content: 'This is a sample Syllabus Element'
+            },
+            styles: {
+            }
+          },
+          {
+            type: "spacer-slot",
+            data: {
+              useHR: true,
+              size: 2
+            }
+          }
+
         ],
         instructorList:
         [
@@ -104,6 +132,24 @@ export default {
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.list)
+
+      let columns = [column]
+      this.createColumnsFromArray({columns, rid})
+    },
+    buildSimpleBanner(options){
+      let column = _.cloneDeep(this.colTypes.simpleBanner)
+      let {cid, rid} = options
+
+      column[0] = _.merge(column[0], options.banner)
+
+      let columns = [column]
+      this.createColumnsFromArray({columns, rid})
+    },
+    buildSyllabusComponent(options){
+      let column = _.cloneDeep(this.colTypes.syllabusComponent)
+      let {cid, rid} = options
+
+      column[0] = _.merge(column[0], options.syllabus)
 
       let columns = [column]
       this.createColumnsFromArray({columns, rid})
