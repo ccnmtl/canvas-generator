@@ -1,6 +1,6 @@
 <template>
   <div :id="sid" class="col content-slot">
-    <img :src="slotData.imgSrc" :style="[forceDimensions ? {width: slotData.width + 'px', height: slotData.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()" />
+    <img :src="data.imgSrc" :style="[forceDimensions ? {width: data.width + 'px', height: data.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()" />
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 
 export default {
   name: "ImageSlot",
-  props: [ "sid", "slotData" ],
+  props: [ "sid", "slotData", "slotItem" ],
   data() {
     return {
       editing: null,
@@ -27,7 +27,7 @@ export default {
         type: 'upload-image',
         defaultWidth: 300,
         defaultHeight: 300,
-        sid: this.sid
+        item: this.slotItem
       })
       this.$store.dispatch("setDialogVisibility", true)
     },

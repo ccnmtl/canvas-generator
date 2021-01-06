@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 
 import defaults from './components/defaults';
 import theme from './components/theme';
@@ -23,5 +24,5 @@ export default new Vuex.Store({
     theme,
     cases
   },
-  plugins: [] // [createPersistedState()]
-})
+  plugins: [createPersistedState()]
+});

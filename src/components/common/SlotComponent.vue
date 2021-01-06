@@ -1,6 +1,6 @@
 <template>
   <div class="slot-outer">
-    <div class="delete-options" data-hidden>
+    <div data-hidden class="delete-options">
       <el-button @click="showConfigSlot"
                  type="secondary"
                  icon="el-icon-s-tools"

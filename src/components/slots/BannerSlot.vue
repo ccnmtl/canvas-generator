@@ -2,8 +2,8 @@
   <div :id="sid" class="col">
       <div :class="['pad-box-mega','STV1_Banner', data.wideBanner ? theme.wide : theme.banner]" style="postition: relative">
 
-        <img v-if="theme.logo" :src="theme.logo" class="logo left" />
-        <img v-if="theme.rightLogo" :src="theme.rightLogo" class="logo right" />
+        <img v-if="theme.logo" :src="theme.logo" style="margin-top: -10px; margin-left: 10px" />
+        <img v-if="theme.rightLogo" :src="theme.rightLogo" style="float: right; height: 100px; margin-top: 10px;" />
 
         <p>
           <span @dblclick="setEditing('title')" v-if="editing !== 'title'">{{ data.title.toUpperCase() }}</span>

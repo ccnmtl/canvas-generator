@@ -1,5 +1,5 @@
 <template>
-  <div class="row" :class="{ empty: !columns }">
+  <div class="row content-box" :class="{ empty: !columns }">
     <div data-hidden class="empty-text" v-if="!columns">
       Start adding columns to this row!
 
@@ -21,16 +21,18 @@
         <span>Delete Row</span>
       </button>
     </div>
+    <div class="grid-row">
+      <column-component v-for="column in columns"
+                          :key="column.colid"
+                          :col="column"
+                          :rid="rid"
+                          :cid="row.cid"
+                          :colspan="12 / columns.length"
+                          :space="24 - totalWidth" />
 
-    <column-component v-for="column in columns"
-                      :key="column.colid"
-                      :col="column"
-                      :rid="rid"
-                      :cid="row.cid"
-                      :colspan="24 / columns.length"
-                      :space="24 - totalWidth" />
+    </div>
+    </div>
 
-  </div>
 </template>
 
 <script>

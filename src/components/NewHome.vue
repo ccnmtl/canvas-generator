@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <container-component cid="home" />
+    <container-component cid="home" :defaultRows="defRows"/>
   </div>
 
 </template>
@@ -12,6 +12,12 @@ export default {
   name: "NewHome",
   data() {
     return {
+      defRows: [
+        'banner-row',
+        'welcome-row',
+        'instructor-ta-row',
+        'dates-times-row'
+      ]
     }
   },
   components: {

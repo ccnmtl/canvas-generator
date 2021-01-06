@@ -33,7 +33,7 @@ export default {
   components: {
     RowComponent
   },
-  props: [ "cid" ],
+  props: [ "cid", "defaultRows" ],
   data() {
     return {
       previewing: false,
@@ -69,7 +69,19 @@ export default {
       html.querySelectorAll('[data-hidden], #previewpage').forEach(element => {
         element.remove()
       })
-      console.log(html)
+      setTimeout(() => {
+        var aux = document.createElement("input");
+        aux.setAttribute("value", html.outerHTML);
+        aux.id = 'code-input-copy'
+        document.body.appendChild(aux);
+        aux.select();
+        console.log('creating aux element..')
+        document.execCommand('copy')
+        console.log('copying text..')
+          aux.style.display = "none";
+          
+      }, 40)
+      this.$snotify.success('Code has been copied', { showProgressBar: false });
     },
     previewPage() {
       let html = this.$refs.canvascode
@@ -91,21 +103,17 @@ export default {
   beforeMount() {
     const self = this
 
-    const rows = [
-      'banner-row',
-      'welcome-row',
-      'instructor-ta-row',
-      'dates-times-row'
-    ]
+    // If no rows exist in the current container, build using default
+    if (!this.rows) {
+      this.defaultRows.forEach(row => {
+        const actualRowType = _.find(RowTypes, { 'type': row })
+        self.$store.dispatch('createRowsFromArray', {
+          cid: self.cid,
+          rows: actualRowType.array
+        })
 
-    rows.forEach(row => {
-      const actualRowType = _.find(RowTypes, { 'type': row })
-      self.$store.dispatch('createRowsFromArray', {
-        cid: self.cid,
-        rows: actualRowType.array
       })
-
-    })
+    }
   }
 }
 </script>
