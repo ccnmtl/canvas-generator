@@ -55,6 +55,8 @@
     "colspan": 8,
     "visible": true,
     "defaultData": {
+      "useHR": true,
+      "size": 2
     }
   },
   {

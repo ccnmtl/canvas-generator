@@ -5,6 +5,7 @@
 
       <div class="empty-button">
         <button @click="addColumn" class="btn btn-primary btn-block">Add Column</button>
+        <button @click="buildHomeWelcomeRow({cid: row.cid})" class="btn btn-primary btn-block">Add Custom Row</button>
       </div>
 
       <div>You can also <a @click="deleteRow">delete</a> this row.</div>
@@ -37,12 +38,14 @@
 
 <script>
 import ColumnComponent from "./ColumnComponent.vue"
+import RowTypeMixin from "../../util/row-types"
 import SlotTypes from "../../util/slot-types.json"
 
 export default {
   components: {
     ColumnComponent
   },
+  mixins: [RowTypeMixin],
   props: [ "rid", "row" ],
   data() {
     return {}

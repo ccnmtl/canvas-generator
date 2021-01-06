@@ -1,6 +1,6 @@
 <template>
   <div :id="sid" class="col">
-      <div :class="['pad-box-mega','STV1_Banner', data.wideBanner ? theme.wide : theme.banner]" style="postition: relative">
+      <div v-if="useWideBanner" :class="['pad-box-mega','STV1_Banner', data.wideBanner ? theme.wide : theme.banner]" style="postition: relative">
 
         <img v-if="theme.logo" :src="theme.logo" style="margin-top: -10px; margin-left: 10px" />
         <img v-if="theme.rightLogo" :src="theme.rightLogo" style="float: right; height: 100px; margin-top: 10px;" />
@@ -17,6 +17,17 @@
             <input ref="semester" @blur="finishEditing('semester')" v-model="data.semester" />
           </span>
         </p>
+      </div>
+
+      <div v-else >
+        <div :class="['STV1_SlimBanner', theme.slim]" style="postition: relative">
+         <p>
+           <span @dblclick="setEditing('title')" v-if="editing !== 'title'">{{ data.title.toUpperCase() }}</span>
+           <span data-hidden v-else>
+             <input ref="title" @blur="finishEditing('title')" v-model="data.title" />
+           </span>
+         </p>
+        </div>
       </div>
   </div>
 </template>
@@ -37,7 +48,10 @@ export default {
     ...mapGetters({
       info: 'getInfo',
       theme: 'getTheme'
-    })
+    }),
+    useWideBanner(){
+      return this.slotData.useWideBanner
+    }
   },
   beforeMount() {
     this.data = this.info
