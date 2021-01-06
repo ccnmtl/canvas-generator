@@ -4,11 +4,11 @@
 
 // TODO Refactor more of the shared functions here (or to a seperate mixin file)
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(["getInfo", "getDWeek", 'getWeeks', 'getTheme', 'getStudents']),
+    ...mapGetters(["getInfo", "dWeek", 'getWeeks', 'getTheme', 'getStudents']),
     info() {
       return this.getInfo
     },
@@ -25,15 +25,17 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo', "updateTheme"]),
+    ...mapMutations([
+      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo', "updateTheme"
+    ]),
     updateProp(prop, value) {
-      this.$store.dispatch('updateProp', { prop, value })
+      this.$store.commit('updateProp', { prop, value })
     },
     updateUser(user, prop, value) {
-      this.$store.dispatch('updateUser', {user, prop, value})
+      this.$store.commit('updateUser', { user, prop, value })
     },
     updateWeek(index, prop, value) {
-      this.$store.dispatch('updateWeek', { index, prop, value })
+      this.$store.commit('updateWeek', { index, prop, value })
     },
     // Copies the text when user selects the code output area
     copyText(option) {

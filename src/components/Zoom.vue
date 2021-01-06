@@ -47,15 +47,15 @@
       <li>
       <div class="ig-row">
       <div class="ig-row__layout">
-      <div class="ig-type-icon" aria-hidden="true"> <i class="icon-group" /> </div>
+      <div class="ig-type-icon" aria-hidden="true"><i class="icon-group"></i></div>
       <div class="ig-info"><a class="ig-title" :href="info.zoomLink" target="_blank" rel="noopener"> LAUNCH ZOOM SESSION</a><a class="ig-title" href="#" target="_blank" rel="noopener"></a></div>
       </div>
       </div>
       </li>
-      <li v-for="(week, index) in weeks" :key="week.id">
+      <li v-for="(week, index) in weeks">
       <div class="ig-row">
       <div class="ig-row__layout">
-      <div class="ig-type-icon" aria-hidden="true"><i class="icon-group" /> </div>
+      <div class="ig-type-icon" aria-hidden="true"><i class="icon-group"></i></div>
       <div class="ig-info"><a href=""> Class Session {{index+1}} Recording</a></div>
       </div>
       </div>
@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters, mapMutations } from "vuex"
 import mutations from "../store/mutations"
 import saveState from "vue-save-state"
 import Home from "./Home"
@@ -131,12 +131,12 @@ export default {
   components: {},
   mixins: [mutations],
   computed: {
-    ...mapGetters(["getInfo", "getDWeek", "getWeeks"])
+    ...mapGetters(["getInfo", "dWeek", "getWeeks"])
   },
   methods: {
     setToDefault() {
       console.log("resetting data...")
-      let dInfo = _.cloneDeep(this.$store.getters.getDInfo)
+      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
       let props = ["zoomLink"]
 
       props.forEach(prop => {

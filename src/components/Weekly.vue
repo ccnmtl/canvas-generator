@@ -13,12 +13,12 @@
         <p>PICKER CENTER CASE COLLECTION</p>
       </div>
 
-      <div v-for="category in getCases" :key="category">
+      <div v-for="category in getCases">
       <div class="pad-box-mini">
         <h3 style="margin-bottom: 15px;"><i class="icon-folder"></i> {{category.category}}</h3>
       </div>
 
-      <div v-for="caseStudy in category.cases" class="content-box" :key="caseStudy.id">
+      <div v-for="caseStudy in category.cases" class="content-box">
         <div class="grid-row top-xs">
           <div class="col-xs-4">
             <div class="styleguide-section__grid-demo-element">
@@ -52,8 +52,9 @@
         <el-select v-model="selected" placeholder="Select" style="width: 150px; margin-left: 12vw; margin-right:12vw; margin-bottom: 15px;" class="input-element">
         <el-option
           v-for="(week, index) in weeks"
+          :key=index
           :label="info.classType.dateType + ' ' + (index + 1)"
-          :value="index" :key="week.id">
+          :value="index">
         </el-option>
         </el-select>
 
@@ -78,7 +79,7 @@
 
         <div class="quill">
           <quill-editor ref="myTextEditor"
-                        :value="weeks[selected].body"
+                        v-model="weeks[selected].body"
                         @input="updateWeek(selected,'body', $event)"
                         :config="editorOption">
           </quill-editor>
@@ -176,7 +177,7 @@
     <transition name="fade">
       <div  v-if="weeks[selected].cases.length > 0">
 
-        <div v-for="caseStudy in weeks[selected].cases" :key="caseStudy.id">
+        <div v-for="caseStudy in weeks[selected].cases">
         <div class="STV1_SlimBanner">
           <p>PICKER CENTER CASE COLLECTION</p>
         </div>
@@ -221,7 +222,7 @@
         </div>
         <div class="content-box">
           <div class="grid-row">
-            <div class="col-xs-12 col-lg-4" v-for="interview in caseStudy.aditionalInterviews" :key="interview">
+            <div class="col-xs-12 col-lg-4" v-for="interview in caseStudy.aditionalInterviews">
               <div class="styleguide-section__grid-demo-element">
                 <div class="embed-container"><iframe :src="interview" width="300" height="150"
                     allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen"
@@ -293,7 +294,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters, mapMutations } from "vuex"
 import mutations from "../store/mutations"
 import { quillEditor } from "vue-quill-editor"
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
@@ -358,7 +359,7 @@ export default {
   },
   mixins: [mutations],
   computed: {
-    ...mapGetters(["getInfo", "getDWeek", "getWeeks", "getCases"]),
+    ...mapGetters(["getInfo", "dWeek", "getWeeks", "getCases"]),
     caseOptions() {
       let cases = this.getCases
       let options = []
@@ -382,32 +383,69 @@ export default {
     }
   },
   methods: {
-
     addCase(caseStudy) {
-      let index = this.selected
-      this.$store.dispatch("addCase", {index, caseStudy})
-    },
+      let arr = _.cloneDeep(this.weeks[this.selected].cases)
 
+      let isUnique = true
+      arr.forEach(function(testCase) {
+        if (testCase.id == caseStudy.id) isUnique = false
+      })
+
+      if (isUnique) arr.push(caseStudy)
+      this.updateWeek(this.selected, "cases", arr)
+    },
     removeCase(caseStudy) {
-      let index = this.selected
-      this.$store.dispatch("removeCase", {index, caseStudy})
-    },
+      let arr = _.cloneDeep(this.weeks[this.selected].cases)
 
+      arr.forEach(function(testCase, index, array) {
+        if (testCase.id == caseStudy.id) {
+          console.log("splice")
+          arr.splice(index, 1)
+        }
+      })
+
+      this.updateWeek(this.selected, "cases", arr)
+    },
     addVideo() {
-       this.$store.dispatch("addVideo", this.selected)
+      let tempVideo = {
+        title: "All that Glitters is not Gold (18 minutes)",
+        description:
+          "‘All that Glitters is not Gold’ features various communities’ representatives concern about the introduction of genetically engineered ‘Golden’ rice in the Philippines.",
+        source: "https://www.youtube.com/watch?v=GxSGKD50ioE"
+      }
+      let arr = _.cloneDeep(this.weeks[this.selected].videos)
+      arr.push(tempVideo)
+      this.updateWeek(this.selected, "videos", arr)
     },
-
     addDiscussion() {
-      this.$store.dispatch("addDiscussion", this.selected)
-    },
+      let manifestID =
+        "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1)
+      let tempDisc = {
+        due: moment(this.weeks[this.selected].date).add(7, "d"),
+        id: manifestID,
+        link: "%24CANVAS_OBJECT_REFERENCE%24/discussion_topics/" + manifestID
+      }
 
+      let arr = _.cloneDeep(this.weeks[this.selected].discussions)
+      arr.push(tempDisc)
+      this.updateWeek(this.selected, "discussions", arr)
+    },
     addAssignment() {
-      this.$store.dispatch("addAssignment", this.selected)
-    },
+      let manifestID =
+        "ccb-session-" + (this.selected + 1) + "-assignment-" + (this.weeks[this.selected].assignments.length + 1)
+      let tempAssign = {
+        due: moment(this.weeks[this.selected].date).add(7, "d"),
+        id: manifestID,
+        link: "%24CANVAS_OBJECT_REFERENCE%24/assignments/" + manifestID
+      }
 
+      let arr = _.cloneDeep(this.weeks[this.selected].assignments)
+      arr.push(tempAssign)
+      this.updateWeek(this.selected, "assignments", arr)
+    },
     setToDefault() {
       console.log("resetting data...")
-      let dWeek = _.cloneDeep(this.$store.getters.getDWeek)
+      let dWeek = _.cloneDeep(this.$store.getters.dWeek)
       let props = ["description", "title", "body", "required", "videos", "discussions", "assignments", "cases"]
 
       props.forEach(prop => {

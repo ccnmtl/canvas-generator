@@ -91,20 +91,20 @@
       </div>
     </div>
 
-    <home v-show="false" ref="home" />
-    <zoom v-show="false" ref="zoom" />
-    <syllabus v-show="false" ref="syllabus" />
-    <list v-show="false" ref="list" />
+    <home v-show="false" ref="home"></home>
+    <zoom v-show="false" ref="zoom"></zoom>
+    <syllabus v-show="false" ref="syllabus"></syllabus> 
+    <list v-show="false" ref="list"></list>
     <div v-for="n in (weeks.length)" :key="n">
-      <week-view v-show="false" :idx="n-1" :ref="'week'+ n" />
+      <week-view v-show="false" :idx="n-1" :ref="'week'+ n"></week-view>
     </div>
     <div v-for="n in (info.students.length)" :key="n">
-      <student-view v-show="false" :idx="n-1" :ref="'student'+ n" />
+      <student-view v-show="false" :idx="n-1" :ref="'student'+ n"></student-view>
     </div>
-    <students-list v-show="false" ref="studentsList" />
+    <students-list v-show="false" ref="studentsList"></students-list>
 
 
-    <div class="clearfix" />
+    <div class="clearfix"></div>
 
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
       <div class="uk-background-muted uk-padding">
@@ -131,7 +131,6 @@ import home from "./Home"
 
 import headings from "../store/export-headings"
 import moment from "moment"
-import { mapActions } from 'vuex'
 
 export default {
   name: "Export",
@@ -143,6 +142,14 @@ export default {
     }
   },
   computed: {
+    loading: {
+      get() {
+        return this.$store.getters.loading
+      },
+      set(payload) {
+        this.$store.commit("updateLoading", payload)
+      }
+    }
   },
   components: { home, syllabus, weekView, list, zoom, studentView, studentsList },
   mixins: [mutations],
@@ -151,8 +158,6 @@ export default {
     console.log(manifest)
   },
   methods: {
-    ...mapActions(['updateInfo','updateTheme','updateWeeks']),
-
     onImportFileChange(changeEvent) {
       let file = changeEvent.target.files[0]
       if (!file) {
@@ -388,8 +393,8 @@ export default {
       }, 1500)
     },
     performImport() {
-      this.updateInfo(this.importData.store.info)
-      this.updateTheme(this.importData.store.theme.theme)
+      this.$store.commit("updateInfo", this.importData.store.info)
+      this.$store.commit("updateTheme", this.importData.store.theme.theme)
 
       if (!this.info.students) this.info.students = []
 
@@ -397,7 +402,7 @@ export default {
         if (!week.cases) week.cases = []
       })
 
-      this.updateWeeks(this.importData.store.weeks)
+      this.$store.commit("updateWeeks", this.importData.store.weeks)
       this.$router.push({ path: "/home" })
     },
     exportJSON() {
