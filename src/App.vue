@@ -94,11 +94,11 @@
       <div class="left">
         <p>
           <label for="coursetitle" style="min-width: 90px">Course Title</label>
-          <el-input name="coursetitle" style="width: 400px" placeholder="Please input" v-model="info.title" @input="updateProp('title', $event)"></el-input>
+          <el-input name="coursetitle" style="width: 400px" placeholder="Please input" :value="info.title" @input="updateProp('title', $event)"></el-input>
         </p>
         <p>
           <label for="courseurl" style="min-width: 90px">Course URL</label>
-          <el-input name="courseurl" style="width: 400px" placeholder="Please input" v-model="info.url" @input="updateProp('url', $event)"></el-input>
+          <el-input name="courseurl" style="width: 400px" placeholder="Please input" :value="info.url" @input="updateProp('url', $event)"></el-input>
         </p>
         <p>
         <!-- Course Type is currently not an option -->
@@ -124,7 +124,7 @@
          <p>
           <label for="select" style="min-width: 110px">Use Zoom</label>
           <el-switch
-            v-model="info.useZoom"
+            :value="info.useZoom"
             @input="updateProp('useZoom', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
@@ -133,7 +133,7 @@
         <p>
           <label for="select" style="min-width: 110px">Help Tooltips</label>
           <el-switch
-            v-model="info.usePops"
+            :value="info.usePops"
             @input="updateProp('usePops', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
@@ -167,7 +167,7 @@
 
 <script>
 import saveState from "vue-save-state"
-import { mapGetters, mapMutations, mapActions } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 import help from "./store/help"
 import mutations from "./store/mutations"
 
@@ -197,8 +197,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
-    ...mapActions(["updateWeek"]),
+    ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo", "addTA",
+                  "addProf", "addStudent"]),
     getSaveStateConfig() {
       return {
         cacheKey: "App"
@@ -240,13 +240,13 @@ export default {
         tempWeek.imgSrc =
           this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + ".png"
         tempWeek.date = moment().add((i-1), "w")
-        this.$store.dispatch("addWeek", tempWeek)
+        this.addWeek(tempWeek)
 
       }
     }
-    if (this.info.students.length < 1) this.$store.dispatch("addStudent")
-    if (this.info.profs.length < 1) this.$store.dispatch("addProf")
-    if (this.info.tas.length < 1) this.$store.dispatch("addTA")
+    if (this.info.students.length < 1) this.addStudent()
+    if (this.info.profs.length < 1) this.addProf()
+    if (this.info.tas.length < 1) this.addTA()
   }
 }
 </script>

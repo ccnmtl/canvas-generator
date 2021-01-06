@@ -86,6 +86,8 @@ export default new Vuex.Store({
     }
   },
   actions: {
+
+    //Slot Actions
     addRow: ({ commit }, row) => {
       if(!row.rid) row.rid = uuid.v1()
       commit('addRow', row)
@@ -119,8 +121,10 @@ export default new Vuex.Store({
     updateSlotData: ({ commit }, slot) => {
       commit('updateSlotData', slot)
     },
+
+    //User Actions
     addProf: ({ commit, getters }) => {
-      let prof = _.cloneDeep(getters.dProf)
+      let prof = _.cloneDeep(getters.getDProf)
       prof.id = uuid.v1()
       commit('addProf', prof)
     },
@@ -128,7 +132,7 @@ export default new Vuex.Store({
       commit('deleteProf', prof)
     },
     addTA: ({ commit, getters }) => {
-      let ta = _.cloneDeep(getters.dTA)
+      let ta = _.cloneDeep(getters.getDTA)
       ta.id = uuid.v1()
       commit('addTA', ta)
     },
@@ -136,33 +140,132 @@ export default new Vuex.Store({
       commit('deleteTA', ta)
     },
     addStudent: ({ commit, getters }) => {
-      let student = _.cloneDeep(getters.dStudent)
+      let student = _.cloneDeep(getters.getDStudent)
       student.id = _.uniqueId()
       commit('addStudent', student)
     },
     deleteStudent: ({ commit }, student) => {
       commit('deleteStudent', student)
     },
-    addWeek: ({ commit, getters }, data = {}) => {
-      let dWeek = _.cloneDeep(getters.dWeek)
-      let week = {...dWeek, ...data}
-      week.id = uuid.v1()
-      commit('addWeek', week)
+    updateUser: ({ commit }, { user, prop, value }) => {
+      commit('updateUser', { user, prop, value })
+    },
+    clearStudents: ({ commit, getters }) => {
+      commit('clearStudents')
+      let student = _.cloneDeep(getters.getDStudent)
+      student.id = _.uniqueId()
+      commit('addStudent', student)
+
+    },
+
+    //Week Actions
+    addWeek: ({ commit, getters, state }, data = {}) => {
+
+      let dWeek = _.cloneDeep(getters.getDWeek)
+
+      if (typeof(data) == "number"){
+        let index = data
+        if (index > 15 && state.info.classType.dateType == "Week") index = 15
+
+        dWeek.imgSrc = state.imageServer + state.info.classType.dateType.toLowerCase() + index + ".png"
+        dWeek.date = moment()
+        dWeek.title = "Lecture " + index
+        dWeek.secondTitle = "Lecture " + index + " II"
+
+        commit('addWeek', dWeek)
+      }
+      else{
+        let week = {...dWeek, ...data}
+        week.id = uuid.v1()
+        commit('addWeek', week)
+      }
+
     },
     deleteWeek: ({ commit }, week) => {
       commit('deleteWeek', week)
     },
-    updateWeek: ({ commit }, data) => {
-      commit('updateWeek', data)
+    updateWeek: ({ commit }, { index, prop, value }) => {
+      commit('updateWeek', { index, prop, value })
+    },
+    sliceWeek: ({ commit }, week) => {
+      commit('sliceWeek', week)
+    },
+    updateWeeks: ({ commit }, week) => {
+      commit('updateWeeks', week)
+    },
+
+    //Week Element Actions
+    addVideo: ({ commit, getters }, index, data = {}) => {
+      let dVideo= _.cloneDeep(getters.getDVideo)
+      let video = {...dVideo, ...data}
+      video.id = uuid.v1()
+      commit('addVideo', { video, index })
+    },
+
+    addCase: ({ commit, state }, {index, caseStudy}) => {
+    
+      let week = state.weeks[index]
+
+      if(week.cases.length == 0){
+        commit('addCase', { index, caseStudy })
+      }
+      else{
+        let arr = week.cases
+        let isUnique = true
+        arr.forEach(function(testCase) {
+          if (testCase.id == caseStudy.id) isUnique = false
+        })
+  
+        if (isUnique) commit('addCase', { index, caseStudy })        
+      }
+    },
+
+    addAssignment:({ commit, getters }, index, data = {}) => {
+      let dAssignment = _.cloneDeep(getters.getDAssignment)
+      let assignment = {...dAssignment, ...data}
+      assignment.id = uuid.v1()
+      commit('addAssignment', { assignment, index })
+    },
+
+    addDiscussion: ({ commit, getters }, index, data = {}) => {
+      let dDiscussion = _.cloneDeep(getters.getDDiscussion)
+      let discussion = {...dDiscussion, ...data}
+      discussion.id = uuid.v1()
+      commit('addDiscussion', {discussion, index})
+    },
+
+    addActivity: ({ commit, getters }, index) => {
+      let tempWeek = _.cloneDeep(getters.getDWeek)
+      commit('addActivity', {index, tempWeek})
+    },
+
+    removeCase: ({ commit }, {index, caseStudy}) => {
+      commit('removeCase', {index, caseStudy})
+    },
+
+    //Page Actions
+    setPageData: ({ commit }, page) => {
+      commit('setPageData', page)
+    },
+
+    //Info Actions
+    updateProp: ({ commit }, { prop, value }) => {
+      commit('updateProp', { prop, value })
     },
     updateSpecificInfo: ({ commit }, payload) => {
       commit('updateSpecificInfo', payload)
     },
-    setPageData: ({ commit }, page) => {
-      commit('setPageData', page)
+    updateInfo: ({ commit }, payload) => {
+      commit('updateInfo', payload)
+    },
+    updateStore: ({ commit }, payload) => {
+      commit('updateStore', payload)
     },
   },
+
   mutations: {
+    
+    // Slot Mutations
     addRow: (state, row) => {
       state.rows.push(row)
     },
@@ -197,6 +300,17 @@ export default new Vuex.Store({
         return slot.sid !== sid
       })
     },
+    updateSlotData: (state, slot) => {
+      const actualSlot = _.find(state.slots, {
+        'sid': slot.item.sid,
+        'rid': slot.item.rid,
+        'cid': slot.item.cid,
+        'colid': slot.item.colid,
+      })
+      Vue.set(actualSlot, 'data', slot.data)
+    },    
+
+    // User Mutations
     addProf: (state, prof) => {
       state.info.profs.push(prof)
     },
@@ -221,14 +335,69 @@ export default new Vuex.Store({
         return user.id !== ta.id
       })
     },
+    updateUser: (state, { user, prop, value }) => {
+      Vue.set(user, prop, value)
+    },
+    clearStudents: (state) => {
+      state.info.students = []
+    },
+
+    //Week Mutations
     addWeek: (state, week) => {
-      state.info.weeks.push(week)
+      state.weeks.push(week)
     },
     deleteWeek: (state, week) => {
-      state.info.weeks = state.info.weeks.filter((user) => {
-        return user.id !== week.id
+      state.weeks = state.info.weeks.filter((item) => {
+        return item.id !== week.id
       })
+    },    
+    updateWeek: (state, { index, prop, value }) => {
+      Vue.set(state.weeks[index], prop, value)
     },
+    sliceWeek: (state, num) => {
+      state.weeks = state.weeks.slice(0, num)
+    },
+    updateWeeks: (state, payload) => {
+      state.weeks = payload
+    },
+
+    //Week Element Mutations
+    addVideo: (state, {video, index}) => {
+      state.weeks[index].videos.push(video)
+    },
+
+    addCase: (state, { index, caseStudy }) => {
+      state.weeks[index].cases.push(caseStudy) 
+    },
+
+    removeCase: (state, {index, caseStudy}) => {
+      state.weeks[index].cases = state.weeks[index].cases.filter((item) => {
+        return item.id !== caseStudy.id
+      }) 
+    },
+    
+    addAssignment: (state, { assignment, index }) => {
+      state.weeks[index].assignments.push(assignment)
+    },
+
+    addDiscussion: (state, {discussion, index}) => {
+      state.weeks[index].discussions.push(discussion)
+    },
+
+    addActivity: (state,{index, tempWeek}) => {
+
+      if (index > 15 && state.info.classType.dateType == "Week") index = 15
+
+      tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + ".png"
+      tempWeek.date = moment()
+      tempWeek.title = "Lecture " + index
+      tempWeek.secondTitle = "Lecture " + index + " II"
+
+      state.weeks.push(tempWeek)
+
+    },
+    
+    //Page Mutations
     setDialogVisibility: (state, visibility) => {
       state.dialogVisible = visibility
     },
@@ -238,15 +407,8 @@ export default new Vuex.Store({
     setPageData: (state, page) => {
       state.pagesSet.push(page)
     },
-    updateSlotData: (state, slot) => {
-      const actualSlot = _.find(state.slots, {
-        'sid': slot.item.sid,
-        'rid': slot.item.rid,
-        'cid': slot.item.cid,
-        'colid': slot.item.colid,
-      })
-      Vue.set(actualSlot, 'data', slot.data)
-    },
+
+    //Info Mutations
     updateInfo: (state, payload) => {
       state.info = payload
     },
@@ -254,35 +416,11 @@ export default new Vuex.Store({
       Vue.set(state.info, payload.key, payload.value)
     },
     updateProp: (state, { prop, value }) => {
-      state.info[prop] = value
-    },
-    updateUser: (state, { user, prop, value }) => {
-      user[prop] = value
-    },
-    updateWeek: (state, { index, prop, value }) => {
-      state.weeks[index][prop] = value
-    },
+      Vue.set(state.info, prop, value)
+    },        
     updateStore: (state, payload) => {
       state = payload
-    },
-    updateLoading: (state, payload) => {
-      state.loading = payload
-    },
-    addWeek: (state, payload) => {
-      state.weeks.push(payload)
-    },
-    sliceWeek: (state, num) => {
-      state.weeks = state.weeks.slice(0, num)
-    },
-    updateWeeks: (state, payload) => {
-      state.weeks = payload
-    },
-    refreshStore: (state) => {
-      state = state
-    },
-    // updateWeek: (state, index, field, value) => {
-    //   state.weeks[index][field] = value
-    // },
+    },    
   },
   modules: {
     defaults,
