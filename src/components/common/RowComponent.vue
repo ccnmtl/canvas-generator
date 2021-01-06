@@ -27,7 +27,7 @@
                           :col="column"
                           :rid="rid"
                           :cid="row.cid"
-                          :colspan="12 / columns.length"
+                          :colspan="column.colspan || 12 / columns.length"
                           :space="24 - totalWidth" />
 
     </div>
@@ -112,10 +112,11 @@ export default {
     opacity: 0;
     float: right;
     position: relative;
-    margin: -7px -7px -38px;
+    margin: -7px -30px -38px;
+    z-index: 10;
 
     &.delete {
-      margin: 43px -7px -88px;
+      margin: 43px -30px -88px;
     }
 
     span {
@@ -136,4 +137,5 @@ export default {
 
   }
 }
+
 </style>
