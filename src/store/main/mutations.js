@@ -61,7 +61,7 @@ export default {
     })
   },
   addWeek: (state, week) => {
-    if(state.info.weeks) state.info.weeks.push(week)
+    if(state.weeks) state.weeks.push(week)
   },
   deleteWeek: (state, week) => {
     state.info.weeks = state.info.weeks.filter((user) => {
