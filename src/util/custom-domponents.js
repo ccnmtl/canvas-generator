@@ -8,6 +8,9 @@ export class CC {
             case 'welcome-row':
                 this.method = 'createRowsFromArray';
                 break;
+            case 'list-row':
+                this.method = 'createRowsFromArray';
+                break;
             default:
                 console.log('Unknown type');
         }

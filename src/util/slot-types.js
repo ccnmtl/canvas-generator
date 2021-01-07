@@ -97,6 +97,16 @@ export default {
           "visible": true,
           "defaultData": {
           }
+        },
+        {
+          "id": 9,
+          "name": "List Slot",
+          "type": "list-slot",
+          "icon": "menu",
+          "colspan": 8,
+          "visible": true,
+          "defaultData": {
+          }
         }
       ]
       return res

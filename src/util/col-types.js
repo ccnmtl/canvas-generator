@@ -104,6 +104,26 @@ export default {
             ]
           }
         ],
+        instructorTaList:
+        [
+          {
+            "type": "list-slot",
+            "getter": "info.profs",
+            "data": {
+              "idField": "id",
+              "labelField": "name",
+              "emailField": "email",
+              "type": "instructor-ta",
+              "title": "Instructor:",
+              "officeField": "office"
+            },
+            "classes": [
+              "pad-box-mini",
+              "border",
+              "border-tbl"
+            ]
+          }
+        ],
 
       }
       return res
@@ -154,7 +174,7 @@ export default {
       let columns = [column]
       this.createColumnsFromArray({columns, rid})
     }
- 
+
 
   },
 }

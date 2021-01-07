@@ -14,10 +14,18 @@ export default {
   data() {
     return {
       editing: null,
-      data: this.slotData,
+      data: null,
       forceDimensions: false,
       imgWidth: 300,
       imgHeight: 300,
+    }
+  },
+  watch: {
+    slotData: {
+      handler(newVal) {
+        this.data = newVal
+      },
+      immediate: true
     }
   },
   methods: {

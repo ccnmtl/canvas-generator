@@ -2,7 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
 // Core App Imports
-import Vue from 'vue';
+import Vue from 'vue'
+
 import App from './App';
 import router from './router';
 import store from './store/store';
@@ -31,17 +32,17 @@ Vue.use(VueTippy);
 let GlobalMethods = {};
 GlobalMethods.install = function (Vue, options) {
   Vue.jsonToArray = (json) => {
-    let array = []; 
+    let array = [];
 
     Object.values(json).forEach(row => {
       let last = (array.push([])) - 1;
       row.columns.forEach(column => {
         array[last].push(column.slots);
-      });      
+      });
     });
     return array;
   };
-  
+
 };
 
 Vue.use(GlobalMethods);

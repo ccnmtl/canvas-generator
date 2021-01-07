@@ -184,6 +184,7 @@ export default {
           actualSlotType = _.find(SlotTypes, { 'type': slot.type })
 
           dispatch('addSlot', {
+            ...slot,
             type: actualSlotType.id,
             rid: column.rid,
             cid: column.cid,

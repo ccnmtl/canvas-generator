@@ -19,11 +19,10 @@
 
 <script>
 
+import Vue from 'vue'
 import _ from 'lodash'
 import SlotTypesComponent from '../../util/slot-types.js'
 const SlotTypes = SlotTypesComponent.computed.SlotTypes()
-
-console.log(SlotTypes)
 
 // Slot Types
 import BannerSlot from '../slots/BannerSlot.vue'
@@ -32,11 +31,13 @@ import TitleSlot from '../slots/TitleSlot.vue'
 import ImageSlot from '../slots/ImageSlot.vue'
 import ContentSlot from '../slots/ContentSlot.vue'
 import SpacerSlot from '../slots/SpacerSlot.vue'
+import ListSlot from '../slots/ListSlot.vue'
 import SimpleListSlot from '../slots/SimpleListSlot.vue'
 import NameValueSlot from '../slots/NameValueSlot.vue'
 
 export default {
   components: {
+    ListSlot,
     BannerSlot,
     ButtonsSlot,
     TitleSlot,
@@ -55,9 +56,11 @@ export default {
   watch: {
     slotData: {
       handler(val) {
-        this.data = _.cloneDeep(val)
+        console.log(val)
+        Vue.set(this, 'data', _.cloneDeep(val))
       },
-      immediate: true
+      immediate: true,
+      deep: true
     }
   },
   computed: {

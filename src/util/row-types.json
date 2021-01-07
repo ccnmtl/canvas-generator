@@ -165,5 +165,31 @@
             ]
           ]
         ]
+    },
+    {
+        "id": 5,
+        "name": "List Row",
+        "type": "list-row",
+        "icon": "sheet",
+        "array": [
+          [
+            [
+              {
+                "type": "list-slot",
+                "getter": "info.profs",
+                "getter2": "info.tas",
+                "data": {
+                  "idField": "id",
+                  "labelField": "name",
+                  "emailField": "email",
+                  "type": "instructor-ta",
+                  "title": "TA:",
+                  "officeField": "office",
+                  "component": "professor-ta-slot"
+                }
+              }
+            ]
+          ]
+        ]
     }
 ]

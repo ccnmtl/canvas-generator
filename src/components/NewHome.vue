@@ -16,7 +16,8 @@ export default {
         'banner-row',
         'welcome-row',
         'instructor-ta-row',
-        'dates-times-row'
+        'dates-times-row',
+        'list-row'
       ]
     }
   },
