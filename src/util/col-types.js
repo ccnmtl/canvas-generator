@@ -141,7 +141,7 @@ export default {
   methods: {
     ...mapActions(['createColumnsFromArray','updateColTypes']),
     homeSidebarCol(options = {}){
-      let column = _.cloneDeep(this.colTypes.homeSidebar)
+      let column = _.cloneDeep(this.colTypes.homeSidebar.array)
       let {cid, rid} = options
 
       // overwrite data with anything specifically added to the options parameter, initally for the title
@@ -177,6 +177,11 @@ export default {
       column[0] = _.merge(column[0], options.syllabus)
 
       return column
+    },
+    findCol(objKey, objValue){
+      for (const [name, col] of Object.entries(this.colTypes)){
+        if (col[objKey] == objValue) return col
+      }
     }
   },
   beforeMount(){

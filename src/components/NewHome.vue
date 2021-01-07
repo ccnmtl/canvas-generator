@@ -7,6 +7,7 @@
 
 <script>
 import ContainerComponent from './common/ContainerComponent.vue'
+import RowTypes from '../util/row-types.js'
 
 export default {
   name: "NewHome",
@@ -35,7 +36,7 @@ export default {
   components: {
     ContainerComponent
   },
-  mixins: []
+  mixins: [RowTypes]
 }
 </script>
 

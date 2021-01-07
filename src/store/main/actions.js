@@ -150,8 +150,6 @@ export default {
         if (typeof row == 'string') actualRow = findObj('type', row, RowTypes).array[0]
         else actualRow = row
 
-        console.log(actualRow)
-
         dispatch('addRow', {
           cid: payload.cid
         }).then(res => {
