@@ -256,7 +256,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
     ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo", "addTA",
                   "addProf", "addStudent"]),
     addNewCourse(from) {
