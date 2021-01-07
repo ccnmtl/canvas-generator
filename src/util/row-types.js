@@ -24,7 +24,7 @@ export default {
           type: 'homeInstructors',
           icon: "s-home",
           array: [
-            [this.buildInstructorList(), this.buildInstructorList({list: {getter: 'info.tas'}})]
+            [this.instructorListCol(), this.instructorListCol({list: {getter: 'info.tas'}})]
           ]
         }
       }
@@ -37,8 +37,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['createRowsFromArray']),
-    buildHomeWelcomeRow(options){
+    ...mapActions(['createRowsFromArray','updateRowTypes']),
+    homeWelcomeRow(options){
       let row = _.cloneDeep(this.rowTypes.homeWelcome)
       let cid = options.cid
 
@@ -52,4 +52,7 @@ export default {
     }
 
   },
+  beforeMount(){
+    this.updateRowTypes(this.rowTypes)
+  }
 }

@@ -140,7 +140,7 @@ export default {
   },
   methods: {
     ...mapActions(['createColumnsFromArray']),
-    buildHomeSidebar(options = {}){
+    homeSidebarCol(options = {}){
       let column = _.cloneDeep(this.colTypes.homeSidebar)
       let {cid, rid} = options
 
@@ -149,36 +149,34 @@ export default {
       column[1] = _.merge(column[1], options.content)
       column[2] = _.merge(column[2], options.button)
 
-      let columns = [column]
-      this.createColumnsFromArray({columns, rid})
+      return column
     },
-    buildInstructorList(options = {}){
+    instructorListCol(options = {}){
       let column = _.cloneDeep(this.colTypes.instructorList)
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.list)
 
-      let columns = [column]
+      
       return column
+      // let columns = [column]
       // this.createColumnsFromArray({columns, rid})
     },
-    buildSimpleBanner(options){
+    simpleBannerCol(options){
       let column = _.cloneDeep(this.colTypes.simpleBanner)
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.banner)
 
-      let columns = [column]
-      this.createColumnsFromArray({columns, rid})
+      return column
     },
-    buildSyllabusComponent(options){
+    syllabusComponentCol(options){
       let column = _.cloneDeep(this.colTypes.syllabusComponent)
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.syllabus)
 
-      let columns = [column]
-      this.createColumnsFromArray({columns, rid})
+      return column
     }
 
 

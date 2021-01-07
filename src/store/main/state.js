@@ -30,5 +30,8 @@ export default {
   editingFields: [],
   pagesSet: [],
   savedStates: [],
-  currentCourse: null
+  currentCourse: null,
+  rowTypes: {},
+  colTypes: {},
+  slotTypes: {}
 }

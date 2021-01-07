@@ -3,9 +3,15 @@ import SavedFields from '../../util/saved-fields.json'
 import SlotTypesComponent from '../../util/slot-types.js'
 import _ from 'lodash'
 
+// const RowTypes = RowTypesComponent.computed.rowTypes()
+// const ColTypes = ColTypesComponent.computed.colTypes()
 const SlotTypes = SlotTypesComponent.computed.SlotTypes()
 
-console.log(SlotTypes)
+function findObj(objKey, objValue, list){
+  for (const [name, row] of Object.entries(list)){
+    if (row[objKey] == objValue) return row
+  }
+}
 
 export default {
     addRow: ({ commit }, row) => {
@@ -137,13 +143,20 @@ export default {
     setSlotClasses: ({ commit }, payload) => {
       commit('setSlotClasses', payload)
     },
-    createRowsFromArray({ dispatch }, payload) {
+    createRowsFromArray({ state, dispatch }, payload) {
+      const RowTypes = state.rowTypes
       payload.rows.forEach(row => {
+        let actualRow
+
+        if (typeof row == 'string') {
+          actualRow = findObj('type', row, RowTypes).array[0]
+        }
+
         dispatch('addRow', {
           cid: payload.cid
         }).then(res => {
           dispatch('createColumnsFromArray', {
-            columns: row,
+            columns: actualRow,
             rid: res.rid
           })
         })
@@ -196,5 +209,8 @@ export default {
           })
         }
       })
-    }
+    },
+  updateRowTypes: ({ commit }, payload) => {
+    commit('updateRowTypes', payload)
+  },
 }
