@@ -143,11 +143,14 @@ export default {
     },
     createRowsFromArray({ state, dispatch }, payload) {
       const RowTypes = state.rowTypes
+      console.log(RowTypes)
       payload.rows.forEach(row => {
         let actualRow
 
         if (typeof row == 'string') actualRow = findObj('type', row, RowTypes).array[0]
         else actualRow = row
+
+        console.log(actualRow)
 
         dispatch('addRow', {
           cid: payload.cid
@@ -163,11 +166,23 @@ export default {
       const row = _.find(state.rows, { rid: payload.rid })
       const ColTypes = state.colTypes
 
-      payload.columns.forEach(column => {
+      let columns = payload.columns
+
+      if (typeof columns[0] == 'string') {
+        let colObj = findObj('type', columns[0], ColTypes).array
+        let res = []
+        colObj.forEach((col) => res.push([col]))
+        columns = res
+      }
+      console.log(columns)
+
+      columns.forEach(column => {  
         let actualCol
 
-        if (typeof column == 'string') actualRow = findObj('type', column, ColTypes).array[0]
+        if (typeof column == 'string') actualCol = findObj('type', column, ColTypes).array
         else actualCol = column
+
+        console.log(actualCol)
         
         dispatch('addColumn', {
           rid: row.rid,
@@ -217,6 +232,6 @@ export default {
     commit('updateRowTypes', payload)
   },
   updateColTypes: ({ commit }, payload) => {
-    commit('updateRowTypes', payload)
+    commit('updateColTypes', payload)
   },
 }

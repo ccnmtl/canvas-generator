@@ -159,6 +159,6 @@ export default {
     state.rowTypes = payload
   },
   updateColTypes: (state, payload) => {
-    state.rowTypes = payload
+    state.colTypes = payload
   },
 }

@@ -11,7 +11,7 @@ export default {
         homeSidebar: {
           id: 1,
           name: "Banner Row",
-          type: "banner-row",
+          type: "home-sidebar",
           icon: "picture",
           array: [
             {

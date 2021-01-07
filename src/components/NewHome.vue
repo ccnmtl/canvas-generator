@@ -21,8 +21,14 @@ export default {
       ],
       defRowsNew: [
         'homeWelcome',
+        'homeInstructors',
+      ],
+      defRowsStringLayout: [
         'homeWelcome',
-        'homeInstructors'
+        'homeWelcome',
+        'homeInstructors',
+        ["home-sidebar"],
+        [['image-slot'],['image-slot']]
       ]
     }
   },

@@ -15,7 +15,7 @@ export default {
           type: 'homeWelcome',
           icon: "s-home",
           array: [
-            [['image-slot'], this.colTypes.homeSidebar.array]
+            [['image-slot'], 'home-sidebar']
           ]
         },
         homeInstructors: {
@@ -54,5 +54,7 @@ export default {
   },
   beforeMount(){
     this.updateRowTypes(this.rowTypes)
+    this.updateColTypes(this.colTypes)
+
   }
 }
