@@ -125,10 +125,10 @@ export default {
       })
     }
 
-    self.$store.dispatch('createRowsFromArray', {
-      cid: self.cid,
-      rows: ['homeInstructors']
-    })
+    // self.$store.dispatch('createRowsFromArray', {
+    //   cid: self.cid,
+    //   rows: ['homeInstructors']
+    // })
 
     // if (!this.rows) {
     //   self.$store.dispatch('createRowsFromArray', {
