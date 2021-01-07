@@ -139,7 +139,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['createColumnsFromArray']),
+    ...mapActions(['createColumnsFromArray','updateColTypes']),
     homeSidebarCol(options = {}){
       let column = _.cloneDeep(this.colTypes.homeSidebar)
       let {cid, rid} = options
@@ -178,7 +178,8 @@ export default {
 
       return column
     }
-
-
   },
+  beforeMount(){
+    this.updateColTypes(this.colTypes)
+  }
 }

@@ -3,8 +3,6 @@ import SavedFields from '../../util/saved-fields.json'
 import SlotTypesComponent from '../../util/slot-types.js'
 import _ from 'lodash'
 
-// const RowTypes = RowTypesComponent.computed.rowTypes()
-// const ColTypes = ColTypesComponent.computed.colTypes()
 const SlotTypes = SlotTypesComponent.computed.SlotTypes()
 
 function findObj(objKey, objValue, list){
@@ -148,9 +146,8 @@ export default {
       payload.rows.forEach(row => {
         let actualRow
 
-        if (typeof row == 'string') {
-          actualRow = findObj('type', row, RowTypes).array[0]
-        }
+        if (typeof row == 'string') actualRow = findObj('type', row, RowTypes).array[0]
+        else actualRow = row
 
         dispatch('addRow', {
           cid: payload.cid
@@ -164,14 +161,20 @@ export default {
     },
     createColumnsFromArray({ dispatch, state }, payload) {
       const row = _.find(state.rows, { rid: payload.rid })
+      const ColTypes = state.colTypes
 
       payload.columns.forEach(column => {
+        let actualCol
+
+        if (typeof column == 'string') actualRow = findObj('type', column, ColTypes).array[0]
+        else actualCol = column
+        
         dispatch('addColumn', {
           rid: row.rid,
           cid: row.cid
         }).then(res => {
           dispatch('createSlotsFromArray', {
-            slots: column,
+            slots: actualCol,
             colid: res.colid
           })
         })
@@ -211,6 +214,9 @@ export default {
       })
     },
   updateRowTypes: ({ commit }, payload) => {
+    commit('updateRowTypes', payload)
+  },
+  updateColTypes: ({ commit }, payload) => {
     commit('updateRowTypes', payload)
   },
 }
