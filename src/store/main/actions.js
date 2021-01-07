@@ -1,7 +1,11 @@
 import { uuid } from "vue-uuid"
 import SavedFields from '../../util/saved-fields.json'
-import SlotTypes from '../../util/slot-types.json'
+import SlotTypesComponent from '../../util/slot-types.js'
 import _ from 'lodash'
+
+const SlotTypes = SlotTypesComponent.computed.SlotTypes()
+
+console.log(SlotTypes)
 
 export default {
     addRow: ({ commit }, row) => {

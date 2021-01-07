@@ -22,7 +22,8 @@
 
 <script>
 
-import SlotTypes from '../../util/slot-types.json'
+import SlotTypesComponent from '../../util/slot-types.js'
+const SlotTypes = SlotTypesComponent.computed.SlotTypes()
 
 export default {
   props: [
