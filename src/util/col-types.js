@@ -7,54 +7,60 @@ export default {
   computed: {
     ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo']),
     colTypes(){
-      let res = {
-        homeSidebar: [
-          {
-            type: "title-slot",
-            data: {
-              title: "WELCOME TO " + this.getInfo.title.toUpperCase(),
-              type: "custom"
+      return {
+        homeSidebar: {
+          id: 1,
+          name: "Banner Row",
+          type: "banner-row",
+          icon: "picture",
+          array: [
+            {
+              type: "title-slot",
+              data: {
+                title: "WELCOME TO " + this.getInfo.title.toUpperCase(),
+                type: "custom"
+              },
+              classes: ["STV1_Welcome"],
+              styles: {
+                "text-transform": "uppercase",
+                "font-size": "14px !important",
+                margin: "0px"
+              }
             },
-            classes: ["STV1_Welcome"],
-            styles: {
-              "text-transform": "uppercase",
-              "font-size": "14px !important",
-              margin: "0px"
-            }
-          },
-          {
-            type: "content-slot",
-            styles: {
-              margin: "20px 0",
-              padding: "0",
-              "font-size": "14px"
-            }
-          },
-          {
-            type: "buttons-slot",
-            styles: {
-              margin: "50px 0 20px",
-              padding: "0",
-              "font-size": "14px"
+            {
+              type: "content-slot",
+              styles: {
+                margin: "20px 0",
+                padding: "0",
+                "font-size": "14px"
+              }
             },
-            data: {
-              buttons: [
-                {
-                  label: "Course Syllabus",
-                  to: "/assignments/syllabus"
-                },
-                {
-                  label: "Activities",
-                  to: "/pages/activities"
-                },
-                {
-                  label: "Zoom",
-                  to: "/pages/zoom"
-                }
-              ]
+            {
+              type: "buttons-slot",
+              styles: {
+                margin: "50px 0 20px",
+                padding: "0",
+                "font-size": "14px"
+              },
+              data: {
+                buttons: [
+                  {
+                    label: "Course Syllabus",
+                    to: "/assignments/syllabus"
+                  },
+                  {
+                    label: "Activities",
+                    to: "/pages/activities"
+                  },
+                  {
+                    label: "Zoom",
+                    to: "/pages/zoom"
+                  }
+                ]
+              }
             }
-          }
-        ],
+          ],
+        },
         simpleBanner: [
           {
             type: "banner-slot",
@@ -126,7 +132,6 @@ export default {
         ],
 
       }
-      return res
     }
   },
   data() {
@@ -135,7 +140,7 @@ export default {
   },
   methods: {
     ...mapActions(['createColumnsFromArray']),
-    buildHomeSidebar(options){
+    buildHomeSidebar(options = {}){
       let column = _.cloneDeep(this.colTypes.homeSidebar)
       let {cid, rid} = options
 
@@ -147,14 +152,15 @@ export default {
       let columns = [column]
       this.createColumnsFromArray({columns, rid})
     },
-    buildInstructorList(options){
+    buildInstructorList(options = {}){
       let column = _.cloneDeep(this.colTypes.instructorList)
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.list)
 
       let columns = [column]
-      this.createColumnsFromArray({columns, rid})
+      return column
+      // this.createColumnsFromArray({columns, rid})
     },
     buildSimpleBanner(options){
       let column = _.cloneDeep(this.colTypes.simpleBanner)

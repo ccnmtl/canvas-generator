@@ -7,7 +7,7 @@ export default {
   computed: {
     ...mapGetters(['getInfo']),
     SlotTypes(){
-      let res = [
+      return [
         {
           "id": 1,
           "name": "Title Slot",
@@ -109,7 +109,6 @@ export default {
           }
         }
       ]
-      return res
     }
   },
   data() {

@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <container-component cid="home" :defaultRows="defRows"/>
+    <container-component cid="home" :defaultRows="defRowsNew"/>
   </div>
 
 </template>
@@ -18,12 +18,18 @@ export default {
         'instructor-ta-row',
         'dates-times-row',
         'list-row'
+      ],
+      defRowsNew: [
+        'homeWelcome',
+        'homeWelcome',
+        'homeInstructors'
       ]
     }
   },
   components: {
     ContainerComponent
-  }
+  },
+  mixins: []
 }
 </script>
 
