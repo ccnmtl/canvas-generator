@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 var moment = require("moment")
 
 export default {
@@ -29,12 +30,14 @@ export default {
     return {}
   },
   computed: {
+    ...mapActions(["updateInfo"]),
+
     info: {
       get() {
         return this.$store.getters.getInfo
       },
       set(payload) {
-        this.$store.commit("updateInfo", payload)
+        this.updateInfo(payload)
       }
     },
     dateType() {

@@ -135,7 +135,7 @@
         <div class="grid-row">
 
           <!-- Professor Info Box -->
-          <div class="col-xs-6 col-md-6" v-for="prof in info.profs">
+          <div class="col-xs-6 col-md-6" v-for="prof in info.profs" :key="prof.id">
             <div class="styleguide-section__grid-demo-element pad-box-mini border border-tl">
 
               <!-- must have weeklyIconImg class for responsiveness -->
@@ -151,7 +151,7 @@
           <!-- End Professor Info Box -->
 
           <!-- Professor Info Box -->
-          <div class="col-xs-6 col-md-6" v-for="ta in info.tas">
+          <div class="col-xs-6 col-md-6" v-for="ta in info.tas" :key="ta.id">
             <div class="styleguide-section__grid-demo-element pad-box-mini border border-tl">
 
               <!-- must have weeklyIconImg class for responsiveness -->
@@ -180,7 +180,7 @@
       <!-- Course Description -->
       <div v-if="info.sectionBox1.includes('Description')" class="content-box pad-box-mini border border-b">
         <h2>Course Description</h2>
-        <div v-html="info.description"></div>
+        <div v-html="info.description" />
       </div>
       <!-- End Course Description -->
 
@@ -218,7 +218,7 @@
           </thead>
           <tbody>
 
-             <tr v-for="(week, index) in weeks">
+             <tr v-for="(week, index) in weeks" :key="week.id">
               <td>{{index + 1}}</td>
               <td v-if="info.useDates" >{{formatDate(week.date)}}</td>
               <td>{{week.title}}</td>
@@ -281,14 +281,14 @@
   <div id="modal-overflow" uk-modal>
       <div class="uk-modal-dialog">
 
-          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <button class="uk-modal-close-default" type="button" uk-close />
 
           <div class="uk-modal-header">
               <h2 class="uk-modal-title">Canvas Code</h2>
           </div>
 
           <div class="uk-modal-body" uk-overflow-auto>
-            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea>
+            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120" />
           </div>
 
           <div class="uk-modal-footer uk-text-right">
@@ -315,7 +315,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"
+import { mapActions, mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"
@@ -373,9 +373,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getInfo", "dProf", "dTA", "getWeeks", "getTheme"])
+    ...mapGetters(["getInfo", "getDProf", "getDTA", "getWeeks", "getTheme"])
   },
   methods: {
+    ...mapActions(["addProf", "addTA", "deleteTA", "deleteProf"]),
+
     formatDate(date) {
       return moment(date).format("MMMM Do")
     },
@@ -421,16 +423,21 @@ export default {
       )
     },
     addProf() {
+
       this.$store.dispatch("addProf")
       let index = this.info.profs.length - 1
       this.selected = { index, list: "profs", key: this.info.profs[index].id }
+
     },
     addTA() {
+
       this.$store.dispatch("addTA")
       let index = this.info.tas.length - 1
       this.selected = { index, list: "tas", key: this.info.tas[index].id }
+
     },
     removeTeacher() {
+      
       let { list, index } = this.selected
       let user = this.info[list][index]
 
@@ -443,34 +450,37 @@ export default {
         this.selected = { index: index - 1, list, key: this.info[list][index - 1].id }
       }
 
-      if (list == "profs") this.$store.dispatch("deleteProf", user)
-      else this.$store.dispatch("deleteTA", user)
+      if (list == "profs") this.deleteProf(user)
+      else this.deleteTA(user)
     },
+
     clearTeachers() {
       this.info.tas.forEach(ta => {
-        this.$store.dispatch("deleteTA", ta)
+        this.deleteTA(ta)
       })
       this.info.profs.forEach((prof, index) => {
-        console.log(index)
-        if (index > 0) this.$store.dispatch("deleteProf", prof)
+        if (index > 0) this.deleteProf(prof)
       })
       this.selected = { index: 0, list: "profs", key: this.info.profs[0].id }
     },
+
     setToDefault() {
       console.log("resetting data...")
-      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let dInfo = _.cloneDeep(this.$store.getters.getDInfo)
       let props = ["profs", "tas", "sectionBox1", "sectionBox2"]
 
       props.forEach(prop => {
         this.updateProp(prop, dInfo[prop])
       })
     },
+
     getSaveStateConfig() {
       return {
         cacheKey: "Syllabus"
       }
     }
   },
+  
   mounted() {
     this.selected = { list: "profs", index: 0, key: this.info.profs[0].id }
     this.updateCode("syllabus-code")
