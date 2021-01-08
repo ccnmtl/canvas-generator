@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <container-component cid="home" :defaultRows="defRowsNew"/>
+    <container-component cid="home" :defaultRows="syllabusLayout"/>
   </div>
 
 </template>
@@ -18,18 +18,38 @@ export default {
         'welcome-row',
         'instructor-ta-row',
         'dates-times-row',
-        'list-row'
+        'list-row',
       ],
-      defRowsNew: [
-        'homeWelcome',
-        'homeInstructors',
-      ],
+      // defRowsNew: [
+      //   'homeWelcome',
+      //   'homeInstructors',
+      // ],
       defRowsStringLayout: [
         'homeWelcome',
         'homeWelcome',
         'homeInstructors',
         ["home-sidebar"],
         [['image-slot'],['image-slot']]
+      ],
+      syllabusLayout: [
+        [['banner-slot']],
+        'homeInstructors',
+        'dates-times-row',
+        [['title-slot']],
+        [['content-slot']],
+        [['title-slot']],
+        [['content-slot']],
+        'list-row'
+      ],
+      studentLayout: [
+        [['banner-slot']],
+        [['image-slot'], ['content-slot']],
+      ],
+      zoomLayout: [
+        [['banner-slot']],
+        'list-row',
+        [['title-slot']],
+        [['content-slot']],
       ]
     }
   },

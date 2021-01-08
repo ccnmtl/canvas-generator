@@ -130,8 +130,31 @@ export default {
             ]
           }
         ],
+        banner: [
+          {
+            id: 6,
+            name: "Banner",
+            type: "banner-col",
+            icon: "picture",
+            array: [
+              [
+                [
+                  {
+                    "type": "banner-slot",
+                    "data": {
+                      "useWideBanner": true
+                    },
+                    "styles": {
+                      "margin-bottom": "20px"
+                    }
+                  }
+                ]
+              ]
+            ]
+        }
+        ],
 
-      }
+      }        
     }
   },
   data() {
@@ -170,6 +193,14 @@ export default {
 
       return column
     },
+    bannerCol(options){
+      let column = _.cloneDeep(this.colTypes.banner.array)
+      let {cid, rid} = options
+
+      column[0] = _.merge(column[0], options.banner)
+
+      return column
+    },        
     syllabusComponentCol(options){
       let column = _.cloneDeep(this.colTypes.syllabusComponent)
       let {cid, rid} = options
