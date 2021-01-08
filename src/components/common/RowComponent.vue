@@ -37,6 +37,8 @@
 </template>
 
 <script>
+
+import _ from 'lodash'
 import ColumnComponent from "./ColumnComponent.vue"
 import RowTypeMixin from "../../util/row-types"
 import SlotTypesComponent from '../../util/slot-types.js'
@@ -54,7 +56,7 @@ export default {
   computed: {
     columns: function() {
       return this.$store.getters.getColumnsByRowID[this.rid]
-    }, 
+    },
     slots() {
       return this.$store.getters.getSlotsByRowID[this.rid]
     },
@@ -64,7 +66,7 @@ export default {
       let res = 0
       this.slots.forEach(slot => {
         let type = _.find(SlotTypes, { id: slot.type })
-        res += type.colspan 
+        res += type.colspan
       });
       return res
     }

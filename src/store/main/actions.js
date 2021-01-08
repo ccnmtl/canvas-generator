@@ -5,8 +5,6 @@ import _ from 'lodash'
 
 const SlotTypes = SlotTypesComponent.computed.SlotTypes()
 
-console.log(SlotTypes)
-
 export default {
     addRow: ({ commit }, row) => {
       if(!row.rid) row.rid = uuid.v1()
