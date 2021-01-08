@@ -1,6 +1,8 @@
 
 import { mapActions, mapGetters } from 'vuex'
 import _ from 'lodash'
+import moment from "moment"
+
 
 export default {
 
@@ -96,6 +98,10 @@ export default {
           "colspan": 8,
           "visible": true,
           "defaultData": {
+            name: "Title",
+            getter: "info.startDate",
+            value: moment().day(1),
+            nameStyle: {'font-weight': 'bold'}
           }
         },
         {
