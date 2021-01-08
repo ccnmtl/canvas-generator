@@ -6,7 +6,7 @@
 
     <!-- The user inputs are located in this div -->
     <div class="textbox-container">
-      <el-input-number  style="margin: 10px;" v-model="userInput.toChange" :min="1" :max="20"></el-input-number>
+      <el-input-number  style="margin: 10px;" v-model="userInput.toChange" :min="1" :max="20" />
 
       <button type="button" class="add-weekly center uk-button uk-button-primary"
       name="button" @click="populateActivities(userInput.toChange)">Edit # of Activities</button>
@@ -28,23 +28,23 @@
         <el-card>
         <div class="code-input center">
           Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
-            controls-position="right" size="small" :label="'Edit ' + info.classType.dateType"></el-input-number>
+            controls-position="right" size="small" :label="'Edit ' + info.classType.dateType" />
         </div>
 
         <select v-model="userInput.weekNumber" class="uk-select" >
-          <option v-for="n in weeks.length" :value="n">{{info.classType.dateType}} {{n}}</option>
+          <option v-for="n in weeks.length" :value="n" :key="week.id">{{info.classType.dateType}} {{n}}</option>
         </select>
 
         <div v-if="weeks.length > 0">
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Title</label> <br>
-            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].title"
+            <el-input type="textarea" autosize :value="weeks[userInput.weekNumber - 1].title"
             @input="updateWeek(userInput.weekNumber - 1,'title', $event)"> </el-input>
           </div>
 
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Description</label>
-            <el-input type="textarea" autosize v-model="weeks[userInput.weekNumber - 1].description"
+            <el-input type="textarea" autosize :value="weeks[userInput.weekNumber - 1].description"
             @input="updateWeek(userInput.weekNumber - 1,'description', $event)"> </el-input>
           </div>
           <div class="center">
@@ -117,7 +117,7 @@
             <div class="ic-image-text-combo__text">
               <div class="pad-box-mini">
                 <h3 style="margin-bottom: 5px;">
-                  <i class="icon-clock"></i> ACTIVITIES</h3>
+                  <i class="icon-clock" /> ACTIVITIES</h3>
               </div>
               <div class="pad-box-mini border border-b border-t">
                 <p>Welcome to the activities page! Below you'll find an overview of all {{numWeeks}} lectures, each covering a distinct topic in the field of {{info.title}}. Clicking on a {{info.classType.dateType.toLowerCase()}} will take you to a page where you can review the activities related to that session.</p>
@@ -131,11 +131,12 @@
       See the WeeklyListItem.vue file in components for the html and styling. -->
 
       <weekly-list-item v-if="weeks.length > 0"
-        v-for="(activity, index) in weeks"
-        :data="activity"
+        v-for="(week, index) in weeks"
+        :data="week"
         :linked="info.useLinks"
-        :index="index+1">
-      </weekly-list-item>
+        :index="index+1"
+        :key="week.id" />
+      
 
     </div>
 
@@ -150,14 +151,14 @@
   <div id="modal-overflow" uk-modal>
       <div class="uk-modal-dialog">
 
-          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <button class="uk-modal-close-default" type="button" uk-close />
 
           <div class="uk-modal-header">
               <h2 class="uk-modal-title">Canvas Code</h2>
           </div>
 
           <div class="uk-modal-body" uk-overflow-auto>
-            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea>
+            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120" />
           </div>
 
           <div class="uk-modal-footer uk-text-right">
@@ -179,7 +180,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"
+import { mapActions, mapGetters } from "vuex"
 import mutations from "../store/mutations"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
@@ -229,7 +230,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getInfo", "dWeek", "getWeeks"]),
+    ...mapGetters(["getInfo", "getDWeek", "getWeeks"]),
     day() {
       return moment(this.info.startDate).format("dddd, MMMM Do")
     },
@@ -283,7 +284,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
+    ...mapActions(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
     updateSwitch() {
       this.userInput.isFile = !this.userInput.isFile
       this.userInput.uploadSwitchText = this.userInput.isFile
@@ -319,25 +320,11 @@ export default {
     // Adds a new weekly activity based on the temp info given below. The src refers to the default week thumbnail hosted on S3.
     AddActivity() {
       let index = this.weeks.length + 1
-
-      if (index > 15 && this.info.classType.dateType == "Week") index = 15
-
-      let tempWeek = _.cloneDeep(this.dWeek)
-      tempWeek.imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + index + ".png"
-      tempWeek.date = moment()
-      tempWeek.title = "Lecture " + index
-      tempWeek.secondTitle = "Lecture " + index + " II"
-
-      // let tempWeek = this.dWeek
-      // tempWeek.imgSrc = this.$store.state.imageServer + 'week' + index + '.png'
-      //
-      this.addWeek(tempWeek)
+      this.addWeek(index)
     },
     // Adds a user inputted number of activities
     populateActivities(num) {
       let diff = num - this.weeks.length
-
-      console.log(diff)
 
       if (diff > 0) {
         for (let i = 0; i < diff; i++) this.AddActivity()
@@ -348,10 +335,9 @@ export default {
         this.sliceWeek(num)
       }
 
-      //this.updateDates()
     },
     setToDefault() {
-      this.$store.commit("updateWeeks", [])
+      this.updateWeeks([])
       this.populateActivities(12)
     },
     // Handles uploading the file or url to Amazon EC2 via POST request, which subsequently uploads the image to S3
@@ -398,7 +384,6 @@ export default {
   mounted() {
     if (this.needsInit) {
       console.log("populating...")
-      // this.populateActivities(12)
       this.needsInit = false
     }
     this.updateCode("list-code")

@@ -131,12 +131,14 @@ export default {
 
   },
   getters: {
-    dWeek: state => state.weekDefault,
-    dVideo: state => state.videoDefault,
-    dInfo: state => state.infoDefault,
-    dProf: state => state.profDefault,
-    dStudent: state => state.studentDefault,
-    dTA: state => state.taDefault,
-    dWeekly: state => state.weeklyDefault
+    getDWeek: state => state.weekDefault,
+    getDVideo: state => state.videoDefault,
+    getDAssignment: state => state.assignmentDefault,
+    getDDiscussion: state => state.discussionDefault,
+    getDInfo: state => state.infoDefault,
+    getDProf: state => state.profDefault,
+    getDStudent: state => state.studentDefault,
+    getDTA: state => state.taDefault,
+    getDWeekly: state => state.weeklyDefault
   }
 }
