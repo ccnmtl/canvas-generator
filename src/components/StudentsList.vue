@@ -265,6 +265,8 @@ export default {
 
     clearStudents() {
       this.$store.dispatch("clearStudents")
+      this.selected = { index: 0, key: this.info.students[0].id }
+
     },
 
     sortStudents() {
