@@ -256,8 +256,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
-    ...mapActions(["updateWeek"]),
+    ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo", "addTA",
+                  "addProf", "addStudent"]),
     addNewCourse(from) {
       const self = this
       if(from === 'current') {
