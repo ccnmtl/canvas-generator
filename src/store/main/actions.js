@@ -68,7 +68,6 @@ export default {
       },
       createRowsFromArray({ state, dispatch }, payload) {
         const RowTypes = state.rowTypes
-        console.log(RowTypes)
         payload.rows.forEach(row => {
           let actualRow
 
@@ -92,10 +91,10 @@ export default {
         let columns = payload.columns
 
         if (typeof columns[0] == 'string') {
+          console.log('column in string')
+          console.log(columns)
           let colObj = findObj('type', columns[0], ColTypes).array
-          let res = []
-          colObj.forEach((col) => res.push([col]))
-          columns = res
+          columns = [colObj]
         }
         console.log(columns)
 

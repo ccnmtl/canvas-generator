@@ -130,8 +130,79 @@ export default {
             ]
           }
         ],
+        banner: [
+          {
+            id: 6,
+            name: "Banner",
+            type: "banner-col",
+            icon: "picture",
+            array: [
+              [
+                [
+                  {
+                    "type": "banner-slot",
+                    "data": {
+                      "useWideBanner": true
+                    },
+                    "styles": {
+                      "margin-bottom": "20px"
+                    }
+                  }
+                ]
+              ]
+            ]
+        }
+        ],
+        dateTime: {
+          id: 7,
+          type: "date-time-col",
+          array: 
+            [
+              {
+                type: "name-value-slot",
+                getter: "info.meetings",
+                data: {
+                  name: "MEETING DATES / TIMES"
+                },
+                styles: {
+                  margin: "20px 0"
+                }
+              },
+              {
+                type: "name-value-slot",
+                getter: "info.discussions",
+                data: {
+                  name: "SPECIAL DISCUSSION FORUMS"
+                },
+                styles: {
+                  "padding-bottom": "40px",
+                  "margin-bottom": "20px",
+                  "border-bottom": "1px solid #C7CDD1",
+                }
+              }
+            ]
+        },
+        instructorTaExpandedList:{
+          type: 'instructor-expanded-list',
+          array: [
+            {
+              type: "list-slot",
+              getter: "info.profs",
+              getter2: "info.tas",
+              data: {
+                idField: "id",
+                labelField: "name",
+                emailField: "email",
+                type: "instructor-ta",
+                title: "TA:",
+                officeField: "office",
+                component: "professor-ta-slot"
+              }
+            }
+          ]
+        }
 
-      }
+      }        
     }
   },
   data() {
@@ -170,6 +241,14 @@ export default {
 
       return column
     },
+    bannerCol(options){
+      let column = _.cloneDeep(this.colTypes.banner.array)
+      let {cid, rid} = options
+
+      column[0] = _.merge(column[0], options.banner)
+
+      return column
+    },        
     syllabusComponentCol(options){
       let column = _.cloneDeep(this.colTypes.syllabusComponent)
       let {cid, rid} = options

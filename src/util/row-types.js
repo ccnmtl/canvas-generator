@@ -19,14 +19,33 @@ export default {
           ]
         },
         homeInstructors: {
-          id: 1,
+          id: 2,
           name: "Home Instructors",
           type: 'homeInstructors',
           icon: "s-home",
           array: [
             [this.instructorListCol(), this.instructorListCol({list: {getter: 'info.tas'}})]
           ]
-        }
+        },       
+        dateTimeRow: {
+          id: 3,
+          name: "Dates/Times Row",
+          type: "dates-times-row",
+          icon: "time",
+          array: [
+            ['date-time-col']
+          ]          
+
+        },
+        listRow: {
+          id: 4,
+          name: "List Row",
+          type: "list-row",
+          icon: "sheet",
+          array: [
+            ['instructor-expanded-list']
+          ]          
+        },
       }
     },
   },
@@ -44,7 +63,21 @@ export default {
 
       let rows = row
       this.createRowsFromArray({rows, cid})
-    },
+    },  
+    dateTimeRow(options){
+      let row = _.cloneDeep(this.rowTypes.dateTimeRow.array)
+      let cid = options.cid
+
+      let rows = row
+      this.createRowsFromArray({rows, cid})
+    },    
+    listRow(options){
+      let row = _.cloneDeep(this.rowTypes.listRow.array)
+      let cid = options.cid
+
+      let rows = row
+      this.createRowsFromArray({rows, cid})
+    },        
     findRow(objKey, objValue){
       for (const [name, row] of Object.entries(this.rowTypes)){
         if (row[objKey] == objValue) return row
