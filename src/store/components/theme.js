@@ -25,6 +25,11 @@ export default {
     getThemeOptions: state => state.themeOptions,
     getGraphics: state => state,
   },
+  actions: {
+    updateTheme: ({ commit }, payload) => {
+      commit("updateTheme", payload)
+    }
+  },
   mutations: {
     updateTheme: (state, payload) => {
       state.theme = payload

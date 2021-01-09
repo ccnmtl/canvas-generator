@@ -56,7 +56,7 @@ export default {
   watch: {
     slotData: {
       handler(val) {
-        console.log(val)
+        //console.log(val)
         Vue.set(this, 'data', _.cloneDeep(val))
       },
       immediate: true,

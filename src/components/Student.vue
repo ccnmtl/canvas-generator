@@ -20,7 +20,7 @@
               <el-option
                 v-for="(student, index) in info.students"
                 :key="student.id"
-                :label="student.id"
+                :label="student.name"
                 :value="{index, key: student.id}">
               </el-option>
             </el-option-group>
@@ -32,11 +32,11 @@
 
         <div v-show="iEditable" v-if="info.students.length > 0" class="center">
           <el-input style="width: 200px; float:left" class="e-input" :value="info.students[selected.index].name" @input="updateUser(info.students[selected.index],'name', $event)"> </el-input>
-          <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
-          <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].title" @input="updateUser(info.students[selected.index],'title', $event)"> </el-input>
-          <el-input class="e-input" v-if="info.students" type="textarea" autosize v-model="info.students[selected.index].bio" @input="updateUser(info.students[selected.index],'bio', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" :value="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" :value="info.students[selected.index].title" @input="updateUser(info.students[selected.index],'title', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" type="textarea" autosize :value="info.students[selected.index].bio" @input="updateUser(info.students[selected.index],'bio', $event)"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
-          <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" :value="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
           <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', info.students[selected.index])">
@@ -100,14 +100,14 @@
   <div id="modal-overflow" uk-modal>
       <div class="uk-modal-dialog">
 
-          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <button class="uk-modal-close-default" type="button" uk-close />
 
           <div class="uk-modal-header">
               <h2 class="uk-modal-title">Canvas Code</h2>
           </div>
 
           <div class="uk-modal-body" uk-overflow-auto>
-            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea>
+            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120" />
           </div>
 
           <div class="uk-modal-footer uk-text-right">
@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"
+import { mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"
@@ -188,7 +188,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getInfo", "dStudent", "getWeeks", "getTheme"]),
+    ...mapGetters(["getInfo", "getDStudent", "getWeeks", "getTheme"]),
     url() {
       return this.info.url.replace(/\/?(\?|#|$)/, "/$1")
     }
@@ -238,11 +238,14 @@ export default {
         }
       )
     },
+
     addStudent() {
-      let tempStudent = _.cloneDeep(this.dStudent)
-      this.info.students.push(tempStudent)
+      // let tempStudent = _.cloneDeep(this.getDStudent)
+      // this.info.students.push(tempStudent)
+      this.$store.dispatch("addStudent")
       this.selected = { index: this.info.students.length - 1, list: "students" }
     },
+
     removeStudent() {
       let { list, index } = this.selected
       console.log(list)
@@ -261,18 +264,21 @@ export default {
       }
       this.updateProp(list, users)
     },
+
     clearStudents() {
-      this.info.students = [this.dStudent]
+      this.info.students = [this.getDStudent]
     },
+
     setToDefault() {
       console.log("resetting data...")
-      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let dInfo = _.cloneDeep(this.$store.getters.getDInfo)
       let props = ["students"]
 
       props.forEach(prop => {
         this.updateProp(prop, dInfo[prop])
       })
     },
+    
     getSaveStateConfig() {
       return {
         cacheKey: "Student"

@@ -1,12 +1,13 @@
 <template>
   <div class="home-page">
-    <container-component cid="home" :defaultRows="defRows"/>
+    <container-component cid="home" :defaultRows="defRowsNew"/>
   </div>
 
 </template>
 
 <script>
 import ContainerComponent from './common/ContainerComponent.vue'
+import RowTypes from '../util/row-types.js'
 
 export default {
   name: "NewHome",
@@ -18,12 +19,24 @@ export default {
         'instructor-ta-row',
         'dates-times-row',
         'list-row'
+      ],
+      defRowsNew: [
+        'homeWelcome',
+        'homeInstructors',
+      ],
+      defRowsStringLayout: [
+        'homeWelcome',
+        'homeWelcome',
+        'homeInstructors',
+        ["home-sidebar"],
+        [['image-slot'],['image-slot']]
       ]
     }
   },
   components: {
     ContainerComponent
-  }
+  },
+  mixins: [RowTypes]
 }
 </script>
 

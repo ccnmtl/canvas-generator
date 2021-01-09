@@ -27,12 +27,15 @@ import _ from "lodash"
 import { mapGetters } from "vuex"
 
 import RowComponent from "./RowComponent.vue"
-import RowTypes from '../../util/row-types.json'
+// import RowTypes from '../../util/row-types.json'
+import RowTypesMixin from '../../util/row-types.js'
+
 
 export default {
   components: {
     RowComponent
   },
+  mixins: [RowTypesMixin],
   props: [ "cid", "defaultRows" ],
   data() {
     return {
@@ -105,15 +108,44 @@ export default {
 
     // If no rows exist in the current container, build using default
     if (!this.rows) {
-      this.defaultRows.forEach(row => {
-        const actualRowType = _.find(RowTypes, { 'type': row })
-        self.$store.dispatch('createRowsFromArray', {
-          cid: self.cid,
-          rows: actualRowType.array
-        })
-
+      self.$store.dispatch('createRowsFromArray', {
+        cid: self.cid,
+        rows: this.defaultRows
       })
     }
+
+    // if (!this.rows) {
+    //   this.defaultRows.forEach(row => {
+    //     let rowArray 
+
+    //     // if row is built using a shorthand string then find the actual row content
+    //     if (typeof row === 'string') rowArray = _.cloneDeep(this.rowTypes[row]).array
+    //     // otherwise build directly from the row
+    //     else rowArray = row
+
+    //     self.$store.dispatch('createRowsFromArray', {
+    //       cid: self.cid,
+    //       rows: rowArray
+    //     })
+
+    //   })
+    // }
+
+    // self.$store.dispatch('createRowsFromArray', {
+    //   cid: self.cid,
+    //   rows: ['homeInstructors']
+    // })
+
+    // if (!this.rows) {
+    //   this.defaultRows.forEach(row => {
+    //     const actualRowType = _.find(RowTypes, { 'type': row })
+    //     self.$store.dispatch('createRowsFromArray', {
+    //       cid: self.cid,
+    //       rows: actualRowType.array
+    //     })
+
+    //   })
+    // }
   }
 }
 </script>

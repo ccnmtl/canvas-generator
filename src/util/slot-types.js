@@ -1,19 +1,21 @@
 
 import { mapActions, mapGetters } from 'vuex'
 import _ from 'lodash'
+import moment from "moment"
+
 
 export default {
 
   computed: {
     ...mapGetters(['getInfo']),
     SlotTypes(){
-      let res = [
+      return [
         {
           "id": 1,
           "name": "Title Slot",
           "type": "title-slot",
           "icon": "edit",
-          "colspan": 8,
+          "colspan": 4,
           "visible": true,
           "defaultData": {
             "title": "Default Title",
@@ -25,7 +27,7 @@ export default {
           "name": "Banner Slot",
           "type": "banner-slot",
           "icon": "s-platform",
-          "colspan": 24,
+          "colspan": 12,
           "visible": true,
           "defaultData": {
             "title": "Default Title",
@@ -37,7 +39,7 @@ export default {
           "name": "Image Slot",
           "type": "image-slot",
           "icon": "picture",
-          "colspan": 8,
+          "colspan": 4,
           "visible": true,
           "defaultData": {
             "imgSrc": "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/OGH_LogoWide.png",
@@ -50,7 +52,7 @@ export default {
           "name": "Content Slot",
           "type": "content-slot",
           "icon": "menu",
-          "colspan": 8,
+          "colspan": 4,
           "visible": true,
           "defaultData": {
             "content": "Here you’ll find course materials and a range of tools to help you get the most out of the class. Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
@@ -61,7 +63,7 @@ export default {
           "name": "Spacer Slot",
           "type": "spacer-slot",
           "icon": "menu",
-          "colspan": 8,
+          "colspan": 4,
           "visible": true,
           "defaultData": {
             "useHR": true,
@@ -73,7 +75,7 @@ export default {
           "name": "Buttons Slot",
           "type": "buttons-slot",
           "icon": "menu",
-          "colspan": 8,
+          "colspan": 4,
           "visible": true,
           "defaultData": {
           }
@@ -83,7 +85,7 @@ export default {
           "name": "Simple List Slot",
           "type": "simple-list-slot",
           "icon": "menu",
-          "colspan": 8,
+          "colspan": 4,
           "visible": true,
           "defaultData": {
           }
@@ -93,9 +95,13 @@ export default {
           "name": "Name Value Slot",
           "type": "name-value-slot",
           "icon": "menu",
-          "colspan": 8,
+          "colspan": 4,
           "visible": true,
           "defaultData": {
+            name: "Title",
+            getter: "info.startDate",
+            value: moment().day(1),
+            nameStyle: {'font-weight': 'bold'}
           }
         },
         {
@@ -103,13 +109,12 @@ export default {
           "name": "List Slot",
           "type": "list-slot",
           "icon": "menu",
-          "colspan": 8,
+          "colspan": 4,
           "visible": true,
           "defaultData": {
           }
         }
       ]
-      return res
     }
   },
   data() {

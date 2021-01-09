@@ -1,13 +1,31 @@
 <template>
   <div :id="sid" class="col name-value-slot">
-    <strong>{{ data.name}}:</strong>
-    {{ data.value }}
+    <span :style="data.nameStyle">{{ data.name}}:</span>
+    <span v-for="n in data.breakSize" :key="n"> <br> </span>
+    <span v-if="isDate(data.value)">
+      <span @dblclick="setEditing('value')" v-if="editing !== 'value'" > {{ formatWeek(data.value) }} </span>
+      <span data-hidden v-else>
+        <el-date-picker
+          v-model="data.value"
+          @blur="finishEditing('value')"
+          type="date"
+          placeholder="Pick date">
+        </el-date-picker>
+      </span>
+    </span>
+    <span v-else>
+      <span @dblclick="setEditing('value')" v-if="editing !== 'value'" > {{ data.value }} </span>
+      <span data-hidden v-else>
+        <input ref="value" @blur="finishEditing('value')" v-model="data.value" />
+      </span>
+    </span>
   </div>
 </template>
 
 <script>
 
 import Vue from 'vue'
+import moment from 'moment'
 
 export default {
   name: "NameValueSlot",
@@ -15,7 +33,8 @@ export default {
   data() {
     return {
       editing: null,
-      data: {},
+      data: {
+      },
     }
   },
   computed: {
@@ -38,7 +57,7 @@ export default {
             this.data = {}
           }
 
-          Vue.set(this.data, 'value', newVal ? newVal : 'No title')
+          Vue.set(this.data, 'value', newVal ? newVal : '')
         }
       },
       immediate: true
@@ -52,6 +71,27 @@ export default {
         sid: this.sid
       })
       this.$store.dispatch("setDialogVisibility", true)
+    },
+    setEditing(field) {
+      this.editing = field
+
+      setTimeout(() => {
+        this.$refs[field].focus()
+      }, 200)
+    },
+    finishEditing(field) {
+      if(this.data[field]) {
+        this.$store.dispatch("updateSpecificInfo", { key: field, value: this.data[field] })
+        this.editing = null
+      }
+    },
+    formatWeek(date) {
+      return moment(date).format("dddd, MMMM Do")
+    },
+    isDate(value){
+      console.log(value)
+      console.log(moment.isMoment(value))
+      return moment.isMoment(value)
     }
   }
 }

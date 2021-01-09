@@ -39,9 +39,9 @@
 
         <div v-show="iEditable" v-if="info.students.length > 0" class="center">
           <el-input style="width: 200px; float:left" class="e-input" :value="info.students[selected.index].name" @input="updateUser(info.students[selected.index],'name', $event)"> </el-input>
-          <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
-          <el-input class="e-input" v-if="info.students" v-model="info.students[selected.index].title" @input="updateUser(info.students[selected.index],'title', $event)"> </el-input>
-          <el-input class="e-input" v-if="info.students" type="textarea" autosize v-model="info.students[selected.index].bio" @input="updateUser(info.students[selected.index],'bio', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" :value = "info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" :value="info.students[selected.index].title" @input="updateUser(info.students[selected.index],'title', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" type="textarea" autosize :value="info.students[selected.index].bio" @input="updateUser(info.students[selected.index],'bio', $event)"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
@@ -74,7 +74,7 @@
       <div class="content-box">
         <div class="grid-row">
 
-        <div style="float: left; display: inline; width: 18%; height: auto; background-color: #f7f7f7; color: #333333; margin: 20px 20px 0; padding: 10px;" v-for="(student, index) in info.students">
+        <div style="float: left; display: inline; width: 18%; height: auto; background-color: #f7f7f7; color: #333333; margin: 20px 20px 0; padding: 10px;" v-if="info.students.length > 0" v-for="(student, index) in info.students" :key="student.id">
           <a :href='url + "pages/student-" + student.id'><img style="width: 200px; height: auto;" :src="student.imgSrc" alt="" /></a>
           <p style="padding-top: 10px; margin: 0 10px; color: #666666; font-size: 14px; font-weight: bold;">{{student.name}}</p>
           <p style="margin: 0 10px; color: #999999; font-size: 12px; font-weight: normal;">{{student.company}}</p>
@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"
+import { mapActions, mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
 import mutations from "../store/mutations"
@@ -190,12 +190,13 @@ export default {
     // Protects against selected.list becoming an object (need to track down why this happens)
   },
   computed: {
-    ...mapGetters(["getInfo", "dStudent", "getWeeks", "getTheme"]),
+    ...mapGetters(["getInfo", "getDStudent", "getWeeks", "getTheme"]),
     url() {
       return this.info.url.replace(/\/?(\?|#|$)/, "/$1")
     }
   },
   methods: {
+    ...mapActions(["deleteStudent"]),
     formatDate(date) {
       return moment(date).format("MMMM Do")
     },
@@ -241,13 +242,8 @@ export default {
       )
     },
     addStudent() {
-      let tempStudent = _.cloneDeep(this.dStudent)
-      let users = _.cloneDeep(this.info.students)
+      this.$store.dispatch("addStudent")
 
-      tempStudent.id = _.uniqueId()
-
-      users.push(tempStudent)
-      this.updateProp("students", users)
       this.selected = {
         index: this.info.students.length - 1,
         key: this.info.students[this.info.students.length - 1].id
@@ -255,25 +251,24 @@ export default {
       this.sortStudents()
     },
     removeStudent() {
+
       let { key, index } = this.selected
-      let users = _.cloneDeep(this.info.students)
-      users.splice(index, 1)
+      let student = this.info.students[index]
+
       if (index == 0) {
-        if (list == "students") {
-          console.log("tried to delete student")
-          return
-          console.log("after return")
-        }
-        console.log("deleting last ta")
         this.selected = { index: 0, key: this.info.students[0].id }
       } else {
+        this.$store.dispatch("deleteStudent", student)
         this.selected = { index: index - 1, key: this.info.students[index - 1].id }
       }
-      this.updateProp("students", users)
     },
+
     clearStudents() {
-      this.info.students = [this.dStudent]
+      this.$store.dispatch("clearStudents")
+      this.selected = { index: 0, key: this.info.students[0].id }
+
     },
+
     sortStudents() {
       this.info.students.sort(function(a, b) {
         var textA = a.name.toUpperCase()
@@ -281,25 +276,30 @@ export default {
         return textA < textB ? -1 : textA > textB ? 1 : 0
       })
     },
+
     setToDefault() {
       console.log("resetting data...")
-      let dInfo = _.cloneDeep(this.$store.getters.dInfo)
+      let dInfo = _.cloneDeep(this.$store.getters.getDInfo)
       let props = ["students"]
 
       props.forEach(prop => {
         this.updateProp(prop, dInfo[prop])
       })
     },
+
     getSaveStateConfig() {
       return {
         cacheKey: "Student List"
       }
     }
   },
+
   mounted() {
+    if (this.info.students.length < 1) this.addStudent()
     this.selected = { index: 0, key: this.info.students[0].id }
     this.updateCode("student-list-code")
   },
+
   beforeCreate() {},
   beforeUpdate() {}
 }

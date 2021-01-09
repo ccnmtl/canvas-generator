@@ -2,6 +2,8 @@ import Vue from 'vue';
 import _ from 'lodash'
 
 export default {
+
+  //Slot Mutations
   addRow: (state, row) => {
     state.rows.push(row)
   },
@@ -36,6 +38,44 @@ export default {
       return slot.sid !== sid
     })
   },
+  updateSlotData: (state, slot) => {
+    const actualSlot = _.findIndex(state.slots, {
+      'sid': slot.item.sid,
+      'rid': slot.item.rid,
+      'cid': slot.item.cid,
+      'colid': slot.item.colid,
+    })
+    Vue.set(state.slots[actualSlot], 'data', slot.data)
+  },
+  setSlotStyles: (state, payload) => {
+    const actualSlot = _.findIndex(state.slots, {
+      'sid': payload.slot.sid,
+      'rid': payload.slot.rid,
+      'cid': payload.slot.cid,
+      'colid': payload.slot.colid,
+    })
+    Vue.set(state.slots[actualSlot], 'styles', payload.styles)
+  },
+  setSlotClasses: (state, payload) => {
+    const actualSlot = _.findIndex(state.slots, {
+      'sid': payload.slot.sid,
+      'rid': payload.slot.rid,
+      'cid': payload.slot.cid,
+      'colid': payload.slot.colid,
+    })
+    Vue.set(state.slots[actualSlot], 'classes', payload.classes)
+  },
+  setSlotGetter: (state, payload) => {
+    const actualSlot = _.findIndex(state.slots, {
+      'sid': payload.slot.sid,
+      'rid': payload.slot.rid,
+      'cid': payload.slot.cid,
+      'colid': payload.slot.colid,
+    })
+    Vue.set(state.slots[actualSlot], 'getter', payload.getter)
+  },
+
+  // User Mutations
   addProf: (state, prof) => {
     state.info.profs.push(prof)
   },
@@ -60,14 +100,56 @@ export default {
       return user.id !== ta.id
     })
   },
+  updateUser: (state, { user, prop, value }) => {
+    Vue.set(user, prop, value)
+  },
+  clearStudents: (state) => {
+    state.info.students = []
+  },
+
+  //Week Mutations
   addWeek: (state, week) => {
-    if(state.weeks) state.weeks.push(week)
+    state.weeks.push(week)
   },
   deleteWeek: (state, week) => {
     state.info.weeks = state.info.weeks.filter((user) => {
       return user.id !== week.id
     })
   },
+  updateWeek: (state, { index, prop, value }) => {
+    Vue.set(state.weeks[index], prop, value)
+  },
+  sliceWeek: (state, num) => {
+    state.weeks = state.weeks.slice(0, num)
+  },
+  updateWeeks: (state, payload) => {
+    state.weeks = payload
+  },
+
+  //Week Element Mutations
+  addVideo: (state, {video, index}) => {
+    state.weeks[index].videos.push(video)
+  },
+
+  addCase: (state, { index, caseStudy }) => {
+    state.weeks[index].cases.push(caseStudy)
+  },
+
+  removeCase: (state, {index, caseStudy}) => {
+    state.weeks[index].cases = state.weeks[index].cases.filter((item) => {
+      return item.id !== caseStudy.id
+    })
+  },
+
+  addAssignment: (state, { assignment, index }) => {
+    state.weeks[index].assignments.push(assignment)
+  },
+
+  addDiscussion: (state, {discussion, index}) => {
+    state.weeks[index].discussions.push(discussion)
+  },
+
+  //Page Mutations
   setDialogVisibility: (state, visibility) => {
     state.dialogVisible = visibility
   },
@@ -77,33 +159,8 @@ export default {
   setPageData: (state, page) => {
     state.pagesSet.push(page)
   },
-  setSlotStyles: (state, payload) => {
-    const actualSlot = _.findIndex(state.slots, {
-      'sid': payload.slot.sid,
-      'rid': payload.slot.rid,
-      'cid': payload.slot.cid,
-      'colid': payload.slot.colid,
-    })
-    Vue.set(state.slots[actualSlot], 'styles', payload.styles)
-  },
-  setSlotClasses: (state, payload) => {
-    const actualSlot = _.findIndex(state.slots, {
-      'sid': payload.slot.sid,
-      'rid': payload.slot.rid,
-      'cid': payload.slot.cid,
-      'colid': payload.slot.colid,
-    })
-    Vue.set(state.slots[actualSlot], 'classes', payload.classes)
-  },
-  updateSlotData: (state, slot) => {
-    const actualSlot = _.findIndex(state.slots, {
-      'sid': slot.item.sid,
-      'rid': slot.item.rid,
-      'cid': slot.item.cid,
-      'colid': slot.item.colid,
-    })
-    Vue.set(state.slots[actualSlot], 'data', slot.data)
-  },
+
+  //Info Mutations
   updateInfo: (state, payload) => {
     state.info = payload
   },
@@ -111,13 +168,7 @@ export default {
     Vue.set(state.info, payload.key, payload.value)
   },
   updateProp: (state, { prop, value }) => {
-    state.info[prop] = value
-  },
-  updateUser: (state, { user, prop, value }) => {
-    user[prop] = value
-  },
-  updateWeek: (state, { index, prop, value }) => {
-    state.weeks[index][prop] = value
+    Vue.set(state.info, prop, value)
   },
   updateStore: (state, payload) => {
     state = payload
@@ -125,12 +176,7 @@ export default {
   updateLoading: (state, payload) => {
     state.loading = payload
   },
-  sliceWeek: (state, num) => {
-    state.weeks = state.weeks.slice(0, num)
-  },
-  updateWeeks: (state, payload) => {
-    state.weeks = payload
-  },
+
   refreshStore: (state) => {
     state = state
   },
@@ -154,5 +200,11 @@ export default {
   },
   setStateFieldWithBase: (state, payload) => {
     Vue.set(state[payload.base], payload.field, payload.value)
+  },
+  updateRowTypes: (state, payload) => {
+    state.rowTypes = payload
+  },
+  updateColTypes: (state, payload) => {
+    state.colTypes = payload
   },
 }

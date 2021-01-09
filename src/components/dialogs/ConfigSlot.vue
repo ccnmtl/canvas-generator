@@ -1,6 +1,31 @@
 <template>
   <div class="dialog-inner">
       <div class="dialog-data">
+        <h5>Slot Data Source</h5>
+
+        <div class="data-item">
+          <strong>Data Source: </strong>
+          <span v-if="getter !== null">
+            <span @dblclick="showEditGetter" v-show="!editGetter">{{ getter }}</span>
+            <span v-show="editGetter">
+              <input class="form-control" ref="getter" style="display: inline-block; width: 50%" v-model="getter" @blur="editGetter = false" />
+            </span>
+            <div>
+              <small>Global data can be assigned as an object eg: info.title</small>
+            </div>
+          </span>
+          <span v-else>Local data</span>
+
+          <div class="data-button">
+            <button @click="setDataTypeTo('local')" v-if="getter !== null" class="btn-primary btn">Change to local data</button>
+            <button @click="setDataTypeTo('global')" v-else class="btn-primary btn">Change to Global data</button>
+
+            <button v-if="dialogData.slotData.type === 7 || dialogData.slotData.type === 9" @click="changeSlotData" class="btn-secondary btn">
+              Config Slot data
+            </button>
+          </div>
+        </div>
+
         <h5>Slot Styles</h5>
 
         <div class="style-item" v-for="(st, i) in styles" :key="i">
@@ -29,7 +54,7 @@
             <span class="bg">
                 {{ cls }}
                 <i class="el-icon-error" />
-            </span> 
+            </span>
         </div>
 
         <el-input placeholder="Class name" v-model="classVal"></el-input>
@@ -54,7 +79,7 @@ export default {
   props: [
     'dialogData'
   ],
-  name: 'ChooseSlot',
+  name: 'ConfigSlot',
   data() {
     return {
       slotTypes: SlotTypes,
@@ -63,15 +88,22 @@ export default {
       usedStyles: [],
       styleAtt: null,
       styleVal: '',
-      classVal: ''
+      classVal: '',
+      editGetter: false,
+      getter: null
     }
   },
   beforeMount() {
-      if(this.dialogData.slotData.styles) 
-        this.styles = this.dialogData.slotData.styles
+      if(this.dialogData.slotData.styles)
+        this.styles = _.cloneDeep(this.dialogData.slotData.styles)
 
-      if(this.dialogData.slotData.classes) 
-        this.classes = this.dialogData.slotData.classes
+      if(this.dialogData.slotData.classes)
+        this.classes = _.cloneDeep(this.dialogData.slotData.classes)
+
+      if(this.dialogData.slotData.getter)
+        this.getter = _.cloneDeep(this.dialogData.slotData.getter)
+
+
   },
   computed: {
       styleOptions() {
@@ -79,6 +111,29 @@ export default {
       }
   },
   methods: {
+    changeSlotData() {
+      this.$store.dispatch("setDialogVisibility", false)
+      this.$store.dispatch("setDialogData", {
+        title: 'Config Slot Data',
+        type: 'config-slot-data',
+        slotData: this.dialogData.slotData
+      })
+      setTimeout(() => { this.$store.dispatch("setDialogVisibility", true) }, 300)
+    },
+    setDataTypeTo(type) {
+      if(type === 'local') {
+        this.getter = null
+      }
+      else {
+        this.getter = this.dialogData.slotData.getter
+                      ? _.cloneDeep(this.dialogData.slotData.getter)
+                      : ''
+      }
+    },
+    showEditGetter() {
+      this.editGetter = true
+      setTimeout(() => { this.$refs.getter.focus() }, 200)
+    },
     saveChanges() {
         const finalStyles = {}
 
@@ -97,7 +152,12 @@ export default {
             slot: this.dialogData.slotData,
             classes: this.classes
         })
-        
+
+        this.$store.dispatch("setSlotGetter", {
+            slot: this.dialogData.slotData,
+            getter: this.getter
+        })
+
         this.$store.dispatch("setDialogVisibility", false)
 
     },
@@ -164,6 +224,12 @@ export default {
             cursor: pointer;
         }
     }
+}
+
+.data-item {
+  .data-button {
+    margin-top: 12px;
+  }
 }
 
 </style>
