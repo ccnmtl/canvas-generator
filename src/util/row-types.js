@@ -33,32 +33,7 @@ export default {
           type: "dates-times-row",
           icon: "time",
           array: [
-            [
-              [
-                {
-                  type: "name-value-slot",
-                  getter: "info.meetings",
-                  data: {
-                    name: "MEETING DATES / TIMES"
-                  },
-                  styles: {
-                    margin: "20px 0"
-                  }
-                },
-                {
-                  type: "name-value-slot",
-                  getter: "info.discussions",
-                  data: {
-                    name: "SPECIAL DISCUSSION FORUMS"
-                  },
-                  styles: {
-                    "padding-bottom": "40px",
-                    "margin-bottom": "20px",
-                    "border-bottom": "1px solid #C7CDD1",
-                  }
-                }
-              ]
-            ]
+            ['date-time-col']
           ]          
 
         },
@@ -68,24 +43,7 @@ export default {
           type: "list-row",
           icon: "sheet",
           array: [
-            [
-              [
-                {
-                  type: "list-slot",
-                  getter: "info.profs",
-                  getter2: "info.tas",
-                  data: {
-                    idField: "id",
-                    labelField: "name",
-                    emailField: "email",
-                    type: "instructor-ta",
-                    title: "TA:",
-                    officeField: "office",
-                    component: "professor-ta-slot"
-                  }
-                }
-              ]
-            ]
+            ['instructor-expanded-list']
           ]          
         },
       }

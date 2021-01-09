@@ -89,8 +89,6 @@ export default {
       return moment(date).format("dddd, MMMM Do")
     },
     isDate(value){
-      console.log(value)
-      console.log(moment.isMoment(value))
       return moment.isMoment(value)
     }
   }

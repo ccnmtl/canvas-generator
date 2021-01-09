@@ -153,6 +153,54 @@ export default {
             ]
         }
         ],
+        dateTime: {
+          id: 7,
+          type: "date-time-col",
+          array: 
+            [
+              {
+                type: "name-value-slot",
+                getter: "info.meetings",
+                data: {
+                  name: "MEETING DATES / TIMES"
+                },
+                styles: {
+                  margin: "20px 0"
+                }
+              },
+              {
+                type: "name-value-slot",
+                getter: "info.discussions",
+                data: {
+                  name: "SPECIAL DISCUSSION FORUMS"
+                },
+                styles: {
+                  "padding-bottom": "40px",
+                  "margin-bottom": "20px",
+                  "border-bottom": "1px solid #C7CDD1",
+                }
+              }
+            ]
+        },
+        instructorTaExpandedList:{
+          type: 'instructor-expanded-list',
+          array: [
+            {
+              type: "list-slot",
+              getter: "info.profs",
+              getter2: "info.tas",
+              data: {
+                idField: "id",
+                labelField: "name",
+                emailField: "email",
+                type: "instructor-ta",
+                title: "TA:",
+                officeField: "office",
+                component: "professor-ta-slot"
+              }
+            }
+          ]
+        }
 
       }        
     }
