@@ -41,6 +41,10 @@ export default {
     },
     addSlot: ({ commit }, slot) => {
       if(!slot.sid) slot.sid = uuid.v1()
+      if(!slot.colspan) {
+        let SlotType = _.find(SlotTypes, { 'id': slot.type })
+        slot.colspan = SlotType.colspan
+      }
       commit('addSlot', slot)
       return slot
     },
@@ -127,6 +131,7 @@ export default {
 
             dispatch('addSlot', {
               type: actualSlotType.id,
+              colspan: actualSlotType.colspan,
               rid: column.rid,
               cid: column.cid,
               colid: column.colid,
@@ -139,6 +144,7 @@ export default {
             dispatch('addSlot', {
               ...slot,
               type: actualSlotType.id,
+              colspan: actualSlotType.colspan,
               rid: column.rid,
               cid: column.cid,
               colid: column.colid,

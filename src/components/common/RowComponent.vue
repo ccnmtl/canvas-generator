@@ -12,7 +12,7 @@
     </div>
 
     <div data-hidden class="actions" v-else>
-      <button v-if="columns.length < 3 && totalWidth < 24" @click="addColumn" class="btn btn-primary float">
+      <button v-if="columns.length < 3 && totalWidth < 12" @click="addColumn" class="btn btn-primary float">
         <i class="el-icon-plus"></i>
         <span>Add Column</span>
       </button>
@@ -28,8 +28,8 @@
                           :col="column"
                           :rid="rid"
                           :cid="row.cid"
-                          :colspan="column.colspan || 12 / columns.length"
-                          :space="24 - totalWidth" />
+                          :colspan="12 / columns.length"
+                          :space="12 - totalWidth" />
 
     </div>
     </div>
@@ -63,12 +63,20 @@ export default {
     totalWidth() {
       if(!this.slots) return 0
 
-      let res = 0
-      this.slots.forEach(slot => {
-        let type = _.find(SlotTypes, { id: slot.type })
-        res += type.colspan
-      });
-      return res
+      let total = 0
+      this.columns.forEach(column => {
+        let slots = this.$store.getters.getSlotsByColID[column.colid]
+        let biggest = 0
+
+        slots.forEach(slot => {
+          let type = _.find(SlotTypes, { id: slot.type })
+          biggest = Math.max(type.colspan, biggest)
+        })
+
+        total += biggest
+      })
+
+      return total
     }
   },
   methods: {

@@ -1,5 +1,5 @@
 <template>
-  <div :class="[{ empty: !slots}, 'col-xs-'+colspan, 'el-col']" >
+  <div :class="[{ empty: !slots}, 'col-xs-'+colWidth, 'el-col']" >
     <div data-hidden class="empty-text" v-if="!slots">
       Start adding slots to this column!
 
@@ -27,8 +27,12 @@
 
 <script>
 
+import _ from 'lodash'
 import SlotComponent from "./SlotComponent.vue"
 import ColumnTypes from "../../util/col-types"
+import SlotTypesComponent from '../../util/slot-types.js'
+
+const SlotTypes = SlotTypesComponent.computed.SlotTypes()
 
 export default {
   components: {
@@ -41,7 +45,18 @@ export default {
   },
   computed: {
     slots: function() {
-      return this.$store.getters.getSlotsByColID[this.col.colid]
+      const slots = this.$store.getters.getSlotsByColID[this.col.colid]
+      slots.forEach(slot => {
+        let SlotType = _.find(SlotTypes, { 'id': slot.type })
+        slot.colspan = SlotType.colspan
+      })
+      return slots
+    },
+    colWidth: function () {
+      if(this.slots.length === 0) return this.colspan
+
+      const bigger = _.orderBy(this.slots, ['colspan'],['desc'])[0].colspan
+      return Math.max(bigger, this.colspan)
     }
   },
   methods: {
