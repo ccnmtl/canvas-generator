@@ -125,13 +125,13 @@ export default {
             actualSlotType = _.find(SlotTypes, { 'type': slot })
 
             dispatch('addSlot', {
-              ...slot,
               type: actualSlotType.id,
               colspan: actualSlotType.colspan,
               rid: column.rid,
               cid: column.cid,
               colid: column.colid,
-              data: slot.data ? slot.data : actualSlotType.defaultData
+              data: slot.data ? slot.data : actualSlotType.defaultData,
+              getter: actualSlotType.getter ? actualSlotType.getter : null
             })
           }
           else {
@@ -147,7 +147,7 @@ export default {
               data: slot.data ? slot.data : actualSlotType.defaultData,
               classes: slot.classes ? slot.classes : [],
               styles: slot.styles ? slot.styles : [],
-              getter: slot.getter
+              getter: slot.getter ? slot.getter : null
             })
           }
         })
