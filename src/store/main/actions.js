@@ -95,20 +95,15 @@ export default {
         let columns = payload.columns
 
         if (typeof columns[0] == 'string') {
-          console.log('column in string')
-          console.log(columns)
           let colObj = findObj('type', columns[0], ColTypes).array
           columns = [colObj]
         }
-        console.log(columns)
 
         columns.forEach(column => {
           let actualCol
 
           if (typeof column == 'string') actualCol = findObj('type', column, ColTypes).array
           else actualCol = column
-
-          console.log(actualCol)
 
           dispatch('addColumn', {
             rid: row.rid,
@@ -130,6 +125,7 @@ export default {
             actualSlotType = _.find(SlotTypes, { 'type': slot })
 
             dispatch('addSlot', {
+              ...slot,
               type: actualSlotType.id,
               colspan: actualSlotType.colspan,
               rid: column.rid,
@@ -196,7 +192,7 @@ export default {
     },
     updateUser: ({ commit }, { user, prop, value }) => {
       commit('updateUser', { user, prop, value })
-    },    
+    },
 
     //Week Actions
     addWeek: ({ commit, getters }, data = {}) => {

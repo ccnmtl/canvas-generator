@@ -97,10 +97,10 @@ export default {
           "icon": "menu",
           "colspan": 4,
           "visible": true,
+          "getter": "info.semester",
           "defaultData": {
             name: "Title",
-            getter: "info.startDate",
-            value: moment().day(1),
+            // value: moment().day(1),
             nameStyle: {'font-weight': 'bold'}
           }
         },

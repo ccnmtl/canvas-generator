@@ -52,6 +52,8 @@ export default {
     },
     getterData: {
       handler(newVal) {
+        console.log("newVal")
+        console.log(newVal)
         if (newVal !== null) {
           if(!this.data) {
             this.data = {}

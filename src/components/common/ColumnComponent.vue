@@ -83,7 +83,6 @@ export default {
       this.$store.dispatch("setDialogVisibility", true)
     },
     addCustomCol(){
-      console.log(this.homeSidebarCol())
       this.createColumnsFromArray({columns: [this.homeSidebarCol()], rid: this.rid})
     }
   }
