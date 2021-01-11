@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <container-component cid="home" :defaultRows="defRowsStringLayout"/>
+    <container-component cid="home" :defaultRows="homeLayout"/>
   </div>
 
 </template>

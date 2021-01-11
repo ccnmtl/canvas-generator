@@ -135,19 +135,15 @@ export default {
             type: "banner-col",
             icon: "picture",
             array: [
-              [
-                [
-                  {
-                    "type": "banner-slot",
-                    "data": {
-                      "useWideBanner": true
-                    },
-                    "styles": {
-                      "margin-bottom": "20px"
-                    }
-                  }
-                ]
-              ]
+              {
+                "type": "banner-slot",
+                "data": {
+                  "useWideBanner": true
+                },
+                "styles": {
+                  "margin-bottom": "20px"
+                }
+              }           
             ]
         },
         dateTime: {
