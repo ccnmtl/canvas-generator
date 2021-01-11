@@ -162,6 +162,7 @@ export default {
     updateColTypes: ({ commit }, payload) => {
       commit('updateColTypes', payload)
     },
+
     //User Actions
     addProf: ({ commit, getters }) => {
       let prof = _.cloneDeep(getters.getDProf)
@@ -192,8 +193,10 @@ export default {
       let student = _.cloneDeep(getters.getDStudent)
       student.id = _.uniqueId()
       commit('addStudent', student)
-
     },
+    updateUser: ({ commit }, { user, prop, value }) => {
+      commit('updateUser', { user, prop, value })
+    },    
 
     //Week Actions
     addWeek: ({ commit, getters }, data = {}) => {
