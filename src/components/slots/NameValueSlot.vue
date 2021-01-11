@@ -46,7 +46,10 @@ export default {
   watch: {
     slotData: {
       handler(newVal) {
-        if(!this.slotItem.getter) this.data = newVal
+        if(!this.slotItem.getter || !this.slotItem.getter.name)
+          this.data.name = newVal.name
+        if(!this.slotItem.getter || !this.slotItem.getter.type)
+          this.data.type = newVal.type
       },
       immediate: true
     },
