@@ -81,7 +81,7 @@ export default {
     },
     finishEditing(field) {
       if(this.data[field]) {
-        this.$store.dispatch("updateSpecificInfo", { key: field, value: this.data[field] })
+        this.$store.dispatch("updateSpecificInfo", { key: this.slotItem.getter.split(".")[1], value: this.data[field] })
         this.editing = null
       }
     },
