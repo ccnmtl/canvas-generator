@@ -2,7 +2,7 @@
   <div :id="sid" class="col name-value-slot">
     <span :style="data.nameStyle">{{ data.name}}:</span>
     <span v-for="n in data.breakSize" :key="n"> <br> </span>
-    <span v-if="isDate(data.value)">
+    <span v-if="data.type == 'date'">
       <span @dblclick="setEditing('value')" v-if="editing !== 'value'" > {{ formatWeek(data.value) }} </span>
       <span data-hidden v-else>
         <el-date-picker

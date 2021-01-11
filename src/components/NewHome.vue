@@ -32,7 +32,8 @@ export default {
         'banner-row',
         [['image-slot'], 'home-sidebar'],
         'home-instructors-row',
-        'date-time-row'
+        'date-time-row',
+        [['name-value-slot']]
       ],
       syllabusLayout: [
         'banner-row',
