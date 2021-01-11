@@ -6,9 +6,9 @@
         <div class="data-item">
           <strong>Data Source: </strong>
           <span v-if="getter !== null">
-            <span @dblclick="showEditGetter" v-show="!editGetter">{{ getter }}</span>
+            <span @dblclick="showEditGetter" v-show="!editGetter">{{ getter ? getter : 'Unassigned' }}</span>
             <span v-show="editGetter">
-              <input class="form-control" ref="getter" style="display: inline-block; width: 50%" v-model="getter" @blur="editGetter = false" />
+              <input class="form-control" ref="getter ? getter : 'Unassigned'" style="display: inline-block; width: 50%" v-model="getter" @blur="editGetter = false" />
             </span>
             <div>
               <small>Global data can be assigned as an object eg: info.title</small>
@@ -102,8 +102,6 @@ export default {
 
       if(this.dialogData.slotData.getter)
         this.getter = _.cloneDeep(this.dialogData.slotData.getter)
-
-
   },
   computed: {
       styleOptions() {

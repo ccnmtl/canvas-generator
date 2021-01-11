@@ -68,10 +68,11 @@ export default {
         let slots = this.$store.getters.getSlotsByColID[column.colid]
         let biggest = 0
 
-        slots.forEach(slot => {
-          let type = _.find(SlotTypes, { id: slot.type })
-          biggest = Math.max(type.colspan, biggest)
-        })
+        if(slots)
+          slots.forEach(slot => {
+            let type = _.find(SlotTypes, { id: slot.type })
+            biggest = Math.max(type.colspan, biggest)
+          })
 
         total += biggest
       })
@@ -111,10 +112,16 @@ export default {
   &.empty {
     padding: 16px 0;
     min-height: 20vh;
-    display: flex;
+    display: relative;
     align-items: center;
     justify-content: center;
     background:#d0e0e8;
+
+    .empty-text {
+      width: 300px;
+      text-align: center;
+      margin: 0 auto;
+    }
 
     .empty-button {
       margin: 7px 0;

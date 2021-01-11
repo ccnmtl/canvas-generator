@@ -46,17 +46,20 @@ export default {
   computed: {
     slots: function() {
       const slots = this.$store.getters.getSlotsByColID[this.col.colid]
-      slots.forEach(slot => {
-        let SlotType = _.find(SlotTypes, { 'id': slot.type })
-        slot.colspan = SlotType.colspan
-      })
+      if(slots)
+        slots.forEach(slot => {
+          let SlotType = _.find(SlotTypes, { 'id': slot.type })
+          slot.colspan = SlotType.colspan
+        })
       return slots
     },
     colWidth: function () {
-      if(this.slots.length === 0) return this.colspan
+      if(this.slots && this.slots.length === 0) return this.colspan
 
-      const bigger = _.orderBy(this.slots, ['colspan'],['desc'])[0].colspan
-      return Math.max(bigger, this.colspan)
+      const bigger = _.orderBy(this.slots, ['colspan'],['desc'])[0]
+
+      if(!bigger) return this.colspan
+      return Math.max(bigger.colspan, this.colspan)
     }
   },
   methods: {
