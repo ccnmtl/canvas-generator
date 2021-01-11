@@ -46,14 +46,12 @@ export default {
   watch: {
     slotData: {
       handler(newVal) {
-        this.data = newVal
+        if(!this.slotItem.getter) this.data = newVal
       },
       immediate: true
     },
     getterData: {
       handler(newVal) {
-        console.log("newVal")
-        console.log(newVal)
         if (newVal !== null) {
           if(!this.data) {
             this.data = {}
