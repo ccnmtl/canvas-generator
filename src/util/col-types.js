@@ -62,72 +62,88 @@ export default {
           ],
         },
         simpleBanner: {
+            id: 2,
+            name: "simpleBanner",
             type: "banner-slot",
             data: {
               useWideBanner: false
             }
           },
-        syllabusComponent: [
-          {
-            type: "title-slot",
-          },
-          {
-            type: "content-slot",
-            data: {
-              content: 'This is a sample Syllabus Element'
+        syllabusComponent: {
+          id: 3,
+          name:"syllabusComponent",
+          type:"syllabus-component",
+          array:[
+            {
+              type: "title-slot",
             },
-            styles: {
+            {
+              type: "content-slot",
+              data: {
+                content: 'This is a sample Syllabus Element'
+              },
+              styles: {
+              }
+            },
+            {
+              type: "spacer-slot",
+              data: {
+                useHR: true,
+                size: 2
+              }
             }
-          },
-          {
-            type: "spacer-slot",
-            data: {
-              useHR: true,
-              size: 2
-            }
-          }
-
-        ],
+        ]
+      },
         instructorList:
-        [
+        {
+          id: 4,
+          name: "instructorList",
+          type: "instructor-list",
+          array: [
           {
-            "type": "simple-list-slot",
-            "getter": "info.profs",
-            "data": {
-              "idField": "id",
-              "labelField": "name",
-              "emailField": "email",
-              "type": "instructor-ta",
-              "title": "Instructor:",
-              "officeField": "office"
-            },
-            "classes": [
-              "pad-box-mini",
-              "border",
-              "border-tbl"
-            ]
-          }
-        ],
+              type: "simple-list-slot",
+              getter: "info.profs",
+              data: {
+                idField: "id",
+                labelField: "name",
+                emailField: "email",
+                type: "instructor-ta",
+                title: "Instructor:",
+                officeField: "office"
+              },
+              classes: [
+                "pad-box-mini",
+                "border",
+                "border-tbl"
+              ]
+            }
+        ]
+        },
         instructorTaList:
-        [
-          {
-            "type": "list-slot",
-            "getter": "info.profs",
-            "data": {
-              "idField": "id",
-              "labelField": "name",
-              "emailField": "email",
-              "type": "instructor-ta",
-              "title": "Instructor:",
-              "officeField": "office"
-            },
-            "classes": [
-              "pad-box-mini",
-              "border",
-              "border-tbl"
-            ]
-          }
-        ],
+        {
+          id: 5,
+          name:"instructorTaList",
+          type:"instructor-TA-list",
+          array:[
+            {
+              type: "list-slot",
+              getter: "info.profs",
+              data: {
+                idField: "id",
+                labelField: "name",
+                emailField: "email",
+                type: "instructor-ta",
+                title: "Instructor:",
+                officeField: "office"
+              },
+              classes: [
+                "pad-box-mini",
+                "border",
+                "border-tbl"
+              ]
+            }
+          ],
+        },
         banner:
           {
             id: 6,
@@ -136,12 +152,12 @@ export default {
             icon: "picture",
             array: [
               {
-                "type": "banner-slot",
-                "data": {
-                  "useWideBanner": true
+                type: "banner-slot",
+                data: {
+                  useWideBanner: true,
                 },
-                "styles": {
-                  "margin-bottom": "20px"
+                styles: {
+                  "margin-bottom": "20px",
                 }
               }           
             ]
@@ -176,6 +192,8 @@ export default {
             ]
         },
         instructorTaExpandedList:{
+          id: 8,
+          name: "instructorTaExpandedList",
           type: 'instructor-expanded-list',
           array: [
             {
