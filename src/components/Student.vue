@@ -238,14 +238,7 @@ export default {
         }
       )
     },
-
-    addStudent() {
-      // let tempStudent = _.cloneDeep(this.getDStudent)
-      // this.info.students.push(tempStudent)
-      this.$store.dispatch("addStudent")
-      this.selected = { index: this.info.students.length - 1, list: "students" }
-    },
-
+    
     removeStudent() {
       let { list, index } = this.selected
       console.log(list)

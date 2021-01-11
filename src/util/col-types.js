@@ -61,14 +61,12 @@ export default {
             }
           ],
         },
-        simpleBanner: [
-          {
+        simpleBanner: {
             type: "banner-slot",
             data: {
               useWideBanner: false
             }
-          }
-        ],
+          },
         syllabusComponent: [
           {
             type: "title-slot",
@@ -130,7 +128,7 @@ export default {
             ]
           }
         ],
-        banner: [
+        banner:
           {
             id: 6,
             name: "Banner",
@@ -151,8 +149,7 @@ export default {
                 ]
               ]
             ]
-        }
-        ],
+        },
         dateTime: {
           id: 7,
           type: "date-time-col",
@@ -211,7 +208,7 @@ export default {
   },
   methods: {
     ...mapActions(['createColumnsFromArray','updateColTypes']),
-    homeSidebarCol(options = {}){
+    buildHomeSidebarCol(options = {}){
       let column = _.cloneDeep(this.colTypes.homeSidebar.array)
       let {cid, rid} = options
 
@@ -222,7 +219,7 @@ export default {
 
       return column
     },
-    instructorListCol(options = {}){
+    buildInstructorListCol(options = {}){
       let column = _.cloneDeep(this.colTypes.instructorList)
       let {cid, rid} = options
 
@@ -233,7 +230,7 @@ export default {
       // let columns = [column]
       // this.createColumnsFromArray({columns, rid})
     },
-    simpleBannerCol(options){
+    buildSimpleBannerCol(options = {}){
       let column = _.cloneDeep(this.colTypes.simpleBanner)
       let {cid, rid} = options
 
@@ -241,15 +238,15 @@ export default {
 
       return column
     },
-    bannerCol(options){
-      let column = _.cloneDeep(this.colTypes.banner.array)
+    buildBannerCol(options = {}){
+      let column = _.cloneDeep(this.colTypes.banner)
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.banner)
 
       return column
     },        
-    syllabusComponentCol(options){
+    buildSyllabusComponentCol(options){
       let column = _.cloneDeep(this.colTypes.syllabusComponent)
       let {cid, rid} = options
 

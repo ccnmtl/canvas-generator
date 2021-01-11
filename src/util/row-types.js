@@ -9,33 +9,32 @@ export default {
     ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID']),
     rowTypes(){
       return {
-        homeWelcome: {
+        homeWelcomeRow: {
           id: 1,
           name: "Home Welcome Row",
-          type: 'homeWelcome',
+          type: 'home-welcome-row',
           icon: "s-home",
           array: [
             [['image-slot'], 'home-sidebar']
           ]
         },
-        homeInstructors: {
+        homeInstructorsRow: {
           id: 2,
           name: "Home Instructors",
-          type: 'homeInstructors',
+          type: 'home-instructors-row',
           icon: "s-home",
           array: [
-            [this.instructorListCol(), this.instructorListCol({list: {getter: 'info.tas'}})]
+            [this.buildInstructorListCol(), this.buildInstructorListCol({list: {getter: 'info.tas'}})]
           ]
         },       
         dateTimeRow: {
           id: 3,
-          name: "Dates/Times Row",
-          type: "dates-times-row",
+          name: "Date/Time Row",
+          type: "date-time-row",
           icon: "time",
           array: [
             ['date-time-col']
           ]          
-
         },
         listRow: {
           id: 4,
@@ -45,6 +44,17 @@ export default {
           array: [
             ['instructor-expanded-list']
           ]          
+        },
+
+        bannerRow: {
+          id: 5,
+          name: "Banner Row",
+          type: "banner-row",
+          icon: "picture",
+          array: [
+            ['banner-col']
+          ]
+
         },
       }
     },
@@ -57,26 +67,41 @@ export default {
   },
   methods: {
     ...mapActions(['createRowsFromArray','updateRowTypes']),
-    homeWelcomeRow(options){
-      let row = _.cloneDeep(this.rowTypes.homeWelcome)
+    buildHomeWelcomeRow(options){
+      let row = _.cloneDeep(this.rowTypes.homeWelcomeRow.array)
       let cid = options.cid
 
       let rows = row
-      this.createRowsFromArray({rows, cid})
-    },  
-    dateTimeRow(options){
-      let row = _.cloneDeep(this.rowTypes.dateTimeRow.array)
+      return rows
+    },
+    buildHomeInstructorsRow(options){
+      let row = _.cloneDeep(this.rowTypes.homeInstructorsRow.array)
       let cid = options.cid
 
       let rows = row
-      this.createRowsFromArray({rows, cid})
+      return rows
+    },        
+    buildDateTimeRow(options){
+      let row = _.cloneDeep(this.rowTypes.dateTimeRow)
+      let cid = options.cid
+
+      let rows = row
+      return rows
     },    
-    listRow(options){
+    buildListRow(options){
       let row = _.cloneDeep(this.rowTypes.listRow.array)
       let cid = options.cid
 
       let rows = row
-      this.createRowsFromArray({rows, cid})
+      return rows
+    },
+    buildBannerRow(){
+      let row = _.cloneDeep(this.rowTypes.bannerRow.array)
+      let cid = options.cid
+
+      let rows = row
+      return rows     
+
     },        
     findRow(objKey, objValue){
       for (const [name, row] of Object.entries(this.rowTypes)){

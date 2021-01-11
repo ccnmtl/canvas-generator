@@ -16,7 +16,7 @@
               {
                 "type": "banner-slot",
                 "data": {
-                  "useWideBanner": true
+                  "useWideBanner": false
                 },
                 "styles": {
                   "margin-bottom": "20px"

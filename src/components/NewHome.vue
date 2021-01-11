@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <container-component cid="home" :defaultRows="syllabusLayout"/>
+    <container-component cid="home" :defaultRows="defRowsStringLayout"/>
   </div>
 
 </template>
@@ -17,39 +17,31 @@ export default {
         'banner-row',
         'welcome-row',
         'instructor-ta-row',
-        'dates-times-row',
+        'date-time-row',
         'list-row',
       ],
-      // defRowsNew: [
-      //   'homeWelcome',
-      //   'homeInstructors',
-      // ],
+
       defRowsStringLayout: [
-        'homeWelcome',
-        'homeWelcome',
-        'homeInstructors',
+        'home-welcome',
+        'home-welcome',
+        'home-instructors',
         ["home-sidebar"],
         [['image-slot'],['image-slot']]
       ],
+      homeLayout: [
+        'banner-row',
+        [['image-slot'], 'home-sidebar'],
+        'home-instructors-row',
+        'date-time-row'
+      ],
       syllabusLayout: [
-        [['banner-slot']],
-        'homeInstructors',
-        'dates-times-row',
-        [['title-slot']],
-        [['content-slot']],
-        [['title-slot']],
-        [['content-slot']],
-        'list-row'
-      ],
-      studentLayout: [
-        [['banner-slot']],
-        [['image-slot'], ['content-slot']],
-      ],
-      zoomLayout: [
-        [['banner-slot']],
+        'banner-row',
         'list-row',
-        [['title-slot']],
-        [['content-slot']],
+        'date-time-row',
+      ],
+      studentListLayout: [
+
+
       ]
     }
   },
