@@ -101,7 +101,6 @@ export default {
           "defaultData": {
             name: "Title",
             getter: "info.startDate",
-            value: moment().day(1),
             type: 'date',
             nameStyle: {'font-weight': 'bold'}
           }
