@@ -6,6 +6,7 @@
       <span @dblclick="setEditing('value')" v-if="editing !== 'value'" > {{ formatWeek(data.value) }} </span>
       <span data-hidden v-else>
         <el-date-picker
+          ref="value"
           v-model="data.value"
           @blur="finishEditing('value')"
           type="date"
@@ -39,8 +40,17 @@ export default {
   },
   computed: {
     getterData: function () {
+      const self = this
       if(!this.slotItem.getter) return null
-      return this.$store.getters.getFromGetter(this.slotItem.getter)
+      if(typeof this.slotItem.getter !== 'string') {
+        const res = {}
+        const getters = this.asArray(this.slotItem.getter)
+        getters.forEach(getter => {
+          res[getter[0]] = self.$store.getters.getFromGetter(getter[1])
+        })
+        return res
+      }
+      else return this.$store.getters.getFromGetter(this.slotItem.getter)
     }
   },
   watch: {
@@ -50,23 +60,35 @@ export default {
           this.data.name = newVal.name
         if(!this.slotItem.getter || !this.slotItem.getter.type)
           this.data.type = newVal.type
+        if(!this.slotItem.getter || !this.slotItem.getter.value)
+          this.data.value = newVal.value
       },
       immediate: true
     },
     getterData: {
       handler(newVal) {
+        const self = this
         if (newVal !== null) {
           if(!this.data) {
             this.data = {}
           }
 
-          Vue.set(this.data, 'value', newVal ? newVal : '')
+          if(typeof this.slotItem.getter === 'string') Vue.set(this.data, 'value', newVal ? newVal : '')
+          else {
+            this.asArray(newVal).forEach(getter => {
+              Vue.set(self.data, getter[0], getter[1] ? getter[1] : '')
+            })
+          }
         }
       },
-      immediate: true
+      immediate: true,
+      deep: true
     }
   },
   methods: {
+    asArray(obj) {
+      return Object.keys(obj).map((key) => [key, obj[key]])
+    },
     deleteSlot() {
       this.$store.dispatch("setDialogData", {
         title: 'Are you sure you want to delete this slot?',
@@ -84,7 +106,11 @@ export default {
     },
     finishEditing(field) {
       if(this.data[field]) {
-        this.$store.dispatch("updateSpecificInfo", { key: this.slotItem.getter.split(".")[1], value: this.data[field] })
+        if(typeof this.slotItem.getter === 'string')
+          this.$store.dispatch("updateSpecificInfo", { key: this.slotItem.getter.split(".")[1], value: this.data[field] })
+        else {
+          this.$store.dispatch("updateSpecificInfo", { key: this.slotItem.getter[field].split(".")[1], value: this.data[field] })
+        }
         this.editing = null
       }
     },

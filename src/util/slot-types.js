@@ -97,7 +97,9 @@ export default {
           "icon": "menu",
           "colspan": 4,
           "visible": true,
-          "getter": "info.startDate",
+          "getter": {
+            value: "info.startDate"
+          },
           "defaultData": {
             name: "Title",
             getter: "info.startDate",
