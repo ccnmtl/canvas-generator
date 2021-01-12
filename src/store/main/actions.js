@@ -98,10 +98,10 @@ export default {
 
         let columns = payload.columns
 
-        if (typeof columns[0] == 'string') {
-          let colObj = findObj('type', columns[0], ColTypes).array
-          columns = [colObj]
-        }
+        // if (typeof columns[0] == 'string') {
+        //   let colObj = findObj('type', columns[0], ColTypes).array
+        //   columns = [colObj]
+        // }
 
         columns.forEach(column => {
           let actualCol
@@ -144,7 +144,7 @@ export default {
             dispatch('addSlot', {
               ...slot,
               type: actualSlotType.id,
-              colspan: actualSlotType.colspan,
+              colspan: slot.colspan || actualSlotType.colspan,
               rid: column.rid,
               cid: column.cid,
               colid: column.colid,

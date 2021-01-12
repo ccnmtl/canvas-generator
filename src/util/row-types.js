@@ -78,8 +78,17 @@ export default {
             ['banner-col']
           ],
         },
-        testExclusionRow: {
+        activityRow: {
           id: 7,
+          name: "Activity Row",
+          type: "activity-row",
+          icon: "picture",
+          array: [
+            ['activity-image','activity-sidebar']
+          ],
+        },
+        testExclusionRow: {
+          id: 20,
           name: "Exluded Row",
           type: "excluded-row",
           icon: "document-copy",
@@ -103,38 +112,32 @@ export default {
       let row = _.cloneDeep(this.rowTypes.homeWelcomeRow.array)
       let cid = options.cid
 
-      let rows = row
-      return rows
+      return row
     },
     buildHomeInstructorsRow(options){
       let row = _.cloneDeep(this.rowTypes.homeInstructorsRow.array)
       let cid = options.cid
 
-      let rows = row
-      return rows
+      return row
     },        
     buildDateTimeRow(options){
       let row = _.cloneDeep(this.rowTypes.dateTimeRow)
       let cid = options.cid
 
-      let rows = row
-      return rows
+      return row
     },    
     buildListRow(options){
       let row = _.cloneDeep(this.rowTypes.listRow.array)
       let cid = options.cid
 
-      let rows = row
-      return rows
+      return row
     },
     buildBannerRow(){
       let row = _.cloneDeep(this.rowTypes.bannerRow.array)
       let cid = options.cid
 
-      let rows = row
-      return rows     
-
-    },        
+      return row
+    },
     findRow(objKey, objValue){
       for (const [name, row] of Object.entries(this.rowTypes)){
         if (row[objKey] == objValue) return row

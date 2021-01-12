@@ -5,7 +5,7 @@ import _ from 'lodash'
 export default {
 
   computed: {
-    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo']),
+    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo', 'getWeeks']),
     colTypes(){
       return {
         homeSidebar: {
@@ -210,6 +210,56 @@ export default {
                 component: "professor-ta-slot"
               }
             }
+          ]
+        },
+        activityImage:{
+          id: 9,
+          name: "Activity Image",
+          type: 'activity-image',
+          array: [
+            {
+              type: "image-slot",
+              colspan: 4,
+              data: {
+                imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/session1.png",
+              }
+            }
+          ]
+        },
+        activitySidebar:{
+          id: 10,
+          name: "Activity Image",
+          type: 'activity-sidebar',
+          array: [
+            {
+              type: "name-value-slot",
+              classes: ["STV1_Welcome"],
+              data: {
+                name: "Session",
+                value: 'Title'
+              },
+            },
+            {
+              type: "content-slot",
+              styles: {
+                margin: "20px 0",
+                padding: "0",
+                "font-size": "14px"
+              },
+              data: {
+                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec maximus odio id aliquam vestibulum."
+              }
+            },
+            {
+              type: "name-value-slot",
+              getter: {
+                value: "info.startDate"
+              },
+              data: {
+                name: "Class",
+                type: 'date',
+              },
+            },
           ]
         }
 
