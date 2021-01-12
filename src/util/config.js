@@ -17,6 +17,10 @@ export default {
         visible: '*', // * show all pages, an Array can be used to show specific pages
         hidden: [ 'page-name' ] // this only works if visible is set to *
       },
+      rows: {
+        visible: '*', // * show all slots, an Array can be used to show specific slots
+        hidden: [ 'excluded-row' ] // this only works if visible is set to *
+      },
       slots: {
         visible: '*', // * show all slots, an Array can be used to show specific slots
         hidden: [ 'slot-name' ] // this only works if visible is set to *

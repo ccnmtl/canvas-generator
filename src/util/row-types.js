@@ -14,7 +14,7 @@ export default {
           name: 'Blank Row',
           type: 'blank-row',
           pages: '*',
-          icon: 'blank'
+          icon: 'circle-plus-outline'
         },
         homeWelcomeRow: {
           id: 1,
@@ -50,7 +50,7 @@ export default {
           id: 4,
           name: "List Row",
           type: "list-row",
-          icon: "sheet",
+          icon: "notebook-2",
           pages: ['syllabus'],
           array: [
             ['instructor-expanded-list']
@@ -73,8 +73,17 @@ export default {
           icon: "picture",
           array: [
             ['banner-col']
-          ]
-
+          ],
+        },
+        testExclusionRow: {
+          id: 7,
+          name: "Exluded Row",
+          type: "excluded-row",
+          icon: "document-copy",
+          pages: ['syllabus'],
+          array: [
+            ['instructor-expanded-list']
+          ]          
         },
       }
     },

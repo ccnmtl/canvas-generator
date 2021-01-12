@@ -58,7 +58,6 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex'
-import { CC } from '../../util/custom-domponents.js'
 import _ from 'lodash'
 
 export default {
@@ -73,16 +72,29 @@ export default {
   },
   computed: {
     ...mapGetters({
-      RowTypes: 'getRowTypes',
+      fullRowTypes: 'getRowTypes',
+      Config: 'getConfig'
     }),
+    RowTypes(){
+      if (this.Config.rows.visible == '*'){
+        return _.pickBy(this.fullRowTypes, (row, key) => {
+          return !_.includes(this.Config.rows.hidden, row.type)
+        })
+      }
+      else {
+        return _.pickBy(this.fullRowTypes, (row, key) => {
+          return _.includes(this.Config.rows.visible, row.type)
+        })
+      }
+    },
     pageRowTypes(){
-      return _.pickBy(this.RowTypes, (value, key) => {
-        return this.isPageType(value)
+      return _.pickBy(this.RowTypes, (row, key) => {
+        return this.isPageType(row)
       })
     },
     otherRowTypes(){
-      return _.pickBy(this.RowTypes, (value, key) => {
-        return !this.isPageType(value)
+      return _.pickBy(this.RowTypes, (row, key) => {
+        return !this.isPageType(row)
       })
     }
   },

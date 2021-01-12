@@ -29,11 +29,10 @@ export default {
         [['image-slot'],['image-slot']]
       ],
       homeLayout: [
-        'banner-row',
+        'home-banner-row',
         [['image-slot'], 'home-sidebar'],
         'home-instructors-row',
         'date-time-row',
-        [['name-value-slot']]
       ],
       syllabusLayout: [
         'banner-row',
