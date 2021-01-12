@@ -6,8 +6,11 @@ import _ from 'lodash'
 export default {
 
   computed: {
-    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID']),
+    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getConfig']),
     rowTypes(){
+      return {...this.defaultRowTypes, ...this.getConfig.rows.customRows}
+    },
+    defaultRowTypes(){
       return {
         blankRow: {
           id: 0,

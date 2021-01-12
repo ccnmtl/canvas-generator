@@ -19,7 +19,19 @@ export default {
       },
       rows: {
         visible: '*', // * show all slots, an Array can be used to show specific slots
-        hidden: [ 'excluded-row' ] // this only works if visible is set to *
+        hidden: [ 'excluded-row' ], // this only works if visible is set to *
+        customRows: {  // Here you can either define totally custom rows, or replace default rows with changed versions 
+          testConfigRow: {
+            id: 8,
+            name: "Config Row",
+            type: "config-row",
+            icon: "document-copy",
+            pages: ['syllabus'],
+            array: [
+              ['instructor-expanded-list']
+            ]          
+          },
+        }
       },
       slots: {
         visible: '*', // * show all slots, an Array can be used to show specific slots
