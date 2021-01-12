@@ -13,6 +13,7 @@ export default {
           id: 0,
           name: 'Blank Row',
           type: 'blank-row',
+          pages: '*',
           icon: 'blank'
         },
         homeWelcomeRow: {
@@ -20,6 +21,7 @@ export default {
           name: "Home Welcome Row",
           type: 'home-welcome-row',
           icon: "s-home",
+          pages: ['home'],
           array: [
             [['image-slot'], 'home-sidebar']
           ]
@@ -29,6 +31,7 @@ export default {
           name: "Home Instructors",
           type: 'home-instructors-row',
           icon: "s-home",
+          pages: ['home'],
           array: [
             [this.buildInstructorListCol(), this.buildInstructorListCol({list: {getter: 'info.tas'}})]
           ]
@@ -38,6 +41,7 @@ export default {
           name: "Date/Time Row",
           type: "date-time-row",
           icon: "time",
+          pages: ['home'],
           array: [
             ['date-time-col']
           ]          
@@ -47,13 +51,24 @@ export default {
           name: "List Row",
           type: "list-row",
           icon: "sheet",
+          pages: ['syllabus'],
           array: [
             ['instructor-expanded-list']
           ]          
         },
-        bannerRow: {
+        homeBannerRow: {
           id: 5,
-          name: "Banner Row",
+          name: "Home Banner",
+          type: "home-banner-row",
+          icon: "picture",
+          pages: ['home'],
+          array: [
+            ['home-banner-col']
+          ]
+        },
+        simpleBannerRow: {
+          id: 6,
+          name: "Simple Banner",
           type: "banner-row",
           icon: "picture",
           array: [

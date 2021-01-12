@@ -1,17 +1,53 @@
 <template>
   <div class="dialog-inner">
-    <div class="row">
-      <el-col v-for="row in rowTypes" :key="row.id" :span="6" class="row-item">
-        <div class="row-content"
-             :class="{ selected: row.id === selectedRow }"
-             @click="selectedRow = row.id">
-          <div class="row-icon">
-            <i :class="'el-icon-' + row.icon"></i>
-          </div>
-          <div class="row-title">{{ row.name }}</div>
+
+    <el-tabs type="border-card">
+      <el-tab-pane :label="dialogData.cid.toUpperCase() + ' ROWS'">
+        <div class="row">
+          <el-col v-for="row in pageRowTypes" :key="row.id" :span="6" class="row-item">
+            <div v-if="isPageType(row)" class="row-content"
+                  :class="{ selected: row.id === selectedRow }"
+                  @click="selectedRow = row.id">
+              <div class="row-icon">
+                <i :class="'el-icon-' + row.icon"></i>
+              </div>
+              <div class="row-title">{{ row.name }}</div>
+            </div>
+          </el-col>
         </div>
-      </el-col>
-    </div>
+      </el-tab-pane>
+      <el-tab-pane label="OTHER ROWS">
+        <div class="row">
+          <el-col v-for="row in otherRowTypes" :key="row.id" :span="6" class="row-item">
+            <div  class="row-content"
+                  :class="{ selected: row.id === selectedRow }"
+                  @click="selectedRow = row.id">
+              <div class="row-icon">
+                <i :class="'el-icon-' + row.icon"></i>
+              </div>
+              <div class="row-title">{{ row.name }}</div>
+            </div>
+          </el-col>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="All ROWS">
+        <div class="row">
+          <el-col v-for="row in RowTypes" :key="row.id" :span="6" class="row-item">
+            <div class="row-content"
+                  :class="{ selected: row.id === selectedRow }"
+                  @click="selectedRow = row.id">
+              <div class="row-icon">
+                <i :class="'el-icon-' + row.icon"></i>
+              </div>
+              <div class="row-title">{{ row.name }}</div>
+            </div>
+          </el-col>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+
+
+
 
     <footer>
       <el-button type="primary" @click="saveChoice">Confirm</el-button>
@@ -21,7 +57,7 @@
 
 <script>
 
-import RowTypes from '../../util/row-types.json'
+import { mapActions, mapGetters } from 'vuex'
 import { CC } from '../../util/custom-domponents.js'
 import _ from 'lodash'
 
@@ -32,13 +68,31 @@ export default {
   name: 'ChooseRow',
   data() {
     return {
-      rowTypes: RowTypes,
       selectedRow: 0
+    }
+  },
+  computed: {
+    ...mapGetters({
+      RowTypes: 'getRowTypes',
+    }),
+    pageRowTypes(){
+      return _.pickBy(this.RowTypes, (value, key) => {
+        return this.isPageType(value)
+      })
+    },
+    otherRowTypes(){
+      return _.pickBy(this.RowTypes, (value, key) => {
+        return !this.isPageType(value)
+      })
     }
   },
   methods: {
     saveChoice() {
-      const actualRowType = _.find(RowTypes, { 'id': this.selectedRow })
+      let actualRowType 
+
+      for (const [name, row] of Object.entries(this.RowTypes)){
+        if (row.id == this.selectedRow) actualRowType = row
+      }
 
       if(actualRowType.type === 'blank-row') {
         this.$store.dispatch('addRow', {
@@ -48,15 +102,19 @@ export default {
       }
 
       else {
-        const res = new CC(actualRowType.type, this.dialogData.cid)
-        this.$store.dispatch(res.method, {
+        //const res = new CC(actualRowType.type, this.dialogData.cid)
+        this.$store.dispatch('createRowsFromArray', {
           cid: this.dialogData.cid,
           rows: actualRowType.array
         })
         this.$store.dispatch("setDialogVisibility", false)
       }
+    },
+    isPageType(row){
+      return _.includes(row.pages, this.dialogData.cid) || row.pages == "*"
     }
-  }
+  },
+
 }
 </script>
 

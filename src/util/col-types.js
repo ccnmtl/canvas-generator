@@ -64,7 +64,7 @@ export default {
         simpleBanner: {
             id: 2,
             name: "simpleBanner",
-            type: "banner-slot",
+            type: "banner-col",
             data: {
               useWideBanner: false
             }
@@ -144,11 +144,11 @@ export default {
             }
           ],
         },
-        banner:
+        homeBanner:
           {
             id: 6,
             name: "Banner",
-            type: "banner-col",
+            type: "home-banner-col",
             icon: "picture",
             array: [
               {
