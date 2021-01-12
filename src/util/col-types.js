@@ -234,18 +234,17 @@ export default {
       return column
     },
     buildInstructorListCol(options = {}){
-      let column = _.cloneDeep(this.colTypes.instructorList)
+      let column = _.cloneDeep(this.colTypes.instructorList.array)
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.list)
 
-      
       return column
       // let columns = [column]
       // this.createColumnsFromArray({columns, rid})
     },
     buildSimpleBannerCol(options = {}){
-      let column = _.cloneDeep(this.colTypes.simpleBanner)
+      let column = _.cloneDeep(this.colTypes.simpleBanner.array)
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.banner)
@@ -253,7 +252,7 @@ export default {
       return column
     },
     buildBannerCol(options = {}){
-      let column = _.cloneDeep(this.colTypes.banner)
+      let column = _.cloneDeep(this.colTypes.banner.array)
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.banner)
@@ -261,7 +260,7 @@ export default {
       return column
     },        
     buildSyllabusComponentCol(options){
-      let column = _.cloneDeep(this.colTypes.syllabusComponent)
+      let column = _.cloneDeep(this.colTypes.syllabusComponent.array)
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.syllabus)

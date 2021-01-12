@@ -58,5 +58,9 @@ export default {
       res = res[item]
     })
     return res
-  }
+  },
+  getRowTypes: state => state.rowTypes,
+  getColTypes: state => state.colTypes,
+  getSlotTypes: state => state.slotTypes,
+
 }

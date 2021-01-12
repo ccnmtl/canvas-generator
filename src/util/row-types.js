@@ -9,6 +9,12 @@ export default {
     ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID']),
     rowTypes(){
       return {
+        blankRow: {
+          id: 0,
+          name: 'Blank Row',
+          type: 'blank-row',
+          icon: 'blank'
+        },
         homeWelcomeRow: {
           id: 1,
           name: "Home Welcome Row",
@@ -45,7 +51,6 @@ export default {
             ['instructor-expanded-list']
           ]          
         },
-
         bannerRow: {
           id: 5,
           name: "Banner Row",
