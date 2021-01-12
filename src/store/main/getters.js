@@ -1,6 +1,7 @@
 export default {
   getStore: state => state,
   getInfo: state => state.info,
+  getConfig: state => state.config,
   loading: state => state.loading,
   getWeeks: state => state.weeks,
   getStudents: state => state.weeks,

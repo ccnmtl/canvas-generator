@@ -33,5 +33,6 @@ export default {
   currentCourse: null,
   rowTypes: {},
   colTypes: {},
-  slotTypes: {}
+  slotTypes: {},
+  config: null
 }

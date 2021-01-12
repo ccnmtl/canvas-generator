@@ -245,6 +245,10 @@ export default {
   created() {
     const self = this
 
+    if(!this.$store.getters.getConfig) {
+      this.$store.dispatch('setConfig')
+    }
+
     if(self.getCurrentCourse == null) {
       self.$store.dispatch('addSavedState')
       .then(current => {

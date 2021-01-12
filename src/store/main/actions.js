@@ -1,5 +1,6 @@
 import { uuid } from "vue-uuid"
 import SavedFields from '../../util/saved-fields.json'
+import Config from '../../util/config.js'
 import state from './state';
 import SlotTypesComponent from '../../util/slot-types.js'
 import _ from 'lodash'
@@ -15,6 +16,9 @@ function findObj(objKey, objValue, list){
 var moment = require('moment');
 
 export default {
+    setConfig: ({ commit }) => {
+      commit('setConfig', Config.data())
+    },
 
     //Slot Actions
     addRow: ({ commit }, row) => {

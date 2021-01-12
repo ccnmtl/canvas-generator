@@ -28,9 +28,9 @@
 
         <h5>Slot Styles</h5>
 
-        <div class="style-item" v-for="(st, i) in styles" :key="i">
+        <div class="style-item" v-for="(st, i) in asArray(styles)" :key="i">
             <span>
-                {{ st.att + ': ' + st.value }}
+                {{ st[0] + ': ' + st[1] }}
                 <i class="el-icon-error" />
             </span>
         </div>
@@ -109,6 +109,9 @@ export default {
       }
   },
   methods: {
+    asArray(obj) {
+      return Object.keys(obj).map((key) => [key, obj[key]])
+    },
     changeSlotData() {
       this.$store.dispatch("setDialogVisibility", false)
       this.$store.dispatch("setDialogData", {

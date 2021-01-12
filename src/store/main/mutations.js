@@ -2,6 +2,9 @@ import Vue from 'vue';
 import _ from 'lodash'
 
 export default {
+  setConfig: (state, config) => {
+    Vue.set(state, 'config', config)
+  },
 
   //Slot Mutations
   addRow: (state, row) => {
