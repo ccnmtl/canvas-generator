@@ -162,8 +162,17 @@
              :key="course.uuid"
              :class="{ active: course.uuid == currentCourse }"
              @click="currentCourse = course.uuid">
-          <h3>{{ JSON.parse(course.info).title }}</h3>
+          <h3>{{ JSON.parse(course.versions[course.version].info).title }}</h3>
           <small>{{ course.uuid }}</small>
+          <div class="course-versions">
+            <div v-for="(version, i) in course.versions" :key="i">
+              <input v-model="course.version" :value="i" type="radio" class="course-version form-check-input" :id="course.uuid + '-' + i">
+              <label class="form-check-label" :for="course.uuid + '-' + i">
+                Version {{ i + 1 }}
+              </label>
+            </div>
+            <a class="add-version" @click="addVersion(course)">Add Version</a>
+          </div>
         </div>
       </div>
 
@@ -201,6 +210,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import saveState from "vue-save-state"
 import { mapGetters, mapActions } from "vuex"
 import help from "./store/help"
@@ -265,14 +275,15 @@ export default {
     ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo", "addTA",
                   "addProf", "addStudent"]),
     showAllCourses(){
-      this.$store.dispatch('setSavedState', this.getCurrentCourse)
+      const version = _.find(this.getSavedStates, { uuid: this.getCurrentCourse }).version
+      this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
       this.showingCourses = true
     },
     addNewCourse(from) {
       const self = this
       if(from === 'current') {
-
-        self.$store.dispatch('setSavedState', self.getCurrentCourse)
+        const version = _.find(this.getSavedStates, { uuid: this.getCurrentCourse }).version
+        this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
         .then(() => {
           self.$store.dispatch('setInfoField', {
             field: 'title',
@@ -289,11 +300,19 @@ export default {
         })
       }
     },
+    addVersion(course) {
+      const version = _.find(this.getSavedStates, { uuid: this.getCurrentCourse }).version
+      this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
+      this.$store.dispatch('addNewVersion', course.uuid)
+    },
     chooseCourse() {
       const self = this
-      self.$store.dispatch('setSavedState', self.getCurrentCourse)
+
+      const version = _.find(this.getSavedStates, { uuid: this.getCurrentCourse }).version
+      self.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
       .then(() => {
-        self.$store.dispatch('chooseSavedState', self.currentCourse)
+        const version = _.find(self.getSavedStates, { uuid: self.currentCourse }).version
+        self.$store.dispatch('chooseSavedState', { uuid: self.currentCourse, version: version })
         self.$store.dispatch('setCurrentCourse', self.currentCourse)
         self.showingCourses = false
       })
@@ -450,6 +469,15 @@ html {
 
       h3, small {
         color: #409EFF;
+      }
+    }
+
+    .course-versions {
+      margin-top: 12px;
+
+      label {
+        font-weight: normal;
+        vertical-align: middle;
       }
     }
   }

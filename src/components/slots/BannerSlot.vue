@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -51,12 +52,47 @@ export default {
     }),
     useWideBanner(){
       return this.slotData.useWideBanner
+    },
+    getterData: function () {
+      const self = this
+      if(!this.slotItem.getter) return null
+      if(typeof this.slotItem.getter !== 'string') {
+        const res = {}
+        const getters = this.asArray(this.slotItem.getter)
+        getters.forEach(getter => {
+          res[getter[0]] = self.$store.getters.getFromGetter(getter[1])
+        })
+        return res
+      }
+      else return this.$store.getters.getFromGetter(this.slotItem.getter)
     }
   },
-  beforeMount() {
-    this.data = this.info
+  watch: {
+    info: {
+      handler(val) {
+        const self = this
+        if (val !== null) {
+          if(!this.data) {
+            this.data = {}
+          }
+
+          if(typeof this.slotItem.getter === 'string') Vue.set(this, 'data', val ? val : '')
+          else {
+            this.asArray(val).forEach(getter => {
+              Vue.set(self.data, getter[0], getter[1] ? getter[1] : '')
+            })
+          }
+        }
+
+      },
+      immediate: true,
+      deep: true
+    }
   },
   methods: {
+    asArray(obj) {
+      return Object.keys(obj).map((key) => [key, obj[key]])
+    },
     setEditing(field) {
       this.editing = field
 

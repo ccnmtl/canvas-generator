@@ -301,24 +301,40 @@ export default {
     },
     addSavedState: ({ commit, state }) => {
       const newState = {
-        uuid: uuid.v1()
+        uuid: uuid.v1(),
+        version: 0,
+        versions: [{}]
       }
 
       SavedFields.forEach(field => {
-        newState[field] = JSON.stringify(state[field])
+        newState.versions[0][field] = JSON.stringify(state[field])
       })
 
       commit('addSavedState', newState)
       return newState.uuid
     },
-    setSavedState: ({ commit, state }, uuid) => {
-      const index = _.findIndex(state.savedStates, { uuid: uuid})
+    setSavedState: ({ commit, state }, payload) => {
+      const index = _.findIndex(state.savedStates, { uuid: payload.uuid })
       const current = state.savedStates[index]
 
       SavedFields.forEach(field => {
-        current[field] = JSON.stringify(state[field])
+        current.versions[payload.version][field] = JSON.stringify(state[field])
       })
       commit('setSavedState', { current: current, index: index })
+    },
+    addNewVersion: ({ commit, state, dispatch }, uuid) => {
+      const index = _.findIndex(state.savedStates, { uuid: uuid })
+      const current = state.savedStates[index]
+      const latest = current.versions[current.versions.length - 1]
+
+      dispatch('setSavedStateVersion', { uuid: uuid, version: current.versions.length })
+
+      commit('addNewVersion', { latest: latest, index: index })
+    },
+    setSavedStateVersion: ({ commit, state }, payload) => {
+      const index = _.findIndex(state.savedStates, { uuid: payload.uuid })
+
+      commit('setSavedStateVersion', { index: index, version: payload.version })
     },
     setCurrentCourse: ({ commit }, uuid) => {
       commit('setCurrentCourse', uuid)
@@ -329,13 +345,13 @@ export default {
     setStateField({ commit }, payload) {
       commit('setStateField', payload)
     },
-    chooseSavedState({ commit, state }, uuid) {
-      const index = _.findIndex(state.savedStates, { uuid: uuid})
+    chooseSavedState({ commit, state }, payload) {
+      const index = _.findIndex(state.savedStates, { uuid: payload.uuid})
       const current = state.savedStates[index]
 
       SavedFields.forEach(field => {
         commit('setStateField', {
-          value: JSON.parse(current[field]),
+          value: JSON.parse(current.versions[payload.version][field]),
           field: field
         })
       })

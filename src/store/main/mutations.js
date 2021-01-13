@@ -192,6 +192,12 @@ export default {
   setSavedState: (state, payload) => {
     Vue.set(state.savedStates, payload.index, payload.current)
   },
+  setSavedStateVersion: (state, payload) => {
+    Vue.set(state.savedStates[payload.index], 'version', payload.version)
+  },
+  addNewVersion: (state, payload) => {
+    state.savedStates[payload.index].versions.push(payload.latest)
+  },
   setCurrentCourse: (state, uuid) => {
     state.currentCourse = uuid
   },
