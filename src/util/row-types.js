@@ -146,6 +146,7 @@ export default {
         })
       let sidebarCol = this.activitySidebarCol({
         title: {
+          //getter: `week[${index}].title`,
           data: {
             value: this.getWeeks[index].title
           },
