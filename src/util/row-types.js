@@ -141,13 +141,12 @@ export default {
     activityRow(index){
       let imageCol = this.activityImageCol({
           data: {
-            imgSrc: this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + (index+1) + ".png"
+            imgSrc: this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + (index+1) + ".png",
           }
         })
       let sidebarCol = this.activitySidebarCol({
         title: {
           data: {
-            name: "Session",
             value: this.getWeeks[index].title
           },
         },

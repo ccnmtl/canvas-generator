@@ -227,6 +227,8 @@ export default {
               colspan: 4,
               data: {
                 imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/session1.png",
+                width: "360",
+                height: "150"
               }
             }
           ]
