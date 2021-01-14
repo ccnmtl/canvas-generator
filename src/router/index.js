@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Splash from 'components/Splash'
 import Home from 'components/Home'
 import NewHome from 'components/NewHome'
+import NewWeeklyList from 'components/NewWeeklyList'
 import Syllabus from 'components/Syllabus'
 import Program from 'components/ProgramOverview'
 import Weekly from 'components/Weekly'
@@ -32,6 +33,11 @@ export default new Router({
       path: '/home-new',
       name: 'New Home Template',
       component: NewHome
+    },
+    {
+      path: '/weekly-new',
+      name: 'New Weekly Template',
+      component: NewWeeklyList
     },
     {
       path: '/syllabus',
