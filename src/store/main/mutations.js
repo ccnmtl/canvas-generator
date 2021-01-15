@@ -201,6 +201,9 @@ export default {
   setCurrentCourse: (state, uuid) => {
     state.currentCourse = uuid
   },
+  setCurrentVersion: (state, version) => {
+    state.currentVersion = version
+  },
   setInfoField: (state, payload) => {
     Vue.set(state.info, payload.field, payload.value)
   },

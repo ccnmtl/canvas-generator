@@ -11,6 +11,7 @@ export default {
   getDialogData: state => state.dialogData,
   getSavedStates: state => state.savedStates,
   getCurrentCourse: state => state.currentCourse,
+  getCurrentVersion: state => state.currentVersion,
   getRowsByCID: state => {
     const res = {}
 

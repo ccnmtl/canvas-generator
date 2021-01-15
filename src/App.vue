@@ -250,7 +250,8 @@ export default {
       exportData: {},
       showingCourses: false,
       newCourseName: '',
-      currentCourse: null
+      currentCourse: null,
+      currentVersion: null
     }
   },
   created() {
@@ -264,26 +265,29 @@ export default {
       self.$store.dispatch('addSavedState')
       .then(current => {
         self.$store.dispatch('setCurrentCourse', current)
+        self.$store.dispatch('setCurrentVersion', 0)
         self.currentCourse = current
+        self.currentVersion = 0
       })
     }
 
     else {
       self.currentCourse = self.getCurrentCourse
+      self.currentVersion = self.getCurrentVersion
     }
   },
   methods: {
     ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo", "addTA",
                   "addProf", "addStudent"]),
     showAllCourses(){
-      const version = _.find(this.getSavedStates, { uuid: this.getCurrentCourse }).version
+      const version = this.currentVersion
       this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
       this.showingCourses = true
     },
     addNewCourse(from) {
       const self = this
       if(from === 'current') {
-        const version = _.find(this.getSavedStates, { uuid: this.getCurrentCourse }).version
+        const version = this.currentVersion
         this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
         .then(() => {
           self.$store.dispatch('setInfoField', {
@@ -294,7 +298,9 @@ export default {
             self.$store.dispatch('addSavedState')
             .then(current => {
               self.$store.dispatch('setCurrentCourse', current)
+              self.$store.dispatch('setCurrentVersion', 0)
               self.currentCourse = current
+              self.currentVersion = 0
               self.newCourseName = ''
             })
           }, 500)
@@ -302,21 +308,17 @@ export default {
       }
     },
     addVersion(course) {
-      const version = _.find(this.getSavedStates, { uuid: this.getCurrentCourse }).version
+      const version = this.currentVersion
       this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
       this.$store.dispatch('addNewVersion', course.uuid)
     },
     chooseCourse() {
-      const self = this
-
-      const version = _.find(this.getSavedStates, { uuid: this.getCurrentCourse }).version
-      self.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
-      .then(() => {
-        const version = _.find(self.getSavedStates, { uuid: self.currentCourse }).version
-        self.$store.dispatch('chooseSavedState', { uuid: self.currentCourse, version: version })
-        self.$store.dispatch('setCurrentCourse', self.currentCourse)
-        self.showingCourses = false
-      })
+      const version = _.find(this.getSavedStates, { uuid: this.currentCourse }).version
+      this.$store.dispatch('chooseSavedState', { uuid: this.currentCourse, version: version })
+      this.$store.dispatch('setCurrentCourse', this.currentCourse)
+      this.$store.dispatch('setCurrentVersion', version)
+      this.currentVersion = version
+      this.showingCourses = false
     },
     getSaveStateConfig() {
       return {
@@ -333,7 +335,7 @@ export default {
   },
   mixins: [saveState, mutations],
   computed: {
-    ...mapGetters([ 'isSettingsVisible', 'getCurrentCourse', 'getSavedStates' ]),
+    ...mapGetters([ 'isSettingsVisible', 'getCurrentCourse', 'getCurrentVersion', 'getSavedStates' ]),
     loading() {
       return this.$store.getters.loading
     },

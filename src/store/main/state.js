@@ -31,6 +31,7 @@ export default {
   pagesSet: [],
   savedStates: [],
   currentCourse: null,
+  currentVersion: null,
   rowTypes: {},
   colTypes: {},
   slotTypes: {},

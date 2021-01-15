@@ -347,6 +347,9 @@ export default {
     setCurrentCourse: ({ commit }, uuid) => {
       commit('setCurrentCourse', uuid)
     },
+    setCurrentVersion: ({ commit }, version) => {
+      commit('setCurrentVersion', version)
+    },
     setInfoField({ commit }, payload) {
       commit('setInfoField', payload)
     },
