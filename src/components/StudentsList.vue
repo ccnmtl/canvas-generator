@@ -56,7 +56,7 @@
         </div>
       </el-card>
 
-     
+
 
 
     </div>
@@ -75,7 +75,7 @@
         <div class="grid-row">
 
         <div style="float: left; display: inline; width: 18%; height: auto; background-color: #f7f7f7; color: #333333; margin: 20px 20px 0; padding: 10px;" v-if="info.students.length > 0" v-for="(student, index) in info.students" :key="student.id">
-          <a :href='url + "pages/student-" + student.id'><img style="width: 200px; height: auto;" :src="student.imgSrc" alt="" /></a>
+          <a @click="doNothing" :href='url + "pages/student-" + student.id'><img style="width: 200px; height: auto;" :src="student.imgSrc" alt="" /></a>
           <p style="padding-top: 10px; margin: 0 10px; color: #666666; font-size: 14px; font-weight: bold;">{{student.name}}</p>
           <p style="margin: 0 10px; color: #999999; font-size: 12px; font-weight: normal;">{{student.company}}</p>
         </div>
@@ -88,9 +88,9 @@
       </div>
 
 
-    
 
-    
+
+
       <div class="clear">&nbsp;</div>
 
 
@@ -197,6 +197,10 @@ export default {
   },
   methods: {
     ...mapActions(["deleteStudent"]),
+    doNothing(e) {
+      e.preventDefault();
+      return false;
+    },
     formatDate(date) {
       return moment(date).format("MMMM Do")
     },

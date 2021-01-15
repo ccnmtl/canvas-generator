@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" ref="app">
 
     <el-row>
       <!-- Off Canvas Menu Slide -->
@@ -275,6 +275,9 @@ export default {
       self.currentCourse = self.getCurrentCourse
       self.currentVersion = self.getCurrentVersion
     }
+  },
+  mounted() {
+    console.log(this.$refs.app.querySelectorAll('[data-suppressed]'))
   },
   methods: {
     ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo", "addTA",
