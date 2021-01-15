@@ -325,7 +325,7 @@ export default {
     addNewVersion: ({ commit, state, dispatch }, uuid) => {
       const index = _.findIndex(state.savedStates, { uuid: uuid })
       const current = state.savedStates[index]
-      const latest = current.versions[current.versions.length - 1]
+      const latest = _.cloneDeep(current.versions[current.versions.length - 1])
 
       dispatch('setSavedStateVersion', { uuid: uuid, version: current.versions.length })
 
