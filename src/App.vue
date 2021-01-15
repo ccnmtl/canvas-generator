@@ -12,6 +12,7 @@
           <ul class="bcTrail center">
             <li><router-link class="router" to="/home">Home</router-link></li>
             <li><router-link class="router" to="/home-new">Home Prototype</router-link></li>
+            <li><router-link class="router" to="/weekly-new">WeeklyPrototype</router-link></li>
             <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
             <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program">Program Overview</router-link></li>
             <li><router-link class="router" to="/studentlist">Students List</router-link></li>
@@ -354,7 +355,7 @@ export default {
       return this.$store.getters.getDialogData
     }
   },
-  mounted() {
+  beforeMount() {
     if (this.weeks.length < 1) {
       for (let i = 1; i <= 12; i++) {
         let tempWeek = {}
@@ -371,6 +372,9 @@ export default {
     if (this.info.profs.length < 1) this.addProf()
     if (this.info.tas.length < 1) this.addTA()
   }
+
+
+
 }
 </script>
 

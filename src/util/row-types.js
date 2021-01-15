@@ -6,7 +6,7 @@ import _ from 'lodash'
 export default {
 
   computed: {
-    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getConfig']),
+    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getConfig', 'getWeeks']),
     rowTypes(){
       return {...this.defaultRowTypes, ...this.getConfig.rows.customRows}
     },
@@ -137,6 +137,28 @@ export default {
       let cid = options.cid
 
       return row
+    },
+    activityRow(index){
+      let imageCol = this.activityImageCol({
+          data: {
+            imgSrc: this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + (index+1) + ".png",
+          }
+        })
+      let sidebarCol = this.activitySidebarCol({
+        title: {
+          //getter: `week[${index}].title`,
+          data: {
+            value: this.getWeeks[index].title
+          },
+        },
+        date: {
+          getter: {
+            value: 'info.startDate' // this getter should actually be `week[${index}].date`
+          },
+        }
+      })
+
+      return [[imageCol, sidebarCol]]
     },
     findRow(objKey, objValue){
       for (const [name, row] of Object.entries(this.rowTypes)){

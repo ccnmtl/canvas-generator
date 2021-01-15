@@ -78,12 +78,20 @@ export default {
         const RowTypes = state.rowTypes
         payload.rows.forEach(row => {
           let actualRow
+          let type = payload.type || ''
+          let data = payload.data || {}
 
-          if (typeof row == 'string') actualRow = findObj('type', row, RowTypes).array[0]
+          if (typeof row == 'string') {
+            let rowTemplate = findObj('type', row, RowTypes)
+            actualRow = rowTemplate.array[0]
+            type = rowTemplate.type
+          }
           else actualRow = row
 
           dispatch('addRow', {
-            cid: payload.cid
+            cid: payload.cid,
+            type, data
+
           }).then(res => {
             dispatch('createColumnsFromArray', {
               columns: actualRow,

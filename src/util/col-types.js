@@ -65,9 +65,14 @@ export default {
             id: 2,
             name: "simpleBanner",
             type: "banner-col",
-            data: {
-              useWideBanner: false
-            }
+            array: [
+              {
+                type: "banner-slot",
+                data: {
+                  useWideBanner: false,
+                },
+              }
+            ] 
           },
         syllabusComponent: {
           id: 3,
@@ -222,13 +227,15 @@ export default {
               colspan: 4,
               data: {
                 imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/session1.png",
+                width: "360",
+                height: "150"
               }
             }
           ]
         },
         activitySidebar:{
           id: 10,
-          name: "Activity Image",
+          name: "Activity Sidebar",
           type: 'activity-sidebar',
           array: [
             {
@@ -314,6 +321,22 @@ export default {
       let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.syllabus)
+
+      return column
+    },
+    activityImageCol(options = {}){
+      let column = _.cloneDeep(this.colTypes.activityImage.array)
+
+      column[0] = _.merge(column[0], options)
+
+      return column
+    },
+    activitySidebarCol(options = {}){
+      let column = _.cloneDeep(this.colTypes.activitySidebar.array)
+
+      column[0] = _.merge(column[0], options.title)
+      column[1] = _.merge(column[1], options.content)
+      column[2] = _.merge(column[2], options.date)
 
       return column
     },

@@ -16,8 +16,8 @@ export default {
       editing: null,
       data: null,
       forceDimensions: false,
-      imgWidth: 300,
-      imgHeight: 300,
+      imgWidth: this.slotData.width || 300,
+      imgHeight: this.slotData.height || 300,
     }
   },
   watch: {
@@ -33,8 +33,8 @@ export default {
       this.$store.dispatch("setDialogData", {
         title: 'Upload Image',
         type: 'upload-image',
-        defaultWidth: 300,
-        defaultHeight: 300,
+        defaultWidth: this.slotData.width || 300,
+        defaultHeight: this.slotData.height || 300,
         item: this.slotItem
       })
       this.$store.dispatch("setDialogVisibility", true)
