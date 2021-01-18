@@ -6,7 +6,7 @@
         <button @click="stopPreview" v-else class="btn btn-secondary">Stop Preview</button>
       </div>
 
-      <row-component v-for="row in rows"
+      <row-component v-for="row in sortedRows"
                     :key="row.rid"
                     :rid="row.rid"
                     :row="row" />
@@ -50,6 +50,9 @@ export default {
     ...mapGetters,
     rows: function() {
       return this.$store.getters.getRowsByCID[this.cid]
+    },
+    sortedRows: function() {
+      return _.sortBy(this.rows, ['sort'])
     }
   },
   methods: {
@@ -82,7 +85,7 @@ export default {
         document.execCommand('copy')
         console.log('copying text..')
           aux.style.display = "none";
-          
+
       }, 40)
       this.$snotify.success('Code has been copied', { showProgressBar: false });
     },
@@ -116,7 +119,7 @@ export default {
 
     // if (!this.rows) {
     //   this.defaultRows.forEach(row => {
-    //     let rowArray 
+    //     let rowArray
 
     //     // if row is built using a shorthand string then find the actual row content
     //     if (typeof row === 'string') rowArray = _.cloneDeep(this.rowTypes[row]).array

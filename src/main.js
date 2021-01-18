@@ -3,6 +3,7 @@
 
 // Core App Imports
 import Vue from 'vue'
+import VueDraggable from 'vue-draggable'
 
 import App from './App';
 import router from './router';
@@ -20,6 +21,7 @@ import locale from 'element-ui/lib/locale/lang/en';
 // import CKEditor from '@ckeditor/ckeditor5-vue';
 
 Vue.use(UUID);
+Vue.use(VueDraggable);
 Vue.use(VueResource);
 Vue.use(Snotify);
 Vue.use(ElementUI, {

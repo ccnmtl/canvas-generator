@@ -28,6 +28,7 @@
     "validator": "^9.4.1",
     "vee-validate": "^2.0.3",
     "vue": "^2.5.9",
+    "vue-draggable": "^2.0.6",
     "vue-material": "^0.7.5",
     "vue-quill": "^1.5.1",
     "vue-quill-editor": "^1.1.1",

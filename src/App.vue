@@ -276,9 +276,6 @@ export default {
       self.currentVersion = self.getCurrentVersion
     }
   },
-  mounted() {
-    console.log(this.$refs.app.querySelectorAll('[data-suppressed]'))
-  },
   methods: {
     ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo", "addTA",
                   "addProf", "addStudent"]),

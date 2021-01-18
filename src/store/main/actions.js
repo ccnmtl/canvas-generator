@@ -21,16 +21,18 @@ export default {
     },
 
     //Slot Actions
-    addRow: ({ commit }, row) => {
+    addRow: ({ commit, state }, row) => {
       if(!row.rid) row.rid = uuid.v1()
+      row.sort = state.rows.length
       commit('addRow', row)
       return row
     },
     deleteRow: ({ commit }, rid) => {
       commit('deleteRow', rid)
     },
-    addColumn: ({ commit }, column) => {
+    addColumn: ({ commit, state }, column) => {
       if(!column.colid) column.colid = uuid.v1()
+      column.sort = state.columns.length
       commit('addColumn', column)
       return column
     },
@@ -43,12 +45,13 @@ export default {
     setDialogData: ({ commit }, data) => {
       commit('setDialogData', data)
     },
-    addSlot: ({ commit }, slot) => {
+    addSlot: ({ commit, state }, slot) => {
       if(!slot.sid) slot.sid = uuid.v1()
       if(!slot.colspan) {
         let SlotType = _.find(SlotTypes, { 'id': slot.type })
         slot.colspan = SlotType.colspan
       }
+      slot.sort = state.slots.length
       commit('addSlot', slot)
       return slot
     },

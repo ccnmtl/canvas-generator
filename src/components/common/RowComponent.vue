@@ -23,11 +23,12 @@
       </button>
     </div>
     <div class="grid-row">
-      <column-component v-for="column in columns"
+      <column-component v-for="column in sortedColumns"
                           :key="column.colid"
                           :col="column"
                           :rid="rid"
                           :cid="row.cid"
+                          :width="row.width"
                           :colspan="12 / columns.length"
                           :space="12 - totalWidth" />
 
@@ -56,6 +57,9 @@ export default {
   computed: {
     columns: function() {
       return this.$store.getters.getColumnsByRowID[this.rid]
+    },
+    sortedColumns: function() {
+      return _.sortBy(this.columns, ['sort'])
     },
     slots() {
       return this.$store.getters.getSlotsByRowID[this.rid]

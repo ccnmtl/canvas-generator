@@ -15,7 +15,8 @@
                     :key="slot.sid"
                     :sid="slot.sid"
                     :colspan="colspan"
-                    :slotData="slot" />
+                    :slotData="slot"
+                    :width="slot.width" />
 
     <div data-hidden class="actions" v-if="slots">
       <button @click="deleteColumn" class="btn btn-danger">Delete Column</button>
@@ -39,7 +40,7 @@ export default {
     SlotComponent
   },
   mixins: [ColumnTypes],
-  props: [ "col", "cid", "rid", "colspan", "space" ],
+  props: [ "col", "cid", "rid", "colspan", "space" , "width" ],
   data() {
     return {}
   },
@@ -53,7 +54,11 @@ export default {
         })
       return slots
     },
+    sortedSlots: function() {
+      return _.sortBy(this.slots, ['sort'])
+    },
     colWidth: function () {
+      if(this.width) return this.width
       if(this.slots && this.slots.length === 0) return this.colspan
 
       const bigger = _.orderBy(this.slots, ['colspan'],['desc'])[0]

@@ -13,7 +13,8 @@
                :slotItem="data"
                :sid="sid"
                :class="[{ 'small-col': colspan < 24 }, ...data.classes]"
-               :style="data.styles" />
+               :style="data.styles"
+               :width="width" />
   </div>
 </template>
 
@@ -47,7 +48,7 @@ export default {
     SimpleListSlot,
     NameValueSlot,
   },
-  props: [ "sid", "slotData", "colspan" ],
+  props: [ "sid", "slotData", "colspan", "width" ],
   data() {
     return {
       data: {}
