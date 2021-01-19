@@ -61,10 +61,10 @@ export default {
       if(this.width) return this.width
       if(this.slots && this.slots.length === 0) return this.colspan
 
-      const bigger = _.orderBy(this.slots, ['colspan'],['desc'])[0]
+      const bigger = _.orderBy(this.slots, ['width', 'colspan'],['desc'])[0]
 
       if(!bigger) return this.colspan
-      return Math.max(bigger.colspan, this.colspan)
+      return bigger.width || bigger.colspan
     }
   },
   methods: {

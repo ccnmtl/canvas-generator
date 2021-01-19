@@ -20,7 +20,7 @@ export default {
     ProfessorTaSlot
   },
   name: "ListSlot",
-  props: [ "sid", "slotData", "slotItem" ],
+  props: [ "sid", "slotData", "slotItem", "width" ],
   data() {
     return {
       editing: null,

@@ -30,7 +30,7 @@ import moment from 'moment'
 
 export default {
   name: "NameValueSlot",
-  props: [ "sid", "slotData", "slotItem" ],
+  props: [ "sid", "slotData", "slotItem", "width" ],
   data() {
     return {
       editing: null,
@@ -109,7 +109,11 @@ export default {
         if(typeof this.slotItem.getter === 'string')
           this.$store.dispatch("updateSpecificInfo", { key: this.slotItem.getter.split(".")[1], value: this.data[field] })
         else {
-          this.$store.dispatch("updateSpecificInfo", { key: this.slotItem.getter[field].split(".")[1], value: this.data[field] })
+          this.$store.dispatch("updateSlotDataWithSetter", {
+            setter: this.slotItem.getter[field],
+            data: this.data[field]
+          })
+          //this.$store.dispatch("updateSpecificInfo", { key: this.slotItem.getter[field].split(".")[1], value: this.data[field] })
         }
         this.editing = null
       }

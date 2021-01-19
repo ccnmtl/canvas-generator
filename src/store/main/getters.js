@@ -53,6 +53,7 @@ export default {
     return res
   },
   getFromGetter: (state) => (getter) => {
+    getter = getter.replaceAll('].', '.').replaceAll(']', '').replaceAll('[', '.')
     let items = getter.split('.')
     let res = state
     items.forEach(item => {

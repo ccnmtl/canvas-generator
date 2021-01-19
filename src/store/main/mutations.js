@@ -211,7 +211,7 @@ export default {
     Vue.set(state, payload.field, payload.value)
   },
   setStateFieldWithBase: (state, payload) => {
-    Vue.set(state[payload.base], payload.field, payload.value)
+    Vue.set(payload.base, payload.field, payload.value)
   },
   updateRowTypes: (state, payload) => {
     state.rowTypes = payload

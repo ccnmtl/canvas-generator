@@ -38,7 +38,7 @@ export default {
           array: [
             [this.buildInstructorListCol(), this.buildInstructorListCol({list: {getter: 'info.tas'}})]
           ]
-        },       
+        },
         dateTimeRow: {
           id: 3,
           name: "Date/Time Row",
@@ -47,7 +47,7 @@ export default {
           pages: ['home'],
           array: [
             ['date-time-col']
-          ]          
+          ]
         },
         listRow: {
           id: 4,
@@ -57,7 +57,7 @@ export default {
           pages: ['syllabus'],
           array: [
             ['instructor-expanded-list']
-          ]          
+          ]
         },
         homeBannerRow: {
           id: 5,
@@ -95,7 +95,7 @@ export default {
           pages: ['syllabus'],
           array: [
             ['instructor-expanded-list']
-          ]          
+          ]
         },
       }
     },
@@ -119,13 +119,13 @@ export default {
       let cid = options.cid
 
       return row
-    },        
+    },
     buildDateTimeRow(options){
       let row = _.cloneDeep(this.rowTypes.dateTimeRow)
       let cid = options.cid
 
       return row
-    },    
+    },
     buildListRow(options){
       let row = _.cloneDeep(this.rowTypes.listRow.array)
       let cid = options.cid

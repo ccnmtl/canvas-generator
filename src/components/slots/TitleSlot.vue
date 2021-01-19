@@ -26,7 +26,7 @@ import Vue from 'vue'
 
 export default {
   name: "TitleSlot",
-  props: [ "sid", "slotData", "slotItem" ],
+  props: [ "sid", "slotData", "slotItem", "width" ],
   data() {
     return {
       editing: null,

@@ -15,7 +15,7 @@
 
 export default {
   name: "ButtonsSlot",
-  props: [ "sid", "slotData", "slotItem" ],
+  props: [ "sid", "slotData", "slotItem", "width" ],
   data() {
     return {
       editing: null,

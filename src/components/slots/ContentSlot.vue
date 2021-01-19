@@ -30,7 +30,7 @@ export default {
     quillEditor
   },
   name: "ContentSlot",
-  props: [ "sid", "slotData", "slotItem" ],
+  props: [ "sid", "slotData", "slotItem", "width" ],
   data() {
     return {
       editing: null,

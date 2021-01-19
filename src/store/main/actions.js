@@ -23,7 +23,7 @@ export default {
     //Slot Actions
     addRow: ({ commit, state }, row) => {
       if(!row.rid) row.rid = uuid.v1()
-      row.sort = state.rows.length
+      if(!row.sort) row.sort = state.rows.length
       commit('addRow', row)
       return row
     },
@@ -32,7 +32,7 @@ export default {
     },
     addColumn: ({ commit, state }, column) => {
       if(!column.colid) column.colid = uuid.v1()
-      column.sort = state.columns.length
+      if(!column.sort) column.sort = state.columns.length
       commit('addColumn', column)
       return column
     },
@@ -51,7 +51,7 @@ export default {
         let SlotType = _.find(SlotTypes, { 'id': slot.type })
         slot.colspan = SlotType.colspan
       }
-      slot.sort = state.slots.length
+      if(!slot.sort) slot.sort = state.slots.length
       commit('addSlot', slot)
       return slot
     },
@@ -61,112 +61,132 @@ export default {
     updateSlotData: ({ commit }, slot) => {
       commit('updateSlotData', slot)
     },
-    updateSlotDataWithSetter: ({ commit }, payload) => {
-      let res = payload.setter.split('.')
-      payload.base = res[0]
-      payload.field = res[1]
-      payload.value = payload.data
-      commit('setStateFieldWithBase', payload)
+    cleanSetter: ({ state }, setter) => {
+      setter = setter.replaceAll('].', '.').replaceAll(']', '').replaceAll('[', '.')
+      let items = setter.split('.')
+      let base = state
+      let last
+
+      items.forEach((item, i, arr) => {
+        if(i === arr.length - 1) last = item
+        else base = base[item]
+      })
+
+      return {
+        base,
+        last
+      }
+    },
+    updateSlotDataWithSetter: ({ commit, dispatch }, payload) => {
+      dispatch('cleanSetter', payload.setter)
+      .then(res => {
+        commit('setStateFieldWithBase', {
+          base: res.base,
+          field: res.last,
+          value: payload.data
+        })
+      })
     },
     setSlotStyles: ({ commit }, payload) => {
-        commit('setSlotStyles', payload)
-      },
-      setSlotClasses: ({ commit }, payload) => {
-        commit('setSlotClasses', payload)
-      },
-      setSlotGetter: ({ commit }, payload) => {
-        commit('setSlotGetter', payload)
-      },
-      createRowsFromArray({ state, dispatch }, payload) {
-        const RowTypes = state.rowTypes
-        payload.rows.forEach(row => {
-          let actualRow
-          let type = payload.type || ''
-          let data = payload.data || {}
+      commit('setSlotStyles', payload)
+    },
+    setSlotClasses: ({ commit }, payload) => {
+      commit('setSlotClasses', payload)
+    },
+    setSlotGetter: ({ commit }, payload) => {
+      commit('setSlotGetter', payload)
+    },
+    createRowsFromArray({ state, dispatch }, payload) {
+      const RowTypes = state.rowTypes
+      payload.rows.forEach(row => {
+        let actualRow
+        let type = payload.type || ''
+        let data = payload.data || {}
 
-          if (typeof row == 'string') {
-            let rowTemplate = findObj('type', row, RowTypes)
-            actualRow = rowTemplate.array[0]
-            type = rowTemplate.type
-          }
-          else actualRow = row
+        if (typeof row == 'string') {
+          let rowTemplate = findObj('type', row, RowTypes)
+          actualRow = rowTemplate.array[0]
+          type = rowTemplate.type
+        }
+        else actualRow = row
 
-          dispatch('addRow', {
-            cid: payload.cid,
-            type, data
+        dispatch('addRow', {
+          cid: payload.cid,
+          type, data
 
-          }).then(res => {
-            dispatch('createColumnsFromArray', {
-              columns: actualRow,
-              rid: res.rid
-            })
+        }).then(res => {
+          dispatch('createColumnsFromArray', {
+            columns: actualRow,
+            rid: res.rid
           })
         })
-      },
-      createColumnsFromArray({ dispatch, state }, payload) {
-        const row = _.find(state.rows, { rid: payload.rid })
-        const ColTypes = state.colTypes
+      })
+    },
+    createColumnsFromArray({ dispatch, state }, payload) {
+      const row = _.find(state.rows, { rid: payload.rid })
+      const ColTypes = state.colTypes
 
-        let columns = payload.columns
+      let columns = payload.columns
 
-        // if (typeof columns[0] == 'string') {
-        //   let colObj = findObj('type', columns[0], ColTypes).array
-        //   columns = [colObj]
-        // }
+      // if (typeof columns[0] == 'string') {
+      //   let colObj = findObj('type', columns[0], ColTypes).array
+      //   columns = [colObj]
+      // }
 
-        columns.forEach(column => {
-          let actualCol
+      columns.forEach(column => {
+        let actualCol
 
-          if (typeof column == 'string') actualCol = findObj('type', column, ColTypes).array
-          else actualCol = column
+        if (typeof column == 'string') actualCol = findObj('type', column, ColTypes).array
+        else actualCol = column
 
-          dispatch('addColumn', {
-            rid: row.rid,
-            cid: row.cid
-          }).then(res => {
-            dispatch('createSlotsFromArray', {
-              slots: actualCol,
-              colid: res.colid
-            })
+        dispatch('addColumn', {
+          width: column.width ? column.width : undefined,
+          rid: row.rid,
+          cid: row.cid
+        }).then(res => {
+          dispatch('createSlotsFromArray', {
+            slots: actualCol,
+            colid: res.colid
           })
         })
-      },
-      createSlotsFromArray({ state, dispatch }, payload) {
-        const column = _.find(state.columns, { colid: payload.colid })
-        let actualSlotType
+      })
+    },
+    createSlotsFromArray({ state, dispatch }, payload) {
+      const column = _.find(state.columns, { colid: payload.colid })
+      let actualSlotType
 
-        payload.slots.forEach(slot => {
-          if(typeof slot == 'string') {
-            actualSlotType = _.find(SlotTypes, { 'type': slot })
+      payload.slots.forEach(slot => {
+        if(typeof slot == 'string') {
+          actualSlotType = _.find(SlotTypes, { 'type': slot })
 
-            dispatch('addSlot', {
-              type: actualSlotType.id,
-              colspan: actualSlotType.colspan,
-              rid: column.rid,
-              cid: column.cid,
-              colid: column.colid,
-              data: slot.data ? slot.data : actualSlotType.defaultData,
-              getter: actualSlotType.getter ? actualSlotType.getter : null
-            })
-          }
-          else {
-            actualSlotType = _.find(SlotTypes, { 'type': slot.type })
+          dispatch('addSlot', {
+            type: actualSlotType.id,
+            colspan: actualSlotType.colspan,
+            rid: column.rid,
+            cid: column.cid,
+            colid: column.colid,
+            data: slot.data ? slot.data : actualSlotType.defaultData,
+            getter: actualSlotType.getter ? actualSlotType.getter : null
+          })
+        }
+        else {
+          actualSlotType = _.find(SlotTypes, { 'type': slot.type })
 
-            dispatch('addSlot', {
-              ...slot,
-              type: actualSlotType.id,
-              colspan: slot.colspan || actualSlotType.colspan,
-              rid: column.rid,
-              cid: column.cid,
-              colid: column.colid,
-              data: slot.data ? slot.data : actualSlotType.defaultData,
-              classes: slot.classes ? slot.classes : [],
-              styles: slot.styles ? slot.styles : [],
-              getter: slot.getter ? slot.getter : null
-            })
-          }
-        })
-      },
+          dispatch('addSlot', {
+            ...slot,
+            type: actualSlotType.id,
+            colspan: slot.colspan || actualSlotType.colspan,
+            rid: column.rid,
+            cid: column.cid,
+            colid: column.colid,
+            data: slot.data ? slot.data : actualSlotType.defaultData,
+            classes: slot.classes ? slot.classes : [],
+            styles: slot.styles ? slot.styles : [],
+            getter: slot.getter ? slot.getter : null
+          })
+        }
+      })
+    },
     updateRowTypes: ({ commit }, payload) => {
       commit('updateRowTypes', payload)
     },

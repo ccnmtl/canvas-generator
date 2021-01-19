@@ -72,7 +72,7 @@ export default {
                   useWideBanner: false,
                 },
               }
-            ] 
+            ]
           },
         syllabusComponent: {
           id: 3,
@@ -164,13 +164,13 @@ export default {
                 styles: {
                   "margin-bottom": "20px",
                 }
-              }           
+              }
             ]
         },
         dateTime: {
           id: 7,
           type: "date-time-col",
-          array: 
+          array:
             [
               {
                 type: "name-value-slot",
@@ -225,6 +225,7 @@ export default {
             {
               type: "image-slot",
               colspan: 4,
+              width: 4,
               data: {
                 imgSrc: "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/session1.png",
                 width: "360",
@@ -237,8 +238,10 @@ export default {
           id: 10,
           name: "Activity Sidebar",
           type: 'activity-sidebar',
+          width: 8,
           array: [
             {
+              width: 8,
               type: "name-value-slot",
               classes: ["STV1_Welcome"],
               data: {
@@ -247,6 +250,7 @@ export default {
               },
             },
             {
+              width: 8,
               type: "content-slot",
               styles: {
                 margin: "20px 0",
@@ -258,6 +262,7 @@ export default {
               }
             },
             {
+              width: 8,
               type: "name-value-slot",
               getter: {
                 value: "info.startDate"
@@ -270,7 +275,7 @@ export default {
           ]
         }
 
-      }        
+      }
     }
   },
   data() {
@@ -315,7 +320,7 @@ export default {
       column[0] = _.merge(column[0], options.banner)
 
       return column
-    },        
+    },
     buildSyllabusComponentCol(options){
       let column = _.cloneDeep(this.colTypes.syllabusComponent.array)
       let {cid, rid} = options

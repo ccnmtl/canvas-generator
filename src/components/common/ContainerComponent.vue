@@ -115,6 +115,19 @@ export default {
         cid: self.cid,
         rows: this.defaultRows
       })
+
+      self.$store.dispatch('createRowsFromArray', {
+        cid: self.cid,
+        rows: [[[{
+          type: 'name-value-slot',
+          getter: {
+            value: 'info.profs[0].name'
+          },
+          data: {
+            name: 'Getter (info.profs[0].name)'
+          }
+        }]]]
+      })
     }
 
     // if (!this.rows) {

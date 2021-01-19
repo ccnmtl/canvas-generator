@@ -22,7 +22,7 @@
         <span>Delete Row</span>
       </button>
     </div>
-    <div class="grid-row">
+    <div class="row">
       <column-component v-for="column in sortedColumns"
                           :key="column.colid"
                           :col="column"

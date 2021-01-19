@@ -20,7 +20,7 @@ import Vue from 'vue'
 
 export default {
   name: "SimpleListSlot",
-  props: [ "sid", "slotData", "slotItem" ],
+  props: [ "sid", "slotData", "slotItem", "width" ],
   data() {
     return {
       editing: null,
