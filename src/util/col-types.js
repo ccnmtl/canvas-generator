@@ -13,6 +13,7 @@ export default {
           name: "Banner Row",
           type: "home-sidebar",
           icon: "picture",
+          width: 6,
           array: [
             {
               type: "title-slot",
@@ -133,6 +134,7 @@ export default {
             {
               type: "list-slot",
               getter: "info.profs",
+              width: 6,
               data: {
                 idField: "id",
                 labelField: "name",
@@ -175,6 +177,7 @@ export default {
               {
                 type: "name-value-slot",
                 getter: "info.meetings",
+                width: 12,
                 data: {
                   name: "MEETING DATES / TIMES"
                 },
@@ -205,6 +208,7 @@ export default {
               type: "list-slot",
               getter: "info.profs",
               getter2: "info.tas",
+              width: 6,
               data: {
                 idField: "id",
                 labelField: "name",

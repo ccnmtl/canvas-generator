@@ -30,7 +30,10 @@ export default {
       ],
       homeLayout: [
         'home-banner-row',
-        [['image-slot'], 'home-sidebar'],
+        [[{
+          type: 'image-slot',
+          width: 6
+          }], 'home-sidebar'],
         'home-instructors-row',
         'date-time-row',
       ],

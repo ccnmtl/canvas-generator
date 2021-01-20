@@ -158,7 +158,7 @@ export default {
         }
       })
 
-      return [[imageCol, sidebarCol]]
+      return [[{ width: 4, array: imageCol}, { width: 8, array: sidebarCol }]]
     },
     findRow(objKey, objValue){
       for (const [name, row] of Object.entries(this.rowTypes)){

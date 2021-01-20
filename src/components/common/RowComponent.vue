@@ -28,8 +28,7 @@
                           :col="column"
                           :rid="rid"
                           :cid="row.cid"
-                          :width="row.width"
-                          :colspan="12 / columns.length"
+                          :colspan="colspan"
                           :space="12 - totalWidth" />
 
     </div>
@@ -42,8 +41,6 @@
 import _ from 'lodash'
 import ColumnComponent from "./ColumnComponent.vue"
 import RowTypeMixin from "../../util/row-types"
-import SlotTypesComponent from '../../util/slot-types.js'
-const SlotTypes = SlotTypesComponent.computed.SlotTypes()
 
 export default {
   components: {
@@ -61,27 +58,27 @@ export default {
     sortedColumns: function() {
       return _.sortBy(this.columns, ['sort'])
     },
-    slots() {
-      return this.$store.getters.getSlotsByRowID[this.rid]
-    },
     totalWidth() {
-      if(!this.slots) return 0
+      if(!this.columns) return 0
 
       let total = 0
       this.columns.forEach(column => {
-        let slots = this.$store.getters.getSlotsByColID[column.colid]
-        let biggest = 0
-
-        if(slots)
-          slots.forEach(slot => {
-            let type = _.find(SlotTypes, { id: slot.type })
-            biggest = Math.max(type.colspan, biggest)
-          })
-
-        total += biggest
+        if(column.width) total += column.width
       })
 
       return total
+    },
+    colsWithoutWidth() {
+      let total = 0
+
+      this.columns.forEach(column => {
+        if(!column.width) total++
+      })
+
+      return total
+    },
+    colspan() {
+      return (12 - this.totalWidth) / (this.colsWithoutWidth > 0 ? this.colsWithoutWidth : 1)
     }
   },
   methods: {

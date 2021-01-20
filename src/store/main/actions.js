@@ -134,13 +134,20 @@ export default {
       // }
 
       columns.forEach(column => {
-        let actualCol
+        let actualCol, col
 
-        if (typeof column == 'string') actualCol = findObj('type', column, ColTypes).array
+        if (typeof column == 'string') {
+          col = findObj('type', column, ColTypes)
+          if(col) actualCol = col.array
+        }
+        else if(column && column.array) {
+          col = column
+          actualCol = col.array
+        }
         else actualCol = column
 
         dispatch('addColumn', {
-          width: column.width ? column.width : undefined,
+          width: col && col.width ? col.width : undefined,
           rid: row.rid,
           cid: row.cid
         }).then(res => {

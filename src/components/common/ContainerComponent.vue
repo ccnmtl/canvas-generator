@@ -123,6 +123,7 @@ export default {
           getter: {
             value: 'info.profs[0].name'
           },
+          width: 8,
           data: {
             name: 'Getter (info.profs[0].name)'
           }
