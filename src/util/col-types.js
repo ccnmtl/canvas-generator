@@ -1,5 +1,7 @@
 
 import { mapActions, mapGetters } from 'vuex'
+import slotTypes from './slot-types'
+
 import _ from 'lodash'
 
 export default {
@@ -13,7 +15,6 @@ export default {
           name: "Banner Row",
           type: "home-sidebar",
           icon: "picture",
-          width: 6,
           array: [
             {
               type: "title-slot",
@@ -286,6 +287,7 @@ export default {
     return {
     }
   },
+  mixins: [slotTypes],
   methods: {
     ...mapActions(['createColumnsFromArray','updateColTypes']),
     buildHomeSidebarCol(options = {}){
