@@ -9,10 +9,12 @@
         <button @click="stopPreview" v-else class="btn btn-secondary">Stop Preview</button>
       </div>
 
-      <row-component v-for="row in sortedRows"
-                     :key="row.rid"
-                     :rid="row.rid"
-                     :row="row" />
+      <draggable v-model="myArray" group="people" @start="drag=true" @end="drag=false">
+        <row-component v-for="row in sortedRows"
+                      :key="row.rid"
+                      :rid="row.rid"
+                      :row="row" />
+      </draggable>
 
       <button data-hidden class="new-row" @click="chooseRow">Add new Row</button>
       <button data-hidden class="new-row" @click="getHTMLCode">get HTML</button>
@@ -33,14 +35,12 @@ import { mapGetters } from "vuex"
 import RowComponent from "./RowComponent.vue"
 // import RowTypes from '../../util/row-types.json'
 import RowTypesMixin from '../../util/row-types.js'
-import { VueDraggableDirective } from 'vue-draggable'
+import draggable from 'vuedraggable'
 
 export default {
-  directives: {
-    dragAndDrop: VueDraggableDirective
-  },
   components: {
-    RowComponent
+    RowComponent,
+    draggable
   },
   mixins: [RowTypesMixin],
   props: [ "cid", "defaultRows" ],
