@@ -1,5 +1,11 @@
 <template>
-  <div class="row content-box" :class="{ empty: !columns }">
+  <div class="row content-box"
+       :class="[{ empty: !columns }, { 'dragging-mode': $store.getters.isDndMode }]">
+
+    <div data-hidden data-dnd class="drag-handler" title="Drag row" @dragstart="startDragging" draggable>
+      ⋮⋮
+    </div>
+
     <div data-hidden class="empty-text" v-if="!columns">
       Start adding columns to this row!
 
@@ -22,7 +28,7 @@
         <span>Delete Row</span>
       </button>
     </div>
-    <div class="grid-row">
+    <div class="row">
       <column-component v-for="column in sortedColumns"
                           :key="column.colid"
                           :col="column"
@@ -95,6 +101,10 @@ export default {
         rid: this.row.rid,
         cid: this.row.cid
       })
+    },
+    startDragging() {
+      this.$store.dispatch('setDraggingRow', true)
+      this.$store.dispatch('setDraggedRow', this.row)
     }
   }
 }
@@ -104,10 +114,38 @@ export default {
 .row {
   margin-bottom: 10px;
 
+  &.dragging-mode {
+    transition: all 0.43s;
+    opacity: .7;
+
+    &:hover {
+      opacity: 1;
+
+      .drag-handler {
+        opacity: 1;
+      }
+    }
+  }
+
   &:hover {
     .float {
       opacity: 1;
     }
+  }
+
+  .drag-handler {
+    transition: all 0.43s;
+    opacity: 0;
+    position: absolute;
+    z-index: 999;
+    background: #DDD;
+    font-size: 26px;
+    width: 37px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: move;
+    margin-left: -50px;
+    top: calc(50% - 37px);
   }
 
   &.empty {

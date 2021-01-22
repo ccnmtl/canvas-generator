@@ -219,4 +219,16 @@ export default {
   updateColTypes: (state, payload) => {
     state.colTypes = payload
   },
+  changeDndMode: (state, mode) => {
+    state.dndMode = mode
+  },
+  setDraggingRow: (state, mode) => {
+    state.draggingRow = mode
+  },
+  setDraggedRow: (state, row) => {
+    state.draggedRow = row
+  },
+  changeRowSort: (state, payload) => {
+    Vue.set(state.rows[payload.index], 'sort', payload.sort)
+  },
 }

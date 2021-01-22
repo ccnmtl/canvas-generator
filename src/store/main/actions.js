@@ -397,5 +397,18 @@ export default {
         })
       })
     },
+    changeDndMode({ commit }, mode) {
+      commit('changeDndMode', mode)
+    },
+    setDraggingRow({ commit }, mode) {
+      commit('setDraggingRow', mode)
+    },
+    setDraggedRow({ commit }, row) {
+      commit('setDraggedRow', row)
+    },
+    changeRowSort({ commit, state }, payload) {
+      const index = _.findIndex(state.rows, { rid: payload.rid })
+      commit('changeRowSort', { index, sort: payload.sort})
+    }
 
 }

@@ -1,15 +1,18 @@
 <template>
-  <div class="canvas-code" ref="canvascode" :class="{ blocked: previewing }">
+  <div class="canvas-code" ref="canvascode" :class="{ blocked: previewing }" @dragend="dragEnd">
     <div class="canvas-container" v-if="!loading">
       <div class="preview-page" id="previewpage">
+        <button @click="startDnd" v-if="!$store.getters.isDndMode" class="btn btn-info">Start Drag and Drop</button>
+        <button @click="stopDnd" v-else class="btn btn-secondary">Stop Drag and Drop</button>
+
         <button @click="previewPage" v-if="!previewing" class="btn btn-primary">Preview this Page</button>
         <button @click="stopPreview" v-else class="btn btn-secondary">Stop Preview</button>
       </div>
 
       <row-component v-for="row in sortedRows"
-                    :key="row.rid"
-                    :rid="row.rid"
-                    :row="row" />
+                     :key="row.rid"
+                     :rid="row.rid"
+                     :row="row" />
 
       <button data-hidden class="new-row" @click="chooseRow">Add new Row</button>
       <button data-hidden class="new-row" @click="getHTMLCode">get HTML</button>
@@ -23,15 +26,19 @@
 
 <script>
 
+import Vue from 'vue'
 import _ from "lodash"
 import { mapGetters } from "vuex"
 
 import RowComponent from "./RowComponent.vue"
 // import RowTypes from '../../util/row-types.json'
 import RowTypesMixin from '../../util/row-types.js'
-
+import { VueDraggableDirective } from 'vue-draggable'
 
 export default {
+  directives: {
+    dragAndDrop: VueDraggableDirective
+  },
   components: {
     RowComponent
   },
@@ -43,16 +50,58 @@ export default {
       loading: false,
       rowsDone: [],
       columnsDone: [],
-      slotsDone: []
+      slotsDone: [],
+      options: {
+        dropzoneSelector: 'ul',
+        draggableSelector: 'li',
+        handlerSelector: null,
+        reactivityEnabled: true,
+        multipleDropzonesItemsDraggingEnabled: false,
+        showDropzoneAreas: true,
+        onDrop: function(event) {},
+        onDragstart: function(event) {},
+        onDragenter: function(event) {},
+        onDragover: function(event) {},
+        onDragend: function(event) {}
+      }
     }
   },
   computed: {
-    ...mapGetters,
+    ...mapGetters([ 'getDraggedRow' ]),
     rows: function() {
       return this.$store.getters.getRowsByCID[this.cid]
     },
     sortedRows: function() {
       return _.sortBy(this.rows, ['sort'])
+    },
+    dndMode: function() {
+      return this.$store.getters.isDndMode
+    }
+  },
+  watch: {
+    dndMode: {
+      handler(val) {
+        let html = this.$refs.canvascode
+        if(val) {
+          html.querySelectorAll('[data-hidden]').forEach(element => {
+            element.style.display = 'none'
+          })
+
+          html.querySelectorAll('[data-dnd]').forEach(element => {
+            element.style.display = null
+          })
+        }
+        else if(html) {
+          html.querySelectorAll('[data-hidden]').forEach(element => {
+            element.style.display = null
+          })
+
+          html.querySelectorAll('[data-dnd]').forEach(element => {
+            element.style.display = 'none'
+          })
+        }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -104,6 +153,31 @@ export default {
         element.style.display = null
       })
       this.previewing = false
+    },
+    startDnd() {
+      this.$store.dispatch('changeDndMode', true)
+    },
+    stopDnd() {
+      this.$store.dispatch('changeDndMode', false)
+    },
+    dragEnd() {
+      this.$store.dispatch('setDraggingRow', false)
+    },
+    dropped(zone) {
+      let sort = this.getDraggedRow.sort
+      const row = _.find(this.rows, { rid: this.getDraggedRow.rid })
+      let affectedRows
+      if(zone !== sort && zone !== sort + 1) {
+        if(zone > sort) {
+          console.log(zone)
+          Vue.set(row, 'sort', (zone - 1))
+
+          /*affectedRows = _.filter(this.sortedRows, (row) => row.sort > sort && row.sort < zone)
+          affectedRows.forEach(row => {
+            this.$store.dispatch('changeRowSort', { rid: row.rid, sort: (row.sort - 1)})
+          })*/
+        }
+      }
     }
   },
   beforeMount() {
@@ -163,6 +237,13 @@ export default {
 
     //   })
     // }
+  },
+  mounted() {
+    let html = this.$refs.canvascode
+
+    html.querySelectorAll('[data-dnd]').forEach(element => {
+      element.style.display = 'none'
+    })
   }
 }
 </script>
@@ -175,6 +256,21 @@ export default {
   &.blocked {
     .row {
       pointer-events: none;
+    }
+  }
+
+  .drop-zone{
+    transition: all 0.43s;
+    height: 0;
+
+    &.dragging {
+      background: #EEE;
+      height: 34px;
+      display: block;
+
+      &:hover {
+        background-color: #38D;
+      }
     }
   }
 
