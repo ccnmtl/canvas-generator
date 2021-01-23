@@ -8,7 +8,10 @@ export default {
 
   computed: {
     ...mapGetters(['getInfo']),
-    SlotTypes(){
+    slotTypes(){
+      return{...this.defaultSlotTypes, ...this.getConfig.slots.customSlots}
+    },
+    defaultSlotTypes(){
       return {
         titleSlot: {
           id: 1,
@@ -125,6 +128,12 @@ export default {
     }
   },
   methods: {
+
+    findSlot(objKey, objValue){
+      for (const [name, slot] of Object.entries(this.slotTypes)){
+        if (slot[objKey] == objValue) return slot
+      }
+    }    
 
   },
 }

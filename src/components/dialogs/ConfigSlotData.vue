@@ -37,16 +37,16 @@
 import Vue from  'vue'
 import _ from 'lodash'
 import SlotTypesComponent from '../../util/slot-types.js'
-const SlotTypes = SlotTypesComponent.computed.SlotTypes()
 
 export default {
   props: [
     'dialogData'
   ],
+  mixins: [SlotTypesComponent],  
   name: 'ConfigSlotData',
   data() {
     return {
-      slotTypes: SlotTypes,
+      slotTypes: this.SlotTypes,
       usedStyles: [],
       styleAtt: null,
       styleVal: '',

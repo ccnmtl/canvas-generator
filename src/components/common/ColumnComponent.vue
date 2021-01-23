@@ -31,9 +31,8 @@
 import _ from 'lodash'
 import SlotComponent from "./SlotComponent.vue"
 import ColumnTypes from "../../util/col-types"
-import SlotTypesComponent from '../../util/slot-types.js'
 
-const SlotTypes = SlotTypesComponent.computed.SlotTypes()
+const SlotTypes = this.SlotTypes
 
 export default {
   components: {

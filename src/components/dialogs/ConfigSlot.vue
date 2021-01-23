@@ -71,18 +71,18 @@
 <script>
 
 import _ from 'lodash'
-import SlotTypesComponent from '../../util/slot-types.js'
-const SlotTypes = SlotTypesComponent.computed.SlotTypes()
+import slotTypes from '../../util/slot-types.js'
 import StyleOptions from '../../util/style-options.json'
 
 export default {
   props: [
     'dialogData'
   ],
+  mixins: [slotTypes],   
   name: 'ConfigSlot',
   data() {
     return {
-      slotTypes: SlotTypes,
+      slotTypes: this.slotTypes,
       styles: [],
       classes: [],
       usedStyles: [],

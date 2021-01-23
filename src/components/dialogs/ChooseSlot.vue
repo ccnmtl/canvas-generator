@@ -22,23 +22,23 @@
 
 <script>
 
-import SlotTypesComponent from '../../util/slot-types.js'
-const SlotTypes = SlotTypesComponent.computed.SlotTypes()
+import slotTypes from '../../util/slot-types.js'
 
 export default {
   props: [
     'dialogData'
   ],
   name: 'ChooseSlot',
+  mixins: [slotTypes],  
   data() {
     return {
-      slotTypes: SlotTypes,
+      SlotTypes: this.slotTypes,
       selectedSlot: 1
     }
   },
   methods: {
     saveChoice() {
-      const actualSlotType = _.find(SlotTypes, { 'id': this.selectedSlot })
+      const actualSlotType = _.find(slotTypes, { 'id': this.selectedSlot })
 
       this.$store.dispatch('addSlot', {
         getter: actualSlotType.getter,

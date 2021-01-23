@@ -22,8 +22,7 @@
 
 import Vue from 'vue'
 import _ from 'lodash'
-import SlotTypesComponent from '../../util/slot-types.js'
-const SlotTypes = SlotTypesComponent.computed.SlotTypes()
+import slotTypes from '../../util/slot-types.js'
 
 // Slot Types
 import BannerSlot from '../slots/BannerSlot.vue'
@@ -49,6 +48,7 @@ export default {
     NameValueSlot,
   },
   props: [ "sid", "slotData", "colspan", "width" ],
+  mixins: [slotTypes],  
   data() {
     return {
       data: {}
@@ -66,7 +66,7 @@ export default {
   },
   computed: {
     type() {
-      return _.find(SlotTypes, { 'id': this.data.type }).type
+      return _.find(slotTypes, { 'id': this.data.type }).type
     },
   },
   methods: {

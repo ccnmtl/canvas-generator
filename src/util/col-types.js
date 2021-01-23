@@ -10,6 +10,12 @@ export default {
     ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo', 'getWeeks']),
     colTypes(){
       return {
+        blankCol: {
+          id: 0,
+          name: 'Blank Col',
+          type: 'blank-col',
+          icon: 'circle-plus-outline'
+        },        
         homeSidebar: {
           id: 1,
           name: "Banner Row",
@@ -283,11 +289,11 @@ export default {
       }
     }
   },
+  mixins: [slotTypes],  
   data() {
     return {
     }
   },
-  mixins: [slotTypes],
   methods: {
     ...mapActions(['createColumnsFromArray','updateColTypes']),
     buildHomeSidebarCol(options = {}){
