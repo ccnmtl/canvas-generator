@@ -1,15 +1,18 @@
 <template>
-  <div class="canvas-code" ref="canvascode" :class="{ blocked: previewing }" @dragend="dragEnd">
+  <div class="canvas-code"
+       ref="canvascode"
+       :class="[{ blocked: previewing }, { dragging: isDndMode }]"
+       @dragend="dragEnd">
     <div class="canvas-container" v-if="!loading">
       <div class="preview-page" id="previewpage">
-        <button @click="startDnd" v-if="!$store.getters.isDndMode" class="btn btn-info">Start Drag and Drop</button>
+        <button @click="startDnd" v-if="!isDndMode" class="btn btn-info">Start Drag and Drop</button>
         <button @click="stopDnd" v-else class="btn btn-secondary">Stop Drag and Drop</button>
 
         <button @click="previewPage" v-if="!previewing" class="btn btn-primary">Preview this Page</button>
         <button @click="stopPreview" v-else class="btn btn-secondary">Stop Preview</button>
       </div>
 
-      <draggable v-model="myArray" group="people" @start="drag=true" @end="drag=false">
+      <draggable :disabled="!isDndMode" v-model="sortedRows" group="people" @start="drag=true" @end="drag=false">
         <row-component v-for="row in sortedRows"
                       :key="row.rid"
                       :rid="row.rid"
@@ -28,7 +31,6 @@
 
 <script>
 
-import Vue from 'vue'
 import _ from "lodash"
 import { mapGetters } from "vuex"
 
@@ -51,31 +53,23 @@ export default {
       rowsDone: [],
       columnsDone: [],
       slotsDone: [],
-      options: {
-        dropzoneSelector: 'ul',
-        draggableSelector: 'li',
-        handlerSelector: null,
-        reactivityEnabled: true,
-        multipleDropzonesItemsDraggingEnabled: false,
-        showDropzoneAreas: true,
-        onDrop: function(event) {},
-        onDragstart: function(event) {},
-        onDragenter: function(event) {},
-        onDragover: function(event) {},
-        onDragend: function(event) {}
-      }
     }
   },
   computed: {
-    ...mapGetters([ 'getDraggedRow' ]),
+    ...mapGetters([ 'getDraggedRow', 'isDndMode' ]),
     rows: function() {
       return this.$store.getters.getRowsByCID[this.cid]
     },
-    sortedRows: function() {
-      return _.sortBy(this.rows, ['sort'])
+    sortedRows: {
+      get() {
+        return _.sortBy(this.rows, ['sort'])
+      },
+      set(val) {
+        this.$store.dispatch('setRowsOrder', val)
+      }
     },
     dndMode: function() {
-      return this.$store.getters.isDndMode
+      return this.isDndMode
     }
   },
   watch: {
@@ -163,22 +157,6 @@ export default {
     dragEnd() {
       this.$store.dispatch('setDraggingRow', false)
     },
-    dropped(zone) {
-      let sort = this.getDraggedRow.sort
-      const row = _.find(this.rows, { rid: this.getDraggedRow.rid })
-      let affectedRows
-      if(zone !== sort && zone !== sort + 1) {
-        if(zone > sort) {
-          console.log(zone)
-          Vue.set(row, 'sort', (zone - 1))
-
-          /*affectedRows = _.filter(this.sortedRows, (row) => row.sort > sort && row.sort < zone)
-          affectedRows.forEach(row => {
-            this.$store.dispatch('changeRowSort', { rid: row.rid, sort: (row.sort - 1)})
-          })*/
-        }
-      }
-    }
   },
   beforeMount() {
     const self = this

@@ -1,8 +1,8 @@
 <template>
   <div class="row content-box"
-       :class="[{ empty: !columns }, { 'dragging-mode': $store.getters.isDndMode }]">
+       :class="[{ empty: !columns }, { 'dragging-mode': $store.getters.isDndMode }]" draggable>
 
-    <div data-hidden data-dnd class="drag-handler" title="Drag row" @dragstart="startDragging" draggable>
+    <div data-hidden data-dnd class="drag-handler" title="Drag row">
       ⋮⋮
     </div>
 
@@ -120,10 +120,6 @@ export default {
 
     &:hover {
       opacity: 1;
-
-      .drag-handler {
-        opacity: 1;
-      }
     }
   }
 
@@ -135,7 +131,6 @@ export default {
 
   .drag-handler {
     transition: all 0.43s;
-    opacity: 0;
     position: absolute;
     z-index: 999;
     background: #DDD;

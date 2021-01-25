@@ -229,6 +229,6 @@ export default {
     state.draggedRow = row
   },
   changeRowSort: (state, payload) => {
-    Vue.set(state.rows[payload.index], 'sort', payload.sort)
+    Vue.set(payload.row, 'sort', payload.sort)
   },
 }

@@ -409,6 +409,11 @@ export default {
     changeRowSort({ commit, state }, payload) {
       const index = _.findIndex(state.rows, { rid: payload.rid })
       commit('changeRowSort', { index, sort: payload.sort})
+    },
+    setRowsOrder({ commit }, rows) {
+      rows.forEach((row, index) => {
+        commit('changeRowSort', { row, sort: index })
+      })
     }
 
 }
