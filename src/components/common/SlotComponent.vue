@@ -66,7 +66,7 @@ export default {
   },
   computed: {
     type() {
-      return _.find(slotTypes, { 'id': this.data.type }).type
+      return findSlot('id', this.data.type ).type
     },
   },
   methods: {

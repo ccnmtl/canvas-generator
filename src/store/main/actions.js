@@ -48,7 +48,7 @@ export default {
     addSlot: ({ commit, state }, slot) => {
       if(!slot.sid) slot.sid = uuid.v1()
       if(!slot.colspan) {
-        let SlotType = _.find(SlotTypes, { 'id': slot.type })
+        let SlotType = findObj('id', slot.type, SlotTypes)
         slot.colspan = SlotType.colspan
       }
       if(!slot.sort) slot.sort = state.slots.length
@@ -164,7 +164,7 @@ export default {
 
       payload.slots.forEach(slot => {
         if(typeof slot == 'string') {
-          actualSlotType = _.find(SlotTypes, { 'type': slot })
+          actualSlotType = findObj('type', slot, SlotTypes)
 
           dispatch('addSlot', {
             type: actualSlotType.id,
@@ -177,7 +177,7 @@ export default {
           })
         }
         else {
-          actualSlotType = _.find(SlotTypes, { 'type': slot.type })
+          actualSlotType = _.find('type', slot.type, SlotTypes)
 
           dispatch('addSlot', {
             ...slot,

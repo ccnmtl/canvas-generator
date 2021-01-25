@@ -1,6 +1,6 @@
 
 import { mapActions, mapGetters } from 'vuex'
-import slotTypes from './slot-types'
+import slotTypes from './slot-types.js'
 
 import _ from 'lodash'
 
