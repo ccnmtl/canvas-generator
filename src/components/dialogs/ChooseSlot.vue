@@ -1,18 +1,53 @@
 <template>
   <div class="dialog-inner">
-    <div class="row">
-      <el-col v-for="slot in slotTypes" :key="slot.id" :span="6" class="slot">
-        <div class="slot-content"
-             :class="[{ selected: slot.id === selectedSlot },
-                      { disabled: slot.colspan > dialogData.space }]"
-             @click="slot.colspan <= dialogData.space ? selectedSlot = slot.id : null">
-          <div class="slot-icon">
-            <i :class="'el-icon-' + slot.icon"></i>
-          </div>
-          <div class="slot-title">{{ slot.name }}</div>
+
+    <el-tabs type="border-card">
+      <el-tab-pane :label="dialogData.cid.toUpperCase() + ' SLOTS'">
+        <div class="slot">
+          <el-col v-for="slot in pageSlotTypes" :key="slot.id" :span="6" class="slot">
+            <div v-if="isPageType(slot)" class="slot-content"
+                  :class="{ selected: slot.id === selectedSlot }"
+                  @click="selectedSlot = slot.id">
+              <div class="slot-icon">
+                <i :class="'el-icon-' + slot.icon"></i>
+              </div>
+              <div class="slot-title">{{ slot.name }}</div>
+            </div>
+          </el-col>
         </div>
-      </el-col>
-    </div>
+      </el-tab-pane>
+      <el-tab-pane label="OTHER SLOTS">
+        <div class="slot">
+          <el-col v-for="slot in otherSlotTypes" :key="slot.id" :span="6" class="slot-item">
+            <div  class="slot-content"
+                  :class="{ selected: slot.id === selectedSlot }"
+                  @click="selectedSlot = slot.id">
+              <div class="slot-icon">
+                <i :class="'el-icon-' + slot.icon"></i>
+              </div>
+              <div class="slot-title">{{ slot.name }}</div>
+            </div>
+          </el-col>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="All SLOTS">
+        <div class="slot">
+          <el-col v-for="slot in SlotTypes" :key="slot.id" :span="6" class="slot-item">
+            <div class="slot-content"
+                  :class="{ selected: slot.id === selectedSlot }"
+                  @click="selectedSlot = slot.id">
+              <div class="slot-icon">
+                <i :class="'el-icon-' + slot.icon"></i>
+              </div>
+              <div class="slot-title">{{ slot.name }}</div>
+            </div>
+          </el-col>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+
+
+
 
     <footer>
       <el-button type="primary" @click="saveChoice">Confirm</el-button>
@@ -21,6 +56,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 import slotTypes from '../../util/slot-types.js'
 
@@ -32,9 +68,37 @@ export default {
   mixins: [slotTypes],  
   data() {
     return {
-      SlotTypes: this.slotTypes,
       selectedSlot: 1
     }
+  },
+  computed:{
+    ...mapGetters({
+      fullSlotTypes: 'getSlotTypes',
+      Config: 'getConfig'      
+    }),
+    SlotTypes(){
+      if (this.Config.slots.visible == '*'){
+        return _.pickBy(this.fullSlotTypes, (slot, key) => {
+          return !_.includes(this.Config.slots.hidden, slot.type)
+        })
+      }
+      else {
+        return _.pickBy(this.fullSlotTypes, (slot, key) => {
+          return _.includes(this.Config.slots.visible, slot.type)
+        })
+      }      
+    },
+    pageSlotTypes(){
+      return _.pickBy(this.SlotTypes, (slot, key) => {
+        return this.isPageType(slot)
+      })
+    },
+    otherSlotTypes(){
+      return _.pickBy(this.SlotTypes, (slot, key) => {
+        return !this.isPageType(slot)
+      })
+    }    
+
   },
   methods: {
     saveChoice() {
@@ -49,7 +113,10 @@ export default {
         data: actualSlotType.defaultData
       })
       this.$store.dispatch("setDialogVisibility", false)
-    }
+    },
+    isPageType(slot){
+      return _.includes(slot.pages, this.dialogData.cid) || slot.pages == "*"
+    }    
   }
 }
 </script>

@@ -57,7 +57,7 @@
 
 <script>
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import _ from 'lodash'
 
 export default {
