@@ -2,10 +2,8 @@ import { uuid } from "vue-uuid"
 import SavedFields from '../../util/saved-fields.json'
 import Config from '../../util/config.js'
 import state from './state';
-import SlotTypesComponent from '../../util/slot-types.js'
 import _ from 'lodash'
 
-const SlotTypes = SlotTypesComponent.computed.SlotTypes()
 
 function findObj(objKey, objValue, list){
   for (const [name, row] of Object.entries(list)){
@@ -160,6 +158,7 @@ export default {
     },
     createSlotsFromArray({ state, dispatch }, payload) {
       const column = _.find(state.columns, { colid: payload.colid })
+      let SlotTypes = state.slotTypes
       let actualSlotType
 
       payload.slots.forEach(slot => {
@@ -177,7 +176,7 @@ export default {
           })
         }
         else {
-          actualSlotType = _.find('type', slot.type, SlotTypes)
+          actualSlotType = findObj('type', slot.type, SlotTypes)
 
           dispatch('addSlot', {
             ...slot,
@@ -199,6 +198,9 @@ export default {
     },
     updateColTypes: ({ commit }, payload) => {
       commit('updateColTypes', payload)
+    },
+    updateSlotTypes: ({ commit }, payload) => {
+      commit('updateSlotTypes', payload)
     },
 
     //User Actions

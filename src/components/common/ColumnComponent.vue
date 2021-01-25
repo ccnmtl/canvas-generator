@@ -48,7 +48,7 @@ export default {
       const slots = this.$store.getters.getSlotsByColID[this.col.colid]
       if(slots)
         slots.forEach(slot => {
-          let SlotType = findSlot('id', slot.type)
+          let SlotType = this.findSlot('id', slot.type)
           slot.colspan = SlotType.colspan
         })
       return slots

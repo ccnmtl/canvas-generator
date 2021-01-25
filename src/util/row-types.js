@@ -170,6 +170,7 @@ export default {
   beforeMount(){
     this.updateRowTypes(this.rowTypes)
     this.updateColTypes(this.colTypes)
+    this.updateSlotTypes(this.slotTypes)
 
   }
 }

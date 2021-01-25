@@ -219,4 +219,7 @@ export default {
   updateColTypes: (state, payload) => {
     state.colTypes = payload
   },
+  updateSlotTypes: (state, payload) => {
+    state.slotTypes = payload
+  },
 }

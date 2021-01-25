@@ -7,9 +7,9 @@ import moment from "moment"
 export default {
 
   computed: {
-    ...mapGetters(['getInfo']),
+    ...mapGetters(['getInfo', 'getConfig']),
     slotTypes(){
-      return{...this.defaultSlotTypes, ...this.getConfig.slots.customSlots}
+      return {...this.defaultSlotTypes, ...this.getConfig.slots.customSlots}
     },
     defaultSlotTypes(){
       return {
@@ -128,7 +128,7 @@ export default {
     }
   },
   methods: {
-
+    ...mapActions(['createSlotsFromArray','updateSlotTypes']),
     findSlot(objKey, objValue){
       for (const [name, slot] of Object.entries(this.slotTypes)){
         if (slot[objKey] == objValue) return slot

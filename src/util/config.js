@@ -35,7 +35,8 @@ export default {
       },
       slots: {
         visible: '*', // * show all slots, an Array can be used to show specific slots
-        hidden: [ 'slot-name' ] // this only works if visible is set to *
+        hidden: [ 'slot-name' ], // this only works if visible is set to *
+        customSlots: {}
       },
       optionalPages: [], // Array of pages that don't show by default
       pageDefaults: {}, // Overrides the default page data

@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     saveChoice() {
-      const actualSlotType = findSlot('id', this.selectedSlot)
+      const actualSlotType = this.findSlot('id', this.selectedSlot)
 
       this.$store.dispatch('addSlot', {
         getter: actualSlotType.getter,
