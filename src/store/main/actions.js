@@ -44,6 +44,7 @@ export default {
       commit('setDialogData', data)
     },
     addSlot: ({ commit, state }, slot) => {
+      let SlotTypes = state.slotTypes
       if(!slot.sid) slot.sid = uuid.v1()
       if(!slot.colspan) {
         let SlotType = findObj('id', slot.type, SlotTypes)
