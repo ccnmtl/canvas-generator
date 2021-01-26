@@ -115,9 +115,11 @@ export default {
     state.weeks.push(week)
   },
   deleteWeek: (state, week) => {
-    state.info.weeks = state.info.weeks.filter((user) => {
-      return user.id !== week.id
+    state.weeks = state.weeks.filter((item) => {
+      return item.id !== week.id
     })
+
+    console.log(state.weeks)
   },
   updateWeek: (state, { index, prop, value }) => {
     Vue.set(state.weeks[index], prop, value)

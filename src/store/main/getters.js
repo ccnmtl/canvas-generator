@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export default {
   getStore: state => state,
   getInfo: state => state.info,
@@ -60,6 +62,9 @@ export default {
       res = res[item]
     })
     return res
+  },
+  getWeekByID: (state) => (id) => {
+    return _.find(state.weeks, {id})
   },
   getRowTypes: state => state.rowTypes,
   getColTypes: state => state.colTypes,

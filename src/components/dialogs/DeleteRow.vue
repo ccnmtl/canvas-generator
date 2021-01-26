@@ -23,6 +23,10 @@ export default {
   methods: {
     deleteRow() {
       this.$store.dispatch('deleteRow', this.dialogData.rid)
+      if (this.dialogData.row.type == 'activity-row'){
+        this.$store.dispatch('deleteWeek', this.$store.getters.getWeekByID(this.dialogData.row.data.weekID))
+      }
+
       this.$store.dispatch("setDialogVisibility", false)
     }
   }

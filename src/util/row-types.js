@@ -144,16 +144,16 @@ export default {
             imgSrc: this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + (index+1) + ".png",
           }
         })
+      console.log(`week[${index}].title`)
       let sidebarCol = this.activitySidebarCol({
         title: {
-          //getter: `week[${index}].title`,
-          data: {
-            value: this.getWeeks[index].title
+          getter: {
+            value: `weeks[${index}].title` 
           },
         },
         date: {
           getter: {
-            value: 'info.startDate' // this getter should actually be `week[${index}].date`
+            value: `weeks[${index}].date`
           },
         }
       })

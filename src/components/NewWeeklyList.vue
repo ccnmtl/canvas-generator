@@ -47,26 +47,42 @@ export default {
 
             console.log(diff)
 
-            if (diff < 0) {
-              this.activityRows.forEach (row => {
-                if (!_.includes(weekIDs, row.data.weekID)) this.deleteRow(row.rid)
-              })
-            }
+            this.activityRows.forEach (row => {
+              this.deleteRow(row.rid)
+            })
 
-            if (diff > 0) {
-              newWeeks.forEach ((week, index) => {
-                if (!_.includes(rowWeekIDs, week.id)) {
-                  this.$store.dispatch('createRowsFromArray', {
-                    cid: 'activities-list',
-                    rows: this.activityRow(index),
-                    type: 'activity-row',
-                    data: {
-                      weekID: week.id
-                    }
-                  })
-                }
-              })
-            }
+
+            newWeeks.forEach ((week, index) => {
+                this.$store.dispatch('createRowsFromArray', {
+                  cid: 'activities-list',
+                  rows: this.activityRow(index),
+                  type: 'activity-row',
+                  data: {
+                    weekID: week.id
+                  }
+                })
+            })
+
+            // if (diff < 0) {
+            //   this.activityRows.forEach (row => {
+            //     if (!_.includes(weekIDs, row.data.weekID)) this.deleteRow(row.rid)
+            //   })
+            // }
+
+            // if (diff > 0) {
+            //   newWeeks.forEach ((week, index) => {
+            //     if (!_.includes(rowWeekIDs, week.id)) {
+            //       this.$store.dispatch('createRowsFromArray', {
+            //         cid: 'activities-list',
+            //         rows: this.activityRow(index),
+            //         type: 'activity-row',
+            //         data: {
+            //           weekID: week.id
+            //         }
+            //       })
+            //     }
+            //   })
+            // }
 
           }
         },

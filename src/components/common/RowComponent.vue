@@ -86,7 +86,8 @@ export default {
       this.$store.dispatch("setDialogData", {
         title: 'Are you sure you want to delete this row?',
         type: 'delete-row',
-        rid: this.rid
+        rid: this.rid,
+        row: this.row
       })
       this.$store.dispatch("setDialogVisibility", true)
     },
