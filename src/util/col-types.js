@@ -7,19 +7,24 @@ import _ from 'lodash'
 export default {
 
   computed: {
-    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo', 'getWeeks']),
+    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo', 'getWeeks', 'getConfig']),
     colTypes(){
+      return {...this.defaultColTypes, ...this.getConfig.rows.customCols}
+    },
+    defaultColTypes(){
       return {
         blankCol: {
           id: 0,
           name: 'Blank Col',
           type: 'blank-col',
+          pages: '*',          
           icon: 'circle-plus-outline'
         },        
         homeSidebar: {
           id: 1,
           name: "Banner Row",
           type: "home-sidebar",
+          pages: '*',          
           icon: "picture",
           array: [
             {
@@ -73,6 +78,7 @@ export default {
             id: 2,
             name: "simpleBanner",
             type: "banner-col",
+            pages: '*',            
             array: [
               {
                 type: "banner-slot",
@@ -86,6 +92,7 @@ export default {
           id: 3,
           name:"syllabusComponent",
           type:"syllabus-component",
+          pages: '*',          
           array:[
             {
               type: "title-slot",
@@ -112,6 +119,7 @@ export default {
           id: 4,
           name: "instructorList",
           type: "instructor-list",
+          pages: '*',          
           array: [
           {
               type: "simple-list-slot",
@@ -137,6 +145,7 @@ export default {
           id: 5,
           name:"instructorTaList",
           type:"instructor-TA-list",
+          pages: '*',          
           array:[
             {
               type: "list-slot",
@@ -163,6 +172,7 @@ export default {
             id: 6,
             name: "Banner",
             type: "home-banner-col",
+            pages: '*',            
             icon: "picture",
             array: [
               {
@@ -179,6 +189,7 @@ export default {
         dateTime: {
           id: 7,
           type: "date-time-col",
+          pages: '*',          
           array:
             [
               {
@@ -210,6 +221,7 @@ export default {
           id: 8,
           name: "instructorTaExpandedList",
           type: 'instructor-expanded-list',
+          pages: '*',          
           array: [
             {
               type: "list-slot",
@@ -232,6 +244,7 @@ export default {
           id: 9,
           name: "Activity Image",
           type: 'activity-image',
+          pages: '*',          
           array: [
             {
               type: "image-slot",
@@ -249,6 +262,7 @@ export default {
           id: 10,
           name: "Activity Sidebar",
           type: 'activity-sidebar',
+          pages: '*',          
           width: 8,
           array: [
             {
