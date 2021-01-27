@@ -4,7 +4,7 @@
       Start adding columns to this row!
 
       <div class="empty-button">
-        <button @click="addColumn" class="btn btn-primary btn-block">Add Column</button>
+        <button @click="chooseCol" class="btn btn-primary btn-block">Add Column</button>
         <button @click="buildHomeWelcomeRow({cid: row.cid})" class="btn btn-primary btn-block">Add Custom Row</button>
       </div>
 
@@ -12,7 +12,7 @@
     </div>
 
     <div data-hidden class="actions" v-else>
-      <button v-if="columns.length < 3 && totalWidth < 12" @click="addColumn" class="btn btn-primary float">
+      <button v-if="columns.length < 3 && totalWidth < 12" @click="chooseCol" class="btn btn-primary float">
         <i class="el-icon-plus"></i>
         <span>Add Column</span>
       </button>
@@ -96,7 +96,17 @@ export default {
         rid: this.row.rid,
         cid: this.row.cid
       })
-    }
+    },
+    chooseCol(){
+      this.$store.dispatch("setDialogData", {
+        title: 'Choose Column Type',
+        type: 'choose-col',
+        cid: this.cid,
+        rid: this.rid,
+        space: this.space
+      })
+      this.$store.dispatch("setDialogVisibility", true)
+    },    
   }
 }
 </script>

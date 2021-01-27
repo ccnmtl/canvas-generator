@@ -223,6 +223,7 @@ import ConfigSlotData from "./components/dialogs/ConfigSlotData.vue"
 
 import ChooseRow from "./components/dialogs/ChooseRow.vue"
 import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
+import ChooseCol from "./components/dialogs/ChooseCol.vue"
 
 import DeleteSlot from "./components/dialogs/DeleteSlot.vue"
 import UploadImage from "./components/dialogs/UploadImage.vue"
@@ -236,6 +237,7 @@ export default {
     ConfigSlot,
     ConfigSlotData,
     ChooseRow,
+    ChooseCol,
     ChooseSlot,
     DeleteSlot,
     UploadImage,
