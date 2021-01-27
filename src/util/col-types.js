@@ -9,13 +9,13 @@ export default {
   computed: {
     ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo', 'getWeeks', 'getConfig']),
     colTypes(){
-      return {...this.defaultColTypes, ...this.getConfig.rows.customCols}
+      return {...this.defaultColTypes, ...this.getConfig.cols.customCols}
     },
     defaultColTypes(){
       return {
         blankCol: {
           id: 0,
-          name: 'Blank Col',
+          name: 'Blank Column',
           type: 'blank-col',
           pages: '*',          
           icon: 'circle-plus-outline'
@@ -76,9 +76,10 @@ export default {
         },
         simpleBanner: {
             id: 2,
-            name: "simpleBanner",
+            name: "Simple Banner",
             type: "banner-col",
-            pages: '*',            
+            pages: '*',
+            icon: "picture",                        
             array: [
               {
                 type: "banner-slot",
@@ -87,12 +88,13 @@ export default {
                 },
               }
             ]
-          },
+        },
         syllabusComponent: {
           id: 3,
-          name:"syllabusComponent",
+          name:"Syllabus Component",
           type:"syllabus-component",
-          pages: '*',          
+          pages: '*',
+          icon: "picture",                    
           array:[
             {
               type: "title-slot",
@@ -113,13 +115,13 @@ export default {
               }
             }
         ]
-      },
-        instructorList:
-        {
+        },
+        instructorList: {
           id: 4,
-          name: "instructorList",
+          name: "Instructor List",
           type: "instructor-list",
-          pages: '*',          
+          pages: '*',
+          icon: "picture",                    
           array: [
           {
               type: "simple-list-slot",
@@ -140,12 +142,12 @@ export default {
             }
         ]
         },
-        instructorTaList:
-        {
+        instructorTaList: {
           id: 5,
-          name:"instructorTaList",
+          name:"Instructor TA List",
           type:"instructor-TA-list",
-          pages: '*',          
+          pages: '*',
+          icon: "picture",                    
           array:[
             {
               type: "list-slot",
@@ -188,8 +190,10 @@ export default {
         },
         dateTime: {
           id: 7,
+          name: "Date Time Column",
           type: "date-time-col",
-          pages: '*',          
+          pages: '*',
+          icon: "picture",                    
           array:
             [
               {
@@ -219,9 +223,10 @@ export default {
         },
         instructorTaExpandedList:{
           id: 8,
-          name: "instructorTaExpandedList",
+          name: "Instructor TA Expanded List",
           type: 'instructor-expanded-list',
-          pages: '*',          
+          pages: '*',
+          icon: "picture",                    
           array: [
             {
               type: "list-slot",
@@ -244,7 +249,8 @@ export default {
           id: 9,
           name: "Activity Image",
           type: 'activity-image',
-          pages: '*',          
+          pages: '*',
+          icon: "picture",                    
           array: [
             {
               type: "image-slot",
@@ -262,7 +268,8 @@ export default {
           id: 10,
           name: "Activity Sidebar",
           type: 'activity-sidebar',
-          pages: '*',          
+          pages: '*',
+          icon: "picture",                    
           width: 8,
           array: [
             {

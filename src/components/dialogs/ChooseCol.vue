@@ -107,7 +107,7 @@ export default {
       }
 
       if(actualColType.type === 'blank-col') {
-        this.$store.dispatch('addCol', {
+        this.$store.dispatch('addColumn', {
           cid: this.dialogData.cid,
         })
         this.$store.dispatch("setDialogVisibility", false)
@@ -115,8 +115,9 @@ export default {
 
       else {
         //const res = new CC(actualColType.type, this.dialogData.cid)
-        this.$store.dispatch('createColsFromArray', {
+        this.$store.dispatch('createColumnsFromArray', {
           cid: this.dialogData.cid,
+          rid: row.rid,
           cols: actualColType.array
         })
         this.$store.dispatch("setDialogVisibility", false)
