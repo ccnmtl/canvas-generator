@@ -4,7 +4,7 @@
     <el-tabs type="border-card">
       <el-tab-pane :label="dialogData.cid.toUpperCase() + ' SLOTS'">
         <div class="slot">
-          <el-col v-for="slot in pageSlotTypes" :key="slot.id" :span="6" class="slot">
+          <el-col v-for="slot in pageSlotTypes" :key="slot.id" :span="6" class="slot-item">
             <div v-if="isPageType(slot)" class="slot-content"
                   :class="{ selected: slot.id === selectedSlot }"
                   @click="selectedSlot = slot.id">
@@ -123,10 +123,10 @@ export default {
 
 <style lang="scss" scoped>
 
-.slot {
+.slot-item {
   text-align: center;
   padding: 0 12px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 
   .slot-content {
     transition: all 0.43s;
@@ -139,7 +139,7 @@ export default {
     }
 
     .slot-title {
-      font-size: 16px;
+      font-size: 14px;
     }
 
     &:hover {
@@ -161,7 +161,6 @@ export default {
     }
   }
 }
-
 footer {
   margin: 30px 0 -10px;
   text-align: right;
