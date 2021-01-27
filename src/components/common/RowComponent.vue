@@ -5,7 +5,6 @@
 
       <div class="empty-button">
         <button @click="chooseCol" class="btn btn-primary btn-block">Add Column</button>
-        <button @click="buildHomeWelcomeRow({cid: row.cid})" class="btn btn-primary btn-block">Add Custom Row</button>
       </div>
 
       <div>You can also <a @click="deleteRow">delete</a> this row.</div>
@@ -101,9 +100,8 @@ export default {
       this.$store.dispatch("setDialogData", {
         title: 'Choose Column Type',
         type: 'choose-col',
-        cid: this.cid,
+        cid: this.row.cid,
         rid: this.rid,
-        space: this.space
       })
       this.$store.dispatch("setDialogVisibility", true)
     },    

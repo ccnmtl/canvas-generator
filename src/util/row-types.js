@@ -6,7 +6,7 @@ import _ from 'lodash'
 export default {
 
   computed: {
-    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getConfig', 'getWeeks']),
+    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getConfig', 'getWeeks', 'getWeekByID']),
     rowTypes(){
       return {...this.defaultRowTypes, ...this.getConfig.rows.customRows}
     },

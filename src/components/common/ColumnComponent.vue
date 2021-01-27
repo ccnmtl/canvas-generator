@@ -5,7 +5,6 @@
 
       <div class="empty-button">
         <button @click="showSlotOptions" class="btn btn-primary btn-block">Add Slot</button>
-        <button @click="addCustomCol()" class="btn btn-primary btn-block">Add Custom Col</button>
       </div>
 
       <div>You can also <a @click="deleteColumn">delete</a> this column.</div>

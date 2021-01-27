@@ -33,6 +33,11 @@ export default {
           },
         }
       },
+      cols: {
+        visible: '*', // * show all slots, an Array can be used to show specific slots
+        hidden: [ ], // this only works if visible is set to *
+        customCols: {}
+      },
       slots: {
         visible: '*', // * show all slots, an Array can be used to show specific slots
         hidden: [ 'slot-name' ], // this only works if visible is set to *
