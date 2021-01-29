@@ -169,8 +169,7 @@ export default {
             }
           ],
         },
-        homeBanner:
-          {
+        homeBanner:{
             id: 6,
             name: "Banner",
             type: "home-banner-col",

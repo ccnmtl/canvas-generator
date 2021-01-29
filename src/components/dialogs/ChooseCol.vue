@@ -116,9 +116,9 @@ export default {
       else {
         //const res = new CC(actualColType.type, this.dialogData.cid)
         this.$store.dispatch('createColumnsFromArray', {
-          cid: this.dialogData.cid,
-          rid: row.rid,
-          cols: actualColType.array
+          rid: this.dialogData.rid,
+          colid: this.dialogData.colid,          
+          columns: actualColType.array,
         })
         this.$store.dispatch("setDialogVisibility", false)
       }
