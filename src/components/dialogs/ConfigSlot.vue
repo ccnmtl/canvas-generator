@@ -28,7 +28,7 @@
 
         <h5>Slot Styles</h5>
 
-        <div class="style-item" v-for="(st, i) in asArray(styles)" :key="i">
+        <div class="style-item" v-for="(st, i) in asArray(styles)" :key="'style' + i">
             <span>
                 {{ st[0] + ': ' + st[1] }}
                 <i class="el-icon-error" />
@@ -50,7 +50,7 @@
 
         <h5>Slot CSS Classes</h5>
 
-        <div class="class-item" v-for="(cls, i) in classes" :key="i">
+        <div class="class-item" v-for="(cls, i) in classes" :key="'class' + i">
             <span class="bg">
                 {{ cls }}
                 <i class="el-icon-error" />
@@ -138,8 +138,8 @@ export default {
     saveChanges() {
         const finalStyles = {}
 
-        this.styles.forEach((st, i, arr) => {
-            finalStyles[st.att] = st.value + ' !important'
+        this.asArray(this.styles).forEach((st, i, arr) => {
+            finalStyles[st[0]] = st[1] + ' !important'
 
             if(i == arr.length - 1) {
                 this.$store.dispatch("setSlotStyles", {
@@ -168,11 +168,7 @@ export default {
     addStyle() {
         if(this.styleAtt && this.styleVal) {
             this.usedStyles.push(this.styleAtt)
-            this.styles.push({
-                att: this.styleAtt,
-                value: this.styleVal,
-            })
-
+            this.styles[this.styleAtt] = this.styleVal
             this.styleAtt = null
             this.styleVal = ''
         }
