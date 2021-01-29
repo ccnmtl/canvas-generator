@@ -2,10 +2,6 @@
   <div class="row content-box"
        :class="[{ empty: !columns }, { 'dragging-mode': $store.getters.isDndMode }]" draggable>
 
-    <div data-hidden data-dnd class="drag-handler" title="Drag row">
-      ⋮⋮
-    </div>
-
     <div data-hidden class="empty-text" v-if="!columns">
       Start adding columns to this row!
 
@@ -29,28 +25,32 @@
       </button>
     </div>
     <div class="row">
-      <column-component v-for="column in sortedColumns"
-                          :key="column.colid"
-                          :col="column"
-                          :rid="rid"
-                          :cid="row.cid"
-                          :colspan="colspan"
-                          :space="12 - totalWidth" />
+      <draggable :disabled="!isDndMode || getDragType !== 'columns'" v-model="sortedColumns" group="columns" @start="drag=true" @end="drag=false">
+        <column-component v-for="column in sortedColumns"
+                            :key="column.colid"
+                            :col="column"
+                            :rid="rid"
+                            :cid="row.cid"
+                            :colspan="colspan"
+                            :space="12 - totalWidth" />
+      </draggable>
 
     </div>
-    </div>
-
+  </div>
 </template>
 
 <script>
 
 import _ from 'lodash'
+import { mapGetters } from "vuex"
+import draggable from 'vuedraggable'
 import ColumnComponent from "./ColumnComponent.vue"
 import RowTypeMixin from "../../util/row-types"
 
 export default {
   components: {
-    ColumnComponent
+    ColumnComponent,
+    draggable
   },
   mixins: [RowTypeMixin],
   props: [ "rid", "row" ],
@@ -58,11 +58,17 @@ export default {
     return {}
   },
   computed: {
+    ...mapGetters([ 'getDraggedRow', 'isDndMode', 'getDragType' ]),
     columns: function() {
       return this.$store.getters.getColumnsByRowID[this.rid]
     },
-    sortedColumns: function() {
-      return _.sortBy(this.columns, ['sort'])
+    sortedColumns: {
+      get() {
+        return _.sortBy(this.columns, ['sort'])
+      },
+      set(val) {
+        this.$store.dispatch('setColumnsOrder', val)
+      }
     },
     totalWidth() {
       if(!this.columns) return 0

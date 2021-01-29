@@ -231,4 +231,10 @@ export default {
   changeRowSort: (state, payload) => {
     Vue.set(payload.row, 'sort', payload.sort)
   },
+  changeColumnSort: (state, payload) => {
+    Vue.set(payload.column, 'sort', payload.sort)
+  },
+  setDragType: (state, type) => {
+    state.dragType = type
+  },
 }

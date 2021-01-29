@@ -414,6 +414,13 @@ export default {
       rows.forEach((row, index) => {
         commit('changeRowSort', { row, sort: index })
       })
-    }
-
+    },
+    setColumnsOrder({ commit }, columns) {
+      columns.forEach((column, index) => {
+        commit('changeColumnSort', { column, sort: index })
+      })
+    },
+    setDragType({ commit }, type) {
+      commit('setDragType', type)
+    },
 }

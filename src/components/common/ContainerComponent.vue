@@ -5,6 +5,20 @@
        @dragend="dragEnd">
     <div class="canvas-container" v-if="!loading">
       <div class="preview-page" id="previewpage">
+        <div class="dragging-type"  v-if="isDndMode">
+          Dragging
+
+          <el-select :value="getDragType"
+            @input="updateDragType($event)"
+            placeholder="Select type">
+
+            <el-option label="Rows" value="rows" />
+            <el-option label="Columns" value="columns" />
+            <el-option label="Slots" value="slots" />
+            </el-option>
+          </el-select>
+        </div>
+
         <button @click="startDnd" v-if="!isDndMode" class="btn btn-info">Start Drag and Drop</button>
         <button @click="stopDnd" v-else class="btn btn-secondary">Stop Drag and Drop</button>
 
@@ -12,7 +26,7 @@
         <button @click="stopPreview" v-else class="btn btn-secondary">Stop Preview</button>
       </div>
 
-      <draggable :disabled="!isDndMode" v-model="sortedRows" group="people" @start="drag=true" @end="drag=false">
+      <draggable :disabled="!isDndMode || getDragType !== 'rows'" v-model="sortedRows" group="rows" @start="drag=true" @end="drag=false">
         <row-component v-for="row in sortedRows"
                       :key="row.rid"
                       :rid="row.rid"
@@ -56,7 +70,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([ 'getDraggedRow', 'isDndMode' ]),
+    ...mapGetters([ 'getDraggedRow', 'isDndMode', 'getDragType' ]),
     rows: function() {
       return this.$store.getters.getRowsByCID[this.cid]
     },
@@ -157,6 +171,9 @@ export default {
     dragEnd() {
       this.$store.dispatch('setDraggingRow', false)
     },
+    updateDragType(type) {
+      this.$store.dispatch('setDragType', type)
+    }
   },
   beforeMount() {
     const self = this
@@ -230,6 +247,10 @@ export default {
 .canvas-code {
   padding: 25px 0;
   font-size: 14px;
+
+  .dragging-type {
+    float: left;
+  }
 
   &.blocked {
     .row {

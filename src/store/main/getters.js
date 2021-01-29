@@ -67,4 +67,5 @@ export default {
   isDndMode: state => state.dndMode,
   isDraggingRow: state => state.draggingRow,
   getDraggedRow: state => state.draggedRow,
+  getDragType: state => state.dragType,
 }
