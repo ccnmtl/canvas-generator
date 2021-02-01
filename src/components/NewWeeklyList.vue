@@ -30,7 +30,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['deleteRow']),
+    ...mapActions(['deleteRow', 'deleteRows']),
   },
   watch: {
     weeks: {
@@ -39,23 +39,26 @@ export default {
 
             let weekIDs = []
             let rowWeekIDs = []
+            let rowIDs = []
             newWeeks.forEach(week => weekIDs.push(week.id))
             this.activityRows.forEach(row => rowWeekIDs.push(row.data.weekID))
+            this.activityRows.forEach(row => rowIDs.push(row.rid))
 
 
             let diff = newWeeks.length - this.activityRows.length
 
             console.log(diff)
 
-            this.activityRows.forEach (row => {
-              this.deleteRow(row.rid)
-            })
+            // this.activityRows.forEach (row => {
+            //   this.deleteRow(row.rid)
+            // })
 
+            this.deleteRows(rowIDs)
 
             newWeeks.forEach ((week, index) => {
                 this.$store.dispatch('createRowsFromArray', {
                   cid: 'activities-list',
-                  rows: this.activityRow(index),
+                  rows: this.activityRowByID(week.id),
                   type: 'activity-row',
                   data: {
                     weekID: week.id

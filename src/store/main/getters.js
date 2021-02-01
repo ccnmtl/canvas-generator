@@ -66,6 +66,9 @@ export default {
   getWeekByID: (state) => (id) => {
     return _.find(state.weeks, {id})
   },
+  getWeekIndexByID: (state) => (id) => {
+    return _.findIndex(state.weeks, {id})
+  },
   getRowTypes: state => state.rowTypes,
   getColTypes: state => state.colTypes,
   getSlotTypes: state => state.slotTypes,

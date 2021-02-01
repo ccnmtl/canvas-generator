@@ -28,6 +28,9 @@ export default {
     deleteRow: ({ commit }, rid) => {
       commit('deleteRow', rid)
     },
+    deleteRows: ({ commit }, arr) => {
+      commit('deleteRows', arr)
+    },
     addColumn: ({ commit, state }, column) => {
       if(!column.colid) column.colid = uuid.v1()
       if(!column.sort) column.sort = state.columns.length

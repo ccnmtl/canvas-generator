@@ -6,7 +6,7 @@ import _ from 'lodash'
 export default {
 
   computed: {
-    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getConfig', 'getWeeks', 'getWeekByID']),
+    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getConfig', 'getWeeks', 'getWeekByID','getWeekIndexByID']),
     rowTypes(){
       return {...this.defaultRowTypes, ...this.getConfig.rows.customRows}
     },
@@ -154,6 +154,27 @@ export default {
         date: {
           getter: {
             value: `weeks[${index}].date`
+          },
+        }
+      })
+
+      return [[{ width: 4, array: imageCol}, { width: 8, array: sidebarCol }]]
+    },
+    activityRowByID(id){
+      let imageCol = this.activityImageCol({
+          data: {
+          imgSrc: this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + (this.getWeekIndexByID(id)+1) + ".png",
+          }
+        })
+      let sidebarCol = this.activitySidebarCol({
+        title: {
+          getter: {
+            value: 'weeks[' + this.getWeekIndexByID(id) + '].title'
+          },
+        },
+        date: {
+          getter: {
+            value: 'weeks[' + this.getWeekIndexByID(id) + '].date'
           },
         }
       })

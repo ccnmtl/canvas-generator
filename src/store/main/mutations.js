@@ -21,6 +21,20 @@ export default {
       return slot.rid !== rid
     })
   },
+  deleteRows: (state, arr) => {
+    arr.forEach((rid) => {
+      state.rows = state.rows.filter((row) => {
+        return row.rid !== rid
+      })
+      state.columns = state.columns.filter((column) => {
+        return column.rid !== rid
+      })
+      state.slots = state.slots.filter((slot) => {
+        return slot.rid !== rid
+      })
+    })
+
+  },
   addColumn: (state, column) => {
     state.columns.push(column)
   },
