@@ -113,7 +113,7 @@ export default {
                 if (!_.includes(rowWeekIDs, week.id)) {
                   this.$store.dispatch('createRowsFromArray', {
                     cid: 'activities-list',
-                    rows: this.activityRow(index),
+                    rows: this.activityRowByID(week.id),
                     type: 'activity-row',
                     data: {
                       weekID: week.id

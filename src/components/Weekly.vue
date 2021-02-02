@@ -13,7 +13,7 @@
         <p>PICKER CENTER CASE COLLECTION</p>
       </div>
 
-      <div v-for="category in getCases" :key="category">
+      <div v-for="category in getCases" :key="category.category">
       <div class="pad-box-mini">
         <h3 style="margin-bottom: 15px;"><i class="icon-folder"></i> {{category.category}}</h3>
       </div>

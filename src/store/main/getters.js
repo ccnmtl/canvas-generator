@@ -69,6 +69,13 @@ export default {
   getWeekIndexByID: (state) => (id) => {
     return _.findIndex(state.weeks, {id})
   },
+  getWeekPropByID: (state, getters) => (prop, id) => {
+    let week = _.find(state.weeks, { id })
+    return {
+      get: week[prop],
+      set: `weeks[${getters.getWeekIndexByID(id)}].${prop}`
+    }
+  },
   getRowTypes: state => state.rowTypes,
   getColTypes: state => state.colTypes,
   getSlotTypes: state => state.slotTypes,

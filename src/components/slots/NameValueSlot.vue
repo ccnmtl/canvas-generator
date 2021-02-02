@@ -36,17 +36,32 @@ export default {
       editing: null,
       data: {
       },
+      setters: { 
+      }
     }
   },
   computed: {
     getterData: function () {
       const self = this
       if(!this.slotItem.getter) return null
+
       if(typeof this.slotItem.getter !== 'string') {
         const res = {}
         const getters = this.asArray(this.slotItem.getter)
+
         getters.forEach(getter => {
-          res[getter[0]] = self.$store.getters.getFromGetter(getter[1])
+          let key = getter[0]
+          let val = getter[1]
+
+          if (typeof val == 'string') {
+            res[key] = self.$store.getters.getFromGetter(val)
+            this.setters[key] = val
+          }
+          else {
+            res[key] = val.get
+            this.setters[key] = val.set
+          }
+        console.log(getter)
         })
         return res
       }
@@ -67,6 +82,7 @@ export default {
     },
     getterData: {
       handler(newVal) {
+        console.log(newVal)
         const self = this
         if (newVal !== null) {
           if(!this.data) {
@@ -76,7 +92,10 @@ export default {
           if(typeof this.slotItem.getter === 'string') Vue.set(this.data, 'value', newVal ? newVal : '')
           else {
             this.asArray(newVal).forEach(getter => {
-              Vue.set(self.data, getter[0], getter[1] ? getter[1] : '')
+              let key = getter[0]
+              let val = getter[1]
+              Vue.set(self.data, key, val ? val : '')
+              if (typeof val !== 'string') Vue.set (self.setters, key, val.set)
             })
           }
         }
@@ -110,7 +129,7 @@ export default {
           this.$store.dispatch("updateSpecificInfo", { key: this.slotItem.getter.split(".")[1], value: this.data[field] })
         else {
           this.$store.dispatch("updateSlotDataWithSetter", {
-            setter: this.slotItem.getter[field],
+            setter: this.setters[field],
             data: this.data[field]
           })
           //this.$store.dispatch("updateSpecificInfo", { key: this.slotItem.getter[field].split(".")[1], value: this.data[field] })

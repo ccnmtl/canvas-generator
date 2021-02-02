@@ -6,7 +6,7 @@ import _ from 'lodash'
 export default {
 
   computed: {
-    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getConfig', 'getWeeks', 'getWeekByID','getWeekIndexByID']),
+    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getConfig', 'getWeeks', 'getWeekByID','getWeekIndexByID','getWeekPropByID']),
     rowTypes(){
       return {...this.defaultRowTypes, ...this.getConfig.rows.customRows}
     },
@@ -169,12 +169,12 @@ export default {
       let sidebarCol = this.activitySidebarCol({
         title: {
           getter: {
-            value: 'weeks[' + this.getWeekIndexByID(id) + '].title'
+            value: this.getWeekPropByID('title', id)
           },
         },
         date: {
           getter: {
-            value: 'weeks[' + this.getWeekIndexByID(id) + '].date'
+            value: this.getWeekPropByID('date', id)
           },
         }
       })
