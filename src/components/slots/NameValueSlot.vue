@@ -58,10 +58,10 @@ export default {
             this.setters[key] = val
           }
           else {
-            res[key] = val.get
-            this.setters[key] = val.set
+            let actualGetter = val.func(val.props[0], val.props[1])
+            res[key] = actualGetter.get
+            this.setters[key] = actualGetter.set
           }
-        console.log(getter)
         })
         return res
       }
@@ -82,7 +82,6 @@ export default {
     },
     getterData: {
       handler(newVal) {
-        console.log(newVal)
         const self = this
         if (newVal !== null) {
           if(!this.data) {
@@ -95,7 +94,6 @@ export default {
               let key = getter[0]
               let val = getter[1]
               Vue.set(self.data, key, val ? val : '')
-              if (typeof val !== 'string') Vue.set (self.setters, key, val.set)
             })
           }
         }

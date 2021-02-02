@@ -169,12 +169,12 @@ export default {
       let sidebarCol = this.activitySidebarCol({
         title: {
           getter: {
-            value: this.getWeekPropByID('title', id)
+            value: {func: this.getWeekPropByID, props: ['title', id]}
           },
         },
         date: {
           getter: {
-            value: this.getWeekPropByID('date', id)
+            value: {func: this.getWeekPropByID, props: ['date', id] }
           },
         }
       })
