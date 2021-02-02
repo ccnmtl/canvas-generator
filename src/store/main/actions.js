@@ -3,6 +3,7 @@ import SavedFields from '../../util/saved-fields.json'
 import Config from '../../util/config.js'
 import state from './state';
 import _ from 'lodash'
+import moment from 'moment'
 
 
 function findObj(objKey, objValue, list){
@@ -10,8 +11,6 @@ function findObj(objKey, objValue, list){
     if (row[objKey] == objValue) return row
   }
 }
-
-var moment = require('moment');
 
 export default {
     setConfig: ({ commit }) => {
