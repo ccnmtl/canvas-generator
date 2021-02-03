@@ -38,7 +38,8 @@ export default {
       },
       setters: { 
       },
-      defaultGetter: 'value'
+      defaultGetter: 'value',
+      editableProps: ['name', 'type', 'value']
     }
   },
   computed: {
@@ -75,12 +76,10 @@ export default {
   watch: {
     slotData: {
       handler(newVal) {
-        if(!this.slotItem.getter || !this.slotItem.getter.name)
-          this.data.name = newVal.name
-        if(!this.slotItem.getter || !this.slotItem.getter.type)
-          this.data.type = newVal.type
-        if(!this.slotItem.getter || !this.slotItem.getter.value)
-          this.data.value = newVal.value
+        this.editableProps.forEach( (prop) => {
+          if (!this.slotItem.getter || !this.slotItem.getter[prop] && !(prop == this.defaultGetter && typeof this.slotItem.getter == 'string'))
+            this.data[prop] = newVal[prop]
+        })
       },
       immediate: true
     },

@@ -174,7 +174,7 @@ export default {
             rid: column.rid,
             cid: column.cid,
             colid: column.colid,
-            data: slot.data ? slot.data : actualSlotType.defaultData,
+            data: { ...actualSlotType.defaultData, ...slot.data}, //slot.data ? slot.data : actualSlotType.defaultData,
             getter: actualSlotType.getter ? actualSlotType.getter : null
           })
         }
@@ -188,7 +188,7 @@ export default {
             rid: column.rid,
             cid: column.cid,
             colid: column.colid,
-            data: slot.data ? slot.data : actualSlotType.defaultData,
+            data: { ...actualSlotType.defaultData, ...slot.data }, // slot.data ? slot.data : actualSlotType.defaultData,
             classes: slot.classes ? slot.classes : [],
             styles: slot.styles ? slot.styles : [],
             getter: slot.getter ? slot.getter : null

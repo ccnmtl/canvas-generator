@@ -304,6 +304,22 @@ export default {
               },
             },
           ]
+        },
+        testCol:{
+          id: 100,
+          name: "Test Col",
+          type: 'test',
+          pages: '*',
+          icon: 'picture',
+          array: [
+            {
+              type: "name-value-slot",
+              data: {
+                name: "Session",
+              },
+              getter: 'info.semester'
+            },
+          ]
         }
 
       }

@@ -7,7 +7,7 @@ import moment from "moment"
 export default {
 
   computed: {
-    ...mapGetters(['getInfo', 'getConfig']),
+    ...mapGetters(['getInfo', 'getConfig', 'getTheme']),
     slotTypes(){
       return {...this.defaultSlotTypes, ...this.getConfig.slots.customSlots}
     },
@@ -36,6 +36,7 @@ export default {
           visible: true,
           defaultData: {
             title: "Default Title",
+            theme: this.getTheme,
             semester: "U6411 // SPRING 2020"
           }
         },
