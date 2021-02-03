@@ -37,7 +37,8 @@ export default {
       data: {
       },
       setters: { 
-      }
+      },
+      defaultGetter: 'value'
     }
   },
   computed: {
@@ -65,7 +66,10 @@ export default {
         })
         return res
       }
-      else return this.$store.getters.getFromGetter(this.slotItem.getter)
+      else {
+        this.setters[this.defaultGetter] = `${this.slotItem.getter}`
+        return this.$store.getters.getFromGetter(this.slotItem.getter)
+      }
     }
   },
   watch: {
@@ -88,7 +92,7 @@ export default {
             this.data = {}
           }
 
-          if(typeof this.slotItem.getter === 'string') Vue.set(this.data, 'value', newVal ? newVal : '')
+          if(typeof this.slotItem.getter === 'string') Vue.set(this.data, this.defaultGetter, newVal ? newVal : '')
           else {
             this.asArray(newVal).forEach(getter => {
               let key = getter[0]
@@ -123,15 +127,10 @@ export default {
     },
     finishEditing(field) {
       if(this.data[field]) {
-        if(typeof this.slotItem.getter === 'string')
-          this.$store.dispatch("updateSpecificInfo", { key: this.slotItem.getter.split(".")[1], value: this.data[field] })
-        else {
-          this.$store.dispatch("updateSlotDataWithSetter", {
-            setter: this.setters[field],
-            data: this.data[field]
-          })
-          //this.$store.dispatch("updateSpecificInfo", { key: this.slotItem.getter[field].split(".")[1], value: this.data[field] })
-        }
+        this.$store.dispatch("updateSlotDataWithSetter", {
+          setter: this.setters[field],
+          data: this.data[field]
+        })
         this.editing = null
       }
     },
