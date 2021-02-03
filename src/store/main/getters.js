@@ -76,6 +76,12 @@ export default {
       set: `weeks[${getters.getWeekIndexByID(id)}].${prop}`
     }
   },
+  getWeekPropGetter: (state, getters) => (prop, id) => {
+    return {
+      func: getters.getWeekPropByID, 
+      props: [prop, id]
+    }
+  },
   getRowTypes: state => state.rowTypes,
   getColTypes: state => state.colTypes,
   getSlotTypes: state => state.slotTypes,
