@@ -109,6 +109,7 @@ export default {
       if(actualColType.type === 'blank-col') {
         this.$store.dispatch('addColumn', {
           cid: this.dialogData.cid,
+          rid: this.dialogData.rid
         })
         this.$store.dispatch("setDialogVisibility", false)
       }
@@ -118,7 +119,7 @@ export default {
         this.$store.dispatch('createColumnsFromArray', {
           rid: this.dialogData.rid,
           colid: this.dialogData.colid,          
-          columns: actualColType.array,
+          columns: [actualColType.array],
         })
         this.$store.dispatch("setDialogVisibility", false)
       }
