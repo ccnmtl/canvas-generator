@@ -122,10 +122,9 @@ export default {
 
   &.dragging-mode {
     transition: all 0.43s;
-    opacity: .7;
 
     &:hover {
-      opacity: 1;
+      border: 1px solid #38D;
     }
   }
 

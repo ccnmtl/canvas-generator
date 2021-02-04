@@ -31,7 +31,7 @@
         <div class="style-item" v-for="(st, i) in asArray(styles)" :key="'style' + i">
             <span>
                 {{ st[0] + ': ' + st[1] }}
-                <i class="el-icon-error" />
+                <i class="el-icon-error" @click="deleteStyle(st)" />
             </span>
         </div>
 
@@ -53,7 +53,7 @@
         <div class="class-item" v-for="(cls, i) in classes" :key="'class' + i">
             <span class="bg">
                 {{ cls }}
-                <i class="el-icon-error" />
+                <i class="el-icon-error" @click="deleteClass(i)" />
             </span>
         </div>
 
@@ -70,6 +70,7 @@
 
 <script>
 
+import Vue from 'vue'
 import _ from 'lodash'
 import SlotTypesComponent from '../../util/slot-types.js'
 const SlotTypes = SlotTypesComponent.computed.SlotTypes()
@@ -112,6 +113,12 @@ export default {
     asArray(obj) {
       return Object.keys(obj).map((key) => [key, obj[key]])
     },
+    deleteStyle(st) {
+      Vue.delete(this.styles, st[0]);
+    },
+    deleteClass(index) {
+      Vue.delete(this.classes, index);
+    },
     changeSlotData() {
       this.$store.dispatch("setDialogVisibility", false)
       this.$store.dispatch("setDialogData", {
@@ -138,16 +145,14 @@ export default {
     saveChanges() {
         const finalStyles = {}
 
-        this.asArray(this.styles).forEach((st, i, arr) => {
-            finalStyles[st[0]] = st[1] + ' !important'
-
-            if(i == arr.length - 1) {
-                this.$store.dispatch("setSlotStyles", {
-                    slot: this.dialogData.slotData,
-                    styles: finalStyles
-                })
-            }
+        this.asArray(this.styles).forEach(st => {
+            finalStyles[st[0]] = st[1]
         });
+
+        this.$store.dispatch("setSlotStyles", {
+            slot: this.dialogData.slotData,
+            styles: finalStyles
+        })
 
         this.$store.dispatch("setSlotClasses", {
             slot: this.dialogData.slotData,

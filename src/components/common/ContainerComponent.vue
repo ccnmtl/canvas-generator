@@ -5,7 +5,7 @@
        @dragend="dragEnd">
     <div class="canvas-container" v-if="!loading">
       <div class="preview-page" id="previewpage">
-        <div class="dragging-type"  v-if="isDndMode">
+        <div class="dragging-type"  v-if="!previewing">
           Dragging
 
           <el-select :value="getDragType"
@@ -15,15 +15,11 @@
             <el-option label="Rows" value="rows" />
             <el-option label="Columns" value="columns" />
             <el-option label="Slots" value="slots" />
-            </el-option>
           </el-select>
         </div>
 
-        <button @click="startDnd" v-if="!isDndMode" class="btn btn-info">Start Drag and Drop</button>
-        <button @click="stopDnd" v-else class="btn btn-secondary">Stop Drag and Drop</button>
-
-        <button @click="previewPage" v-if="!previewing" class="btn btn-primary">Preview this Page</button>
-        <button @click="stopPreview" v-else class="btn btn-secondary">Stop Preview</button>
+        <button @click="enterEditMode" v-if="previewing" class="btn btn-primary">Enter Edit Mode</button>
+        <button @click="exitEditMode" v-else class="btn btn-secondary">Exit Edit Mode</button>
       </div>
 
       <draggable :disabled="!isDndMode || getDragType !== 'rows'" v-model="sortedRows" group="rows" @start="drag=true" @end="drag=false">
@@ -62,7 +58,7 @@ export default {
   props: [ "cid", "defaultRows" ],
   data() {
     return {
-      previewing: false,
+      previewing: true,
       loading: false,
       rowsDone: [],
       columnsDone: [],
@@ -84,32 +80,6 @@ export default {
     },
     dndMode: function() {
       return this.isDndMode
-    }
-  },
-  watch: {
-    dndMode: {
-      handler(val) {
-        let html = this.$refs.canvascode
-        if(val) {
-          html.querySelectorAll('[data-hidden]').forEach(element => {
-            element.style.display = 'none'
-          })
-
-          html.querySelectorAll('[data-dnd]').forEach(element => {
-            element.style.display = null
-          })
-        }
-        else if(html) {
-          html.querySelectorAll('[data-hidden]').forEach(element => {
-            element.style.display = null
-          })
-
-          html.querySelectorAll('[data-dnd]').forEach(element => {
-            element.style.display = 'none'
-          })
-        }
-      },
-      immediate: true
     }
   },
   methods: {
@@ -146,21 +116,23 @@ export default {
       }, 40)
       this.$snotify.success('Code has been copied', { showProgressBar: false });
     },
-    previewPage() {
+    exitEditMode() {
       let html = this.$refs.canvascode
 
       html.querySelectorAll('[data-hidden]').forEach(element => {
         element.style.display = 'none'
       })
       this.previewing = true
+      this.$store.dispatch('changeDndMode', false)
     },
-    stopPreview() {
+    enterEditMode() {
       let html = this.$refs.canvascode
 
       html.querySelectorAll('[data-hidden]').forEach(element => {
         element.style.display = null
       })
       this.previewing = false
+      this.$store.dispatch('changeDndMode', true)
     },
     startDnd() {
       this.$store.dispatch('changeDndMode', true)
