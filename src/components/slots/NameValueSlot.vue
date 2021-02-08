@@ -27,10 +27,12 @@
 
 import Vue from 'vue'
 import moment from 'moment'
+import slotMixin from '../mixins/slot-mixin.js'
 
 export default {
   name: "NameValueSlot",
   props: [ "sid", "slotData", "slotItem", "width" ],
+  mixins: [slotMixin],  
   data() {
     return {
       editing: null,
@@ -109,14 +111,14 @@ export default {
     asArray(obj) {
       return Object.keys(obj).map((key) => [key, obj[key]])
     },
-    deleteSlot() {
-      this.$store.dispatch("setDialogData", {
-        title: 'Are you sure you want to delete this slot?',
-        type: 'delete-slot',
-        sid: this.sid
-      })
-      this.$store.dispatch("setDialogVisibility", true)
-    },
+    // deleteSlot() {
+    //   this.$store.dispatch("setDialogData", {
+    //     title: 'Are you sure you want to delete this slot?',
+    //     type: 'delete-slot',
+    //     sid: this.sid
+    //   })
+    //   this.$store.dispatch("setDialogVisibility", true)
+    // },
     setEditing(field) {
       this.editing = field
 

@@ -14,6 +14,7 @@
 
 import Vue from 'vue'
 import ProfessorTaSlot from './ProfessorTaSlot.vue'
+import slotMixin from '../mixins/slot-mixin.js'
 
 export default {
   components: {
@@ -21,10 +22,12 @@ export default {
   },
   name: "ListSlot",
   props: [ "sid", "slotData", "slotItem", "width" ],
+  mixins: [slotMixin],
   data() {
     return {
       editing: null,
-      data: {},
+      data: {
+      },
     }
   },
   computed: {

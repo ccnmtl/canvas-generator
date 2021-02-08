@@ -332,10 +332,8 @@ export default {
   },
   methods: {
     ...mapActions(['createColumnsFromArray','updateColTypes']),
-    buildHomeSidebarCol(options = {}){
+    homeSidebarCol(options = {}){
       let column = _.cloneDeep(this.colTypes.homeSidebar.array)
-      let {cid, rid} = options
-
       // overwrite data with anything specifically added to the options parameter, initally for the title
       column[0] = _.merge(column[0], options.title)
       column[1] = _.merge(column[1], options.content)
@@ -343,9 +341,8 @@ export default {
 
       return column
     },
-    buildInstructorListCol(options = {}){
+    instructorListCol(options = {}){
       let column = _.cloneDeep(this.colTypes.instructorList.array)
-      let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.list)
 
@@ -353,9 +350,8 @@ export default {
       // let columns = [column]
       // this.createColumnsFromArray({columns, rid})
     },
-    buildSimpleBannerCol(options = {}){
+    simpleBannerCol(options = {}){
       let column = _.cloneDeep(this.colTypes.simpleBanner.array)
-      let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.banner)
 
@@ -369,9 +365,8 @@ export default {
 
       return column
     },
-    buildSyllabusComponentCol(options){
+    syllabusComponentCol(options){
       let column = _.cloneDeep(this.colTypes.syllabusComponent.array)
-      let {cid, rid} = options
 
       column[0] = _.merge(column[0], options.syllabus)
 

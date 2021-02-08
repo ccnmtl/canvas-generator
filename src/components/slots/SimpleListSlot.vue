@@ -17,10 +17,12 @@
 <script>
 
 import Vue from 'vue'
+import slotMixin from '../mixins/slot-mixin.js'
 
 export default {
   name: "SimpleListSlot",
   props: [ "sid", "slotData", "slotItem", "width" ],
+  mixins: [slotMixin],
   data() {
     return {
       editing: null,

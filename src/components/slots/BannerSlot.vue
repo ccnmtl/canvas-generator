@@ -39,6 +39,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: "BannerSlot",
   props: [ "sid", "slotData", "slotItem", "width" ],
+  mixins: [slotMixin],
   data() {
     return {
       editing: null,

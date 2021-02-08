@@ -36,7 +36,7 @@ export default {
           icon: "s-home",
           pages: ['home'],
           array: [
-            [this.buildInstructorListCol(), this.buildInstructorListCol({list: {getter: 'info.tas'}})]
+            [this.instructorListCol(), this.instructorListCol({list: {getter: 'info.tas'}})]
           ]
         },
         dateTimeRow: {
@@ -108,33 +108,28 @@ export default {
   },
   methods: {
     ...mapActions(['createRowsFromArray','updateRowTypes']),
-    buildHomeWelcomeRow(options){
+    homeWelcomeRow(options){
       let row = _.cloneDeep(this.rowTypes.homeWelcomeRow.array)
-      let cid = options.cid
 
       return row
     },
-    buildHomeInstructorsRow(options){
+    homeInstructorsRow(options){
       let row = _.cloneDeep(this.rowTypes.homeInstructorsRow.array)
-      let cid = options.cid
 
       return row
     },
-    buildDateTimeRow(options){
+    dateTimeRow(options){
       let row = _.cloneDeep(this.rowTypes.dateTimeRow)
-      let cid = options.cid
 
       return row
     },
-    buildListRow(options){
+    listRow(options){
       let row = _.cloneDeep(this.rowTypes.listRow.array)
-      let cid = options.cid
 
       return row
     },
-    buildBannerRow(){
+    bannerRow(){
       let row = _.cloneDeep(this.rowTypes.bannerRow.array)
-      let cid = options.cid
 
       return row
     },
