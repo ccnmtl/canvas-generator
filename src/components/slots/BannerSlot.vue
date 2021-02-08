@@ -35,6 +35,8 @@
 <script>
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
+import slotMixin from '../mixins/slot-mixin.js'
+
 
 export default {
   name: "BannerSlot",

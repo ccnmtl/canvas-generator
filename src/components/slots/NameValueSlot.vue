@@ -41,7 +41,7 @@ export default {
       setters: { 
       },
       defaultGetter: 'value',
-      editableProps: ['name', 'type', 'value']
+      editableProps: ['name', 'type', 'value', 'nameStyle']
     }
   },
   computed: {
