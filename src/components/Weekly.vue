@@ -239,8 +239,8 @@
       <div class="item-group-container" style="padding-bottom: 0;" v-if="weeks[selected].assignments.length > 0 || weeks[selected].discussions.length > 0">
         <div class="item-group-condensed">
           <ul id="cond_group_1" class="ig-list">
-          <weekly-discussion  v-for="(disc, index) in weeks[selected].discussions" :data="disc" :index="index+1" :key="disc.link"> </weekly-discussion>
-          <weekly-assignment  v-for="(assign, index) in weeks[selected].assignments" :data="assign" :index="index+1" :key="assign.link"> </weekly-assignment>
+          <weekly-discussion  v-for="(disc, index) in weeks[selected].discussions" :data="disc" :index="index+1" :key="disc.id"> </weekly-discussion>
+          <weekly-assignment  v-for="(assign, index) in weeks[selected].assignments" :data="assign" :index="index+1" :key="assign.id"> </weekly-assignment>
           </ul>
         </div>
       </div>
@@ -398,11 +398,20 @@ export default {
     },
 
     addDiscussion() {
-      this.$store.dispatch("addDiscussion", this.selected)
+      let tempDisc = {
+        link: "%24CANVAS_OBJECT_REFERENCE%24/discussion_topics/" + "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1),
+        due: moment(this.weeks[this.selected].date).add(7, "d"),
+      }
+      console.log(tempDisc)
+      this.$store.dispatch("addDiscussion", {index:this.selected, data: tempDisc})
     },
 
     addAssignment() {
-      this.$store.dispatch("addAssignment", this.selected)
+      let tempAssign = {
+        link: "%24CANVAS_OBJECT_REFERENCE%24/assignments/" + "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1),
+        due: moment(this.weeks[this.selected].date).add(7, "d"),
+      }
+      this.$store.dispatch("addAssignment", {index:this.selected, data: tempAssign})
     },
 
     setToDefault() {

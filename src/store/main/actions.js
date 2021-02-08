@@ -278,7 +278,7 @@ export default {
     },
 
     //Week Element Actions
-    addVideo: ({ commit, getters }, index, data = {}) => {
+    addVideo: ({ commit, getters }, {index, data = {}}) => {
       let dVideo= _.cloneDeep(getters.getDVideo)
       let video = {...dVideo, ...data}
       video.id = uuid.v1()
@@ -303,14 +303,14 @@ export default {
       }
     },
 
-    addAssignment:({ commit, getters }, index, data = {}) => {
+  addAssignment: ({ commit, getters }, { index, data = {} }) => {
       let dAssignment = _.cloneDeep(getters.getDAssignment)
       let assignment = {...dAssignment, ...data}
       assignment.id = uuid.v1()
       commit('addAssignment', { assignment, index })
     },
 
-    addDiscussion: ({ commit, getters }, index, data = {}) => {
+  addDiscussion: ({ commit, getters }, { index, data = {} }) => {
       let dDiscussion = _.cloneDeep(getters.getDDiscussion)
       let discussion = {...dDiscussion, ...data}
       discussion.id = uuid.v1()
