@@ -7,7 +7,7 @@ import moment from "moment"
 export default {
 
   computed: {
-    ...mapGetters(['getInfo', 'getConfig', 'getTheme']),
+    ...mapGetters(['getInfo', 'getConfig', 'getTheme', 'getWeeks']),
     slotTypes(){
       return {...this.defaultSlotTypes, ...this.getConfig.slots.customSlots}
     },
@@ -115,7 +115,6 @@ export default {
           defaultData: {
             name: "Title",
             getter: "info.startDate",
-            type: 'date',
             nameStyle: {'font-weight': 'bold'}
           }
         },
@@ -128,6 +127,18 @@ export default {
           colspan: 4,
           visible: true,
           defaultData: {
+          }
+        },
+        ActivityItemSlot: {
+          id: 10,
+          name: "Activity Item Slot",
+          type: 'activity-item-slot',
+          pages: '*',
+          icon: "menu",
+          visible: true,
+          defaultData: {
+            type: 'discussion',
+            item: this.getWeeks[0].discussions[0]
           }
         }
       }
