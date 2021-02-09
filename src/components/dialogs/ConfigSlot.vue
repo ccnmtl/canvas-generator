@@ -63,6 +63,7 @@
 
     <footer>
       <el-button type="secondary" @click="cancel">Cancel</el-button>
+      <el-button type="danger" @click="deleteSlot">Delete</el-button>
       <el-button type="primary" @click="saveChanges">Save Changes</el-button>
     </footer>
   </div>
@@ -161,6 +162,13 @@ export default {
 
         this.$store.dispatch("setDialogVisibility", false)
 
+    },
+    deleteSlot(){
+      this.$store.dispatch("setDialogData", {
+        title: 'Delete Slot',
+        type: 'delete-slot',
+        sid: this.dialogData.slotData.sid
+      })
     },
     cancel() {
       this.$store.dispatch("setDialogVisibility", false)
