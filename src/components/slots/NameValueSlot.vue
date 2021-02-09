@@ -62,7 +62,7 @@ export default {
             this.setters[key] = val
           }
           else {
-            let actualGetter = val.func(val.props[0], val.props[1])
+            let actualGetter = val.func(...val.props)
             res[key] = actualGetter.get
             this.setters[key] = actualGetter.set
           }

@@ -3,6 +3,14 @@ import Vue from 'vue'
 import moment from 'moment'
 
 export default {
+  data(){
+    return {
+      data: {
+      },
+      setters: { 
+      },
+    }
+  },
   computed: {
     getterData: function () {
       const self = this
@@ -21,7 +29,7 @@ export default {
             this.setters[key] = val
           }
           else {
-            let actualGetter = val.func(val.props[0], val.props[1])
+            let actualGetter = val.func(...val.props)
             res[key] = actualGetter.get
             this.setters[key] = actualGetter.set
           }
