@@ -1,5 +1,6 @@
 import _ from 'lodash'
 
+
 export default {
   getStore: state => state,
   getInfo: state => state.info,
@@ -80,6 +81,21 @@ export default {
     return {
       func: getters.getWeekPropByID, 
       props: [prop, id]
+    }
+  },
+  getWeekItemPropByID: (state, getters) => (prop, type, id) => {
+    let week = _.find(state.weeks, { [type]: [{ id }] })
+    let itemIndex = _.findIndex(week[type], { id })
+    let item = week[type][itemIndex]
+    return {
+      get: item[prop],
+      set: `weeks[${getters.getWeekIndexByID(week.id)}][${type}][${itemIndex}].${prop}`
+    }
+  },
+  getWeekItemPropGetter: (state, getters) => (prop, type, id) => {
+    return {
+      func: getters.getWeekItemPropByID, 
+      props: [prop, type, id]
     }
   },
   getRowTypes: state => state.rowTypes,
