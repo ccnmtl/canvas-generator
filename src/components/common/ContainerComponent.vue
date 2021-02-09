@@ -224,12 +224,6 @@ export default {
     float: left;
   }
 
-  &.blocked {
-    .row {
-      pointer-events: none;
-    }
-  }
-
   .drop-zone{
     transition: all 0.43s;
     height: 0;
