@@ -149,7 +149,7 @@ export default {
           icon: "menu",
           visible: true,
           defaultData: {
-            type: 'discussion',
+            type: 'all',
             weekID: this.getWeeks[0].id
           }
         }
