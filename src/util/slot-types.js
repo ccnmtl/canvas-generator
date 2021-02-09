@@ -140,6 +140,18 @@ export default {
             type: 'discussion',
             item: this.getWeeks[0].discussions[0]
           }
+        },
+        ActivityItemListSlot: {
+          id: 11,
+          name: "Activity Item List Slot",
+          type: 'activity-item-list-slot',
+          pages: '*',
+          icon: "menu",
+          visible: true,
+          defaultData: {
+            type: 'discussion',
+            weekID: this.getWeeks[0].id
+          }
         }
       }
     }

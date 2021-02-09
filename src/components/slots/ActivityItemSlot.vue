@@ -1,8 +1,8 @@
 <template>
-  <div :id="sid"  class="ig-row ig-published ig-row__layout">
+  <div :id="sid"  class="ig-row ig-published">
       <div class="ig-row__layout">
           <div class="ig-type-icon" aria-hidden="true"><i :class="iconType"></i></div>
-          <div class="ig-info"><a class="ig-title" :href="data.item.link" :data-api-endpoint="data.item.link" :data-api-returntype="data.type"> {{data.type.charAt(0).toUpperCase() + data.type.slice(1)}} {{index}}</a>
+          <div class="ig-info"><a class="ig-title" :href="data.item.link" :data-api-endpoint="data.item.link" :data-api-returntype="data.item.type"> {{data.item.type.charAt(0).toUpperCase() + data.item.type.slice(1)}} {{data.index + 1}}</a>
             <div class="ig-details">
               <!-- <div class="ig-details__item"><strong>Due</strong> {{formatWeek(data.item.due)}}</div>
               <div class="ig-details__item">
@@ -50,19 +50,19 @@ export default {
     return {
       editing: null,
       data: {},
-      editableProps: ['type', 'item']
+      editableProps: ['type', 'item', 'index']
     }
   },
   computed: {
     ...mapGetters(['getWeekItemPropGetter','getWeekItemPropByID']),
     iconType: function() {
-      return 'icon-' + this.data.type
+      return 'icon-' + this.data.item.type
     },
     testGetter: function() {
-      return this.getWeekItemPropGetter('due', this.data.type + 's', this.data.item.id)
+      return this.getWeekItemPropGetter('due', this.data.item.type + 's', this.data.item.id)
     },
     testValue: function() {
-      return this.getWeekItemPropByID('due', this.data.type + 's', this.data.item.id)
+      return this.getWeekItemPropByID('due', this.data.item.type + 's', this.data.item.id)
     }
   },
   watch: {

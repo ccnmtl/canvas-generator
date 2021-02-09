@@ -27,6 +27,7 @@ import slotTypes from '../../util/slot-types.js'
 // Slot Types
 import BannerSlot from '../slots/BannerSlot.vue'
 import ActivityItemSlot from '../slots/ActivityItemSlot.vue'
+import ActivityItemListSlot from '../slots/ActivityItemListSlot.vue'
 import ButtonsSlot from '../slots/ButtonsSlot.vue'
 import TitleSlot from '../slots/TitleSlot.vue'
 import ImageSlot from '../slots/ImageSlot.vue'
@@ -41,6 +42,7 @@ export default {
     ListSlot,
     BannerSlot,
     ActivityItemSlot,
+    ActivityItemListSlot,
     ButtonsSlot,
     TitleSlot,
     ImageSlot,

@@ -89,12 +89,14 @@ export default {
     },
     discussionDefault: {
       due: "Feb 4, 2017",
+      type: 'discussion',
       available: "Jan 1",
       link: '', //context.rootState.courseUrl + 'discussion_topics/', TODO put this in a getter so it can call rootState?
       points: 10
     },
     assignmentDefault: {
       due: "Feb 4, 2017",
+      type: 'assignment',
       available: "Jan 1",
       link: '', //context.rootState.courseUrl + 'discussion_topics/', TODO put this in a getter?
       points: 10
