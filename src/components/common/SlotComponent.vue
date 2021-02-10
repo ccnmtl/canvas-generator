@@ -31,6 +31,7 @@ import ActivityItemListSlot from '../slots/ActivityItemListSlot.vue'
 import ButtonsSlot from '../slots/ButtonsSlot.vue'
 import TitleSlot from '../slots/TitleSlot.vue'
 import ImageSlot from '../slots/ImageSlot.vue'
+import VideoSlot from '../slots/VideoSlot.vue'
 import ContentSlot from '../slots/ContentSlot.vue'
 import SpacerSlot from '../slots/SpacerSlot.vue'
 import ListSlot from '../slots/ListSlot.vue'
@@ -46,6 +47,7 @@ export default {
     ButtonsSlot,
     TitleSlot,
     ImageSlot,
+    VideoSlot,
     ContentSlot,
     SpacerSlot,
     SimpleListSlot,

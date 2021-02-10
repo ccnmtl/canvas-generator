@@ -152,6 +152,17 @@ export default {
             type: 'all',
             weekID: this.getWeeks[0].id
           }
+        },
+        VideoSlot: {
+          id: 12,
+          name: "Video Slot",
+          type: 'video-slot',
+          pages: '*',
+          icon: "menu",
+          visible: true,
+          defaultData: {
+            videoSrc: 'https://www.youtube.com/watch?v=GxSGKD50ioE',
+          }
         }
       }
     }

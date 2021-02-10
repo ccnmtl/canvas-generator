@@ -394,7 +394,8 @@ export default {
     },
 
     addVideo() {
-       this.$store.dispatch("addVideo", this.selected)
+       let index = this.selected
+       this.$store.dispatch("addVideo", {index})
     },
 
     addDiscussion() {
