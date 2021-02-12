@@ -45,26 +45,6 @@ export default {
     }
   },
   methods: {
-    setEditing(field) {
-      this.editing = field
-    },
-    finishEditing() {
-      if(this.data.content) {
-        this.$store.dispatch("updateSlotData", {
-          item: this.slotItem,
-          data: this.data
-        })
-        this.editing = null
-      }
-    },
-    // deleteSlot() {
-    //   this.$store.dispatch("setDialogData", {
-    //     title: 'Are you sure you want to delete this slot?',
-    //     type: 'delete-slot',
-    //     sid: this.sid
-    //   })
-    //   this.$store.dispatch("setDialogVisibility", true)
-    // }
   }
 }
 </script>

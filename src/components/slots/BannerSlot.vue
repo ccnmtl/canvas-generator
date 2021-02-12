@@ -93,22 +93,6 @@ export default {
     }
   },
   methods: {
-    asArray(obj) {
-      return Object.keys(obj).map((key) => [key, obj[key]])
-    },
-    setEditing(field) {
-      this.editing = field
-
-      setTimeout(() => {
-        this.$refs[field].focus()
-      }, 200)
-    },
-    finishEditing(field) {
-      if(this.data[field]) {
-        this.$store.dispatch("updateSpecificInfo", { key: field, value: this.data[field] })
-        this.editing = null
-      }
-    }
   }
 }
 </script>
