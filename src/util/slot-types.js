@@ -36,7 +36,6 @@ export default {
           visible: true,
           defaultData: {
             title: "Default Title",
-            theme: this.getTheme,
             semester: "U6411 // SPRING 2020"
           }
         },
@@ -118,10 +117,10 @@ export default {
             nameStyle: {'font-weight': 'bold'}
           }
         },
-        listSlot: {
+        instructorListSlot: {
           id: 9,
-          name: "List Slot",
-          type: "list-slot",
+          name: "Instructor List Slot",
+          type: "instructor-list-slot",
           pages: '*',
           icon: "menu",
           colspan: 4,
