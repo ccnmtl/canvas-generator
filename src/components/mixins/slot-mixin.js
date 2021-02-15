@@ -45,9 +45,10 @@ export default {
   watch: {
     slotData: {
       handler(newVal) {
-        this.editableProps.forEach((prop) => {
+        this.asArray(newVal).forEach(valPair => {
+          let prop = valPair[0]
           if (!this.slotItem.getter || !this.slotItem.getter[prop] && !(prop == this.defaultGetter && typeof this.slotItem.getter == 'string'))
-            this.data[prop] = newVal[prop]
+          this.data[prop] = newVal[prop]
         })
       },
       immediate: true
@@ -95,10 +96,15 @@ export default {
     },
     finishEditing(field) {
       if (this.data[field]) {
-        this.$store.dispatch("updateSlotDataWithSetter", {
-          setter: this.setters[field],
-          data: this.data[field]
-        })
+        if (this.setters[field]){
+          this.$store.dispatch("updateSlotDataWithSetter", {
+            setter: this.setters[field],
+            data: this.data[field]
+          }) 
+        }
+        // else {
+        //   this.$store.dispatch("updateSpecificInfo", { key: field, value: this.data[field] })
+        // }
         this.editing = null
       }
     },
