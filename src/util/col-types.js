@@ -181,6 +181,10 @@ export default {
                 data: {
                   useWideBanner: true,
                 },
+                getter: {
+                  title: "info.title",
+                  semester:"info.semester"
+                },
                 styles: {
                   "margin-bottom": "20px",
                 }
