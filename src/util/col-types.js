@@ -7,7 +7,7 @@ import _ from 'lodash'
 export default {
 
   computed: {
-    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo', 'getWeeks', 'getConfig']),
+    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo', 'getWeeks', 'getConfig', 'getWeekPropGetter', 'getSelectedWeekID']),
     colTypes(){
       return {...this.defaultColTypes, ...this.getConfig.cols.customCols}
     },
@@ -307,6 +307,26 @@ export default {
                 type: 'date',
               },
             },
+          ]
+        },
+        caseList: {
+          id: 11,
+          name: "Case List",
+          type: 'activity-image',
+          pages: '*',
+          icon: "picture",                    
+          array: [
+            {
+              type: "list-slot",
+              width: 12,
+              data: {
+                component: "case-slot",
+                // items: this.getWeeks[0].cases
+              },
+              getter: {
+                items: this.getWeekPropGetter('cases', this.getSelectedWeekID)
+              }
+            }
           ]
         },
         testCol:{

@@ -280,7 +280,7 @@ export default {
   },
   methods: {
     ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo", "addTA",
-                  "addProf", "addStudent"]),
+                  "addProf", "addStudent","setStateField"]),
     showAllCourses(){
       const version = this.currentVersion
       this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
@@ -337,7 +337,7 @@ export default {
   },
   mixins: [saveState, mutations],
   computed: {
-    ...mapGetters([ 'isSettingsVisible', 'getCurrentCourse', 'getCurrentVersion', 'getSavedStates' ]),
+    ...mapGetters([ 'isSettingsVisible', 'getCurrentCourse', 'getCurrentVersion', 'getSavedStates', 'getWeeks' ]),
     loading() {
       return this.$store.getters.loading
     },
@@ -369,8 +369,8 @@ export default {
           this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + ".png"
         tempWeek.date = moment().add((i-1), "w")
         this.addWeek(tempWeek)
-
       }
+      this.setStateField({field: 'selectedWeekID', value: this.getWeeks[0].id})
     }
     if (this.info.students.length < 1) this.addStudent()
     if (this.info.profs.length < 1) this.addProf()

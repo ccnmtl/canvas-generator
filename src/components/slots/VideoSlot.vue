@@ -27,7 +27,7 @@ export default {
       let output
       let link = this.data.videoSrc
       let parts = link.split("/")
-      if (parts[2].includes("vimeo.com")) {
+      if (parts[2].includes("vimeo.com") && !parts[2].includes("player.vimeo.com")) {
         output = "https://player.vimeo.com/video/" + parts[3]
       } else if (parts[2].includes("youtube")) {
         let split = link.split("=")

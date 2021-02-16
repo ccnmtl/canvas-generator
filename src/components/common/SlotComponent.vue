@@ -33,11 +33,14 @@ import ButtonsSlot from '../slots/ButtonsSlot.vue'
 import TitleSlot from '../slots/TitleSlot.vue'
 import ImageSlot from '../slots/ImageSlot.vue'
 import VideoSlot from '../slots/VideoSlot.vue'
+import ActivityVideoListSlot from '../slots/ActivityVideoListSlot.vue'
 import ContentSlot from '../slots/ContentSlot.vue'
 import SpacerSlot from '../slots/SpacerSlot.vue'
 import ListSlot from '../slots/ListSlot.vue'
 import SimpleListSlot from '../slots/SimpleListSlot.vue'
 import NameValueSlot from '../slots/NameValueSlot.vue'
+import CaseSlot from '../slots/CaseSlot.vue'
+
 
 export default {
   components: {
@@ -50,6 +53,8 @@ export default {
     TitleSlot,
     ImageSlot,
     VideoSlot,
+    CaseSlot,
+    ActivityVideoListSlot,
     ContentSlot,
     SpacerSlot,
     SimpleListSlot,

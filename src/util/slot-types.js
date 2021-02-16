@@ -162,6 +162,37 @@ export default {
           defaultData: {
             videoSrc: 'https://www.youtube.com/watch?v=GxSGKD50ioE',
           }
+        },
+        ActivityVideoListSlot: {
+          id: 13,
+          name: "Activity Video List",
+          type: 'activity-video-list-slot',
+          pages: '*',
+          icon: "menu",
+          visible: true,
+          defaultData: {
+            weekID: this.getWeeks[0].id
+          }
+        },
+        CaseSlot: {
+          id: 14,
+          name: "Case Slot",
+          type: 'case-slot',
+          colspan: 12,
+          pages: '*',
+          icon: "menu",
+          visible: true,
+          defaultData: this.getWeeks[0].cases[0]
+        },
+        ListSlot: {
+          id: 15,
+          name: "List Slot",
+          type: 'list-slot',
+          pages: '*',
+          icon: "menu",
+          visible: false,
+          defaultData: {
+          }
         }
       }
     }

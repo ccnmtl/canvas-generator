@@ -27,6 +27,7 @@ export default {
     title: 'Choose Slot Type',
     type: 'choose-slot'
   },
+  selectedWeekID: "",
   editingFields: [],
   pagesSet: [],
   savedStates: [],

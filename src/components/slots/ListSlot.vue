@@ -1,12 +1,12 @@
 <template>
   <div :id="sid" class="row list-slot">
-    <component class="col-md-6"
+    <component class=""
                :is="slotData.component"
                v-for="item in data.items"
                :key="item.id"
-               :sid="'professor-ta-slot-' + item.id"
+               :sid="'list-slot-' + item.id"
                :slotData="item"
-               :slotItem="item"/>
+               :slotItem="{}"/>
   </div>
 </template>
 
@@ -14,11 +14,12 @@
 
 import Vue from 'vue'
 import ProfessorTaSlot from './ProfessorTaSlot.vue'
+import CaseSlot from './CaseSlot.vue'
 import slotMixin from '../mixins/slot-mixin.js'
 
 export default {
   components: {
-    ProfessorTaSlot
+    ProfessorTaSlot, CaseSlot
   },
   name: "ListSlot",
   props: [ "sid", "slotData", "slotItem", "width" ],
@@ -31,69 +32,12 @@ export default {
     }
   },
   computed: {
-    getterData: function () {
-      if(!this.slotItem.getter) return null
-      return this.$store.getters.getFromGetter(this.slotItem.getter)
-    },
-    getter2Data: function () {
-      if(!this.slotItem.getter2) return null
-      return this.$store.getters.getFromGetter(this.slotItem.getter2)
-    }
   },
   watch: {
-    slotData: {
-      handler(newVal) {
-        this.data = newVal
-      },
-      immediate: true
-    },
-    getterData: {
-      handler(newVal) {
-        if (newVal !== null) {
-          if(!this.data) {
-            this.data = {}
-          }
-
-          newVal.forEach((val, i) => {
-            newVal[i].type = 'Instructor'
-          })
-
-          if(!newVal) newVal = []
-
-          if(!this.getter2Data) Vue.set(this.data, 'items', newVal)
-          else Vue.set(this.data, 'items', newVal.concat(this.getter2Data))
-        }
-      },
-      immediate: true
-    },
-    getter2Data: {
-      handler(newVal) {
-        if (newVal !== null) {
-          if(!this.data) {
-            this.data = {}
-          }
-
-          newVal.forEach((val, i) => {
-            newVal[i].type = 'TA'
-          })
-
-          if(!newVal) newVal = []
-
-          Vue.set(this.data, 'items', this.getterData.concat(newVal))
-        }
-      },
-      immediate: true
-    }
+    
   },
   methods: {
-    deleteSlot() {
-      this.$store.dispatch("setDialogData", {
-        title: 'Are you sure you want to delete this slot?',
-        type: 'delete-slot',
-        sid: this.sid
-      })
-      this.$store.dispatch("setDialogVisibility", true)
-    }
+
   }
 }
 </script>
