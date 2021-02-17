@@ -116,19 +116,19 @@ export default {
         rows: this.defaultRows
       })
 
-      self.$store.dispatch('createRowsFromArray', {
-        cid: self.cid,
-        rows: [[[{
-          type: 'name-value-slot',
-          getter: {
-            value: 'info.profs[0].name'
-          },
-          width: 8,
-          data: {
-            name: 'Getter (info.profs[0].name)'
-          }
-        }]]]
-      })
+      // self.$store.dispatch('createRowsFromArray', {
+      //   cid: self.cid,
+      //   rows: [[[{
+      //     type: 'name-value-slot',
+      //     getter: {
+      //       value: 'info.profs[0].name'
+      //     },
+      //     width: 8,
+      //     data: {
+      //       name: 'Getter (info.profs[0].name)'
+      //     }
+      //   }]]]
+      // })
     }
 
     // if (!this.rows) {

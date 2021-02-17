@@ -13,6 +13,7 @@
             <li><router-link class="router" to="/home">Home</router-link></li>
             <li><router-link class="router" to="/home-new">Home Prototype</router-link></li>
             <li><router-link class="router" to="/weekly-new">WeeklyPrototype</router-link></li>
+            <li><router-link class="router" to="/activity-new">Activity Prototype</router-link></li>
             <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
             <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program">Program Overview</router-link></li>
             <li><router-link class="router" to="/studentlist">Students List</router-link></li>

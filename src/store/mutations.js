@@ -8,7 +8,7 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(["getInfo", "getDWeek", 'getWeeks', 'getTheme', 'getStudents']),
+    ...mapGetters(["getInfo", "getDWeek", 'getWeeks', 'getTheme', 'getStudents','getSelectedWeekID']),
     info() {
       return this.getInfo
     },
@@ -25,7 +25,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo', "updateTheme"]),
+    ...mapActions(['addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo', "updateTheme",'setStateField']),
     updateProp(prop, value) {
       this.$store.dispatch('updateProp', { prop, value })
     },

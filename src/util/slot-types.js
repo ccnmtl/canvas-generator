@@ -147,9 +147,12 @@ export default {
           pages: '*',
           icon: "menu",
           visible: true,
+          getter: {
+            weekID: 'selectedWeekID'
+          },
           defaultData: {
             type: 'all',
-            weekID: this.getWeeks[0].id
+            // weekID: this.getWeeks[0].id
           }
         },
         VideoSlot: {
@@ -170,8 +173,11 @@ export default {
           pages: '*',
           icon: "menu",
           visible: true,
+          getter: {
+            weekID: 'selectedWeekID'
+          },
           defaultData: {
-            weekID: this.getWeeks[0].id
+            // weekID: this.getWeeks[0].id
           }
         },
         CaseSlot: {
