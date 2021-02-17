@@ -1,5 +1,5 @@
 <template>
-  <div :id="sid" class="col-xs-12">
+  <div :id="sid" class="">
       <div v-if="useWideBanner" :class="['pad-box-mega','STV1_Banner', data.wideBanner ? theme.wide : theme.banner]" style="postition: relative">
 
         <img v-if="theme.logo" :src="theme.logo" style="margin-top: -10px; margin-left: 10px" />

@@ -329,6 +329,43 @@ export default {
             }
           ]
         },
+        ActivityIntro: {
+          id: 12,
+          name:"Activity Intro",
+          type:"activity-intro",
+          pages: '*',
+          icon: "picture",                    
+          array:[
+            {
+              type: "title-slot",
+              data: {
+                type: 'h3',
+                title: 'ACTIVITIES'
+              },
+              classes: ['ic-image-text-combo__text']
+            },
+            {
+              type: "spacer-slot",
+              data: {
+                useHR: true,
+              }
+            },
+            {
+              type: "content-slot",
+              data: {
+                content: "Welcome to the activities page! Below you'll find an overview of all the sessions in this course, each covering a distinct topic. Clicking on a session will take you to a page where you can review the activities related to that session."
+              },
+              styles: {
+              }
+            },
+            {
+              type: "spacer-slot",
+              data: {
+                useHR: true,
+              }
+            }
+        ]
+        },
         testCol:{
           id: 100,
           name: "Test Col",
@@ -410,6 +447,13 @@ export default {
       column[1] = _.merge(column[1], options.content)
       column[2] = _.merge(column[2], options.date)
 
+      return column
+    },
+    activityIntroCol(options = {}){
+      let column = _.cloneDeep(this.colTypes.activitySidebar.array)
+
+      column[0] = _.merge(column[0], options.title)
+      column[1] = _.merge(column[2], options.content)
       return column
     },
     findCol(objKey, objValue){

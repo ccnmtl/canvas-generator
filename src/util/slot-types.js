@@ -75,7 +75,6 @@ export default {
           visible: true,
           defaultData: {
             "useHR": true,
-            "size": 2
           }
         },
         buttonsSlot: {
@@ -213,6 +212,10 @@ export default {
       for (const [name, slot] of Object.entries(this.slotTypes)){
         if (slot[objKey] == objValue) return slot
       }
+    },
+    createSlot(type, newData){
+      let slotType = this.findSlot('type', type)
+      return _.merge(slotType, newData)
     }    
 
   },

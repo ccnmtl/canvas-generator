@@ -23,18 +23,25 @@ export default {
   name: "NewActivity",
   data() {
     return {
-      defRows: [
-        'banner-row',
-        ['syllabus-component'],
-        [['activity-video-list-slot']],
-        [['activity-item-list-slot']],
-      ],
     }
   },
   components: {
     ContainerComponent
   },
-  mixins: [RowTypes, mutations]
+  computed: {
+    defRows(){
+      return [
+        [this.simpleBannerCol({banner: {getter: {title: 'info.title'}}})],
+        ['activity-intro'],
+        [['activity-video-list-slot']],
+        [['activity-item-list-slot']],
+      ]
+    }
+  },
+  mixins: [RowTypes, mutations],
+  mounted(){
+    console.log(this.simpleBannerCol({banner: {getter: {title: 'info.title'}}}))
+  }
 }
 </script>
 
