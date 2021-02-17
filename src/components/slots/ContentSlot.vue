@@ -7,7 +7,7 @@
                     v-model="data.content"
                     :config="editorOption" />
 
-      <button class="btn btn-primary" @click="finishEditing">
+      <button class="btn btn-primary" @click="finishEditing('content')">
         Save changes
       </button>
     </div>
