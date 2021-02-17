@@ -39,7 +39,7 @@ import { mapActions, mapGetters } from 'vuex'
 
 
 export default {
-  name: "Activity Item Slot",
+  name: "ActivityItemSlot",
   props: [ "sid", "slotData", "slotItem", "width" ],
   mixins: [slotMixin],
   components: {

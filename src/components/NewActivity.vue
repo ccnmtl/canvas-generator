@@ -32,15 +32,15 @@ export default {
     defRows(){
       return [
         [this.simpleBannerCol({banner: {getter: {title: 'info.title'}}})],
-        ['activity-intro'],
+        [this.activityIntroCol()],
         [['activity-video-list-slot']],
+        ['case-list'],
         [['activity-item-list-slot']],
       ]
     }
   },
   mixins: [RowTypes, mutations],
   mounted(){
-    console.log(this.simpleBannerCol({banner: {getter: {title: 'info.title'}}}))
   }
 }
 </script>

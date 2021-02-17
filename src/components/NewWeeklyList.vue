@@ -107,11 +107,11 @@ export default {
         immediate: true
       }
   },
-  created(){
+  beforeMount(){
     // add banner to top of Weekly List Element
     this.$store.dispatch('createRowsFromArray', {
       cid: 'activities-list',
-      rows: ['banner-row']
+      rows: ['banner-row', ['activity-list-intro']]
     })
 
   },

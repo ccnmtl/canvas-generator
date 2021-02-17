@@ -39,25 +39,9 @@ export default {
     }
   },
   computed: {
-    getterData: function () {
-      if(!this.slotItem.getter) return null
-      return this.$store.getters.getFromGetter(this.slotItem.getter)
-    }
   },
   watch: {
-    getterData: {
-      handler(newVal) {
-        if (newVal !== null) {
-          if(!this.data) {
-            this.data = {}
-            this.data.type = this.slotData ? this.slotData.type : "h1"
-          }
 
-          Vue.set(this.data, 'title', newVal ? newVal : 'No title')
-        }
-      },
-      immediate: true
-    }
   },
   methods: {
     setEditing(field) {
@@ -66,23 +50,6 @@ export default {
         this.$refs[field].focus()
       }, 200)
     },
-    finishEditing() {
-      if(this.data.title) {
-        if(this.slotItem.getter) {
-          this.$store.dispatch("updateSlotDataWithSetter", {
-            data: this.data.title,
-            setter: this.slotItem.getter
-          })
-        }
-
-        this.$store.dispatch("updateSlotData", {
-          item: this.slotItem,
-          data: this.data
-        })
-
-        this.editing = null
-      }
-    }
   }
 }
 </script>

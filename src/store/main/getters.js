@@ -78,10 +78,24 @@ export default {
       set: `weeks[${getters.getWeekIndexByID(id)}].${prop}`
     }
   },
+  getSelectedWeekProp: (state, getters) => (prop) => {
+    let id = getters.getSelectedWeekID
+    let week = _.find(state.weeks, { id })
+    return {
+      get: week[prop],
+      set: `weeks[${getters.getWeekIndexByID(id)}].${prop}`
+    }
+  },
   getWeekPropGetter: (state, getters) => (prop, id) => {
     return {
       func: getters.getWeekPropByID, 
       props: [prop, id]
+    }
+  },
+  getSelectedWeekPropGetter: (state, getters) => (prop) => {
+    return {
+      func: getters.getSelectedWeekProp, 
+      props: [prop]
     }
   },
   getWeekItemPropByID: (state, getters) => (prop, type, id) => {

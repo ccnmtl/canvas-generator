@@ -7,7 +7,7 @@ import _ from 'lodash'
 export default {
 
   computed: {
-    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo', 'getWeeks', 'getConfig', 'getWeekPropGetter', 'getSelectedWeekID']),
+    ...mapGetters(['getColumnsByRowID', 'getRowsByCID', 'getSlotsByColID', 'getInfo', 'getWeeks', 'getConfig', 'getWeekPropGetter', 'getSelectedWeekID', 'getSelectedWeekPropGetter']),
     colTypes(){
       return {...this.defaultColTypes, ...this.getConfig.cols.customCols}
     },
@@ -312,7 +312,7 @@ export default {
         caseList: {
           id: 11,
           name: "Case List",
-          type: 'activity-image',
+          type: 'case-list',
           pages: '*',
           icon: "picture",                    
           array: [
@@ -324,15 +324,15 @@ export default {
                 // items: this.getWeeks[0].cases
               },
               getter: {
-                items: this.getWeekPropGetter('cases', this.getSelectedWeekID)
+                items: this.getSelectedWeekPropGetter('cases')
               }
             }
           ]
         },
-        ActivityIntro: {
+        activityListIntro: {
           id: 12,
           name:"Activity Intro",
-          type:"activity-intro",
+          type:"activity-list-intro",
           pages: '*',
           icon: "picture",                    
           array:[
@@ -449,13 +449,34 @@ export default {
 
       return column
     },
-    activityIntroCol(options = {}){
-      let column = _.cloneDeep(this.colTypes.activitySidebar.array)
+    activityIntroListCol(options = {}){
+      let column = _.cloneDeep(this.colTypes.activityListIntro.array)
 
       column[0] = _.merge(column[0], options.title)
       column[1] = _.merge(column[2], options.content)
       return column
     },
+    activityIntroCol(){
+      let column = _.cloneDeep(this.colTypes.activityListIntro.array)
+
+      let options = {
+        title: {
+          getter: {
+            title: this.getSelectedWeekPropGetter('title')
+          }
+        },
+        content : {
+          getter: {
+            content: this.getSelectedWeekPropGetter('body')
+          }
+        }
+      }
+
+      column[0] = _.merge(column[0], options.title)
+      column[2] = _.merge(column[2], options.content)
+      return column
+    },
+
     findCol(objKey, objValue){
       for (const [name, col] of Object.entries(this.colTypes)){
         if (col[objKey] == objValue) return col
