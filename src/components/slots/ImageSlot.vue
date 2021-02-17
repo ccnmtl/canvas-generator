@@ -15,7 +15,6 @@ export default {
   data() {
     return {
       editing: null,
-      data: null,
       forceDimensions: false,
       imgWidth: this.slotData.width || 300,
       imgHeight: this.slotData.height || 300,
