@@ -1,6 +1,6 @@
 <template>
   <div ref="container" class="canvas-code"
-       
+
        :class="[{ blocked: previewing }, { dragging: isDndMode }]"
        @dragend="dragEnd">
     <h4 class="preview-text">CANVAS PREVIEW AREA</h4>
@@ -166,7 +166,7 @@ export default {
   },
   mounted() {
     setTimeout(() => this.exitEditMode(), 100);
-}
+  }
 }
 </script>
 
@@ -180,8 +180,8 @@ export default {
   }
 
   .preview-text {
-    text-align: center; 
-    font-weight: bold; 
+    text-align: center;
+    font-weight: bold;
     position: absolute;
     left: 50%;
     transform: translate(-50%, -10%);

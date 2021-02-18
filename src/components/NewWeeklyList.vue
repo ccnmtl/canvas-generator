@@ -1,5 +1,5 @@
 <template>
-  
+
   <div class="home-page">
     <el-input-number  style="margin: 10px;" v-model="userInput.toChange" :min="1" :max="20" />
 
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import ContainerComponent from './common/ContainerComponent.vue'
 import RowTypes from '../util/row-types.js'
 import { mapGetters, mapActions } from 'vuex'
@@ -111,7 +112,7 @@ export default {
     // add banner to top of Weekly List Element
     this.$store.dispatch('createRowsFromArray', {
       cid: 'activities-list',
-      rows: ['banner-row', ['activity-list-intro']]
+      rows: ['banner-row', 'weekly-activity-list-intro']
     })
 
   },

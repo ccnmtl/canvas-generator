@@ -100,7 +100,7 @@ export default {
     createRowsFromArray({ state, dispatch }, payload) {
       const RowTypes = state.rowTypes
       payload.rows.forEach(row => {
-        let actualRow
+        let actualRow, sort = null
         let type = payload.type || ''
         let data = payload.data || {}
 
@@ -108,13 +108,15 @@ export default {
           let rowTemplate = findObj('type', row, RowTypes)
           actualRow = rowTemplate.array[0]
           type = rowTemplate.type
+          if(rowTemplate.sort) sort = rowTemplate.sort
         }
         else actualRow = row
 
         dispatch('addRow', {
           cid: payload.cid,
-          type, data
-
+          type,
+          data,
+          sort
         }).then(res => {
           dispatch('createColumnsFromArray', {
             columns: actualRow,
