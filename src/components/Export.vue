@@ -91,7 +91,8 @@
       </div>
     </div>
 
-    <home v-show="false" ref="home" />
+    <container-component v-show="false" cid="home" ref="home"/>
+    <container-component v-show="false" cid="activity" ref="activity"/>
     <zoom v-show="false" ref="zoom" />
     <syllabus v-show="false" ref="syllabus" />
     <list v-show="false" ref="list" />
@@ -133,6 +134,9 @@ import headings from "../store/export-headings"
 import moment from "moment"
 import { mapActions } from 'vuex'
 
+import ContainerComponent from './common/ContainerComponent.vue'
+
+
 export default {
   name: "Export",
   data() {
@@ -144,7 +148,7 @@ export default {
   },
   computed: {
   },
-  components: { home, syllabus, weekView, list, zoom, studentView, studentsList },
+  components: { home, syllabus, weekView, list, zoom, studentView, studentsList, ContainerComponent },
   mixins: [PageMixin],
   mounted() {
     let manifest = this.readLocalXML("../../static/files/Clean Course/course_settings/course_settings.xml")
@@ -178,8 +182,8 @@ export default {
         }
 
         JSZip.loadAsync(data).then(zip => {
-          console.log(zip)
-          zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode("home-code") + footer)
+          console.log(this.$refs.home.returnCode() )
+          zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
           zip.file(
             "course_settings/syllabus.html",
             headings.syllabus + this.$refs.syllabus.returnCode("syllabus-code") + footer
@@ -214,23 +218,17 @@ export default {
               let manifest = parser.parseFromString(data, "text/xml")
 
               //add weeks
-              for (let i = 1; i <= this.weeks.length; i++) {
-                let title = "<title>Session " + i + "</title>"
-                let iden = '<meta name="identifier" content="ccb-session' + i + '"/>'
-                let el = document.getElementById("week-box" + (i - 1))
-                let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
-                zip.file(
-                  "wiki_content/session-" + i + ".html",
-                  headings.top + title + iden + headings.bottom + code + footer
-                )
-                addResource({
-                  xml: manifest,
-                  iden: "ccb-session-" + i,
-                  link: "wiki_content/pages/session-" + i
-                })
-              }
+              // for (let i = 1; i <= this.weeks.length; i++) {
+                
+              //   let el = document.getElementById("week-box" + (i - 1))
+              //   let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
+
+              // }
 
               //add students
+
+              let renderRest = () => {
+              console.log("rendering rest...")
               for (let i = 1; i <= this.info.students.length; i++) {
                 let student = this.info.students[i - 1]
                 let id = student.id || i
@@ -327,6 +325,33 @@ export default {
                   data: blob
                 })
               })
+            }
+
+            let renderWeek = (i) => {
+              let title = "<title>Session " + i + "</title>"
+              let iden = '<meta name="identifier" content="ccb-session' + i + '"/>'
+              let code
+              this.setStateField({field: 'selectedWeekID', value: this.weeks[(i-1)].id}).then( (res) => {
+                console.log(res)
+                code = this.$refs.activity.returnCode()
+
+                zip.file(
+                  "wiki_content/session-" + i + ".html",
+                  headings.top + title + iden + headings.bottom + code + footer
+                )
+                addResource({
+                  xml: manifest,
+                  iden: "ccb-session-" + i,
+                  link: "wiki_content/pages/session-" + i
+                })
+                console.log(code)
+                if (i+1 <= this.weeks.length) renderWeek(i+1)
+                else renderRest()
+              })
+            }
+
+            renderWeek(1)
+
             })
         })
       })

@@ -392,6 +392,7 @@ export default {
     },
     setStateField({ commit }, payload) {
       commit('setStateField', payload)
+      return payload
     },
     chooseSavedState({ commit, state }, payload) {
       const index = _.findIndex(state.savedStates, { uuid: payload.uuid})
