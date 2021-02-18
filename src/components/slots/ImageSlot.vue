@@ -35,7 +35,8 @@ export default {
         type: 'upload-image',
         defaultWidth: this.slotData.width || 300,
         defaultHeight: this.slotData.height || 300,
-        item: this.slotItem
+        item: this.slotItem,
+        setters: this.setters
       })
       this.$store.dispatch("setDialogVisibility", true)
     },

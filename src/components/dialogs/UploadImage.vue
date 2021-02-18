@@ -78,6 +78,14 @@ export default {
           console.log(imageData)
           console.log(this.dialogData)
 
+          let imgSetter = this.dialogData.setters.imgSrc
+          if(imgSetter) {
+            this.$store.dispatch("updateSlotDataWithSetter", {
+              setter: imgSetter,
+              data: imageData.imageUrls[0]
+            }) 
+          }
+
           this.$store.dispatch("updateSlotData", {
             item: this.dialogData.item,
             data: {
