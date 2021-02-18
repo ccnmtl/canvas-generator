@@ -25,7 +25,7 @@
       </div>
 
       <draggable :disabled="!isDndMode || getDragType !== 'rows'" v-model="sortedRows" group="rows" @start="drag=true" @end="drag=false">
-        <div ref="canvascode">
+        <div :id="cid" ref="canvascode">
         <row-component v-for="row in sortedRows"
                       :key="row.rid"
                       :rid="row.rid"
@@ -104,7 +104,7 @@ export default {
       html.querySelectorAll('[data-hidden], #previewpage').forEach(element => {
         element.remove()
       })
-      return html
+      return html.innerHTML
     },
     getHTMLCode() {
       let html = this.returnCode()
