@@ -1,8 +1,10 @@
 <template>
-  <div class="canvas-code"
-       ref="canvascode"
+  <div ref="container" class="canvas-code"
+
        :class="[{ blocked: previewing }, { dragging: isDndMode }]"
        @dragend="dragEnd">
+    <h4 class="preview-text">CANVAS PREVIEW AREA</h4>
+
     <div class="canvas-container" v-if="!loading">
       <div class="preview-page" id="previewpage">
         <div class="dragging-type"  v-if="!previewing">
@@ -17,20 +19,22 @@
             <el-option label="Slots" value="slots" />
           </el-select>
         </div>
-
-        <button @click="enterEditMode" v-if="previewing" class="btn btn-primary">Enter Edit Mode</button>
-        <button @click="exitEditMode" v-else class="btn btn-secondary">Exit Edit Mode</button>
+        <el-button type="primary" @click="enterEditMode" v-if="previewing" class="btn btn-primary">Enter Edit Mode</el-button>
+        <el-button type="primary" @click="exitEditMode" v-else class="btn btn-secondary">Exit Edit Mode</el-button>
+        <el-button type="success" @click="getHTMLCode()">Copy the Code</el-button>
       </div>
 
       <draggable :disabled="!isDndMode || getDragType !== 'rows'" v-model="sortedRows" group="rows" @start="drag=true" @end="drag=false">
+        <div ref="canvascode">
         <row-component v-for="row in sortedRows"
                       :key="row.rid"
                       :rid="row.rid"
                       :row="row" />
+        </div>
       </draggable>
 
-      <button data-hidden class="new-row" @click="chooseRow">Add new Row</button>
-      <button data-hidden class="new-row" @click="getHTMLCode">get HTML</button>
+      <button data-hidden v-if="!previewing" class="new-row" @click="chooseRow">Add new Row</button>
+      <!-- <button data-hidden class="new-row" @click="getHTMLCode">get HTML</button> -->
     </div>
 
     <div class="loading" v-else>
@@ -94,14 +98,16 @@ export default {
       })
       this.$store.dispatch("setDialogVisibility", true)
     },
-    getHTMLCode() {
-      console.log(this.$refs.canvascode)
+    returnCode(){
       let html = document.createElement("div")
       html.innerHTML = this.$refs.canvascode.outerHTML.replace(/data-v[^ ]*?>/g, ">").replace(/(<!--.*?-->|data-v[^>]*? )/g, "")
-
       html.querySelectorAll('[data-hidden], #previewpage').forEach(element => {
         element.remove()
       })
+      return html
+    },
+    getHTMLCode() {
+      let html = this.returnCode()
       setTimeout(() => {
         var aux = document.createElement("input");
         aux.setAttribute("value", html.outerHTML);
@@ -117,7 +123,7 @@ export default {
       this.$snotify.success('Code has been copied', { showProgressBar: false });
     },
     exitEditMode() {
-      let html = this.$refs.canvascode
+      let html = this.$refs.container
 
       html.querySelectorAll('[data-hidden]').forEach(element => {
         element.style.display = 'none'
@@ -126,7 +132,7 @@ export default {
       this.$store.dispatch('changeDndMode', false)
     },
     enterEditMode() {
-      let html = this.$refs.canvascode
+      let html = this.$refs.container
 
       html.querySelectorAll('[data-hidden]').forEach(element => {
         element.style.display = null
@@ -156,59 +162,10 @@ export default {
         cid: self.cid,
         rows: this.defaultRows
       })
-
-      // self.$store.dispatch('createRowsFromArray', {
-      //   cid: self.cid,
-      //   rows: [[[{
-      //     type: 'name-value-slot',
-      //     getter: {
-      //       value: 'info.profs[0].name'
-      //     },
-      //     width: 8,
-      //     data: {
-      //       name: 'Getter (info.profs[0].name)'
-      //     }
-      //   }]]]
-      // })
     }
-
-    // if (!this.rows) {
-    //   this.defaultRows.forEach(row => {
-    //     let rowArray
-
-    //     // if row is built using a shorthand string then find the actual row content
-    //     if (typeof row === 'string') rowArray = _.cloneDeep(this.rowTypes[row]).array
-    //     // otherwise build directly from the row
-    //     else rowArray = row
-
-    //     self.$store.dispatch('createRowsFromArray', {
-    //       cid: self.cid,
-    //       rows: rowArray
-    //     })
-
-    //   })
-    // }
-
-    // self.$store.dispatch('createRowsFromArray', {
-    //   cid: self.cid,
-    //   rows: ['homeInstructors']
-    // })
-
-    // if (!this.rows) {
-    //   this.defaultRows.forEach(row => {
-    //     const actualRowType = _.find(RowTypes, { 'type': row })
-    //     self.$store.dispatch('createRowsFromArray', {
-    //       cid: self.cid,
-    //       rows: actualRowType.array
-    //     })
-
-    //   })
-    // }
   },
   mounted() {
-    setTimeout(() => {
-      this.exitEditMode()
-    }, 500)
+    setTimeout(() => this.exitEditMode(), 100);
   }
 }
 </script>
@@ -220,6 +177,14 @@ export default {
 
   .dragging-type {
     float: left;
+  }
+
+  .preview-text {
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -10%);
   }
 
   .drop-zone{

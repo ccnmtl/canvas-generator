@@ -294,7 +294,7 @@
 
 <script>
 import { mapGetters } from "vuex"
-import mutations from "../store/mutations"
+import PageMixin from "../components/mixins/page-mixin"
 import { quillEditor } from "vue-quill-editor"
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 import WeeklyCodeModule from "./weekly/WeeklyCodeModule"
@@ -356,7 +356,7 @@ export default {
     WeeklyDiscussion,
     WeeklyAssignment
   },
-  mixins: [mutations],
+  mixins: [PageMixin],
   computed: {
     ...mapGetters(["getInfo", "getDWeek", "getWeeks", "getCases"]),
     caseOptions() {

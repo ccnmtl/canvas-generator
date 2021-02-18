@@ -80,7 +80,7 @@
 
 <script>
 import saveState from "vue-save-state"
-import mutations from "../store/mutations"
+import PageMixin from "../components/mixins/page-mixin"
 
 export default {
   name: "Home",
@@ -106,7 +106,7 @@ export default {
       }
     }
   },
-  mixins: [saveState, mutations],
+  mixins: [saveState, PageMixin],
   computed: {},
   methods: {
     getStarted() {

@@ -137,7 +137,7 @@
 import { mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
-import mutations from "../store/mutations"
+import PageMixin from "../components/mixins/page-mixin"
 
 var moment = require("moment")
 
@@ -178,7 +178,7 @@ export default {
   components: {
     quillEditor
   },
-  mixins: [saveState, mutations],
+  mixins: [saveState, PageMixin],
   watch: {
     // Protects against selected.list becoming an object (need to track down why this happens)
     selected: function() {

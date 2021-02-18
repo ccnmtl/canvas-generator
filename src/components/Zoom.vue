@@ -118,7 +118,7 @@
 
 <script>
 import { mapGetters } from "vuex"
-import mutations from "../store/mutations"
+import PageMixin from "../components/mixins/page-mixin"
 import saveState from "vue-save-state"
 import Home from "./Home"
 import moment from "moment"
@@ -129,7 +129,7 @@ export default {
     return {}
   },
   components: {},
-  mixins: [mutations],
+  mixins: [PageMixin],
   computed: {
     ...mapGetters(["getInfo", "getDWeek", "getWeeks"])
   },
