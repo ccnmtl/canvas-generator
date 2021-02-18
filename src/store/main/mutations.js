@@ -238,4 +238,22 @@ export default {
   updateSlotTypes: (state, payload) => {
     state.slotTypes = payload
   },
+  changeDndMode: (state, mode) => {
+    state.dndMode = mode
+  },
+  setDraggingRow: (state, mode) => {
+    state.draggingRow = mode
+  },
+  setDraggedRow: (state, row) => {
+    state.draggedRow = row
+  },
+  changeRowSort: (state, payload) => {
+    Vue.set(payload.row, 'sort', payload.sort)
+  },
+  changeColumnSort: (state, payload) => {
+    Vue.set(payload.column, 'sort', payload.sort)
+  },
+  setDragType: (state, type) => {
+    state.dragType = type
+  },
 }

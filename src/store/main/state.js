@@ -36,5 +36,13 @@ export default {
   rowTypes: {},
   colTypes: {},
   slotTypes: {},
-  config: null
+  config: null,
+  dndMode: false,
+  draggingRow: false,
+  draggedRow: {},
+  draggingColumn: false,
+  draggedColumn: {},
+  draggingSlot: false,
+  draggedSlot: {},
+  dragType: 'rows'
 }

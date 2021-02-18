@@ -402,5 +402,30 @@ export default {
         })
       })
     },
-
+    changeDndMode({ commit }, mode) {
+      commit('changeDndMode', mode)
+    },
+    setDraggingRow({ commit }, mode) {
+      commit('setDraggingRow', mode)
+    },
+    setDraggedRow({ commit }, row) {
+      commit('setDraggedRow', row)
+    },
+    changeRowSort({ commit, state }, payload) {
+      const index = _.findIndex(state.rows, { rid: payload.rid })
+      commit('changeRowSort', { index, sort: payload.sort})
+    },
+    setRowsOrder({ commit }, rows) {
+      rows.forEach((row, index) => {
+        commit('changeRowSort', { row, sort: index })
+      })
+    },
+    setColumnsOrder({ commit }, columns) {
+      columns.forEach((column, index) => {
+        commit('changeColumnSort', { column, sort: index })
+      })
+    },
+    setDragType({ commit }, type) {
+      commit('setDragType', type)
+    },
 }
