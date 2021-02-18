@@ -318,7 +318,7 @@
 import { mapActions, mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
-import PageMixin from "../components/mixins/page-mixin"
+import PageMixin from "../../components/mixins/page-mixin"
 
 var moment = require("moment")
 

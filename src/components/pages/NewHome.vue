@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import ContainerComponent from './common/ContainerComponent.vue'
-import RowTypes from '../util/row-types.js'
+import ContainerComponent from '../common/ContainerComponent.vue'
+import RowTypes from '../../util/row-types.js'
 
 export default {
   name: "NewHome",

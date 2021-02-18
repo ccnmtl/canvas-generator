@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import ContainerComponent from './common/ContainerComponent.vue'
-import PageMixin from "../components/mixins/page-mixin"
-import RowTypes from '../util/row-types.js'
+import ContainerComponent from '../common/ContainerComponent.vue'
+import PageMixin from "../../components/mixins/page-mixin"
+import RowTypes from '../../util/row-types.js'
 
 export default {
   name: "NewActivity",

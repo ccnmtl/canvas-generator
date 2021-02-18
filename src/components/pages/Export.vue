@@ -116,13 +116,13 @@
 </template>
 
 <script>
-import saveFile from "../util/save-file"
-import PageMixin from "../components/mixins/page-mixin"
+import saveFile from "../../util/save-file"
+import PageMixin from "../../components/mixins/page-mixin"
 import JSZip from "jszip"
 import JSZipUtils from "jszip-utils"
 
-import weekView from "./render/weekView"
-import studentView from "./render/studentView"
+import weekView from "../render/weekView"
+import studentView from "../render/studentView"
 
 import zoom from "./Zoom"
 import list from "./WeeklyList"
@@ -130,11 +130,11 @@ import studentsList from "./StudentsList"
 import syllabus from "./Syllabus"
 import home from "./Home"
 
-import headings from "../store/export-headings"
+import headings from "../../store/export-headings"
 import moment from "moment"
 import { mapActions } from 'vuex'
 
-import ContainerComponent from './common/ContainerComponent.vue'
+import ContainerComponent from '../common/ContainerComponent.vue'
 
 
 export default {

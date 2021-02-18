@@ -1,18 +1,13 @@
 <template lang="html">
 
-  <div id="studentlist">
+  <div id="weeklylist">
 
   <hr>
 
   <div class="code-container">
 
     <div class="textbox-container">
-      <el-card class="card">
-          <el-button type="primary" @click="addStudent">Add Student</el-button>
-          <el-button type="danger" @click="clearStudents">Clear</el-button>
-          <el-button type="success" @click="sortStudents">Sort</el-button>
 
-      </el-card>
 
       <el-card class="card box-card">
         <div slot="header" class="clearfix">
@@ -32,17 +27,16 @@
 
           </el-select>
 
-          <el-button style="float: right; padding: 3px 0" type="text"@click="iEditable = !iEditable"> {{ iEditable ? "Save" : "Edit" }}</el-button>
 
         </div>
-        <el-button style="float: right; margin-bottom: 10px;" type="danger" size="medium" @click="removeStudent">Remove</el-button>
 
         <div v-show="iEditable" v-if="info.students.length > 0" class="center">
           <el-input style="width: 200px; float:left" class="e-input" :value="info.students[selected.index].name" @input="updateUser(info.students[selected.index],'name', $event)"> </el-input>
-          <el-input class="e-input" v-if="info.students" :value = "info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
+          <el-input class="e-input" v-if="info.students" :value="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
           <el-input class="e-input" v-if="info.students" :value="info.students[selected.index].title" @input="updateUser(info.students[selected.index],'title', $event)"> </el-input>
           <el-input class="e-input" v-if="info.students" type="textarea" autosize :value="info.students[selected.index].bio" @input="updateUser(info.students[selected.index],'bio', $event)"> </el-input>
           <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
+          <el-input class="e-input" v-if="info.students" :value="info.students[selected.index].company" @input="updateUser(info.students[selected.index],'company', $event)"> </el-input>
 
           <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
           <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image', info.students[selected.index])">
@@ -56,41 +50,40 @@
         </div>
       </el-card>
 
-
+     
 
 
     </div>
 
     <!-- Where the canvas code is stored -->
-    <div id="students-list-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain canvas-code'>
+    <div id="student-code" class='show-content user_content clearfix enhanced ic-Layout-contentMain canvas-code'>
       <div :class="['STV1_SlimBanner', this.$store.getters.getTheme.slim]" style="width: 1054px;">
-        <p>STUDENTS</p>
+        <p>{{info.students[selected.index].name.toUpperCase()}}</p>
       </div>
 
-      <p>Introduce yourselves and get to know one another.</p>
-      <hr>
+      <div class="clear">&nbsp;</div>
 
-      <!-- Student List -->
-      <div class="content-box">
-        <div class="grid-row">
-
-        <div style="float: left; display: inline; width: 18%; height: auto; background-color: #f7f7f7; color: #333333; margin: 20px 20px 0; padding: 10px;" v-if="info.students.length > 0" v-for="(student, index) in info.students" :key="student.id">
-          <a @click="doNothing" :href='url + "pages/student-" + student.id'><img style="width: 200px; height: auto;" :src="student.imgSrc" alt="" /></a>
-          <p style="padding-top: 10px; margin: 0 10px; color: #666666; font-size: 14px; font-weight: bold;">{{student.name}}</p>
-          <p style="margin: 0 10px; color: #999999; font-size: 12px; font-weight: normal;">{{student.company}}</p>
-        </div>
-
-          <!-- Professor Info Box -->
-
-          <!-- End Professor Info Box -->
-
-        </div>
+      <!-- Student -->
+      <div style="float: left; display: inline; width: 45%; height: auto; background-color: #f7f7f7; color: #333333; margin: 0 10px 10px 0; padding: 10px;">
+        <a href="#"><img style="width: 100%; height: auto;" :src="info.students[selected.index].imgSrc" alt="" /></a>
       </div>
 
+      <div style="float: left; display: inline; width: 48%; height: auto; background-color: #f7f7f7; color: #333333; padding: 10px;">
+        <p style="margin: 0 10px; color: #666666; font-size: 16px; font-weight: bold;">Name:</p>
+        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[selected.index].name}}</p>
+        <p style="line-height: 18px; margin: 0;">&nbsp;</p>
+        <p style="margin: 0 10px; color: #666666; font-size: 16px; font-weight: bold;">Company:</p>
+        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[selected.index].company}}</p>
+        <p style="line-height: 18px; margin: 0;">&nbsp;</p>
+        <p style="margin: 0 10px; color: #666666; font-size: 16px; font-weight: bold;">Title:</p>
+        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[selected.index].title}}</p>
+        <p style="line-height: 18px; margin: 0;">&nbsp;</p>
+        <p style="margin: 0 10px; color: #666666; font-size: 16px; font-weight: bold;">Bio:</p>
+        <p style="margin: 0 10px; color: #999999; font-size: 16px; font-weight: normal;">{{info.students[selected.index].bio}}</p>
+      </div>
+  
 
-
-
-
+    
       <div class="clear">&nbsp;</div>
 
 
@@ -100,21 +93,21 @@
 
   <div class="uk-float-right">
     <a class="uk-button uk-button-primary" href="#modal-overflow" uk-toggle>View the Code</a>
-    <button class="uk-button uk-button-primary" @click="copyText({elem:'aux', div: 'students-list-code'})">Copy the Code</button>
+    <button class="uk-button uk-button-primary" @click="copyText({elem:'aux', div: 'student-code'})">Copy the Code</button>
     <button class="uk-button uk-button-danger" @click="setToDefault">Reset to Default</button>
   </div>
 
   <div id="modal-overflow" uk-modal>
       <div class="uk-modal-dialog">
 
-          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <button class="uk-modal-close-default" type="button" uk-close />
 
           <div class="uk-modal-header">
               <h2 class="uk-modal-title">Canvas Code</h2>
           </div>
 
           <div class="uk-modal-body" uk-overflow-auto>
-            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120"></textarea>
+            <textarea @click="copyText" v-model="outputCode" id="copy-text-area" rows="30" cols="120" />
           </div>
 
           <div class="uk-modal-footer uk-text-right">
@@ -141,10 +134,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex"
+import { mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import saveState from "vue-save-state"
-import PageMixin from "../components/mixins/page-mixin"
+import PageMixin from "../../components/mixins/page-mixin"
 
 var moment = require("moment")
 
@@ -165,7 +158,7 @@ var toolbarOptions = [
 ]
 
 export default {
-  name: "StudentsList",
+  name: "Student",
   data() {
     return {
       userInput: {
@@ -174,7 +167,7 @@ export default {
       },
       iEditable: true,
       outputCode: "",
-      selected: { index: 0 },
+      selected: { index: 0, list: "students" },
       editorOption: {
         modules: {
           toolbar: toolbarOptions
@@ -188,6 +181,11 @@ export default {
   mixins: [saveState, PageMixin],
   watch: {
     // Protects against selected.list becoming an object (need to track down why this happens)
+    selected: function() {
+      if (typeof this.selected.list !== "string") {
+        this.selected.list = "profs"
+      }
+    }
   },
   computed: {
     ...mapGetters(["getInfo", "getDStudent", "getWeeks", "getTheme"]),
@@ -196,11 +194,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["deleteStudent"]),
-    doNothing(e) {
-      e.preventDefault();
-      return false;
-    },
     formatDate(date) {
       return moment(date).format("MMMM Do")
     },
@@ -245,40 +238,28 @@ export default {
         }
       )
     },
-    addStudent() {
-      this.$store.dispatch("addStudent")
-
-      this.selected = {
-        index: this.info.students.length - 1,
-        key: this.info.students[this.info.students.length - 1].id
-      }
-      this.sortStudents()
-    },
+    
     removeStudent() {
-
-      let { key, index } = this.selected
-      let student = this.info.students[index]
-
+      let { list, index } = this.selected
+      console.log(list)
+      let users = _.cloneDeep(this.info[list])
+      users.splice(index, 1)
       if (index == 0) {
-        this.selected = { index: 0, key: this.info.students[0].id }
+        if (list == "students") {
+          console.log("tried to delete student")
+          return
+          console.log("after return")
+        }
+        console.log("deleting last ta")
+        this.selected = { index: 0, list: "students" }
       } else {
-        this.$store.dispatch("deleteStudent", student)
-        this.selected = { index: index - 1, key: this.info.students[index - 1].id }
+        this.selected = { index: index - 1, list }
       }
+      this.updateProp(list, users)
     },
 
     clearStudents() {
-      this.$store.dispatch("clearStudents")
-      this.selected = { index: 0, key: this.info.students[0].id }
-
-    },
-
-    sortStudents() {
-      this.info.students.sort(function(a, b) {
-        var textA = a.name.toUpperCase()
-        var textB = b.name.toUpperCase()
-        return textA < textB ? -1 : textA > textB ? 1 : 0
-      })
+      this.info.students = [this.getDStudent]
     },
 
     setToDefault() {
@@ -290,20 +271,16 @@ export default {
         this.updateProp(prop, dInfo[prop])
       })
     },
-
+    
     getSaveStateConfig() {
       return {
-        cacheKey: "Student List"
+        cacheKey: "Student"
       }
     }
   },
-
   mounted() {
-    if (this.info.students.length < 1) this.addStudent()
-    this.selected = { index: 0, key: this.info.students[0].id }
-    this.updateCode("student-list-code")
+    this.updateCode("student-code")
   },
-
   beforeCreate() {},
   beforeUpdate() {}
 }

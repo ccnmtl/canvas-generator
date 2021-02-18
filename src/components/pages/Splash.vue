@@ -90,7 +90,7 @@
 
 <script>
 import saveState from "vue-save-state"
-import PageMixin from "../components/mixins/page-mixin"
+import PageMixin from "../../components/mixins/page-mixin"
 import { quillEditor } from "vue-quill-editor"
 
 export default {

@@ -80,7 +80,7 @@
 
 <script>
 import saveState from "vue-save-state"
-import PageMixin from "../components/mixins/page-mixin"
+import PageMixin from "../../components/mixins/page-mixin"
 
 export default {
   name: "Home",

@@ -118,7 +118,7 @@
 
 <script>
 import { mapGetters } from "vuex"
-import PageMixin from "../components/mixins/page-mixin"
+import PageMixin from "../../components/mixins/page-mixin"
 import saveState from "vue-save-state"
 import Home from "./Home"
 import moment from "moment"

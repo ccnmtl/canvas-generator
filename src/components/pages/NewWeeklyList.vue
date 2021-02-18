@@ -14,8 +14,8 @@
 
 <script>
 import _ from 'lodash'
-import ContainerComponent from './common/ContainerComponent.vue'
-import RowTypes from '../util/row-types.js'
+import ContainerComponent from '../common/ContainerComponent.vue'
+import RowTypes from '../../util/row-types.js'
 import { mapGetters, mapActions } from 'vuex'
 
 
