@@ -28,10 +28,10 @@
 
         <h5>Slot Styles</h5>
 
-        <div class="style-item" v-for="(st, i) in asArray(styles)" :key="i">
+        <div class="style-item" v-for="(st, i) in asArray(styles)" :key="'style' + i">
             <span>
                 {{ st[0] + ': ' + st[1] }}
-                <i class="el-icon-error" />
+                <i class="el-icon-error" @click="deleteStyle(st)" />
             </span>
         </div>
 
@@ -50,10 +50,10 @@
 
         <h5>Slot CSS Classes</h5>
 
-        <div class="class-item" v-for="(cls, i) in classes" :key="i">
+        <div class="class-item" v-for="(cls, i) in classes" :key="'class' + i">
             <span class="bg">
                 {{ cls }}
-                <i class="el-icon-error" />
+                <i class="el-icon-error" @click="deleteClass(i)" />
             </span>
         </div>
 
@@ -71,6 +71,7 @@
 
 <script>
 
+import Vue from 'vue'
 import _ from 'lodash'
 import slotTypes from '../../util/slot-types.js'
 import StyleOptions from '../../util/style-options.json'
@@ -113,6 +114,12 @@ export default {
     asArray(obj) {
       return Object.keys(obj).map((key) => [key, obj[key]])
     },
+    deleteStyle(st) {
+      Vue.delete(this.styles, st[0]);
+    },
+    deleteClass(index) {
+      Vue.delete(this.classes, index);
+    },
     changeSlotData() {
       this.$store.dispatch("setDialogVisibility", false)
       this.$store.dispatch("setDialogData", {
@@ -139,16 +146,14 @@ export default {
     saveChanges() {
         const finalStyles = {}
 
-        this.styles.forEach((st, i, arr) => {
-            finalStyles[st.att] = st.value + ' !important'
-
-            if(i == arr.length - 1) {
-                this.$store.dispatch("setSlotStyles", {
-                    slot: this.dialogData.slotData,
-                    styles: finalStyles
-                })
-            }
+        this.asArray(this.styles).forEach(st => {
+            finalStyles[st[0]] = st[1]
         });
+
+        this.$store.dispatch("setSlotStyles", {
+            slot: this.dialogData.slotData,
+            styles: finalStyles
+        })
 
         this.$store.dispatch("setSlotClasses", {
             slot: this.dialogData.slotData,
@@ -176,11 +181,7 @@ export default {
     addStyle() {
         if(this.styleAtt && this.styleVal) {
             this.usedStyles.push(this.styleAtt)
-            this.styles.push({
-                att: this.styleAtt,
-                value: this.styleVal,
-            })
-
+            this.styles[this.styleAtt] = this.styleVal
             this.styleAtt = null
             this.styleVal = ''
         }

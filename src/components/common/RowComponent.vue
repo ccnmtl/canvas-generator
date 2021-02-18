@@ -1,5 +1,7 @@
 <template>
-  <div class="row content-box" :class="{ empty: !columns }">
+  <div class="row content-box"
+       :class="[{ empty: !columns }, { 'dragging-mode': $store.getters.isDndMode }]" draggable>
+
     <div data-hidden class="empty-text" v-if="!columns">
       Start adding columns to this row!
 
@@ -21,29 +23,33 @@
         <span>Delete Row</span>
       </button>
     </div>
-    <div class="grid-row">
-      <column-component v-for="column in sortedColumns"
-                          :key="column.colid"
-                          :col="column"
-                          :rid="rid"
-                          :cid="row.cid"
-                          :colspan="colspan"
-                          :space="12 - totalWidth" />
+    <div class="row">
+      <draggable :disabled="!isDndMode || getDragType !== 'columns'" v-model="sortedColumns" group="columns" @start="drag=true" @end="drag=false">
+        <column-component v-for="column in sortedColumns"
+                            :key="column.colid"
+                            :col="column"
+                            :rid="rid"
+                            :cid="row.cid"
+                            :colspan="colspan"
+                            :space="12 - totalWidth" />
+      </draggable>
 
     </div>
-    </div>
-
+  </div>
 </template>
 
 <script>
 
 import _ from 'lodash'
+import { mapGetters } from "vuex"
+import draggable from 'vuedraggable'
 import ColumnComponent from "./ColumnComponent.vue"
 import RowTypeMixin from "../../util/row-types"
 
 export default {
   components: {
-    ColumnComponent
+    ColumnComponent,
+    draggable
   },
   mixins: [RowTypeMixin],
   props: [ "rid", "row" ],
@@ -51,11 +57,17 @@ export default {
     return {}
   },
   computed: {
+    ...mapGetters([ 'getDraggedRow', 'isDndMode', 'getDragType' ]),
     columns: function() {
       return this.$store.getters.getColumnsByRowID[this.rid]
     },
-    sortedColumns: function() {
-      return _.sortBy(this.columns, ['sort'])
+    sortedColumns: {
+      get() {
+        return _.sortBy(this.columns, ['sort'])
+      },
+      set(val) {
+        this.$store.dispatch('setColumnsOrder', val)
+      }
     },
     totalWidth() {
       if(!this.columns) return 0
@@ -104,7 +116,7 @@ export default {
         rid: this.rid,
       })
       this.$store.dispatch("setDialogVisibility", true)
-    },    
+    },
   }
 }
 </script>
@@ -113,10 +125,28 @@ export default {
 .row {
   margin-bottom: 10px;
 
+  &.dragging-mode {
+    transition: all 0.43s;
+  }
+
   &:hover {
     .float {
       opacity: 1;
     }
+  }
+
+  .drag-handler {
+    transition: all 0.43s;
+    position: absolute;
+    z-index: 999;
+    background: #DDD;
+    font-size: 26px;
+    width: 37px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: move;
+    margin-left: -50px;
+    top: calc(50% - 37px);
   }
 
   &.empty {

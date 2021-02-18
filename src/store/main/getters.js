@@ -116,5 +116,8 @@ export default {
   getRowTypes: state => state.rowTypes,
   getColTypes: state => state.colTypes,
   getSlotTypes: state => state.slotTypes,
-
+  isDndMode: state => state.dndMode,
+  isDraggingRow: state => state.draggingRow,
+  getDraggedRow: state => state.draggedRow,
+  getDragType: state => state.dragType,
 }

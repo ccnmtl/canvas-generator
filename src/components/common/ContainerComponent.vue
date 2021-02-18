@@ -1,15 +1,33 @@
 <template>
-  <div class="canvas-code" ref="canvascode" :class="{ blocked: previewing }">
+  <div class="canvas-code"
+       ref="canvascode"
+       :class="[{ blocked: previewing }, { dragging: isDndMode }]"
+       @dragend="dragEnd">
     <div class="canvas-container" v-if="!loading">
       <div class="preview-page" id="previewpage">
-        <button @click="previewPage" v-if="!previewing" class="btn btn-primary">Preview this Page</button>
-        <button @click="stopPreview" v-else class="btn btn-secondary">Stop Preview</button>
+        <div class="dragging-type"  v-if="!previewing">
+          Dragging
+
+          <el-select :value="getDragType"
+            @input="updateDragType($event)"
+            placeholder="Select type">
+
+            <el-option label="Rows" value="rows" />
+            <el-option label="Columns" value="columns" />
+            <el-option label="Slots" value="slots" />
+          </el-select>
+        </div>
+
+        <button @click="enterEditMode" v-if="previewing" class="btn btn-primary">Enter Edit Mode</button>
+        <button @click="exitEditMode" v-else class="btn btn-secondary">Exit Edit Mode</button>
       </div>
 
-      <row-component v-for="row in sortedRows"
-                    :key="row.rid"
-                    :rid="row.rid"
-                    :row="row" />
+      <draggable :disabled="!isDndMode || getDragType !== 'rows'" v-model="sortedRows" group="rows" @start="drag=true" @end="drag=false">
+        <row-component v-for="row in sortedRows"
+                      :key="row.rid"
+                      :rid="row.rid"
+                      :row="row" />
+      </draggable>
 
       <button data-hidden class="new-row" @click="chooseRow">Add new Row</button>
       <button data-hidden class="new-row" @click="getHTMLCode">get HTML</button>
@@ -29,30 +47,39 @@ import { mapGetters } from "vuex"
 import RowComponent from "./RowComponent.vue"
 // import RowTypes from '../../util/row-types.json'
 import RowTypesMixin from '../../util/row-types.js'
-
+import draggable from 'vuedraggable'
 
 export default {
   components: {
-    RowComponent
+    RowComponent,
+    draggable
   },
   mixins: [RowTypesMixin],
   props: [ "cid", "defaultRows" ],
   data() {
     return {
-      previewing: false,
+      previewing: true,
       loading: false,
       rowsDone: [],
       columnsDone: [],
-      slotsDone: []
+      slotsDone: [],
     }
   },
   computed: {
-    ...mapGetters,
+    ...mapGetters([ 'getDraggedRow', 'isDndMode', 'getDragType' ]),
     rows: function() {
       return this.$store.getters.getRowsByCID[this.cid]
     },
-    sortedRows: function() {
-      return _.sortBy(this.rows, ['sort'])
+    sortedRows: {
+      get() {
+        return _.sortBy(this.rows, ['sort'])
+      },
+      set(val) {
+        this.$store.dispatch('setRowsOrder', val)
+      }
+    },
+    dndMode: function() {
+      return this.isDndMode
     }
   },
   methods: {
@@ -89,21 +116,35 @@ export default {
       }, 40)
       this.$snotify.success('Code has been copied', { showProgressBar: false });
     },
-    previewPage() {
+    exitEditMode() {
       let html = this.$refs.canvascode
 
       html.querySelectorAll('[data-hidden]').forEach(element => {
         element.style.display = 'none'
       })
       this.previewing = true
+      this.$store.dispatch('changeDndMode', false)
     },
-    stopPreview() {
+    enterEditMode() {
       let html = this.$refs.canvascode
 
       html.querySelectorAll('[data-hidden]').forEach(element => {
         element.style.display = null
       })
       this.previewing = false
+      this.$store.dispatch('changeDndMode', true)
+    },
+    startDnd() {
+      this.$store.dispatch('changeDndMode', true)
+    },
+    stopDnd() {
+      this.$store.dispatch('changeDndMode', false)
+    },
+    dragEnd() {
+      this.$store.dispatch('setDraggingRow', false)
+    },
+    updateDragType(type) {
+      this.$store.dispatch('setDragType', type)
     }
   },
   beforeMount() {
@@ -163,6 +204,13 @@ export default {
 
     //   })
     // }
+  },
+  mounted() {
+    let html = this.$refs.canvascode
+
+    html.querySelectorAll('[data-dnd]').forEach(element => {
+      element.style.display = 'none'
+    })
   }
 }
 </script>
@@ -172,9 +220,22 @@ export default {
   padding: 25px 0;
   font-size: 14px;
 
-  &.blocked {
-    .row {
-      pointer-events: none;
+  .dragging-type {
+    float: left;
+  }
+
+  .drop-zone{
+    transition: all 0.43s;
+    height: 0;
+
+    &.dragging {
+      background: #EEE;
+      height: 34px;
+      display: block;
+
+      &:hover {
+        background-color: #38D;
+      }
     }
   }
 
