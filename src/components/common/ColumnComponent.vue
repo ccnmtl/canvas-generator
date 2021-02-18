@@ -89,13 +89,15 @@ export default {
 
 <style scoped lang="scss">
 .el-col {
-  padding: 0 10px;
-
   &:hover {
     .actions {
       height: 50px;
       margin-bottom: 20px;
     }
+  }
+
+  &.h {
+    display: none;
   }
 
   &.empty {

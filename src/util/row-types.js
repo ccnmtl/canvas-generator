@@ -74,8 +74,19 @@ export default {
           name: "Simple Banner",
           type: "banner-row",
           icon: "picture",
+          sort: -2,
           array: [
             ['banner-col']
+          ],
+        },
+        weeklyActivityListIntro: {
+          id: 6,
+          name: "Simple Banner",
+          type: "weekly-activity-list-intro",
+          icon: "document",
+          sort: -1,
+          array: [
+            ['activity-list-intro']
           ],
         },
         activityRow: {
@@ -143,7 +154,7 @@ export default {
       let sidebarCol = this.activitySidebarCol({
         title: {
           getter: {
-            value: `weeks[${index}].title` 
+            value: `weeks[${index}].title`
           },
         },
         date: {

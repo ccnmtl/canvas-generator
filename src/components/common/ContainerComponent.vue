@@ -206,11 +206,9 @@ export default {
     // }
   },
   mounted() {
-    let html = this.$refs.canvascode
-
-    html.querySelectorAll('[data-dnd]').forEach(element => {
-      element.style.display = 'none'
-    })
+    setTimeout(() => {
+      this.exitEditMode()
+    }, 500)
   }
 }
 </script>

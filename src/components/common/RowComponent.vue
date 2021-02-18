@@ -1,5 +1,5 @@
 <template>
-  <div class="row content-box"
+  <div class="outer-row content-box"
        :class="[{ empty: !columns }, { 'dragging-mode': $store.getters.isDndMode }]" draggable>
 
     <div data-hidden class="empty-text" v-if="!columns">
@@ -23,15 +23,15 @@
         <span>Delete Row</span>
       </button>
     </div>
-    <div class="row">
-      <draggable :disabled="!isDndMode || getDragType !== 'columns'" v-model="sortedColumns" group="columns" @start="drag=true" @end="drag=false">
+    <div class="row" style="display: flex; margin: 0 -15px">
+      <draggable style="width: 100%; display: flex" :disabled="!isDndMode || getDragType !== 'columns'" v-model="sortedColumns" group="columns" @start="drag=true" @end="drag=false">
         <column-component v-for="column in sortedColumns"
-                            :key="column.colid"
-                            :col="column"
-                            :rid="rid"
-                            :cid="row.cid"
-                            :colspan="colspan"
-                            :space="12 - totalWidth" />
+                          :key="column.colid"
+                          :col="column"
+                          :rid="rid"
+                          :cid="row.cid"
+                          :colspan="colspan"
+                          :space="12 - totalWidth" />
       </draggable>
 
     </div>
@@ -122,8 +122,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.row {
+.outer-row {
   margin-bottom: 10px;
+  padding: 0 15px;
 
   &.dragging-mode {
     transition: all 0.43s;
@@ -132,6 +133,22 @@ export default {
   &:hover {
     .float {
       opacity: 1;
+    }
+  }
+
+  .grid-row {
+    box-sizing: border-box;
+    display: block;
+    -webkit-flex-direction: column;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: 0;
+    margin-left: 0;
+    width: auto;
+
+    .h {
+      display: none;
     }
   }
 
