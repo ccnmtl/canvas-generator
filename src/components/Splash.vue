@@ -90,7 +90,7 @@
 
 <script>
 import saveState from "vue-save-state"
-import mutations from "../store/mutations"
+import PageMixin from "../components/mixins/page-mixin"
 import { quillEditor } from "vue-quill-editor"
 
 export default {
@@ -119,7 +119,7 @@ export default {
       }
     }
   },
-  mixins: [saveState, mutations],
+  mixins: [saveState, PageMixin],
   computed: {},
   methods: {
     getStarted() {

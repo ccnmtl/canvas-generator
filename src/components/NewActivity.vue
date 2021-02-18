@@ -16,7 +16,7 @@
 
 <script>
 import ContainerComponent from './common/ContainerComponent.vue'
-import mutations from "../store/mutations"
+import PageMixin from "../components/mixins/page-mixin"
 import RowTypes from '../util/row-types.js'
 
 export default {
@@ -39,7 +39,7 @@ export default {
       ]
     }
   },
-  mixins: [RowTypes, mutations],
+  mixins: [RowTypes, PageMixin],
   mounted(){
   }
 }

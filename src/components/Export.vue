@@ -116,7 +116,7 @@
 
 <script>
 import saveFile from "../util/save-file"
-import mutations from "../store/mutations"
+import PageMixin from "../components/mixins/page-mixin"
 import JSZip from "jszip"
 import JSZipUtils from "jszip-utils"
 
@@ -145,7 +145,7 @@ export default {
   computed: {
   },
   components: { home, syllabus, weekView, list, zoom, studentView, studentsList },
-  mixins: [mutations],
+  mixins: [PageMixin],
   mounted() {
     let manifest = this.readLocalXML("../../static/files/Clean Course/course_settings/course_settings.xml")
     console.log(manifest)

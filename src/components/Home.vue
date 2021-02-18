@@ -238,7 +238,7 @@ import saveState from "vue-save-state"
 import { quillEditor } from "vue-quill-editor"
 import validator from "validator"
 import _ from "lodash"
-import mutations from "../store/mutations"
+import PageMixin from "../components/mixins/page-mixin"
 import homeView from "./render/homeView"
 
 import xml2js from "xml2js"
@@ -274,7 +274,7 @@ export default {
     quillEditor,
     homeView
   },
-  mixins: [saveState, mutations],
+  mixins: [saveState, PageMixin],
   computed: {
     // Parses an inputted video link to output the correct embed link for the source
     videoLink() {
