@@ -34,10 +34,8 @@ export default {
   computed: {
   },
   watch: {
-    
   },
   methods: {
-
   }
 }
 </script>

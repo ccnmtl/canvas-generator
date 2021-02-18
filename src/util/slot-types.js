@@ -20,7 +20,7 @@ export default {
           pages: '*',
           icon: "edit",
           colspan: 4,
-          visible: true,
+          visible: true,        
           defaultData: {
             title: "Default Title",
             type: "h1"

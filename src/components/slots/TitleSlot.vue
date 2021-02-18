@@ -14,7 +14,7 @@
         <option value="h6">H6</option>
         <option value="custom">Custom</option>
       </select>
-      <button class="btn btn-primary" :class="'font-' + data.type" @click="finishEditing">
+      <button class="btn btn-primary" :class="'font-' + data.type" @click="finishEditing('title')">
         Save changes
       </button>
     </span>
@@ -33,7 +33,7 @@ export default {
     return {
       editing: null,
       data: this.slotData ? this.slotData : {
-        title: '',
+        title: 'Default Title',
         type: 'h1'
       }
     }
@@ -41,15 +41,8 @@ export default {
   computed: {
   },
   watch: {
-
   },
   methods: {
-    setEditing(field) {
-      this.editing = field
-      setTimeout(() => {
-        this.$refs[field].focus()
-      }, 200)
-    },
   }
 }
 </script>

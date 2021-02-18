@@ -19,18 +19,6 @@ export default {
     }
   },
   methods: {
-    setEditing(field) {
-      this.editing = field
-    },
-    finishEditing() {
-      if(this.data.content) {
-        this.$store.dispatch("updateSlotData", {
-          item: this.slotItem,
-          data: this.data
-        })
-        this.editing = null
-      }
-    },
   }
 }
 </script>
