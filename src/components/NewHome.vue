@@ -13,45 +13,20 @@ export default {
   name: "NewHome",
   data() {
     return {
-      defRows: [
-        'banner-row',
-        'welcome-row',
-        'instructor-ta-row',
-        'date-time-row',
-        'list-row',
-      ],
-
-      defRowsStringLayout: [
-        'home-welcome',
-        'home-welcome',
-        'home-instructors',
-        ["home-sidebar"],
-        [['image-slot'],['image-slot']]
-      ],
       homeLayout: [
         'home-banner-row',
-        [[{
-          type: 'image-slot',
-          width: 6
-          }], 'home-sidebar'],
+        [['image-slot'], 'home-sidebar'],
         'home-instructors-row',
         'date-time-row',
       ],
-      syllabusLayout: [
-        'banner-row',
-        'list-row',
-        'date-time-row',
-      ],
-      studentListLayout: [
-
-
-      ]
     }
   },
   components: {
     ContainerComponent
   },
-  mixins: [RowTypes]
+  mixins: [RowTypes],
+  methods: {
+  }
 }
 </script>
 
