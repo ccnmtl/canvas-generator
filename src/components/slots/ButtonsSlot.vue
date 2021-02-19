@@ -1,12 +1,9 @@
 <template>
   <div :id="sid" class="col button-slot">
-    <template v-for="button in data.buttons">
-      <button class="Button" v-if="button.type == 'button'" :key="button.label">{{ button.label }}</button>
-      <router-link class="Button"
-         style="margin-right: 5px"
-         v-else
-         :key="button.label"
-         :to="button.to ? button.to : '/'">{{ button.label }}</router-link>
+    <template v-for="button in data.buttons" >
+      <a :href="createLink(button.to)" @click="doNothing" :key="button.label" class="Button" style="margin-right: 7px;">
+        {{ button.label }}
+      </a>
     </template>
   </div>
 </template>
@@ -33,12 +30,10 @@ export default {
 <style scoped lang="scss">
 
 .content-slot {
-  padding: 12px;
   color: #333;
 }
 
-button {
-  margin-top: 16px;
+Button {
   margin-right: 7px;
 }
 

@@ -12,6 +12,10 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(["getInfo"]),
+    info() {
+      return this.getInfo
+    },
     getterData: function () {
       const self = this
       if (!this.slotItem.getter) return null
@@ -110,6 +114,9 @@ export default {
     },
     formatWeek(date) {
       return moment(date).format("dddd, MMMM Do")
+    },
+    createLink(link){
+      return this.info.url + link
     },
     doNothing(e) {
       e.preventDefault();
