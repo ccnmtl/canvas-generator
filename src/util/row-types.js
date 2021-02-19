@@ -80,7 +80,7 @@ export default {
           ],
         },
         weeklyActivityListIntro: {
-          id: 6,
+          id: 7,
           name: "Simple Banner",
           type: "weekly-activity-list-intro",
           icon: "document",
@@ -90,7 +90,7 @@ export default {
           ],
         },
         activityRow: {
-          id: 7,
+          id: 8,
           name: "Activity Row",
           type: "activity-row",
           icon: "picture",

@@ -198,6 +198,16 @@ export default {
           visible: false,
           defaultData: {
           }
+        },
+        ActivityTableSlot: {
+          id: 16,
+          name: "Activity Table Slot",
+          type: 'activity-table-slot',
+          pages: '*',
+          icon: "menu",
+          visible: true,
+          defaultData: {
+          }
         }
       }
     }
