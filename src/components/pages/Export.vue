@@ -104,14 +104,6 @@
     </div>
     <students-list v-show="false" ref="studentsList" />
 
-
-    <div class="clearfix" />
-
-    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
-      <div class="uk-background-muted uk-padding">
-        <p>Copyright © Columbia University. All rights reserved.</p>
-      </div>
-    </div>
   </div>
 </template>
 

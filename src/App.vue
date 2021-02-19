@@ -209,6 +209,13 @@
       width="50%">
         <component :is="dialogData.type" :dialogData="dialogData" @cancelDialog="closeDialog" />
     </el-dialog>
+    <div class="clearfix" />
+
+    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
+        <div class="uk-background-muted uk-padding">
+        <p>Copyright © Columbia University. All rights reserved.</p>
+         </div>
+    </div>
   </div>
 </template>
 
