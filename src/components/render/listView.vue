@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import mutations from "../../store/mutations"
+import PageMixin from "../../components/mixins/page-mixin"
 import WeeklyListItem from "../weekly/WeeklyListItem"
 
 export default {
@@ -124,7 +124,7 @@ export default {
   components: {
     WeeklyListItem
   },
-  mixins: [mutations]
+  mixins: [pagemixin]
 }
 </script>
 

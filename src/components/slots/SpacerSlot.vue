@@ -26,7 +26,7 @@ export default {
 <style scoped lang="scss">
 
 .content-slot {
-  padding: 16px;
+  // padding: 16px;
   color: #333;
 }
 

@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import mutations from "../../store/mutations"
+import PageMixin from "../../components/mixins/page-mixin"
 var moment = require("moment")
 
 export default {
@@ -70,7 +70,7 @@ export default {
     }
   },
   props: ["idx"],
-  mixins: [mutations]
+  mixins: [PageMixin]
 }
 </script>
 

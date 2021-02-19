@@ -10,17 +10,18 @@
       <!-- Breadcrumb navigation bar -->
       <el-col :span="12" style="padding: 10px;">
           <ul class="bcTrail center">
+            <li><router-link class="router" to="/home-new">Home#</router-link></li>
             <li><router-link class="router" to="/home">Home</router-link></li>
-            <li><router-link class="router" to="/home-new">Home Prototype</router-link></li>
-            <li><router-link class="router" to="/weekly-new">WeeklyPrototype</router-link></li>
-            <li><router-link class="router" to="/activity-new">Activity Prototype</router-link></li>
+            <li><router-link class="router" to="/weekly-new">Activity List#</router-link></li>
+            <li><router-link class="router" to="/activities">Activities List</router-link></li>
+            <li><router-link class="router" to="/activity-new">Activity#</router-link></li>
+            <li><router-link class="router" to="/weekly">Activity</router-link></li>
+            <li><router-link class="router" to="/syllabus-new">Syllabus#</router-link></li>
             <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
             <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program">Program Overview</router-link></li>
-            <li><router-link class="router" to="/studentlist">Students List</router-link></li>
-            <li><router-link class="router" to="/student">Student</router-link></li>
-            <li><router-link class="router" to="/activities">Activities</router-link></li>
-            <li><router-link class="router" to="/weekly">Individual Activity</router-link></li>
-            <li v-show="info.useZoom"><router-link class="router"  to="/zoom">Zoom</router-link></li>
+            <!-- <li><router-link class="router" to="/studentlist">Students List</router-link></li>
+            <li><router-link class="router" to="/student">Student</router-link></li> -->
+            <!-- <li v-show="info.useZoom"><router-link class="router"  to="/zoom">Zoom</router-link></li> -->
             <li><router-link class="router" to="/export">Export</router-link></li>
           </ul>
       </el-col>
@@ -216,7 +217,7 @@ import _ from 'lodash'
 import saveState from "vue-save-state"
 import { mapGetters, mapActions } from "vuex"
 import help from "./store/help"
-import mutations from "./store/mutations"
+import PageMixin from "./components/mixins/page-mixin"
 
 // Dialog Types
 import ConfigSlot from "./components/dialogs/ConfigSlot.vue"
@@ -336,7 +337,7 @@ export default {
       this.dialogFormVisible = true
     }
   },
-  mixins: [saveState, mutations],
+  mixins: [saveState, PageMixin],
   computed: {
     ...mapGetters([ 'isSettingsVisible', 'getCurrentCourse', 'getCurrentVersion', 'getSavedStates', 'getWeeks' ]),
     loading() {

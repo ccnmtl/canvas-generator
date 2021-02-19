@@ -148,7 +148,7 @@
 </template>
 
 <script>
-import mutations from "../../store/mutations"
+import PageMixin from "../../components/mixins/page-mixin"
 var moment = require("moment")
 
 export default {
@@ -177,7 +177,7 @@ export default {
       return val.replace(/\r?\n/g, "<br />")
     }
   },
-  mixins: [mutations]
+  mixins: [PageMixin]
 }
 </script>
 

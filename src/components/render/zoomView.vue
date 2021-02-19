@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import mutations from "../../store/mutations"
+import PageMixin from "../../components/mixins/page-mixin"
 var moment = require("moment")
 import WeeklyVideo from "../weekly/WeeklyVideo"
 import WeeklyDiscussion from "../weekly/WeeklyDiscussion"
@@ -90,7 +90,7 @@ export default {
     }
   },
   props: ["idx"],
-  mixins: [mutations],
+  mixins: [PageMixin],
   components: {
     WeeklyVideo,
     WeeklyDiscussion,

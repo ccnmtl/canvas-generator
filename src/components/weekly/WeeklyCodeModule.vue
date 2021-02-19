@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import mutations from "../../store/mutations"
+import PageMixin from "../../components/mixins/page-mixin"
 
 export default {
   data() {
@@ -79,7 +79,7 @@ export default {
     }
   },
   props: ["content", "fn", "inputs", "property", "idx"],
-  mixins: [mutations]
+  mixins: [PageMixin]
 }
 </script>
 
