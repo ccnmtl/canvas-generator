@@ -23,7 +23,7 @@ export default {
           visible: true,        
           defaultData: {
             title: "Default Title",
-            type: "h1"
+            type: "h2"
           }
         },
         bannerSlot: {
