@@ -7,6 +7,7 @@ export default {
   getConfig: state => state.config,
   loading: state => state.loading,
   getWeeks: state => state.weeks,
+  getImageServer: state => state.imageServer,
   getSelectedWeekID: state => state.selectedWeekID,
   getStudents: state => state.weeks,
   isDialogVisible: state => state.dialogVisible,

@@ -30,15 +30,14 @@
           <li><a href="#">instructors</a></li>
           <li><a href="#">Meeting Times</a></li>
           <li><a href="#">Banner</a></li>
-          <li><a href="#">Buttons</a></li>
         </ul>
         <ul id="tab-content" class="uk-switcher uk-margin">
           <li class="uk-active uk-text-center">
 
             <!-- Alerts based on validation of course title and url -->
             <el-alert
-              title="Course Info Incomplete"
-              type="warning" class="alert" show-icon
+              title="Course Info Incomplete" effect="dark"
+              type="warning" class="alert" show-icon center
               description="The course title or course URL are currently empty or not valid. Please complete these sections to continue."
               v-show="!checkTitle">
             </el-alert>
@@ -88,19 +87,6 @@
                 <!-- <el-checkbox v-if="theme.wide" v-model="info.wideBanner" @input="updateProp('wideBanner', $event)" >Use Wide Banner</el-checkbox> -->
             </label>
 
-          </li>
-          <li class="uk-text-center">
-            Syllabus Button
-            <el-switch
-              :value="info.sylButton"
-              @input="updateProp('sylButton', $event)">
-            </el-switch>
-            <br>
-            Activities Button
-            <el-switch
-              :value="info.weekButton"
-              @input="updateProp('weekButton', $event)">
-            </el-switch>
           </li>
         </ul>
       </div>
@@ -173,6 +159,7 @@ el-tab-pane {
 .alert {
   width: 50%;
   margin: auto;
+  text-align: center;
   margin-bottom: 10px;
 }
 

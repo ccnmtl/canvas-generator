@@ -22,7 +22,7 @@ export default {
         },        
         homeSidebar: {
           id: 1,
-          name: "Banner Row",
+          name: "Home Sidebar",
           type: "home-sidebar",
           pages: '*',          
           icon: "picture",

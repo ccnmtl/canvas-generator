@@ -5,14 +5,22 @@
       <el-tab-pane :label="dialogData.cid.toUpperCase() + ' COLUMNS'">
         <div class="col">
           <el-col v-for="col in pageColTypes" :key="col.id" :span="6" class="col-item">
-            <div v-if="isPageType(col)" class="col-content"
-                  :class="{ selected: col.id === selectedCol }"
-                  @click="selectedCol = col.id">
-              <div class="col-icon">
-                <i :class="'el-icon-' + col.icon"></i>
+            <el-popover
+              placement="right-end"
+              title="Column Preview"
+              width="400"
+              trigger="click">
+              <img :src="imageServer + col.type + '.PNG'" alt="">
+              <div v-if="isPageType(col)" class="col-content"
+                    :class="{ selected: col.id === selectedCol }"
+                    @click="selectedCol = col.id" slot="reference">
+                <div class="col-icon">
+                  <i :class="'el-icon-' + col.icon"></i>
+                </div>
+                <div class="col-title">{{ col.name }}</div>
               </div>
-              <div class="col-title">{{ col.name }}</div>
-            </div>
+            </el-popover>
+
           </el-col>
         </div>
       </el-tab-pane>
@@ -73,7 +81,8 @@ export default {
   computed: {
     ...mapGetters({
       fullColTypes: 'getColTypes',
-      Config: 'getConfig'
+      Config: 'getConfig',
+      imageServer: 'getImageServer'
     }),
     ColTypes(){
       if (this.Config.cols.visible == '*'){
