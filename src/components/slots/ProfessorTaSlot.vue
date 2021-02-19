@@ -1,7 +1,7 @@
 <template>
   <div :id="sid" class="professor-ta-slot">
     <div class="pad-box-mini border border-tl">
-      <div class="STV1_ProfileBG" style="background: rgb(31, 19, 71);">
+      <div class="STV1_ProfileBG color-columbia-blue" :style="{background:getTheme.primary}">
         <img :src="slotData.imgSrc" class="STV1_SyllabusPhoto">
         </div>
         <p>{{ slotData.type }}:</p>

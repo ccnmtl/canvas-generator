@@ -12,7 +12,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getInfo"]),
+    ...mapGetters(["getInfo", 'getTheme']),
     info() {
       return this.getInfo
     },
