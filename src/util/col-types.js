@@ -102,7 +102,7 @@ export default {
             {
               type: "content-slot",
               data: {
-                content: 'This is a sample Syllabus Element'
+                content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec maximus odio id aliquam vestibulum.'
               },
               styles: {
               }
@@ -111,7 +111,6 @@ export default {
               type: "spacer-slot",
               data: {
                 useHR: true,
-                size: 2
               }
             }
         ]
@@ -429,7 +428,10 @@ export default {
     syllabusComponentCol(options){
       let column = _.cloneDeep(this.colTypes.syllabusComponent.array)
 
-      column[0] = _.merge(column[0], options.syllabus)
+      column[0] = _.merge(column[0], options.title)
+      column[1] = _.merge(column[1], options.content)
+      column[2] = _.merge(column[2], options.spacer)
+
 
       return column
     },

@@ -4,6 +4,7 @@ import Splash from 'components/pages/Splash'
 import Home from 'components/pages/Home'
 import NewHome from 'components/pages/NewHome'
 import NewActivity from 'components/pages/NewActivity'
+import NewSyllabus from 'components/pages/NewSyllabus'
 import NewWeeklyList from 'components/pages/NewWeeklyList'
 import Syllabus from 'components/pages/Syllabus'
 import Program from 'components/pages/ProgramOverview'
@@ -49,6 +50,11 @@ export default new Router({
       path: '/syllabus',
       name: 'Syllabus Template',
       component: Syllabus
+    },
+    {
+      path: '/syllabus-new',
+      name: 'New Syllabus',
+      component: NewSyllabus
     },
     {
       path: '/weekly',

@@ -103,6 +103,7 @@ export default {
     },
     profDefault: {
       name: 'Professor Name',
+      type: 'Professor',
       id: 1,
       email: 'professor@sipa.columbia.edu',
       office: 'Office Hours: Monday 3:00-6:00 pm (IAB Room 1234)',
@@ -117,6 +118,7 @@ export default {
     },
     taDefault: {
       name: 'TA Name',
+      type: 'Teaching Assistant',
       id: 1,
       email: 'TA@sipa.columbia.edu',
       office: 'Office Hours: Tuesday 1:00-3:00 pm (IAB Room 1234)',

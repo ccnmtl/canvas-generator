@@ -4,7 +4,7 @@
       <div class="STV1_ProfileBG" style="background: rgb(31, 19, 71);">
         <img :src="slotData.imgSrc" class="STV1_SyllabusPhoto">
         </div>
-        <p>{{ slotItem.type }}:</p>
+        <p>{{ slotData.type }}:</p>
         <p>
           {{ slotData.name }} (<a :href="'mailto:' + slotData.email">{{ slotData.email }}</a>)
           <br>
