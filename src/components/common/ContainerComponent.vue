@@ -16,7 +16,7 @@
 
             <el-option label="Rows" value="rows" />
             <el-option label="Columns" value="columns" />
-            <el-option label="Slots" value="slots" />
+            <!-- <el-option label="Slots" value="slots" /> -->
           </el-select>
         </div>
         <el-button type="primary" @click="enterEditMode" v-if="previewing" class="btn btn-primary">Enter Edit Mode</el-button>

@@ -81,7 +81,7 @@ export default {
         },
         weeklyActivityListIntro: {
           id: 7,
-          name: "Simple Banner",
+          name: "Activity List Intro",
           type: "weekly-activity-list-intro",
           icon: "document",
           sort: -1,
