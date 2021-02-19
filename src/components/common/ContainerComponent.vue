@@ -110,7 +110,7 @@ export default {
       let html = this.returnCode()
       setTimeout(() => {
         var aux = document.createElement("input");
-        aux.setAttribute("value", html.outerHTML);
+        aux.setAttribute("value", html);
         aux.id = 'code-input-copy'
         document.body.appendChild(aux);
         aux.select();

@@ -35,14 +35,6 @@
     </div>
   </div>
 
-    <div class="clearfix"></div>
-
-    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left" uk-grid>
-        <div class="uk-background-muted uk-padding uk-margin-xlarge-top">
-    		<p>Copyright © Columbia University. All rights reserved.</p>
-       	</div>
-    </div>
-
     <el-dialog  title="Course Info" :visible.sync="dialogFormVisible" style="width: 80%; margin:auto;">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px">
         <el-form-item label="Course Title" prop="title">

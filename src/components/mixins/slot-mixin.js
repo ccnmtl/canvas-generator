@@ -111,6 +111,9 @@ export default {
     formatWeek(date) {
       return moment(date).format("dddd, MMMM Do")
     },
-
+    doNothing(e) {
+      e.preventDefault();
+      return false;
+    },
   },
 }
