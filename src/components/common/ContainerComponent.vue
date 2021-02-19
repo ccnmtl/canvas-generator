@@ -172,7 +172,6 @@ export default {
 
 <style lang="scss">
 .canvas-code {
-  padding: 25px 0;
   font-size: 14px;
 
   .dragging-type {
