@@ -94,10 +94,12 @@
     <container-component v-show="false" cid="home" ref="home"/>
     <container-component v-show="false" cid="activity" ref="activity"/>
     <container-component v-show="false" cid="syllabus" ref="syllabus"/>
+    <container-component v-show="false" cid="activities-list" ref="list"/>
+
 
     <zoom v-show="false" ref="zoom" />
     <!-- <syllabus v-show="false" ref="syllabus" /> -->
-    <list v-show="false" ref="list" />
+    <!-- <list v-show="false" ref="list" /> -->
     <div v-for="n in (weeks.length)" :key="n">
       <week-view v-show="false" :idx="n-1" :ref="'week'+ n" />
     </div>
@@ -176,14 +178,14 @@ export default {
         }
 
         JSZip.loadAsync(data).then(zip => {
-          console.log(this.$refs.home.returnCode() )
           zip.file("wiki_content/home.html", headings.home + this.$refs.home.returnCode() + footer)
+          console.log(this.$refs.syllabus.returnCode())
           zip.file(
             "course_settings/syllabus.html",
             headings.syllabus + this.$refs.syllabus.returnCode() + footer
           )
 
-          zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode("list-code") + footer)
+          zip.file("wiki_content/activities.html", headings.list + this.$refs.list.returnCode() + footer)
 
           zip.file(
             "wiki_content/students.html",
