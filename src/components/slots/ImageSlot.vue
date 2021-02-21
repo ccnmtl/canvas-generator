@@ -1,6 +1,8 @@
 <template>
   <div :id="sid" class="col content-slot">
-    <img :src="data.imgSrc" :style="[forceDimensions ? {width: data.width + 'px', height: data.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()" />
+    <a :href="data.link" @click="doNothing" :class="{'has-pointer': !data.link}">
+      <img :src="data.imgSrc"  :style="[forceDimensions ? {width: data.width + 'px', height: data.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()" />
+    </a>
   </div>
 </template>
 
@@ -49,6 +51,10 @@ export default {
 .content-slot {
   // padding: 12px;
   color: #333;
+}
+
+.has-pointer {
+  cursor: context-menu;
 }
 
 button {
