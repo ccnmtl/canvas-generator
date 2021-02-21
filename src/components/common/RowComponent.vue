@@ -18,6 +18,17 @@
         <span>Add Column</span>
       </button>
 
+      <router-link
+          to="/activity-new"
+          @click.native="setSelectedWeek"
+          v-if="row.data.weekID">
+          <button  class="btn  btn-success float">
+            <i class="el-icon-edit"></i>
+            <span>Edit Activity</span>
+          </button>
+      </router-link>
+
+
       <button @click="deleteRow" class="btn btn-danger float delete">
         <i class="el-icon-delete"></i>
         <span>Delete Row</span>
@@ -117,6 +128,12 @@ export default {
       })
       this.$store.dispatch("setDialogVisibility", true)
     },
+    setSelectedWeek(){
+      this.$store.dispatch('setStateField', {
+        field: 'selectedWeekID', 
+        value: this.row.data.weekID
+      })
+    }
   }
 }
 </script>
