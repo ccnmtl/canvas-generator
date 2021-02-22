@@ -1,23 +1,108 @@
 <template>
 
   <div class="home-page">
-    <el-input-number  style="margin: 10px;" v-model="userInput.toChange" :min="1" :max="20" />
+    <div class="code-container">
+    <hr>
+    <div class="textbox-container">
+      <el-input-number  style="margin: 10px;" v-model="userInput.toChange" :min="1" :max="20" />
 
       <button type="button" class="add-weekly center uk-button uk-button-primary"
       name="button" @click="populateActivities(userInput.toChange)">Edit # of Activities</button>
 
+      <div v-if="info.classType.option == 'Weekly Course'" class="center">
+        <strong>Start Date:</strong>
+        <el-date-picker
+          style="margin: 10px; margin-bottom:20px"
+          :value="info.startDate"
+          @input="changeStartDate($event)"
+          type="date"
+          placeholder="Pick start date">
+        </el-date-picker>
+      </div>
+
       <hr>
+
+      <div>
+        <el-card>
+        <div class="code-input center">
+          Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
+            controls-position="right" size="small" :label="'Edit ' + info.classType.dateType" />
+        </div>
+
+        <select v-model="userInput.weekNumber" class="uk-select" >
+          <option v-for="n in weeks.length" :value="n" :key="n">{{info.classType.dateType}} {{n}}</option>
+        </select>
+
+        <div v-if="weeks.length > 0">
+          <div class="code-input center ">
+            <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
+
+            <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
+            <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
+              <input name="image" id="image-file" type="file"> <br>
+              <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+            </form>
+            <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url')">
+              <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
+              <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
+            </form>
+            <button class="uk-button uk-button-danger uk-margin-small-top" @click="setDefaultImage(userInput.weekNumber - 1)">Reset Image</button>
+
+          </div>
+        </div>
+        </el-card>
+        <div class="center add-weekly">
+          Links
+          <el-switch
+            :value="info.useLinks"
+            @input="updateProp('useLinks', $event)"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+
+          Dates
+          <el-switch
+            :value="info.useDates"
+            @input="updateProp('useDates', $event)"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+        </div>
+        <div class="center add-weekly">
+          Images
+          <el-switch
+            :value="info.useWeeklyImages"
+            @input="updateProp('useWeeklyImages', $event)"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+        </div>
+
+      </div>
+    </div>
     <container-component cid="activities-list" :defaultRows="homeLayout"/>
+    </div>
   </div>
 
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex"
+import PageMixin from "../../components/mixins/page-mixin"
+import { quillEditor } from "vue-quill-editor"
+import saveState from "vue-save-state"
 import _ from 'lodash'
 import ContainerComponent from '../common/ContainerComponent.vue'
 import RowTypes from '../../util/row-types.js'
-import { mapGetters, mapActions } from 'vuex'
 
+var moment = require("moment")
+
+var toolbarOptions = [
+  ["bold", "italic", "underline"],
+  ["blockquote", { list: "ordered" }, { list: "bullet" }],
+  [{ header: [1, 2, 3, 4, 5, 6, false] }, "clean"],
+  ["link", "image"]
+]
 
 export default {
   name: "NewWeekly",
@@ -33,6 +118,11 @@ export default {
       },
       needsInit: true,
       outputCode: "",
+      editorOption: {
+        modules: {
+          toolbar: toolbarOptions
+        }
+      },      
       homeLayout: [
         'banner-row',
       ],
@@ -50,6 +140,38 @@ export default {
   },
   methods: {
     ...mapActions(['deleteRow', 'deleteRows',"addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
+    updateSwitch() {
+      this.userInput.isFile = !this.userInput.isFile
+      this.userInput.uploadSwitchText = this.userInput.isFile
+        ? "Click to Upload Image from URL"
+        : "Click to Upload Image from Computer"
+    },
+    changeStartDate(event) {
+      this.updateProp("startDate", event)
+      this.updateDates()
+    },
+    updateDates() {
+      // right now do not update if in exec training mode
+      if (true) {
+        //this.info.classType.dateType == "Week"
+        this.weeks.forEach((week, index) => {
+          let interval = this.info.classType.option == "Weekly Course" ? "w" : "d"
+          let date = moment(this.info.startDate).add(index, interval)
+          this.updateWeek(index, "date", date)
+        })
+      }
+    },
+    updateImages() {
+      this.weeks.forEach((week, index) => {
+        if (index > 14 && this.info.classType.dateType == "Week") index = 14
+        let imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + ".png"
+        if (week.imgSrc.includes(this.$store.state.imageServer)) this.updateWeek(index, "imgSrc", imgSrc)
+      })
+    },
+    setDefaultImage(index) {
+      let imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + ".png"
+      this.updateWeek(index, "imgSrc", imgSrc)
+    },    
     AddActivity() {
       let index = this.weeks.length + 1
       this.addWeek(index)
@@ -68,7 +190,45 @@ export default {
       }
 
     },
+    onFormSubmit(type, ev) {
+      var formData = new FormData()
+
+      if (type == "url") {
+        console.log("uploading url...")
+        var imageurl = document.querySelector("#image-url") // Gets form data in html
+        if (imageurl.value == "") return
+        formData.append("imageUrl", imageurl.value) // Adds api header to tell server that it is a url
+      } else {
+        console.log("uploading file...")
+        var imagefile = document.querySelector("#image-file")
+        if (imagefile.files.length == 0) return
+        formData.append("image", imagefile.files[0]) // Adds api header to tell server that it is a file
+      }
+
+      // More api headers to tell the server the dimensions to crop
+      formData.append("imageWidth", 360)
+      formData.append("imageHeight", 150)
+
+      // Send post request to Amazon server using vue-resource with form data
+      this.$http.post("http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image", formData).then(
+        response => {
+          console.log("success")
+          let imageData = JSON.parse(response.bodyText)
+          this.updateWeek(this.userInput.weekNumber - 1, "imgSrc", imageData.imageUrls[0]) // Change requisite weekly activity image src to the hosted file
+          // this.weeks[this.userInput.weekNumber - 1].imgSrc = imageData.imageUrls[0]
+        },
+        response => {
+          console.log(response)
+        }
+      )
+    },    
+    getSaveStateConfig() {
+      return {
+        cacheKey: "Weeklylist"
+      }
+    }    
   },
+  mixins: [RowTypes, saveState, PageMixin],  
   watch: {
     weeks: {
       handler(newWeeks) {
@@ -119,10 +279,75 @@ export default {
   components: {
     ContainerComponent
   },
-  mixins: [RowTypes]
 }
 </script>
 
 <style scoped lang="scss">
+h1,
+h2 {
+  font-weight: normal;
+}
 
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+textarea {
+  width: auto;
+}
+
+.add-weekly {
+  margin: 10px;
+}
+
+.week-card {
+  width: 400px;
+}
+
+.textbox-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 350px;
+  margin-left: 3%;
+  margin-right: 30px;
+  align-self: flex-start;
+  margin-top: 20px;
+}
+
+.code-input {
+  margin: 10px;
+}
+
+.quill {
+  width: 75%;
+}
+
+#canvas-code {
+  width: 1090px;
+  margin: auto;
+  align-self: flex-start;
+}
+
+.code-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#copy-text-area {
+  width: 80%;
+  height: 200px;
+}
+
+.GFbanner {
+  height: 190px;
+}
 </style>
