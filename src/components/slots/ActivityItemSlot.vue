@@ -2,19 +2,18 @@
   <div :id="sid"  class="ig-row ig-published">
       <div class="ig-row__layout">
           <div class="ig-type-icon" aria-hidden="true"><i :class="iconType"></i></div>
-          <div class="ig-info"><a class="ig-title" :href="data.item.link" :data-api-endpoint="data.item.link" :data-api-returntype="data.item.type"> {{data.item.type.charAt(0).toUpperCase() + data.item.type.slice(1)}} {{data.index + 1}}</a>
+          <div class="ig-info">
+            <a class="ig-title" :href="data.link" @click="doNothing" :data-api-endpoint="data.link" :data-api-returntype="data.type">
+              <span @dblclick="setEditing('title')" v-if="editing !== 'title'" > {{data.title}} </span>
+              <span data-hidden v-else>
+                <input ref="title" @blur="finishEditing('title')" v-model="data.title" />
+              </span> 
+            </a>
             <div class="ig-details">
-              <!-- <div class="ig-details__item"><strong>Due</strong> {{formatWeek(data.item.due)}}</div>
-              <div class="ig-details__item">
-                <name-value-slot 
-                  :sid="'name-value-' + this.sid"
-                  :slotData='{type: "date", name: "Due", value: data.item.due, nameStyle: {"font-weight": "bold"}}'
-                  :slotItem={} />
-                </div> -->
                 <div class="ig-details__item">
                 <name-value-slot 
                   :sid="'name-value-' + this.sid"
-                  :slotData='{type: "date", name: "Due", value: "",nameStyle: {"font-weight": "bold"}}'
+                  :slotData='{type: "date", name: "Due", value: data.due ,nameStyle: {"font-weight": "bold"}}'
                   :slotItem='{
                     getter: {
                       value: testGetter
@@ -50,24 +49,32 @@ export default {
     return {
       editing: null,
       data: {},
-      editableProps: ['type', 'item', 'index']
     }
   },
   computed: {
     ...mapGetters(['getWeekItemPropGetter','getWeekItemPropByID']),
     iconType: function() {
-      return 'icon-' + this.data.item.type
+      return 'icon-' + this.data.type
     },
     testGetter: function() {
-      return this.getWeekItemPropGetter('due', this.data.item.type + 's', this.data.item.id)
+      return this.getWeekItemPropGetter('due', this.data.type + 's', this.data.id)
     },
     testValue: function() {
-      return this.getWeekItemPropByID('due', this.data.item.type + 's', this.data.item.id)
+      return this.getWeekItemPropByID('due', this.data.type + 's', this.data.id)
     }
   },
   watch: {
   },
   methods: {
+    finishEditing(field) {
+      if (this.data[field]) {
+        this.$store.dispatch("updateSlotDataWithSetter", {
+          setter: this.getWeekItemPropByID(field, this.data.type + 's', this.data.id).set,
+          data: this.data[field]
+        }) 
+        this.editing = null
+      }
+    },
   }
 }
 </script>

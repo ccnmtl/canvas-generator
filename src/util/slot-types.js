@@ -113,8 +113,10 @@ export default {
           icon: "menu",
           visible: true,
           defaultData: {
-            type: 'discussion',
-            item: this.getWeeks[0].discussions[0]
+            title: "Activity",
+            type: "activity",
+            link: "",
+            due: this.getInfo.startDate
           }
         },
         ActivityItemListSlot: {

@@ -31,7 +31,7 @@ export default {
       },
       slots: {
         visible: '*', // * show all slots, an Array can be used to show specific slots
-        hidden: ['slot-name', 'list-slot', 'case-slot', 'name-value-slot', ], // this only works if visible is set to *
+        hidden: ['slot-name', 'list-slot', 'case-slot', 'name-value-slot', 'activity-item-list-slot', 'activity-video-list-slot'], // this only works if visible is set to *
         customSlots: {}
       },
       optionalPages: [], // Array of pages that don't show by default

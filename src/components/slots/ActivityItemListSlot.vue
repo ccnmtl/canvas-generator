@@ -4,7 +4,7 @@
         <ul id="cond_group_1" class="ig-list">
           <li v-for="(item, index) in itemList" :key="item.id">
             <activity-item-slot 
-            :slotData="{item, index}"
+            :slotData="item"
             :slotItem="{}"/>
           </li>
         </ul>
