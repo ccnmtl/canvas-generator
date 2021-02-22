@@ -520,4 +520,7 @@ html {
   max-height: 52vh;
   overflow: auto;
 }
+
+.tox-notifications-container {display: none !important;}
+
 </style>

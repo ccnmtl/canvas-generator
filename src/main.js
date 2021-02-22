@@ -18,7 +18,7 @@ import VueTippy from 'vue-tippy';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'; // Use this OR theme chalk in index.html
 import locale from 'element-ui/lib/locale/lang/en';
-// import CKEditor from '@ckeditor/ckeditor5-vue';
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
 Vue.use(UUID);
 Vue.use(VueDraggable);
@@ -28,7 +28,7 @@ Vue.use(ElementUI, {
   locale
 });
 Vue.use(VueTippy);
-// Vue.use(CKEditor);
+Vue.use(CKEditor);
 
 // Create Global methods
 let GlobalMethods = {};
