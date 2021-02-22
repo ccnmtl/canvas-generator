@@ -5,42 +5,63 @@
       <el-tab-pane :label="dialogData.cid.toUpperCase() + ' SLOTS'">
         <div class="slot">
           <el-col v-for="slot in pageSlotTypes" :key="slot.id" :span="6" class="slot-item">
-            <div v-if="isPageType(slot)" class="slot-content"
-                  :class="{ selected: slot.id === selectedSlot }"
-                  @click="selectedSlot = slot.id">
-              <div class="slot-icon">
-                <i :class="'el-icon-' + slot.icon"></i>
+            <el-popover
+              placement="right-end"
+              title="Slot Preview"
+              width="400"
+              trigger="click">
+              <img :src="imageServer + 'preview-images/slots/' + slot.type + '.PNG'" alt="">
+              <div v-if="isPageType(slot)" class="slot-content"
+                    :class="{ selected: slot.id === selectedSlot }"
+                    @click="selectedSlot = slot.id" slot="reference">
+                <div class="slot-icon">
+                  <i :class="'el-icon-' + slot.icon"></i>
+                </div>
+                <div class="slot-title">{{ slot.name }}</div>
               </div>
-              <div class="slot-title">{{ slot.name }}</div>
-            </div>
+            </el-popover>
           </el-col>
         </div>
       </el-tab-pane>
       <el-tab-pane label="OTHER SLOTS">
         <div class="slot">
           <el-col v-for="slot in otherSlotTypes" :key="slot.id" :span="6" class="slot-item">
-            <div  class="slot-content"
-                  :class="{ selected: slot.id === selectedSlot }"
-                  @click="selectedSlot = slot.id">
-              <div class="slot-icon">
-                <i :class="'el-icon-' + slot.icon"></i>
+            <el-popover
+              placement="right-end"
+              title="Slot Preview"
+              width="400"
+              trigger="click">
+              <img :src="imageServer + 'preview-images/slots/' + slot.type + '.PNG'" alt="">
+              <div v-if="isPageType(slot)" class="slot-content"
+                    :class="{ selected: slot.id === selectedSlot }"
+                    @click="selectedSlot = slot.id" slot="reference">
+                <div class="slot-icon">
+                  <i :class="'el-icon-' + slot.icon"></i>
+                </div>
+                <div class="slot-title">{{ slot.name }}</div>
               </div>
-              <div class="slot-title">{{ slot.name }}</div>
-            </div>
+            </el-popover>
           </el-col>
         </div>
       </el-tab-pane>
       <el-tab-pane label="All SLOTS">
         <div class="slot">
           <el-col v-for="slot in SlotTypes" :key="slot.id" :span="6" class="slot-item">
-            <div class="slot-content"
-                  :class="{ selected: slot.id === selectedSlot }"
-                  @click="selectedSlot = slot.id">
-              <div class="slot-icon">
-                <i :class="'el-icon-' + slot.icon"></i>
+            <el-popover
+              placement="right-end"
+              title="Slot Preview"
+              width="400"
+              trigger="click">
+              <img :src="imageServer + 'preview-images/slots/' + slot.type + '.PNG'" alt="">
+              <div v-if="isPageType(slot)" class="slot-content"
+                    :class="{ selected: slot.id === selectedSlot }"
+                    @click="selectedSlot = slot.id" slot="reference">
+                <div class="slot-icon">
+                  <i :class="'el-icon-' + slot.icon"></i>
+                </div>
+                <div class="slot-title">{{ slot.name }}</div>
               </div>
-              <div class="slot-title">{{ slot.name }}</div>
-            </div>
+            </el-popover>
           </el-col>
         </div>
       </el-tab-pane>
@@ -74,7 +95,8 @@ export default {
   computed:{
     ...mapGetters({
       fullSlotTypes: 'getSlotTypes',
-      Config: 'getConfig'      
+      Config: 'getConfig',
+      imageServer: 'getImageServer'      
     }),
     SlotTypes(){
       if (this.Config.slots.visible == '*'){
