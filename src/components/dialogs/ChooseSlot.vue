@@ -110,7 +110,9 @@ export default {
         rid: this.dialogData.rid,
         cid: this.dialogData.cid,
         colid: this.dialogData.colid,
-        data: actualSlotType.defaultData
+        data: actualSlotType.defaultData,
+        classes: actualSlotType.classes,
+        styles: actualSlotType.styles
       })
       this.$store.dispatch("setDialogVisibility", false)
     },

@@ -177,6 +177,8 @@ export default {
             cid: column.cid,
             colid: column.colid,
             data: { ...actualSlotType.defaultData, ...slot.data}, //slot.data ? slot.data : actualSlotType.defaultData,
+            classes: slot.classes ? slot.classes : [],
+            styles: slot.styles ? slot.styles : [],
             getter: actualSlotType.getter ? actualSlotType.getter : null
           })
         }

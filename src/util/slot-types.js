@@ -88,17 +88,6 @@ export default {
           defaultData: {
           }
         },
-        simpleListSot: {
-          id: 7,
-          name: "Simple List Slot",
-          type: "simple-list-slot",
-          pages: '*',
-          icon: "menu",
-          colspan: 4,
-          visible: true,
-          defaultData: {
-          }
-        },
         nameValueSlot: {
           id: 8,
           name: "Name Value Slot",
@@ -114,17 +103,6 @@ export default {
             name: "Title",
             getter: "info.startDate",
             nameStyle: {'font-weight': 'bold'}
-          }
-        },
-        instructorListSlot: {
-          id: 9,
-          name: "Instructor List Slot",
-          type: "instructor-list-slot",
-          pages: '*',
-          icon: "menu",
-          colspan: 4,
-          visible: true,
-          defaultData: {
           }
         },
         ActivityItemSlot: {
@@ -208,7 +186,62 @@ export default {
           visible: true,
           defaultData: {
           }
-        }
+        },
+        InstructorList: {
+          id: 17,
+          name:"Instructor List",
+          type: "simple-list-slot",
+          pages: '*',
+          icon: "picture",
+          getter: "info.profs",
+          width: 6,
+          classes: [
+            "pad-box-mini",
+            "border",
+            "border-tbl"
+          ],
+          defaultData: {
+            idField: "id",
+            labelField: "name",
+            emailField: "email",
+            type: "instructor-ta",
+            title: "Instructor:",
+            officeField: "office"
+          }                    
+        },
+        TAList: {
+          id: 18,
+          name:"TA List",
+          type: "simple-list-slot",
+          pages: '*',
+          icon: "picture",
+          getter: "info.tas",
+          width: 6,
+          classes: [
+            "pad-box-mini",
+            "border",
+            "border-tbl"
+          ],
+          defaultData: {
+            idField: "id",
+            labelField: "name",
+            emailField: "email",
+            type: "instructor-ta",
+            title: "Teaching Assistant:",
+            officeField: "office"
+          }                    
+        },
+        instructorListSlot: {
+          id: 9,
+          name: "Expanded Instructors List",
+          type: "instructor-list-slot",
+          pages: '*',
+          icon: "menu",
+          colspan: 4,
+          visible: true,
+          defaultData: {
+          }
+        },
       }
     }
   },

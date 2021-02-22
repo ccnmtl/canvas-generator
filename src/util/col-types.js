@@ -51,7 +51,7 @@ export default {
             {
               type: "buttons-slot",
               styles: {
-                margin: "50px 0 20px",
+                margin: "10px 0 20px",
                 padding: "0",
                 "font-size": "14px"
               },
@@ -115,59 +115,6 @@ export default {
             }
         ]
         },
-        instructorList: {
-          id: 4,
-          name: "Instructor List",
-          type: "instructor-list",
-          pages: '*',
-          icon: "picture",                    
-          array: [
-          {
-              type: "simple-list-slot",
-              getter: "info.profs",
-              data: {
-                idField: "id",
-                labelField: "name",
-                emailField: "email",
-                type: "instructor-ta",
-                title: "Instructor:",
-                officeField: "office"
-              },
-              classes: [
-                "pad-box-mini",
-                "border",
-                "border-tbl"
-              ]
-            }
-        ]
-        },
-        instructorTaList: {
-          id: 5,
-          name:"Instructor TA List",
-          type:"instructor-TA-list",
-          pages: '*',
-          icon: "picture",                    
-          array:[
-            {
-              type: "list-slot",
-              getter: "info.profs",
-              width: 6,
-              data: {
-                idField: "id",
-                labelField: "name",
-                emailField: "email",
-                type: "instructor-ta",
-                title: "Instructor:",
-                officeField: "office"
-              },
-              classes: [
-                "pad-box-mini",
-                "border",
-                "border-tbl"
-              ]
-            }
-          ],
-        },
         homeBanner:{
             id: 6,
             name: "Banner",
@@ -223,35 +170,12 @@ export default {
               }
             ]
         },
-        instructorTaExpandedList:{
-          id: 8,
-          name: "Instructor TA Expanded List",
-          type: 'instructor-expanded-list',
-          pages: '*',
-          icon: "picture",                    
-          array: [
-            {
-              type: "list-slot",
-              getter: "info.profs",
-              getter2: "info.tas",
-              width: 6,
-              data: {
-                idField: "id",
-                labelField: "name",
-                emailField: "email",
-                type: "instructor-ta",
-                title: "TA:",
-                officeField: "office",
-                component: "professor-ta-slot"
-              }
-            }
-          ]
-        },
         activityImage:{
           id: 9,
           name: "Activity Image",
           type: 'activity-image',
           pages: '*',
+          visible: false,        
           icon: "picture",                    
           array: [
             {
@@ -298,12 +222,10 @@ export default {
             {
               width: 8,
               type: "name-value-slot",
-              getter: {
-                value: "info.startDate"
-              },
               data: {
                 name: "Class",
                 type: 'date',
+                value: this.getInfo.startDate
               },
             },
           ]
