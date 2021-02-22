@@ -24,14 +24,14 @@
         <el-button type="success" @click="getHTMLCode()">Copy the Code</el-button>
       </div>
 
-      <draggable :disabled="!isDndMode || getDragType !== 'rows'" v-model="sortedRows" group="rows" @start="drag=true" @end="drag=false">
-        <div :id="cid" ref="canvascode">
-        <row-component v-for="row in sortedRows"
-                      :key="row.rid"
-                      :rid="row.rid"
-                      :row="row" />
-        </div>
-      </draggable>
+      <div :id="cid" ref="canvascode">
+        <draggable :disabled="!isDndMode || getDragType !== 'rows'" v-model="sortedRows" group="rows" @start="drag=true" @end="drag=false">
+          <row-component v-for="row in sortedRows"
+                        :key="row.rid"
+                        :rid="row.rid"
+                        :row="row" />
+        </draggable>
+      </div>
 
       <button data-hidden v-if="!previewing" class="new-row" @click="chooseRow">Add new Row</button>
       <!-- <button data-hidden class="new-row" @click="getHTMLCode">get HTML</button> -->
