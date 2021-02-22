@@ -1,11 +1,17 @@
 <template>
   <div class="slot-outer">
     <div data-hidden  class="delete-options">
+      <el-button @click="showDeleteSlot"
+                 type="danger"
+                 icon="el-icon-delete"
+                 circle>
+        <span>Delete Slot</span>
+      </el-button>
       <el-button @click="showConfigSlot"
                  type="secondary"
                  icon="el-icon-s-tools"
                  circle>
-        <span>Slot Options</span>
+        <span class="smaller">Slot Data</span>
       </el-button>
     </div>
     <component :is="type"
@@ -63,7 +69,7 @@ export default {
     NameValueSlot,
   },
   props: [ "sid", "slotData", "colspan", "width" ],
-  mixins: [slotTypes],  
+  mixins: [slotTypes],
   data() {
     return {
       data: {}
@@ -140,7 +146,11 @@ export default {
         padding: 10px 11px;
 
         span {
-          width: 77px;
+          width: 74px;
+
+          &.smaller {
+            width: 64px;
+          }
         }
       }
     }
