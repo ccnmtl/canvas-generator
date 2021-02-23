@@ -1,5 +1,6 @@
 <template>
   <div :id="sid" class="col name-value-slot">
+    <a :href="createLink(data.link)" @click="doNothing" :class="{'has-pointer': (!data.link && !data.linkID)}">
     <span :style="data.nameStyle">{{ data.name}}:</span>
     <span v-for="n in data.breakSize" :key="n"> <br> </span>
     <span v-if="data.type == 'date'">
@@ -20,6 +21,7 @@
         <input ref="value" @blur="finishEditing('value')" v-model="data.value" />
       </span>
     </span>
+    </a>
   </div>
 </template>
 
@@ -91,6 +93,12 @@ export default {
 .content-slot {
   padding: 12px;
   color: #333;
+}
+
+.has-pointer {
+  color: black;
+  cursor: context-menu;
+  text-decoration: none; 
 }
 
 button {
