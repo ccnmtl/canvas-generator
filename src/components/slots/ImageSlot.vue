@@ -34,7 +34,8 @@ export default {
       this.$store.dispatch("setDialogData", {
         title: 'Slot Data - Image',
         type: 'slot-data-image-slot',
-        slotData: this.slotItem
+        slotData: this.slotItem,
+        setters: this.setters
       })
       this.$store.dispatch("setDialogVisibility", true)
 
