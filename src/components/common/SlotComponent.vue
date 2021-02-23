@@ -94,7 +94,7 @@ export default {
       return this.findSlot('id', this.data.type ).name
     },
     slotDataType(){
-      let values = ['image-slot', 'banner-slot', 'video-slot']
+      let values = ['banner-slot', 'video-slot']
       return _.some(values, (el) => _.includes(this.type, el));
     }
   },
