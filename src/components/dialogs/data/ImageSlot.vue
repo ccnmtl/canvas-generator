@@ -31,7 +31,7 @@
         </div>
         <div class="col-sm-6">
           <label>Current Image:
-            <img :src="data.imgSrc" alt="" />
+            <br><img :src="data.imgSrc" alt="" />
           </label>
         </div>
       </div>
