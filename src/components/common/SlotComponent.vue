@@ -7,9 +7,9 @@
                  circle>
         <span>Delete Slot</span>
       </el-button>
-      <el-button @click="showConfigSlot"
+      <el-button @click="showSlotData"
                  type="secondary"
-                 icon="el-icon-s-tools"
+                 icon="el-icon-edit"
                  circle>
         <span class="smaller">Slot Data</span>
       </el-button>
@@ -89,6 +89,9 @@ export default {
     type() {
       return this.findSlot('id', this.data.type ).type
     },
+    typeName() {
+      return this.findSlot('id', this.data.type ).name
+    },
   },
   methods: {
     showDeleteSlot() {
@@ -99,10 +102,10 @@ export default {
       })
       this.$store.dispatch("setDialogVisibility", true)
     },
-    showConfigSlot() {
+    showSlotData() {
       this.$store.dispatch("setDialogData", {
-        title: 'Config Slot',
-        type: 'config-slot',
+        title: 'Slot Data - ' + this.typeName,
+        type: 'slot-data-' + this.type,
         slotData: this.data
       })
       this.$store.dispatch("setDialogVisibility", true)

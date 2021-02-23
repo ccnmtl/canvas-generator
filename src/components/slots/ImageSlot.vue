@@ -1,5 +1,5 @@
 <template>
-  <div :id="sid" class="col content-slot">
+  <div :id="sid" class="col content-slot" style="display: flex; align-items: center; justify-content: center; min-height: 300px;">
     <a :href="data.link" @click="doNothing" :class="{'has-pointer': !data.link}">
       <img :src="data.imgSrc"  :style="[forceDimensions ? {width: data.width + 'px', height: data.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()" />
     </a>
@@ -13,11 +13,11 @@ import slotMixin from '../mixins/slot-mixin.js'
 export default {
   name: "ImageSlot",
   props: [ "sid", "slotData", "slotItem", "width" ],
-  mixins: [slotMixin],  
+  mixins: [slotMixin],
   data() {
     return {
       editing: null,
-      forceDimensions: false,
+      forceDimensions: true,
       imgWidth: this.slotData.width || 300,
       imgHeight: this.slotData.height || 300,
     }
@@ -49,8 +49,8 @@ export default {
 <style scoped lang="scss">
 
 .content-slot {
-  // padding: 12px;
   color: #333;
+  display: flex;
 }
 
 .has-pointer {
