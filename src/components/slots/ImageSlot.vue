@@ -1,5 +1,5 @@
 <template>
-  <div :id="sid" class="col content-slot" style="display: flex; align-items: center; justify-content: center; min-height: 300px;">
+  <div :id="sid" class="col content-slot" style="display: flex; align-items: center; justify-content: center;">
     <a :href="data.link" @click="doNothing" :class="{'has-pointer': !data.link}">
       <img :src="data.imgSrc"  :style="[forceDimensions ? {width: data.width + 'px', height: data.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()" />
     </a>
@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       editing: null,
-      forceDimensions: true,
+      forceDimensions: false,
       imgWidth: this.slotData.width || 300,
       imgHeight: this.slotData.height || 300,
     }
