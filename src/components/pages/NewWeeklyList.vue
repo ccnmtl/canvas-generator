@@ -23,7 +23,7 @@
       <hr>
 
       <div>
-        <el-card>
+        <!-- <el-card>
         <div class="code-input center">
           Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
             controls-position="right" size="small" :label="'Edit ' + info.classType.dateType" />
@@ -37,7 +37,6 @@
           <div class="code-input center ">
             <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
-            <!-- These forms upload the file or url to Amazon S3. More detail in the onFormSubmit method. -->
             <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
               <input name="image" id="image-file" type="file"> <br>
               <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
@@ -50,8 +49,8 @@
 
           </div>
         </div>
-        </el-card>
-        <div class="center add-weekly">
+        </el-card> -->
+        <!-- <div class="center add-weekly">
           Links
           <el-switch
             :value="info.useLinks"
@@ -76,7 +75,7 @@
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
-        </div>
+        </div> -->
 
       </div>
     </div>
