@@ -47,6 +47,11 @@
 
     <div class="textbox-container">
       <el-card class="card box-card">
+        <router-link
+        to="/weekly-new">
+        <el-button style="float: right; margin-top: 2px; margin-right: 20px" type="success" size="medium">Return To Activity List</el-button>
+        </router-link>
+
         <div class="uk-text-center">
         <el-select  :value="getSelectedWeekID" @input="setStateField({field: 'selectedWeekID', value: $event})" 
         placeholder="Select" 
