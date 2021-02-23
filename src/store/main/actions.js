@@ -286,10 +286,12 @@ export default {
       let dVideo= _.cloneDeep(getters.getDVideo)
       let video = {...dVideo, ...data}
       video.id = uuid.v1()
+      if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
       commit('addVideo', { video, index })
     },
 
-    addCase: ({ commit, state }, {index, caseStudy}) => {
+    addCase: ({ commit, state, getters }, {index, caseStudy}) => {
+      if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
 
       let week = state.weeks[index]
 
@@ -312,6 +314,7 @@ export default {
       let assignment = {...dAssignment, ...data}
       assignment.title = "Assigment " + (state.weeks[index].assignments.length + 1)
       assignment.id = uuid.v1()
+      if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
       commit('addAssignment', { assignment, index })
     },
 
@@ -320,6 +323,7 @@ export default {
       let discussion = {...dDiscussion, ...data}
       discussion.title = "Discussion " + (state.weeks[index].discussions.length + 1)
       discussion.id = uuid.v1()
+      if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
       commit('addDiscussion', {discussion, index})
     },
 

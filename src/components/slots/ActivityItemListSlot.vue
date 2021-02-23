@@ -1,4 +1,5 @@
 <template>
+<transition name="fade">
   <div v-if="itemList.length>0" class="item-group-container" style="padding-bottom: 0px;">
     <div class="item-group-condensed">
         <ul id="cond_group_1" class="ig-list">
@@ -10,6 +11,8 @@
         </ul>
      </div>
   </div>
+  </transition>
+
 </template>
 
 <script>
@@ -58,13 +61,20 @@ export default {
 <style scoped lang="scss">
 
 .content-slot {
-  padding: 12px;
   color: #333;
 }
 
 button {
-  margin-top: 16px;
   margin-right: 7px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to{
+  opacity: 0;
 }
 
 </style>

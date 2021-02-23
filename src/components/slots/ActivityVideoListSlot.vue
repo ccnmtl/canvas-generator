@@ -143,7 +143,6 @@ export default {
 }
 
 button {
-  margin-top: 16px;
   margin-right: 7px;
 }
 

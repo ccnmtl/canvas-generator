@@ -44,63 +44,22 @@
     </div>
   </div>
 
-    <!-- <el-select :value="getSelectedWeekID" @input="setStateField({field: 'selectedWeekID', value: $event})" 
-    placeholder="Select" style="width: 150px; margin-left: 12vw; margin-right:12vw; margin-bottom: 15px;" 
-    class="input-element">
-    <el-option
-      v-for="(week, index) in weeks"
-      :label="info.classType.dateType + ' ' + (index + 1)"
-      :value="week.id" :key="week.id">
-    </el-option>
-    </el-select> -->
 
     <div class="textbox-container">
-
-        <el-select v-model="selected" placeholder="Select" style="width: 150px; margin-left: 12vw; margin-right:12vw; margin-bottom: 15px;" class="input-element">
+      <el-card class="card box-card">
+        <div class="uk-text-center">
+        <el-select  :value="getSelectedWeekID" @input="setStateField({field: 'selectedWeekID', value: $event})" 
+        placeholder="Select" 
+        >
         <el-option
           v-for="(week, index) in weeks"
           :label="info.classType.dateType + ' ' + (index + 1)"
-          :value="index" :key="week.id">
+          :value="week.id" :key="week.id">
         </el-option>
         </el-select>
-
-
-     <div class=" input-element">
-      <el-input autosize class="code-inputt" style="width: 300px; margin-bottom: 15px;" placeholder="Please input week title" :value="weeks[selected].title"
-        @input="updateWeek(selected,'title', $event)"></el-input> 
-      </div>
-
-      <hr>
-      <!-- This transition is defined as a css animations in the style section -->
-      <transition name="fade"></transition>
-      <div v-show="showEditor">
-
-        <!-- Alert to warn about how to edit the table -->
-        <el-alert
-          title="Edit Readings and Lecture Presentation table directly in Canvas" type="warning"
-          show-icon style="width:80%; margin:auto; margin-bottom: 10px" justify="center">
-        </el-alert>
-
-        <div class="quill">
-          <quill-editor ref="myTextEditor"
-                        :value="weeks[selected].body"
-                        @input="updateWeek(selected,'body', $event)"
-                        :config="editorOption">
-          </quill-editor>
-
-          <!-- <ckeditor :editor="editor" @input="updateWeek(selected,'body', $event)" :value="weeks[selected].body" :config="editorConfig"></ckeditor> -->
         </div>
 
-        <!-- <div class="quill">
-          <quill-editor ref="myTextEditor"
-                        v-model="weeks[selected].required"
-                        :config="editorOption">
-          </quill-editor>
-        </div> -->
-      <br>
-      </div>
-      </transition>
-      <div style="margin-top: 10px;"><br> <hr></div>
+        <hr>
 
 
       <!-- This is a seperate component to handle adding new Acitivity Page elements abstractly. For more information check the WeeklyCodeModule.vue file. -->
@@ -136,13 +95,13 @@
         @clearArr="updateWeek(selected,'assignments', [])">
         Assignment
       </weekly-code-module>
-      <div style="margin-left= 12vw; margin-right=12vw;">
+      <div class="uk-text-center">
       <a href="#case-slide" uk-toggle>
         <el-button  class="center" size="large" style=" margin-right: 10px"> Add Case <i class="fas fa-info-circle"></i></el-button>
       </a>
         <el-button  @click="updateWeek(selected,'cases', [])" class="center" size="large" type="danger" style=""> Clear Cases <i class="fas fa-trash"></i></el-button>
       </div>
-
+    </el-card>
     </div>
     <div class="canvas-code">
       <container-component cid="activity" :defaultRows="defRows"/>
@@ -322,8 +281,6 @@ textarea {
 }
 
 .code-module {
-  margin-left: 20%;
-  margin-right: 20%;
 }
 
 .show-editor {
@@ -379,16 +336,22 @@ textarea {
   height: 190px;
 }
 
+
+
+.box-card {
+  width: 480px;
+}
+
+.card {
+  margin: 10px;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
 }
-
 .fade-enter,
-.fade-leave-to
-/* .fade-leave-active in <2.1.8 */
-
- {
+.fade-leave-to{
   opacity: 0;
 }
 </style>
