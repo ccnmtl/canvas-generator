@@ -19,7 +19,8 @@
 
     <div data-hidden class="actions" v-if="slots">
       <button @click="deleteColumn" class="btn btn-danger">Delete Column</button>
-      <button @click="showSlotOptions" class="btn btn-primary">Add Slot</button>
+       <button @click="addColumn" class="btn btn-primary">Append</button>
+      <button @click="showSlotOptions" class="btn btn-success">Add Slot</button>
     </div>
 
   </div>
@@ -80,9 +81,18 @@ export default {
       })
       this.$store.dispatch("setDialogVisibility", true)
     },
-    addCustomCol(){
-      this.createColumnsFromArray({columns: [this.homeSidebarCol()], rid: this.rid})
-    }
+    addColumn() {
+      this.$store.dispatch("setDialogData", {
+        title: 'Choose Column Type',
+        type: 'choose-col',
+        cid: this.cid,
+        rid: this.rid,
+        action: 'append',
+        colid: this.col.colid,
+        space: this.space
+      })
+      this.$store.dispatch("setDialogVisibility", true)
+    },
   }
 }
 </script>

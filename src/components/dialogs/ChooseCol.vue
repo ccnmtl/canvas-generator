@@ -135,7 +135,15 @@ export default {
         })
         this.$store.dispatch("setDialogVisibility", false)
       }
-
+      else if(this.dialogData.action == 'append'){
+        this.$store.dispatch('createSlotsFromArray', {
+          rid: this.dialogData.rid,
+          colid: this.dialogData.colid,          
+          slots: actualColType.array,
+        })
+        this.$store.dispatch("setDialogVisibility", false)
+        
+      }
       else {
         //const res = new CC(actualColType.type, this.dialogData.cid)
         this.$store.dispatch('createColumnsFromArray', {
