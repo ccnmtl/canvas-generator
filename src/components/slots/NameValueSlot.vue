@@ -1,6 +1,7 @@
 <template>
   <div :id="sid" class="col name-value-slot">
-    <a :href="createLink(data.link)" @click="doNothing" :class="{'has-pointer': (!data.link && !data.linkID)}">
+    <a :href="createLink(data.link)" @click="doNothing" 
+    :style="(!data.link && !data.linkID) ? 'cursor: context-menu;color: black; text-decoration: none;' : 'color: black; text-decoration: none;'">
     <span :style="data.nameStyle">{{ data.name}}:</span>
     <span v-for="n in data.breakSize" :key="n"> <br> </span>
     <span v-if="data.type == 'date'">

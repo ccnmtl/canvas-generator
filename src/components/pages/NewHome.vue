@@ -100,6 +100,8 @@
 
 <script>
 import ContainerComponent from '../common/ContainerComponent.vue'
+import validator from "validator"
+
 import RowTypes from '../../util/row-types.js'
 import PageMixin from "../../components/mixins/page-mixin"
 
