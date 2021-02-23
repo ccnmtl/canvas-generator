@@ -2,7 +2,7 @@
   <div v-if="itemList.length>0" class="item-group-container" style="padding-bottom: 0px;">
     <div class="item-group-condensed">
         <ul id="cond_group_1" class="ig-list">
-          <li v-for="(item, index) in itemList" :key="item.id">
+          <li v-for="item in itemList" :key="item.id">
             <activity-item-slot 
             :slotData="item"
             :slotItem="{}"/>
