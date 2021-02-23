@@ -26,7 +26,7 @@
       
       <ckeditor v-if="editorType == 'CK'" :editor="editor" v-model="data.content" :config="editorConfig"></ckeditor>
 
-      <el-select v-model="editorType" placeholder="Select">
+      <!-- <el-select v-model="editorType" placeholder="Select">
         <el-option
           label="Quill"
           value="Quill">
@@ -39,10 +39,7 @@
           label="Tiny"
           value="Tiny">
         </el-option>
-      </el-select>
-      <!-- <button class="btn btn-primary" @click="useQuill = !useQuill ">
-        Swap Editors
-      </button> -->
+      </el-select> -->
       <button class="btn btn-success" @click="finishEditing('content')">
         Save changes
       </button>
@@ -94,7 +91,7 @@ export default {
   methods: {
   },
   mounted(){
-    this.editorType = 'Quill' || this.slotData.editorType
+    this.editorType = this.data.editorType || 'Quill'
   }
 }
 </script>
