@@ -3,7 +3,7 @@
 
        :class="[{ blocked: previewing }, { dragging: isDndMode }]"
        @dragend="dragEnd">
-    <!-- <h4 class="preview-text">CANVAS PREVIEW AREA</h4> -->
+    <h4 class="preview-text">CANVAS PREVIEW AREA</h4>
 
     <div class="canvas-container" v-if="!loading">
       <div class="preview-page" id="previewpage">
@@ -182,8 +182,8 @@ export default {
     text-align: center;
     font-weight: bold;
     position: absolute;
-    left: 50%;
-    transform: translate(-50%, -10%);
+    margin-left: 18%;
+    margin-top: 10px;
   }
 
   .drop-zone{
