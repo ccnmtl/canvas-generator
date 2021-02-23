@@ -101,7 +101,8 @@ export default {
         data: {
           imgSrc: this.data.imgSrc,
           width: this.data.width,
-          height: this.data.height
+          height: this.data.height,
+          forceDimensions: true
           }
         })
       this.$store.dispatch("setDialogVisibility", false)

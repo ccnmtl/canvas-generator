@@ -1,12 +1,20 @@
 <template>
   <div class="slot-outer">
-    <div data-hidden  class="delete-options">
+    <div data-hidden class="delete-options">
       <el-button @click="showDeleteSlot"
                  type="danger"
                  icon="el-icon-delete"
                  circle>
         <span>Delete Slot</span>
       </el-button>
+      <el-button @click="showSlotData"
+                 type="secondary"
+                 icon="el-icon-edit"
+                 circle>
+        <span class="smaller">Slot Data</span>
+      </el-button>
+    </div>
+    <div data-hidden data-always class="delete-options">
       <el-button @click="showSlotData"
                  type="secondary"
                  icon="el-icon-edit"

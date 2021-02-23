@@ -1,6 +1,5 @@
 <template>
   <div ref="container" class="canvas-code"
-
        :class="[{ blocked: previewing }, { dragging: isDndMode }]"
        @dragend="dragEnd">
     <!-- <h4 class="preview-text">CANVAS PREVIEW AREA</h4> -->
@@ -128,6 +127,11 @@ export default {
       html.querySelectorAll('[data-hidden]').forEach(element => {
         element.style.display = 'none'
       })
+
+      html.querySelectorAll('[data-always]').forEach(element => {
+        element.style.display = null
+      })
+
       this.previewing = true
       this.$store.dispatch('changeDndMode', false)
     },
