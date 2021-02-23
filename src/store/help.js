@@ -47,7 +47,7 @@ export default {
   or turn off images altogether using the "IMAGES" toggle at the bottom of the page.</p>
   <p>If you do not want to have individual pages for each class session, then click the "LINKS" toggle to remove the hotlinks on the session images and titles.</p>
   `,
-  "Weekly Activity":
+  "Activity":
     `
   <p>On the Individual Activity page you can edit the information for each session. First you can select which session you would like to change using the dropdown
   at the top of the page. Next you can edit the title using the input directly below or the decription, by clicking the "SHOW TEXT EDITOR" button if no input is visible.

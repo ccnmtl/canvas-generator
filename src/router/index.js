@@ -27,37 +27,37 @@ export default new Router({
       component: Splash
     },
     {
-      path: '/home',
+      path: '/home-old',
       name: 'Home Template',
       component: Home
     },
     {
-      path: '/home-new',
-      name: 'New Home Template',
+      path: '/home',
+      name: 'Home',
       component: NewHome
     },
     {
-      path: '/activity-new',
-      name: 'New Activity Template',
+      path: '/activity',
+      name: 'Activity',
       component: NewActivity
     },
     {
-      path: '/weekly-new',
-      name: 'New Weekly Template',
+      path: '/activities',
+      name: 'Activities',
       component: NewWeeklyList
     },
     {
-      path: '/syllabus',
-      name: 'Syllabus Template',
+      path: '/syllabus-old',
+      name: 'Syllabus',
       component: Syllabus
     },
     {
-      path: '/syllabus-new',
-      name: 'New Syllabus',
+      path: '/syllabus',
+      name: 'New Syllabus Template',
       component: NewSyllabus
     },
     {
-      path: '/weekly',
+      path: '/weekly-old',
       name: 'Weekly Activity',
       component: Weekly
     },
@@ -77,7 +77,7 @@ export default new Router({
       component: Student
     },
     {
-      path: '/activities',
+      path: '/activities-old',
       name: 'Activities',
       component: WeeklyList
     },

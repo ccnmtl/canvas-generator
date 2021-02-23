@@ -127,7 +127,7 @@ var toolbarOptions = [
 ]
 
 export default {
-  name: "NewWeekly",
+  name: "Activities",
   data() {
     return {
       userInput: {

@@ -19,7 +19,7 @@
       </button>
 
       <router-link
-          to="/activity-new"
+          to="/activity"
           @click.native="setSelectedWeek"
           v-if="row.data && row.data.weekID">
           <button  class="btn  btn-success float">
