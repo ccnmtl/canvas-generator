@@ -32,14 +32,21 @@ export default {
   methods: {
     openUploadDialog(){
       this.$store.dispatch("setDialogData", {
-        title: 'Upload Image',
-        type: 'upload-image',
-        defaultWidth: this.slotData.width || 300,
-        defaultHeight: this.slotData.height || 300,
-        item: this.slotItem,
-        setters: this.setters
+        title: 'Slot Data - Image',
+        type: 'slot-data-image-slot',
+        slotData: this.slotItem
       })
       this.$store.dispatch("setDialogVisibility", true)
+
+      // this.$store.dispatch("setDialogData", {
+      //   title: 'Upload Image',
+      //   type: 'upload-image',
+      //   defaultWidth: this.slotData.width || 300,
+      //   defaultHeight: this.slotData.height || 300,
+      //   item: this.slotItem,
+      //   setters: this.setters
+      // })
+      // this.$store.dispatch("setDialogVisibility", true)
     },
   }
 }

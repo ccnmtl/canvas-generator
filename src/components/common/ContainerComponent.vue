@@ -19,8 +19,8 @@
             <!-- <el-option label="Slots" value="slots" /> -->
           </el-select>
         </div>
-        <el-button type="primary" @click="enterEditMode" v-if="previewing" class="btn btn-primary">Enter Edit Mode</el-button>
-        <el-button type="primary" @click="exitEditMode" v-else class="btn btn-secondary">Exit Edit Mode</el-button>
+        <el-button type="primary" @click="enterEditMode" v-if="previewing" class="btn btn-primary">Enter Advanced Editor</el-button>
+        <el-button type="primary" @click="exitEditMode" v-else class="btn btn-secondary">Exit Advanced Editor</el-button>
         <el-button type="success" @click="getHTMLCode()">Copy the Code</el-button>
       </div>
 
