@@ -177,6 +177,8 @@ export default {
             cid: column.cid,
             colid: column.colid,
             data: { ...actualSlotType.defaultData, ...slot.data}, //slot.data ? slot.data : actualSlotType.defaultData,
+            classes: slot.classes ? slot.classes : [],
+            styles: slot.styles ? slot.styles : [],
             getter: actualSlotType.getter ? actualSlotType.getter : null
           })
         }
@@ -284,10 +286,12 @@ export default {
       let dVideo= _.cloneDeep(getters.getDVideo)
       let video = {...dVideo, ...data}
       video.id = uuid.v1()
+      if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
       commit('addVideo', { video, index })
     },
 
-    addCase: ({ commit, state }, {index, caseStudy}) => {
+    addCase: ({ commit, state, getters }, {index, caseStudy}) => {
+      if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
 
       let week = state.weeks[index]
 
@@ -308,14 +312,18 @@ export default {
   addAssignment: ({ commit, getters }, { index, data = {} }) => {
       let dAssignment = _.cloneDeep(getters.getDAssignment)
       let assignment = {...dAssignment, ...data}
+      assignment.title = "Assigment " + (state.weeks[index].assignments.length + 1)
       assignment.id = uuid.v1()
+      if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
       commit('addAssignment', { assignment, index })
     },
 
   addDiscussion: ({ commit, getters }, { index, data = {} }) => {
       let dDiscussion = _.cloneDeep(getters.getDDiscussion)
       let discussion = {...dDiscussion, ...data}
+      discussion.title = "Discussion " + (state.weeks[index].discussions.length + 1)
       discussion.id = uuid.v1()
+      if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
       commit('addDiscussion', {discussion, index})
     },
 

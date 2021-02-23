@@ -21,7 +21,7 @@
       <router-link
           to="/activity-new"
           @click.native="setSelectedWeek"
-          v-if="row.data.weekID">
+          v-if="row.data && row.data.weekID">
           <button  class="btn  btn-success float">
             <i class="el-icon-edit"></i>
             <span>Edit Activity</span>

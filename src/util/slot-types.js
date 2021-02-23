@@ -15,7 +15,7 @@ export default {
       return {
         titleSlot: {
           id: 1,
-          name: "Title Slot",
+          name: "Title",
           type: "title-slot",
           pages: '*',
           icon: "edit",
@@ -28,7 +28,7 @@ export default {
         },
         bannerSlot: {
           id: 2,
-          name: "Banner Slot",
+          name: "Banner",
           type: "banner-slot",
           pages: '*',
           icon: "s-platform",
@@ -41,7 +41,7 @@ export default {
         },
         imageSlot: {
           id: 3,
-          name: "Image Slot",
+          name: "Image",
           type: "image-slot",
           pages: '*',
           icon: "picture",
@@ -55,7 +55,7 @@ export default {
         },
         contentSlot: {
           id: 4,
-          name: "Content Slot",
+          name: "Content",
           type: "content-slot",
           pages: '*',
           icon: "menu",
@@ -67,10 +67,10 @@ export default {
         },
         spacerSlot: {
           id: 5,
-          name: "Spacer Slot",
+          name: "Spacer",
           type: "spacer-slot",
           pages: '*',
-          icon: "menu",
+          icon: "minus",
           colspan: 4,
           visible: true,
           defaultData: {
@@ -79,29 +79,24 @@ export default {
         },
         buttonsSlot: {
           id: 6,
-          name: "Buttons Slot",
+          name: "Buttons",
           type: "buttons-slot",
           pages: ['home'],
           icon: "menu",
           colspan: 4,
           visible: true,
           defaultData: {
-          }
-        },
-        simpleListSot: {
-          id: 7,
-          name: "Simple List Slot",
-          type: "simple-list-slot",
-          pages: '*',
-          icon: "menu",
-          colspan: 4,
-          visible: true,
-          defaultData: {
+            buttons: [
+              {
+                label: "Default Button",
+                to: "/assignments/syllabus"
+              },
+            ]            
           }
         },
         nameValueSlot: {
           id: 8,
-          name: "Name Value Slot",
+          name: "Name Value",
           type: "name-value-slot",
           pages: '*',
           icon: "menu",
@@ -116,32 +111,23 @@ export default {
             nameStyle: {'font-weight': 'bold'}
           }
         },
-        instructorListSlot: {
-          id: 9,
-          name: "Instructor List Slot",
-          type: "instructor-list-slot",
-          pages: '*',
-          icon: "menu",
-          colspan: 4,
-          visible: true,
-          defaultData: {
-          }
-        },
         ActivityItemSlot: {
           id: 10,
-          name: "Activity Item Slot",
+          name: "Activity Item",
           type: 'activity-item-slot',
           pages: '*',
           icon: "menu",
           visible: true,
           defaultData: {
-            type: 'discussion',
-            item: this.getWeeks[0].discussions[0]
+            title: "Activity",
+            type: "activity",
+            link: "",
+            due: this.getInfo.startDate
           }
         },
         ActivityItemListSlot: {
           id: 11,
-          name: "Activity Item List Slot",
+          name: "Activity Item List",
           type: 'activity-item-list-slot',
           pages: '*',
           icon: "menu",
@@ -156,7 +142,7 @@ export default {
         },
         VideoSlot: {
           id: 12,
-          name: "Video Slot",
+          name: "Video",
           type: 'video-slot',
           pages: '*',
           icon: "menu",
@@ -181,7 +167,7 @@ export default {
         },
         CaseSlot: {
           id: 14,
-          name: "Case Slot",
+          name: "Case",
           type: 'case-slot',
           colspan: 12,
           pages: '*',
@@ -191,7 +177,7 @@ export default {
         },
         ListSlot: {
           id: 15,
-          name: "List Slot",
+          name: "List",
           type: 'list-slot',
           pages: '*',
           icon: "menu",
@@ -201,14 +187,69 @@ export default {
         },
         ActivityTableSlot: {
           id: 16,
-          name: "Activity Table Slot",
+          name: "Activity Table",
           type: 'activity-table-slot',
           pages: '*',
           icon: "menu",
           visible: true,
           defaultData: {
           }
-        }
+        },
+        InstructorList: {
+          id: 17,
+          name:"Instructor List",
+          type: "simple-list-slot",
+          pages: '*',
+          icon: "picture",
+          getter: "info.profs",
+          width: 6,
+          classes: [
+            "pad-box-mini",
+            "border",
+            "border-tbl"
+          ],
+          defaultData: {
+            idField: "id",
+            labelField: "name",
+            emailField: "email",
+            type: "instructor-ta",
+            title: "Instructor:",
+            officeField: "office"
+          }                    
+        },
+        TAList: {
+          id: 18,
+          name:"TA List",
+          type: "simple-list-slot",
+          pages: '*',
+          icon: "picture",
+          getter: "info.tas",
+          width: 6,
+          classes: [
+            "pad-box-mini",
+            "border",
+            "border-tbl"
+          ],
+          defaultData: {
+            idField: "id",
+            labelField: "name",
+            emailField: "email",
+            type: "instructor-ta",
+            title: "Teaching Assistant:",
+            officeField: "office"
+          }                    
+        },
+        instructorListSlot: {
+          id: 9,
+          name: "Expanded Instructors List",
+          type: "instructor-list-slot",
+          pages: '*',
+          icon: "menu",
+          colspan: 4,
+          visible: true,
+          defaultData: {
+          }
+        },
       }
     }
   },

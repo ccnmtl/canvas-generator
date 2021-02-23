@@ -6,11 +6,11 @@
         <div class="col">
           <el-col v-for="col in pageColTypes" :key="col.id" :span="6" class="col-item">
             <el-popover
-              placement="right-end"
+              placement="top"
               title="Column Preview"
               width="400"
               trigger="click">
-              <img :src="imageServer + col.type + '.PNG'" alt="">
+              <img :src="imageServer + 'preview-images/cols/' + col.type + '.PNG'" alt="">
               <div v-if="isPageType(col)" class="col-content"
                     :class="{ selected: col.id === selectedCol }"
                     @click="selectedCol = col.id" slot="reference">
@@ -20,35 +20,48 @@
                 <div class="col-title">{{ col.name }}</div>
               </div>
             </el-popover>
-
           </el-col>
         </div>
       </el-tab-pane>
       <el-tab-pane label="OTHER COLUMNS">
         <div class="col">
           <el-col v-for="col in otherColTypes" :key="col.id" :span="6" class="col-item">
-            <div  class="col-content"
-                  :class="{ selected: col.id === selectedCol }"
-                  @click="selectedCol = col.id">
-              <div class="col-icon">
-                <i :class="'el-icon-' + col.icon"></i>
+            <el-popover
+              placement="right-end"
+              title="Column Preview"
+              width="400"
+              trigger="click">
+              <img :src="imageServer + 'preview-images/cols/' + col.type + '.PNG'" alt="">
+              <div v-if="isPageType(col)" class="col-content"
+                    :class="{ selected: col.id === selectedCol }"
+                    @click="selectedCol = col.id" slot="reference">
+                <div class="col-icon">
+                  <i :class="'el-icon-' + col.icon"></i>
+                </div>
+                <div class="col-title">{{ col.name }}</div>
               </div>
-              <div class="col-title">{{ col.name }}</div>
-            </div>
+            </el-popover>
           </el-col>
         </div>
       </el-tab-pane>
       <el-tab-pane label="All COLUMNS">
         <div class="col">
           <el-col v-for="col in ColTypes" :key="col.id" :span="6" class="col-item">
-            <div class="col-content"
-                  :class="{ selected: col.id === selectedCol }"
-                  @click="selectedCol = col.id">
-              <div class="col-icon">
-                <i :class="'el-icon-' + col.icon"></i>
+            <el-popover
+              placement="bottom-start"
+              title="Column Preview"
+              width="400"
+              trigger="click">
+              <img :src="imageServer + 'preview-images/cols/' + col.type + '.PNG'" alt="">
+              <div v-if="isPageType(col)" class="col-content"
+                    :class="{ selected: col.id === selectedCol }"
+                    @click="selectedCol = col.id" slot="reference">
+                <div class="col-icon">
+                  <i :class="'el-icon-' + col.icon"></i>
+                </div>
+                <div class="col-title">{{ col.name }}</div>
               </div>
-              <div class="col-title">{{ col.name }}</div>
-            </div>
+            </el-popover>
           </el-col>
         </div>
       </el-tab-pane>
@@ -122,7 +135,15 @@ export default {
         })
         this.$store.dispatch("setDialogVisibility", false)
       }
-
+      else if(this.dialogData.action == 'append'){
+        this.$store.dispatch('createSlotsFromArray', {
+          rid: this.dialogData.rid,
+          colid: this.dialogData.colid,          
+          slots: actualColType.array,
+        })
+        this.$store.dispatch("setDialogVisibility", false)
+        
+      }
       else {
         //const res = new CC(actualColType.type, this.dialogData.cid)
         this.$store.dispatch('createColumnsFromArray', {

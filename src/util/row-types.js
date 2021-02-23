@@ -36,7 +36,7 @@ export default {
           icon: "s-home",
           pages: ['home'],
           array: [
-            [this.instructorListCol(), this.instructorListCol({list: {getter: 'info.tas'}})]
+            [[this.slotTypes.InstructorList], [this.slotTypes.TAList]]
           ]
         },
         dateTimeRow: {
@@ -47,16 +47,6 @@ export default {
           pages: ['home'],
           array: [
             ['date-time-col']
-          ]
-        },
-        listRow: {
-          id: 4,
-          name: "List Row",
-          type: "list-row",
-          icon: "notebook-2",
-          pages: ['syllabus'],
-          array: [
-            ['instructor-expanded-list']
           ]
         },
         homeBannerRow: {

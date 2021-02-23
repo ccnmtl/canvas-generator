@@ -1,23 +1,23 @@
 <template lang="html">
   <div>
-    <div class="center">
-      <el-button  class="center" size="large" type="primary" style="display: inline-block; margin-top: 5px;" @click="fn">Add New <slot></slot></el-button>
-      <el-button  class="center" size="large" type="danger" style="display: inline-block; margin-top: 5px;" @click="clear">Clear</el-button>
+    <div class='uk-text-center'>
+      <el-button size="large" type="primary" style="display: inline-block; margin-top: 5px;" @click="fn">Add New <slot></slot></el-button>
+      <el-button size="large" type="danger" style="display: inline-block; margin-top: 5px;" @click="clear">Clear</el-button>
     </div>
     <hr>
-    <transition name="fade">
     <div v-if="content.length > 0" >
 
-      <div class="center drop-down">
+      <div class="uk-text-center drop-down">
         <select v-model="index" class="uk-select uk-form-width-small">
           <option v-for="n in content.length" :value="n"><slot></slot> {{n}}</option>
         </select>
         <button type="button" name="button" class="uk-button-small uk-button-primary" @click="editable = !editable">{{ editable ? "Save" : "Edit" }}</button>
         <button v-show="editable" type="button" class="uk-button-small uk-button-danger center" name="button" @click="remove"> Delete</button>
       </div>
+      <transition name="fade">
 
       <div v-show="editable">
-        <div class="code-input center uk-margin-small-top" v-for = "input in inputs">
+        <div class="code-input uk-text-center uk-margin-small-top" v-for = "input in inputs">
           <label for="text-area">{{capitalize(input)}}</label>
           <el-date-picker
             v-if = "input == 'due'"
@@ -31,12 +31,13 @@
           <textarea v-else :value="currentItem[input]" @input="modify(currentItem, input, $event)" id="text-area" class="uk-textarea" rows="2" cols="50"></textarea> <br>
         </div>
       </div>
-          <hr>
+       </transition>
+      <hr>
 
 
     </div>
 
-    </transition>
+   
   </div>
 
 </template>
@@ -95,6 +96,19 @@ export default {
 textarea {
   margin-bottom: 10px;
   width: auto;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active in <2.1.8 */
+
+ {
+  opacity: 0;
 }
 </style>
 

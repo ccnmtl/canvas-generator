@@ -21,26 +21,17 @@ export default {
         visible: '*', // * show all slots, an Array can be used to show specific slots
         hidden: ['excluded-row', 'weekly-activity-list-intro' ], // this only works if visible is set to *
         customRows: {  // Here you can either define totally custom rows, or replace default rows with changed versions 
-          testConfigRow: {
-            id: 8,
-            name: "Config Row",
-            type: "config-row",
-            icon: "document-copy",
-            pages: ['syllabus'],
-            array: [
-              ['instructor-expanded-list']
-            ]          
-          },
+          
         }
       },
       cols: {
         visible: '*', // * show all slots, an Array can be used to show specific slots
-        hidden: [ ], // this only works if visible is set to *
+        hidden: ['activity-image', 'home-banner-col', 'case-list', 'activity-list-intro', 'test' ], // this only works if visible is set to *
         customCols: {}
       },
       slots: {
         visible: '*', // * show all slots, an Array can be used to show specific slots
-        hidden: [ 'slot-name' ], // this only works if visible is set to *
+        hidden: ['slot-name', 'list-slot', 'case-slot', 'name-value-slot', 'activity-item-list-slot', 'activity-video-list-slot'], // this only works if visible is set to *
         customSlots: {}
       },
       optionalPages: [], // Array of pages that don't show by default
