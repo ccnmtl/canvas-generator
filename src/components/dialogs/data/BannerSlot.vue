@@ -12,7 +12,7 @@
         Banner Image:
         <select style="display: inline-block; width:150px" v-model="theme" name="Choose Banner" class="uk-select">
           <option selected disabled>Choose Banner</option>
-          <option v-for="theme in $store.getters.getThemeOptions" :value="theme" :key="theme.option">{{theme.option}}</option>
+          <option v-for="theme in themeOptions" :value="theme" :key="theme.option">{{theme.option}}</option>
         </select>
       </label>
     </div>
@@ -58,7 +58,8 @@ export default {
     ...mapGetters({
       fullSlotTypes: 'getSlotTypes',
       Config: 'getConfig',
-      getTheme: 'getTheme'
+      getTheme: 'getTheme',
+      defaultOptions: 'getThemeOptions'
     }),
     theme: {
       get() {
@@ -68,6 +69,19 @@ export default {
         this.$store.commit('updateTheme', payload)
       }
     },
+    themeOptions(){
+      // return this.themeOptions
+      if (this.Config.themes.visible == '*'){
+        return _.pickBy(this.defaultOptions, (theme, key) => {
+          return !_.includes(this.Config.themes.hidden, theme.option)
+        })
+      }
+      else {
+        return _.pickBy(this.defaultOptions, (theme, key) => {
+          return _.includes(this.Config.themes.visible, theme.option)
+        })
+      } 
+    }
   },
   methods: {
     saveChoice() {

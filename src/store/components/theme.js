@@ -2,9 +2,13 @@ const IMAGE_SERVER = "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-imag
 
 export default {
   state: {
-    theme: { option: "Istari", banner: 'Banner_Istari', slim: 'Banner_Istari_Slim', logo: IMAGE_SERVER + "Istari_Logo.png", primary: "#1F1347" },
+    theme: { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SipaLogo2.png" },
     themeOptions: [
       // { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SipaLogo2.png", primary: "#008EE2" },
+      { option: "Columbia", banner: 'CU01', slim: 'CU01_Slim', wide:'STV1_BannerBlue', logo: IMAGE_SERVER + "CU_Default_Logo.png" },
+      { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SipaLogo2.png" },
+      { option: "Social Work", banner: 'SSW', slim: 'SSW_Slim', logo: IMAGE_SERVER + "SSW_logo.png" },
+      { option: "Mailman", banner: 'MM', slim: 'MM_Slim', logo: IMAGE_SERVER + "MM_logo2.png" },
       { option: "Istari", banner: 'Banner_Istari', slim: 'Banner_Istari_Slim', logo: IMAGE_SERVER + "Istari_Logo.png", primary: "#1F1347" },
       { option: "Acountability Lab", banner: 'Banner_AL', slim: 'Banner_AL_Slim', logo: IMAGE_SERVER + "AL_Logo.png", primary: "#671E20" },
       { option: "Center for Open Data Enterprise", banner: 'Banner_CODE', slim: 'Banner_CODE_Slim', logo: IMAGE_SERVER + "Code_Logo.png", primary: "#0F084E" },
