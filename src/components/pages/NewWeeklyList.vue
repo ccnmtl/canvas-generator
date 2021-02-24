@@ -149,7 +149,7 @@ export default {
         modules: {
           toolbar: toolbarOptions
         }
-      },      
+      },
       homeLayout: [
         'banner-row',
       ],
@@ -198,7 +198,7 @@ export default {
     setDefaultImage(index) {
       let imgSrc = this.$store.state.imageServer + this.info.classType.dateType.toLowerCase() + (index + 1) + ".png"
       this.updateWeek(index, "imgSrc", imgSrc)
-    },    
+    },
     AddActivity() {
       let index = this.weeks.length + 1
       this.addWeek(index)
@@ -248,14 +248,14 @@ export default {
           console.log(response)
         }
       )
-    },    
+    },
     getSaveStateConfig() {
       return {
         cacheKey: "Weeklylist"
       }
-    }    
+    }
   },
-  mixins: [RowTypes, saveState, PageMixin],  
+  mixins: [RowTypes, saveState, PageMixin],
   watch: {
     weeks: {
       handler(newWeeks) {

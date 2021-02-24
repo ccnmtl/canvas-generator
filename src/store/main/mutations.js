@@ -261,4 +261,7 @@ export default {
       Vue.set(state, prop, data[prop])
     }
   },
+  setRenderedComponents: (state, value) => {
+    state.componentsRendered = value
+  },
 }

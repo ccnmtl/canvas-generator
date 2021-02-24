@@ -44,5 +44,6 @@ export default {
   draggedColumn: {},
   draggingSlot: false,
   draggedSlot: {},
-  dragType: 'rows'
+  dragType: 'rows',
+  componentsRendered: false,
 }

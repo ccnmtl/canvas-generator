@@ -216,6 +216,10 @@
         <p>Copyright © Columbia University. All rights reserved.</p>
          </div>
     </div>
+
+    <div id="render-components" v-if="!$store.getters.areComponentsRendered">
+      <container-component v-for="page in pages" :key="page.name" :cid="page.name" :defaultRows="page.rows" />
+    </div>
   </div>
 </template>
 
@@ -225,6 +229,8 @@ import saveState from "vue-save-state"
 import { mapGetters, mapActions } from "vuex"
 import help from "./store/help"
 import PageMixin from "./components/mixins/page-mixin"
+import RowTypes from './util/row-types'
+import ContainerComponent from './components/common/ContainerComponent.vue'
 
 // Dialog Types
 import ConfigSlot from "./components/dialogs/ConfigSlot.vue"
@@ -259,6 +265,7 @@ export default {
     DeleteColumn,
     SlotDataImageSlot,
     SlotDataBannerSlot,
+    ContainerComponent,
     SlotDataActivityVideoListSlot
   },
   name: "app",
@@ -270,7 +277,8 @@ export default {
       showingCourses: false,
       newCourseName: '',
       currentCourse: null,
-      currentVersion: null
+      currentVersion: null,
+      pages: null
     }
   },
   created() {
@@ -350,9 +358,9 @@ export default {
     openDialog(e) {
       e.preventDefault();
       this.dialogFormVisible = true
-    }
+    },
   },
-  mixins: [saveState, PageMixin],
+  mixins: [RowTypes, saveState, PageMixin],
   computed: {
     ...mapGetters([ 'isSettingsVisible', 'getCurrentCourse', 'getCurrentVersion', 'getSavedStates', 'getWeeks' ]),
     loading() {
@@ -374,9 +382,61 @@ export default {
     },
     dialogData() {
       return this.$store.getters.getDialogData
+    },
+    defActivityRows(){
+      return [
+        [this.simpleBannerCol({banner: {getter: {title: 'info.title'}}})],
+        [this.activityIntroCol()],
+        [['activity-video-list-slot']],
+        ['case-list'],
+        [['activity-item-list-slot']],
+      ]
+    },
+    defSyllabusRows(){
+      return [
+        [this.simpleBannerCol({banner: {getter: {title: 'info.title'}}})],
+        [['instructor-list-slot']],
+        [['spacer-slot']],
+        'date-time-row',
+        [this.syllabusComponentCol({title: {data: {title: 'Course Description'}}})],
+        [this.syllabusComponentCol({title: {data: {title: 'Course Objectives'}}})],
+        [this.syllabusComponentCol({title: {data: {title: 'Weekly Schedule'}}})],
+        [['activity-table-slot']],
+      ]
     }
   },
   beforeMount() {
+    if(!this.$store.getters.areComponentsRendered) {
+      this.pages = [
+        {
+          name: 'home',
+          rows: [
+            'home-banner-row',
+            [['image-slot'], 'home-sidebar'],
+            'home-instructors-row',
+            'date-time-row',
+          ],
+        },
+        {
+          name: 'activities-list',
+          rows: [
+            'banner-row',
+          ],
+        },
+        {
+          name: 'activity',
+          rows: this.defActivityRows,
+        },
+        {
+          name: 'syllabus',
+          rows: this.defSyllabusRows
+        },
+      ]
+      setTimeout(() => {
+        this.$store.dispatch('setRenderedComponents', true)
+      }, 1000)
+    }
+
     if (this.weeks.length < 1) {
       for (let i = 1; i <= 12; i++) {
         let tempWeek = {}
@@ -400,6 +460,11 @@ export default {
 </script>
 
 <style lang="scss">
+
+#render-components {
+  display: none;
+}
+
 *,
 *::before,
 *::after {

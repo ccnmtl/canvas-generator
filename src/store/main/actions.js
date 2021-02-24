@@ -13,6 +13,9 @@ function findObj(objKey, objValue, list){
 }
 
 export default {
+    setRenderedComponents: ({ commit }, value) => {
+      commit('setRenderedComponents', value)
+    },
     updateState: ({ commit }, data) => {
       commit('updateState', data)
     },

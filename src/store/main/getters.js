@@ -8,6 +8,7 @@ export default {
   loading: state => state.loading,
   getWeeks: state => state.weeks,
   getImageServer: state => state.imageServer,
+  areComponentsRendered: state => state.componentsRendered,
   getSelectedWeekID: state => state.selectedWeekID,
   getStudents: state => state.weeks,
   isDialogVisible: state => state.dialogVisible,
@@ -89,13 +90,13 @@ export default {
   },
   getWeekPropGetter: (state, getters) => (prop, id) => {
     return {
-      func: getters.getWeekPropByID, 
+      func: getters.getWeekPropByID,
       props: [prop, id]
     }
   },
   getSelectedWeekPropGetter: (state, getters) => (prop) => {
     return {
-      func: getters.getSelectedWeekProp, 
+      func: getters.getSelectedWeekProp,
       props: [prop]
     }
   },
@@ -110,7 +111,7 @@ export default {
   },
   getWeekItemPropGetter: (state, getters) => (prop, type, id) => {
     return {
-      func: getters.getWeekItemPropByID, 
+      func: getters.getWeekItemPropByID,
       props: [prop, type, id]
     }
   },
