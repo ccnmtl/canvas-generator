@@ -2,7 +2,7 @@
   <div class="activity-page">
     <div class="code-container">
       <div class="textbox-container">
-        <el-card class="card">
+        <el-card class="card box-card">
             <el-button type="primary" @click="addProf">Add Professor</el-button>
             <el-button type="primary" @click="addTA">Add TA</el-button>
             <el-button type="danger" @click="clearTeachers">Clear</el-button>
@@ -86,14 +86,8 @@
             </el-date-picker>
             </label>
           </div>
-        </el-card>
-
-        <el-card class="card box-card" v-if="selected.list">
-          <div slot="header" class="clearfix">
-            <span class="big-text">Sections / Options</span>
-          </div>
           <div class="">
-            Dates
+            Use Dates
             <el-switch
               :value="info.useDates"
               @input="updateProp('useDates', $event)"
@@ -101,7 +95,6 @@
               inactive-color="#ff4949">
             </el-switch>
           </div>
-
         </el-card>
 
 
@@ -308,15 +301,7 @@ export default {
   float: right;
 }
 
-.textbox-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 500px;
-  margin: auto;
-  align-self: flex-start;
-  margin-top: 20px;
-}
+
 
 .code-input {
   margin: 10px;
@@ -330,10 +315,27 @@ export default {
 }
 
 .code-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: all 0.5s ease;
+  display: block;
+
+  .textbox-container {
+    width: 40%;
+    margin-top: 0;
+    position: sticky;
+    display: inline-block;
+    top: 16px;
+    vertical-align: top;
+    max-width: calc(100% - 1080px);
+
+    .box-card {
+        max-width: 500px;
+        margin: 10px auto;
+    }
+  }
+
+  .canvas-code {
+    display: inline-block;
+  }
 }
 
 .footer {

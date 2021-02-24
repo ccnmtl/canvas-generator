@@ -4,11 +4,13 @@
     <div class="code-container">
     <hr>
     <div class="textbox-container">
-      <el-input-number  style="margin: 10px;" v-model="userInput.toChange" :min="1" :max="20" />
+      <div class="card">
+      <div class="center">
+        <el-input-number  style="margin: 10px;" v-model="userInput.toChange" :min="1" :max="20" />
 
-      <button type="button" class="add-weekly center uk-button uk-button-primary"
-      name="button" @click="populateActivities(userInput.toChange)">Edit # of Activities</button>
-
+        <button type="button" class="add-weekly center uk-button uk-button-primary"
+        name="button" @click="populateActivities(userInput.toChange)">Edit # of Activities</button>
+      </div>
       <div v-if="info.classType.option == 'Weekly Course'" class="center">
         <strong>Start Date:</strong>
         <el-date-picker
@@ -61,11 +63,11 @@
             <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
             <form name="file-form" v-show="this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('image')">
-              <input name="image" id="image-file" type="file"> <br>
+              <input name="image" id="image-file" type="file"> <br> <hr>
               <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
             </form>
             <form v-show="!this.userInput.isFile" class="your-form-class" v-on:submit.prevent="onFormSubmit('url')">
-              <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br> <br>
+              <input name="imageUrl" id="image-url" type="text" class="uk-input"> <br>  <hr>
               <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
             </form>
             <button class="uk-button uk-button-danger uk-margin-small-top" @click="setDefaultImage(userInput.weekNumber - 1)">Reset Image</button>
@@ -102,7 +104,10 @@
 
       </div>
     </div>
-    <container-component cid="activities-list" :defaultRows="homeLayout"/>
+    </div>
+    <div class="canvas-code">
+      <container-component cid="activities-list" :defaultRows="homeLayout"/>
+    </div>
     </div>
   </div>
 
@@ -323,20 +328,13 @@ textarea {
   margin: 10px;
 }
 
-.week-card {
-  width: 400px;
+.card {
+  width: 350px;
+  margin: auto;
+  justify-content: center;
+
 }
 
-.textbox-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 350px;
-  margin-left: 3%;
-  margin-right: 30px;
-  align-self: flex-start;
-  margin-top: 20px;
-}
 
 .code-input {
   margin: 10px;
@@ -349,13 +347,27 @@ textarea {
 #canvas-code {
   width: 1090px;
   margin: auto;
+  margin-bottom: auto;
   align-self: flex-start;
 }
 
 .code-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+transition: all 0.5s ease;
+display: block;
+
+  .textbox-container {
+    width: 40%;
+    margin-top: 0;
+    justify-content: center;
+    position: sticky;
+    display: inline-block;
+    top: 16px;
+    vertical-align: top;
+    max-width: calc(100% - 1080px);
+  }
+  .canvas-code {
+      display: inline-block;
+    }
 }
 
 .footer {
