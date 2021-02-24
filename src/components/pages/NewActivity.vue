@@ -27,10 +27,10 @@
           </div>
           <div class="col-xs-8">
             <div class="styleguide-section__grid-demo-element">
-              <div v-if="caseStudy.name.length < 30" class="welcome" style="height:50px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}} 
+              <div v-if="caseStudy.name.length < 30" class="welcome" style="height:50px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}}
               <el-button @click="removeCase(caseStudy)" size="small" type="danger" style="float: right;">Remove Case</el-button>
               <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right; margin-right: 5px">Add Case</el-button></div>
-              <div v-else class="welcome" style="height:75px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}} 
+              <div v-else class="welcome" style="height:75px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}}
               <el-button @click="removeCase(caseStudy)" size="small" type="danger" style="float: right; margin-top: 5px">Remove Case</el-button>
               <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right; margin-top: 5px; margin-right: 5px">Add Case</el-button></div>
               <p>{{caseStudy.shortDescription}}</p>
@@ -40,7 +40,7 @@
       </div>
 
       </div>
-      
+
     </div>
   </div>
 
@@ -48,8 +48,8 @@
     <div class="textbox-container">
       <el-card class="card box-card">
         <div class="uk-text-center">
-        <el-select  :value="getSelectedWeekID" @input="setStateField({field: 'selectedWeekID', value: $event})" 
-        placeholder="Select" 
+        <el-select  :value="getSelectedWeekID" @input="setStateField({field: 'selectedWeekID', value: $event})"
+        placeholder="Select"
         >
         <el-option
           v-for="(week, index) in weeks"
@@ -164,7 +164,7 @@ export default {
         modules: {
           toolbar: toolbarOptions
         }
-      }            
+      }
     }
   },
   components: {
@@ -172,10 +172,10 @@ export default {
     WeeklyVideo,
     WeeklyCodeModule,
     WeeklyDiscussion,
-    WeeklyAssignment    
+    WeeklyAssignment
   },
   computed: {
-    ...mapGetters(["getInfo", "getDWeek", "getWeeks", "getCases"]),    
+    ...mapGetters(["getInfo", "getDWeek", "getWeeks", "getCases"]),
     defRows(){
       return [
         [this.simpleBannerCol({banner: {getter: {title: 'info.title'}}})],
@@ -205,7 +205,7 @@ export default {
       })
 
       return options
-    }    
+    }
   },
   mixins: [RowTypes, PageMixin],
   methods: {
@@ -256,12 +256,12 @@ export default {
         cacheKey: "Weekly"
       }
     }
-  },  
+  },
   mounted(){
     this.weeks.forEach(week => {
       if (!week.cases) week.cases = []
     })
-    this.updateCode("week-code")    
+    this.updateCode("week-code")
   }
 }
 </script>
@@ -317,8 +317,29 @@ textarea {
   align-self: flex-start;
 }
 
+// Make the left menu follow the scroll
 .code-container {
   transition: all 0.5s ease;
+  display: block;
+
+  .textbox-container {
+    width: 40%;
+    margin-top: 0;
+    position: sticky;
+    display: inline-block;
+    top: 16px;
+    vertical-align: top;
+    max-width: calc(100% - 1080px);
+
+    .box-card {
+        max-width: 340px;
+        margin: 0 auto;
+    }
+  }
+
+  .canvas-code {
+    display: inline-block;
+  }
 }
 
 .footer {

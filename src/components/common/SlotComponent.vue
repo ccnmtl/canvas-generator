@@ -1,20 +1,21 @@
 <template>
   <div class="slot-outer">
     <div data-hidden class="delete-options">
+      <el-button @click="showSlotData"
+                 type="secondary"
+                 icon="el-icon-edit"
+                 circle
+                 v-if="showEdit">
+        <span class="smaller">Slot Data</span>
+      </el-button>
       <el-button @click="showDeleteSlot"
                  type="danger"
                  icon="el-icon-delete"
                  circle>
         <span>Delete Slot</span>
       </el-button>
-      <el-button @click="showSlotData"
-                 type="secondary"
-                 icon="el-icon-edit"
-                 circle>
-        <span class="smaller">Slot Data</span>
-      </el-button>
     </div>
-    <div data-hidden data-always class="delete-options">
+    <div data-hidden data-always class="delete-options" v-if="showEdit">
       <el-button @click="showSlotData"
                  type="secondary"
                  icon="el-icon-edit"
@@ -100,6 +101,10 @@ export default {
     typeName() {
       return this.findSlot('id', this.data.type ).name
     },
+    showEdit() {
+      return this.type === 'banner-slot'
+          || this.type === 'activity-video-list-slot'
+    }
   },
   methods: {
     showDeleteSlot() {

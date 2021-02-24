@@ -242,6 +242,7 @@ import DeleteColumn from './components/dialogs/DeleteColumn.vue'
 // Dialog Data Types
 import SlotDataBannerSlot from './components/dialogs/data/BannerSlot.vue'
 import SlotDataImageSlot from './components/dialogs/data/ImageSlot.vue'
+import SlotDataActivityVideoListSlot from './components/dialogs/data/ActivityVideoListSlot.vue'
 
 import moment from "moment"
 
@@ -256,8 +257,9 @@ export default {
     UploadImage,
     DeleteRow,
     DeleteColumn,
+    SlotDataImageSlot,
     SlotDataBannerSlot,
-    SlotDataImageSlot
+    SlotDataActivityVideoListSlot
   },
   name: "app",
   data() {
