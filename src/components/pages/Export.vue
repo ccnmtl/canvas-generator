@@ -215,7 +215,7 @@ export default {
 
               //add weeks
               // for (let i = 1; i <= this.weeks.length; i++) {
-                
+
               //   let el = document.getElementById("week-box" + (i - 1))
               //   let code = el.innerHTML.replace(/\bdata-v-\S+\"/gi, "")
 
@@ -409,6 +409,8 @@ export default {
       }, 1500)
     },
     performImport() {
+      this.$store.dispatch('updateState', this.importData.store)
+      /*
       this.updateInfo(this.importData.store.info)
       this.updateTheme(this.importData.store.theme.theme)
 
@@ -419,6 +421,9 @@ export default {
       })
 
       this.updateWeeks(this.importData.store.weeks)
+      this.$router.push({ path: "/home" })
+      */
+     alert('Data imported successfully!')
       this.$router.push({ path: "/home" })
     },
     exportJSON() {

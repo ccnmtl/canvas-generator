@@ -256,4 +256,9 @@ export default {
   setDragType: (state, type) => {
     state.dragType = type
   },
+  updateState: (state, data) => {
+    for (var prop in data) {
+      Vue.set(state, prop, data[prop])
+    }
+  },
 }
