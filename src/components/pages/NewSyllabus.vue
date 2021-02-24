@@ -123,7 +123,7 @@ import { mapActions } from "vuex"
 
 
 export default {
-  name: "NewSyllabus",
+  name: "Syllabus",
   data() {
     return {
       userInput: {

@@ -116,6 +116,8 @@ export default {
       return moment(date).format("dddd, MMMM Do")
     },
     createLink(link){
+      if (this.data.linkID) link = '/pages/session-' + ( this.$store.getters.getWeekIndexByID(this.data.linkID) + 1)
+      if (!link) return null
       return this.info.url + link
     },
     doNothing(e) {

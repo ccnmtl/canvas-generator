@@ -2,7 +2,7 @@
   <div ref="container" class="canvas-code"
        :class="[{ blocked: previewing }, { dragging: isDndMode }]"
        @dragend="dragEnd">
-    <!-- <h4 class="preview-text">CANVAS PREVIEW AREA</h4> -->
+    <h4 class="preview-text">CANVAS PREVIEW AREA</h4>
 
     <div class="canvas-container" v-if="!loading">
       <div class="preview-page" id="previewpage">
@@ -18,8 +18,8 @@
             <!-- <el-option label="Slots" value="slots" /> -->
           </el-select>
         </div>
-        <el-button type="primary" @click="enterEditMode" v-if="previewing" class="btn btn-primary">Enter Edit Mode</el-button>
-        <el-button type="primary" @click="exitEditMode" v-else class="btn btn-secondary">Exit Edit Mode</el-button>
+        <el-button type="primary" @click="enterEditMode" v-if="previewing" class="btn btn-primary">Enter Advanced Editor</el-button>
+        <el-button type="primary" @click="exitEditMode" v-else class="btn btn-secondary">Exit Advanced Editor</el-button>
         <el-button type="success" @click="getHTMLCode()">Copy the Code</el-button>
       </div>
 
@@ -186,8 +186,8 @@ export default {
     text-align: center;
     font-weight: bold;
     position: absolute;
-    left: 50%;
-    transform: translate(-50%, -10%);
+    margin-left: 18%;
+    margin-top: 10px;
   }
 
   .drop-zone{

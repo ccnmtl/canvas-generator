@@ -23,17 +23,40 @@
       <hr>
 
       <div>
-        <!-- <el-card>
-        <div class="code-input center">
-          Edit {{info.classType.dateType}}: <el-input-number  style="margin: px;" v-model="userInput.weekNumber" :min="1" :max="weeks.length"
-            controls-position="right" size="small" :label="'Edit ' + info.classType.dateType" />
-        </div>
-
-        <select v-model="userInput.weekNumber" class="uk-select" >
-          <option v-for="n in weeks.length" :value="n" :key="n">{{info.classType.dateType}} {{n}}</option>
-        </select>
+        <el-card>
 
         <div v-if="weeks.length > 0">
+          <div class="code-input center uk-margin-small-top">
+            <label for="select">Edit Session:</label> <br>
+            <select v-model="userInput.weekNumber" class="uk-select" >
+              <option v-for="n in weeks.length" :value="n" :key="n">{{info.classType.dateType}} {{n}}</option>
+            </select>
+          </div>
+
+
+
+          <div class="code-input center uk-margin-small-top">
+            <label for="text-area">Title</label> <br>
+            <el-input type="textarea" autosize :value="weeks[userInput.weekNumber - 1].title"
+            @input="updateWeek(userInput.weekNumber - 1,'title', $event)"> </el-input>
+          </div>
+
+          <div class="code-input center uk-margin-small-top">
+            <label for="text-area">Description</label>
+            <el-input type="textarea" autosize :value="weeks[userInput.weekNumber - 1].description"
+            @input="updateWeek(userInput.weekNumber - 1,'description', $event)"> </el-input>
+          </div>
+          <div class="center">
+            <label >Date
+            <el-date-picker
+              style="margin: 10px; margin-bottom:20px"
+              :value="weeks[userInput.weekNumber - 1].date"
+              @input="updateWeek(userInput.weekNumber - 1,'date', $event)"
+              type="date"
+              placeholder="Pick start date">
+            </el-date-picker>
+            </label>
+          </div>
           <div class="code-input center ">
             <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
 
@@ -49,7 +72,7 @@
 
           </div>
         </div>
-        </el-card> -->
+        </el-card>
         <!-- <div class="center add-weekly">
           Links
           <el-switch
@@ -104,7 +127,7 @@ var toolbarOptions = [
 ]
 
 export default {
-  name: "NewWeekly",
+  name: "Activities",
   data() {
     return {
       userInput: {

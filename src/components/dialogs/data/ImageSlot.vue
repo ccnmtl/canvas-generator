@@ -2,41 +2,46 @@
   <div class="dialog-inner">
 
     <div class="dialog-content">
-      <form name="file-form" v-on:submit.prevent="uploadImage()">
-        <label>Source:
-          <el-radio-group v-model="source">
-            <el-radio-button label="computer">From Computer</el-radio-button>
-            <el-radio-button label="url">From URL</el-radio-button>
-          </el-radio-group>
-        </label>
+      <div class="row">
+        <div class="col-sm-6">
+          <form name="file-form" v-on:submit.prevent="uploadImage()">
+            <label>Source:
+              <el-radio-group v-model="source">
+                <el-radio-button label="computer">From Computer</el-radio-button>
+                <el-radio-button label="url">From URL</el-radio-button>
+              </el-radio-group>
+            </label>
 
-        <transition name="fade" mode="out-in">
-          <label key="computer" v-if="source === 'computer'">Upload New Image:
-            <input @change="setImage" class="form-control" ref="image" name="image" id="image-file" type="file">
+            <transition name="fade" mode="out-in">
+              <label key="computer" v-if="source === 'computer'">Upload New Image:
+                <input @change="setImage" class="form-control" ref="image" name="image" id="image-file" type="file">
+              </label>
+              <label key="url" v-else>Select from URL:
+                <input v-model="newImage" class="form-control" name="image" id="image-link" placeholder="Image URL">
+              </label>
+            </transition>
+            <div class="row">
+                <label> Width: <el-input ref="width" style="width:80px; margin-right: 20px" v-model="data.width" /></label>
+                <label> Height: <el-input ref="height" style="width:80px" v-model="data.height" /></label>
+            </div>
+            <label>
+              <input type="submit" class="el-button el-button--primary" value="Upload">
+            </label>
+          </form>
+        </div>
+        <div class="col-sm-6">
+          <label>Current Image:
+            <br><img :src="data.imgSrc" alt="" />
           </label>
-          <label key="url" v-else>Select from URL:
-            <input v-model="newImage" class="form-control" name="image" id="image-link" placeholder="Image URL">
-          </label>
-        </transition>
-        <label>
-          <input type="submit" class="el-button el-button--primary" value="Upload">
-        </label>
-      </form>
+        </div>
+      </div>
+
+
 
       <hr>
 
-      <label>Current Image:
-        <img :src="data.imgSrc" alt="" />
-      </label>
 
-      <div class="row">
-        <div class="col-sm-4">
-          <label> Width: <el-input ref="width" style="width:80px" v-model="data.width" /></label>
-        </div>
-        <div class="col-sm-4">
-          <label> Height: <el-input ref="height" style="width:80px" v-model="data.height" /></label>
-        </div>
-      </div>
+
     </div>
 
     <footer>

@@ -5,12 +5,12 @@
             <div class="uk-background-cover uk-height-large uk-panel uk-text-center" style="background-image: url(static/images/cover01.jpg);">
                <p>&nbsp;</p>
                <p>&nbsp;</p>
-               <img class="columbia-logo" src="https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/CCB_logo_istari.png" />
+               <img class="columbia-logo" src="https://s3.amazonaws.com/cu-coursebuilder/images/CCB_logo.jpg" />
                <br><br>
                <router-link class="router" to="/guide">
-               <el-button type="plain" size="large" style="background-color: #1F1347; color: #FFFFFF; display: inline-block; margin-left: 15px; margin-right: 20px;">View Guide</el-button>
+               <el-button type="primary" size="large" style="display: inline-block; margin-left: 15px; margin-right: 20px;">View Guide</el-button>
                </router-link>
-               <el-button type="plain" size="large" style="background-color: #1F1347; color: #FFFFFF; display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
+               <el-button type="primary" size="large" style="display: inline-block; margin-right: 20px;" @click="dialogFormVisible = true">Get Started</el-button>
             </div>
         </div>
     </div>

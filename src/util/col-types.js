@@ -390,6 +390,9 @@ export default {
           }
         },
         content : {
+          data:{
+            editorType: 'Tiny'
+          },
           getter: {
             content: this.getSelectedWeekPropGetter('body')
           }

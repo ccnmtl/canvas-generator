@@ -9,6 +9,10 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters(["getInfo", "getDWeek", 'getWeeks', 'getTheme', 'getStudents','getSelectedWeekID']),
+    ...mapGetters({
+      Config: 'getConfig',
+      defaultOptions: 'getThemeOptions'
+    }),
     info() {
       return this.getInfo
     },

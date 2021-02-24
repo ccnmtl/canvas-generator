@@ -49,8 +49,8 @@ export default {
           visible: true,
           defaultData: {
             "imgSrc": "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/OGH_LogoWide.png",
-            "width": "300",
-            "height": "300"
+            "width": "480",
+            "height": "270"
           }
         },
         contentSlot: {

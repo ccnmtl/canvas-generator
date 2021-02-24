@@ -158,18 +158,26 @@ export default {
     },
     activityRowByID(id){
       let imageCol = this.activityImageCol({
-          data: {link: 'http://www.google.com'},
+          data: {
+            linkID: id
+          },
           getter: {
           imgSrc: this.getWeekPropGetter('imgSrc', id) // this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + (this.getWeekIndexByID(id)+1) + ".png",
           }
         })
       let sidebarCol = this.activitySidebarCol({
         title: {
+          data: {
+            linkID: id
+          },
           getter: {
             value: this.getWeekPropGetter('title', id) // {func: this.getWeekPropByID, props: ['title', id]}
           },
         },
         date: {
+          data:{
+            name: 'Date',
+          },
           getter: {
             value: this.getWeekPropGetter('date', id) // {func: this.getWeekPropByID, props: ['date', id] }
           },

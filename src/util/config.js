@@ -10,7 +10,7 @@ export default {
         image: 'https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/CCB_logo_istari.png'
       },
       themes: {
-        visible: '*', // * show all themes, an Array can be used to show specific themes
+        visible: ["SIPA", "Columbia", "Social Work","Mailman"], // * show all themes, an Array can be used to show specific themes
         hidden: [ 'theme-name' ] // this only works if visible is set to *
       },
       pages: {
