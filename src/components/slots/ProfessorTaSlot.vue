@@ -6,7 +6,7 @@
         </div>
         <p>{{ data.type }}:</p>
         <p>
-          {{ data.name }} (<a :href="'mailto:' + data.email">{{ data.email }}</a>)
+          {{ data.name }} (<a @click="doNothing" :href="'mailto:' + data.email">{{ data.email }}</a>)
           <br>
           Office Hours: <span>{{ data.office }}</span>
         </p>
