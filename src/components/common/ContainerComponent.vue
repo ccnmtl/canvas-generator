@@ -2,7 +2,12 @@
   <div ref="container" class="canvas-code"
        :class="[{ blocked: previewing }, { dragging: isDndMode }]"
        @dragend="dragEnd">
-    <h4 class="preview-text">CANVAS PREVIEW AREA</h4>
+    <el-alert
+      title="CANVAS PREVIEW AREA" effect="dark"
+      type="info" class="preview-text" show-icon center
+      description="Build your final canvas page layout below">
+    </el-alert>
+
 
     <div class="canvas-container" v-if="!loading">
       <div class="preview-page" id="previewpage">
@@ -186,8 +191,9 @@ export default {
     text-align: center;
     font-weight: bold;
     position: absolute;
-    margin-left: 18%;
-    margin-top: 10px;
+    margin-top: -7px;
+    width: 350px;
+    transform: translate(88%, 0%);
   }
 
   .drop-zone{

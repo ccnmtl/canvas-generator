@@ -58,21 +58,21 @@
 
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
         <div>
-            <div class="uk-background-primary uk-padding uk-light uk-height-medium">
+            <div class="uk-padding uk-light uk-height-medium" :style="{background: theme.primary}">
             	<h1>1</h1>
             	<h5>DESIGN IN REAL TIME</h5>
             	<p>This website allows Columbia Professors and TA’s to quickly build Canvas class websites using our pre-built course template. </p>
             </div>
         </div>
         <div>
-            <div class="uk-background-primary uk-padding uk-light uk-height-medium">
+            <div class="uk-padding uk-light uk-height-medium" :style="{background: theme.primary}">
             	<h1>2</h1>
             	<h5>EXPORT CODE</h5>
             	<p>Once each page is built, you can copy the code for the page template.</p>
             </div>
         </div>
         <div>
-            <div class="uk-background-primary uk-padding uk-light uk-height-medium">
+            <div class="uk-padding uk-light uk-height-medium" :style="{background: theme.primary}">
             	<h1>3</h1>
             	<h5>INSERT INTO CANVAS</h5>
             	<p>And insert it into the canvas Page! See <router-link class="router" to="/guide">user guide</router-link> for details.</p>
