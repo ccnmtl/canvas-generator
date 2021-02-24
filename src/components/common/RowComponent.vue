@@ -12,28 +12,31 @@
       <div>You can also <a @click="deleteRow">delete</a> this row.</div>
     </div>
 
+
     <div data-hidden class="actions" v-else>
       <button v-if="columns.length < 3 && totalWidth < 12" @click="chooseCol" class="btn btn-primary float">
         <i class="el-icon-plus"></i>
         <span>Add Column</span>
       </button>
 
-      <router-link
-          to="/activity"
-          @click.native="setSelectedWeek"
-          v-if="row.data && row.data.weekID">
-          <button  class="btn  btn-success float">
-            <i class="el-icon-edit"></i>
-            <span>Edit Activity</span>
-          </button>
-      </router-link>
-
-
       <button @click="deleteRow" class="btn btn-danger float delete">
         <i class="el-icon-delete"></i>
         <span>Delete Row</span>
       </button>
     </div>
+
+    <div data-hidden data-always class="actions">
+      <router-link
+          to="/activity"
+          @click.native="setSelectedWeek"
+          v-if="row.data && row.data.weekID" >
+          <button  class="btn  btn-success float">
+            <i class="el-icon-edit"></i>
+            <span>Edit Activity</span>
+          </button>
+      </router-link>
+    </div>
+    
     <div class="row" style="display: flex; margin: 0 -15px">
       <draggable style="width: 100%; display: flex" :disabled="!isDndMode || getDragType !== 'columns'" v-model="sortedColumns" group="columns" @start="drag=true" @end="drag=false">
         <column-component v-for="column in sortedColumns"

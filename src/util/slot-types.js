@@ -36,7 +36,6 @@ export default {
           visible: true,
           defaultData: {
             title: "Default Title",
-            semester: "U6411 // SPRING 2020"
           }
         },
         imageSlot: {

@@ -17,7 +17,7 @@
     </div>
     <div data-hidden data-always class="delete-options" v-if="showEdit">
       <el-button @click="showSlotData"
-                 type="secondary"
+                 type="success"
                  icon="el-icon-edit"
                  circle>
         <span class="smaller">Slot Data</span>

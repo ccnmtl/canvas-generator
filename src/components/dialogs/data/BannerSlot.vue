@@ -2,10 +2,10 @@
   <div class="dialog-inner">
 
     <div class="dialog-content">
-      <label>Title:
+      <label v-if="data.title">Title:
         <input class="form-control" @blur="finishEditing('title')" ref="title" v-model="data.title" placeholder="Course Title">
       </label>
-      <label>Semester:
+      <label v-if="data.semester">Semester:
         <input class="form-control" @blur="finishEditing('semester')" ref="semester" v-model="data.semester" placeholder="Semester">
       </label>
       <label>
