@@ -6,11 +6,11 @@
         <div class="row">
           <el-col v-for="row in pageRowTypes" :key="row.id" :span="6" class="row-item">
             <el-popover
-              placement="bottom-start"
+              placement="top"
               title="Row Preview"
-              width="400"
+              width="600"
               trigger="click">
-              <img :src="imageServer + 'preview-images/rows/' + row.type + '.PNG'" alt="">
+              <img :src="imageServer + 'preview-images/rows/' + row.type + '.png'" alt="">
               <div v-if="isPageType(row)" class="row-content"
                     :class="{ selected: row.id === selectedRow }"
                     @click="selectedRow = row.id" slot="reference">
@@ -27,11 +27,11 @@
         <div class="row">
           <el-col v-for="row in otherRowTypes" :key="row.id" :span="6" class="row-item">
             <el-popover
-              placement="bottom-end"
+              placement="top"
               title="Row Preview"
-              width="400"
+              width="600"
               trigger="click">
-              <img :src="imageServer + 'preview-images/rows/' + row.type + '.PNG'" alt="">
+              <img :src="imageServer + 'preview-images/rows/' + row.type + '.png'" alt="">
               <div class="row-content"
                   :class="{ selected: row.id === selectedRow }"
                   @click="selectedRow = row.id"  slot="reference">
@@ -48,11 +48,11 @@
         <div class="row">
           <el-col v-for="row in RowTypes" :key="row.id" :span="6" class="row-item">
             <el-popover
-              placement="right-end"
+              placement="top"
               title="Row Preview"
-              width="400"
+              width="600"
               trigger="click">
-              <img :src="imageServer + 'preview-images/rows/' + row.type + '.PNG'" alt="">
+              <img :src="imageServer + 'preview-images/rows/' + row.type + '.png'" alt="">
               <div class="row-content"
                 :class="{ selected: row.id === selectedRow }"
                 @click="selectedRow = row.id"  slot="reference">

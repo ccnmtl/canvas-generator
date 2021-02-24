@@ -10,7 +10,7 @@
               title="Column Preview"
               width="400"
               trigger="click">
-              <img :src="imageServer + 'preview-images/cols/' + col.type + '.PNG'" alt="">
+              <img :src="imageServer + 'preview-images/cols/' + col.type + '.png'" alt="">
               <div v-if="isPageType(col)" class="col-content"
                     :class="{ selected: col.id === selectedCol }"
                     @click="selectedCol = col.id" slot="reference">
@@ -27,11 +27,11 @@
         <div class="col">
           <el-col v-for="col in otherColTypes" :key="col.id" :span="6" class="col-item">
             <el-popover
-              placement="right-end"
+              placement="top"
               title="Column Preview"
               width="400"
               trigger="click">
-              <img :src="imageServer + 'preview-images/cols/' + col.type + '.PNG'" alt="">
+              <img :src="imageServer + 'preview-images/cols/' + col.type + '.png'" alt="">
               <div v-if="isPageType(col)" class="col-content"
                     :class="{ selected: col.id === selectedCol }"
                     @click="selectedCol = col.id" slot="reference">
@@ -48,11 +48,11 @@
         <div class="col">
           <el-col v-for="col in ColTypes" :key="col.id" :span="6" class="col-item">
             <el-popover
-              placement="bottom-start"
+              placement="top"
               title="Column Preview"
               width="400"
               trigger="click">
-              <img :src="imageServer + 'preview-images/cols/' + col.type + '.PNG'" alt="">
+              <img :src="imageServer + 'preview-images/cols/' + col.type + '.png'" alt="">
               <div v-if="isPageType(col)" class="col-content"
                     :class="{ selected: col.id === selectedCol }"
                     @click="selectedCol = col.id" slot="reference">

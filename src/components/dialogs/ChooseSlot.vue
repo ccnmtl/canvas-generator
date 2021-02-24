@@ -6,11 +6,11 @@
         <div class="slot">
           <el-col v-for="slot in pageSlotTypes" :key="slot.id" :span="6" class="slot-item">
             <el-popover
-              placement="right-end"
+              placement="top"
               title="Slot Preview"
               width="400"
               trigger="click">
-              <img :src="imageServer + 'preview-images/slots/' + slot.type + '.PNG'" alt="">
+              <img :src="imageServer + 'preview-images/slots/' + slot.type + '.png'" alt="">
               <div v-if="isPageType(slot)" class="slot-content"
                     :class="{ selected: slot.id === selectedSlot }"
                     @click="selectedSlot = slot.id" slot="reference">
@@ -29,9 +29,9 @@
             <el-popover
               placement="right-end"
               title="Slot Preview"
-              width="400"
+              width="top"
               trigger="click">
-              <img :src="imageServer + 'preview-images/slots/' + slot.type + '.PNG'" alt="">
+              <img :src="imageServer + 'preview-images/slots/' + slot.type + '.png'" alt="">
               <div v-if="isPageType(slot)" class="slot-content"
                     :class="{ selected: slot.id === selectedSlot }"
                     @click="selectedSlot = slot.id" slot="reference">
@@ -50,9 +50,9 @@
             <el-popover
               placement="right-end"
               title="Slot Preview"
-              width="400"
+              width="top"
               trigger="click">
-              <img :src="imageServer + 'preview-images/slots/' + slot.type + '.PNG'" alt="">
+              <img :src="imageServer + 'preview-images/slots/' + slot.type + '.png'" alt="">
               <div v-if="isPageType(slot)" class="slot-content"
                     :class="{ selected: slot.id === selectedSlot }"
                     @click="selectedSlot = slot.id" slot="reference">
