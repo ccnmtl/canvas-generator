@@ -174,6 +174,11 @@ export default {
             value: this.getWeekPropGetter('title', id) // {func: this.getWeekPropByID, props: ['title', id]}
           },
         },
+        content: {
+          getter: {
+            content: this.getWeekPropGetter('description', id) // {func: this.getWeekPropByID, props: ['date', id] }
+          },
+        },
         date: {
           data:{
             name: 'Date',

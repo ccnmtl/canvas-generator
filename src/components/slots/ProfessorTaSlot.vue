@@ -2,13 +2,13 @@
   <div :id="sid" class="professor-ta-slot">
     <div class="pad-box-mini border border-tl">
       <div class="STV1_ProfileBG color-columbia-blue" :style="{background:getTheme.primary}">
-        <img :src="slotData.imgSrc" class="STV1_SyllabusPhoto">
+        <img :src="data.imgSrc" class="STV1_SyllabusPhoto">
         </div>
-        <p>{{ slotData.type }}:</p>
+        <p>{{ data.type }}:</p>
         <p>
-          {{ slotData.name }} (<a :href="'mailto:' + slotData.email">{{ slotData.email }}</a>)
+          {{ data.name }} (<a @click="doNothing" :href="'mailto:' + data.email">{{ data.email }}</a>)
           <br>
-          Office Hours: <span>{{ slotData.office }}</span>
+          Office Hours: <span>{{ data.office }}</span>
         </p>
       </div>
   </div>

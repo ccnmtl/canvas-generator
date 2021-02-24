@@ -98,7 +98,6 @@
         </el-card>
 
 
-
       </div>
       <div class='canvas-code'>
         <container-component cid="syllabus" :defaultRows="defRows"/>

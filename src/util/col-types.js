@@ -28,11 +28,12 @@ export default {
           icon: "picture",
           array: [
             {
-              type: "title-slot",
+              type: "name-value-slot",
               data: {
-                title: "WELCOME TO " + this.getInfo.title.toUpperCase(),
-                type: "custom"
+                name: "WELCOME TO",
+                nameStyle: ""
               },
+              getter: 'info.title',
               classes: ["STV1_Welcome"],
               styles: {
                 "text-transform": "uppercase",
