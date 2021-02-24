@@ -13,6 +13,9 @@ function findObj(objKey, objValue, list){
 }
 
 export default {
+    updateState: ({ commit }, data) => {
+      commit('updateState', data)
+    },
     setConfig: ({ commit }) => {
       commit('setConfig', Config.data())
     },
