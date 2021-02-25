@@ -217,9 +217,9 @@
          </div>
     </div>
 
-    <div id="render-components" v-if="!$store.getters.areComponentsRendered">
+    <!-- <div id="render-components" v-if="!$store.getters.areComponentsRendered">
       <container-component v-for="page in pages" :key="page.name" :cid="page.name" :defaultRows="page.rows" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -406,37 +406,7 @@ export default {
     }
   },
   beforeMount() {
-    if(!this.$store.getters.areComponentsRendered) {
-      this.pages = [
-        {
-          name: 'home',
-          rows: [
-            'home-banner-row',
-            [['image-slot'], 'home-sidebar'],
-            'home-instructors-row',
-            'date-time-row',
-          ],
-        },
-        {
-          name: 'activities-list',
-          rows: [
-            'banner-row',
-          ],
-        },
-        {
-          name: 'activity',
-          rows: this.defActivityRows,
-        },
-        {
-          name: 'syllabus',
-          rows: this.defSyllabusRows
-        },
-      ]
-      setTimeout(() => {
-        this.$store.dispatch('setRenderedComponents', true)
-      }, 1000)
-    }
-
+    
     if (this.weeks.length < 1) {
       for (let i = 1; i <= 12; i++) {
         let tempWeek = {}
@@ -452,6 +422,45 @@ export default {
     if (this.info.students.length < 1) this.addStudent()
     if (this.info.profs.length < 1) this.addProf()
     if (this.info.tas.length < 1) this.addTA()
+
+    if(!this.$store.getters.areComponentsRendered) {
+
+      this.updateRowTypes(this.rowTypes)
+      this.updateColTypes(this.colTypes)
+      this.updateSlotTypes(this.slotTypes)
+
+      console.log('building pages...')
+      this.pages = []
+      console.log(this.pages)
+
+      let containers = this.defaultContainerRows
+      let keys = Object.keys(containers)
+      keys.forEach(key => {
+        this.$store.dispatch('createRowsFromArray', {
+          cid: key,
+          rows: containers[key]
+        })
+        console.log(key)
+
+        // this.pages.push({name: key, rows: containers[key]})
+      })
+
+      this.weeks.forEach ((week, index) => {
+        this.$store.dispatch('createRowsFromArray', {
+          cid: 'activities-list',
+          rows: this.activityRowByID(week.id),
+          type: 'activity-row',
+          data: {
+            weekID: week.id
+          }
+        })
+      })
+
+      setTimeout(() => {
+        this.$store.dispatch('setRenderedComponents', true)
+      }, 1000)
+      
+    }
   }
 
 

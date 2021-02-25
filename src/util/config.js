@@ -19,7 +19,7 @@ export default {
       },
       rows: {
         visible: '*', // * show all slots, an Array can be used to show specific slots
-        hidden: ['excluded-row', 'weekly-activity-list-intro' ], // this only works if visible is set to *
+        hidden: ['excluded-row', 'weekly-activity-list-intro', 'title-banner-row' ], // this only works if visible is set to *
         customRows: {  // Here you can either define totally custom rows, or replace default rows with changed versions 
           
         }
