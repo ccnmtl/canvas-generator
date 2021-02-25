@@ -126,18 +126,44 @@ export default {
     saveChoice() {
       const actualSlotType = this.findSlot('id', this.selectedSlot)
 
-      this.$store.dispatch('addSlot', {
-        getter: actualSlotType.getter,
-        type: this.selectedSlot,
-        rid: this.dialogData.rid,
-        cid: this.dialogData.cid,
-        colid: this.dialogData.colid,
-        data: actualSlotType.defaultData,
-        classes: actualSlotType.classes,
-        styles: actualSlotType.styles
-      })
-      this.$store.dispatch("setDialogVisibility", false)
-    },
+      
+      if(this.dialogData.action == 'new'){
+       this.$store.dispatch('addRow', {
+          cid: this.dialogData.cid,
+        }).then( newRow => {
+          this.$store.dispatch('addColumn', {
+            cid: this.dialogData.cid,
+            rid: newRow.rid
+          }).then( newCol => {
+            this.$store.dispatch('addSlot', {
+              getter: actualSlotType.getter,
+              type: this.selectedSlot,
+              rid: newRow.rid,
+              cid: this.dialogData.cid,
+              colid: newCol.colid,
+              data: actualSlotType.defaultData,
+              classes: actualSlotType.classes,
+              styles: actualSlotType.styles
+            })
+          })
+        })
+        this.$store.dispatch("setDialogVisibility", false)
+        return
+      }
+      else {
+        this.$store.dispatch('addSlot', {
+            getter: actualSlotType.getter,
+            type: this.selectedSlot,
+            rid: this.dialogData.rid,
+            cid: this.dialogData.cid,
+            colid: this.dialogData.colid,
+            data: actualSlotType.defaultData,
+            classes: actualSlotType.classes,
+            styles: actualSlotType.styles
+          })
+          this.$store.dispatch("setDialogVisibility", false)
+        }
+      },
     isPageType(slot){
       return _.includes(slot.pages, this.dialogData.cid) || slot.pages == "*"
     }    

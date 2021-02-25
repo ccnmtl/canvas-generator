@@ -130,10 +130,20 @@ export default {
       }
 
       if(actualRowType.type === 'blank-row') {
-        this.$store.dispatch('addRow', {
+        let newRow = this.$store.dispatch('addRow', {
           cid: this.dialogData.cid,
         })
-        this.$store.dispatch("setDialogVisibility", false)
+
+        newRow.then( (res)=> {
+          console.log(res)
+          this.$store.dispatch("setDialogData", {
+          title: 'Choose Column Type',
+          type: 'choose-col',
+          cid: this.dialogData.cid,
+          rid: res.rid,
+          })
+        })
+        // this.$store.dispatch("setDialogVisibility", false)
       }
 
       else {
