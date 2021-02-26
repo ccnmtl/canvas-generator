@@ -209,6 +209,17 @@
       width="50%">
         <component :is="dialogData.type" :dialogData="dialogData" @cancelDialog="closeDialog" />
     </el-dialog>
+
+    <!-- <el-drawer
+      :title="dialogData.title"
+      :visible.sync="dialogVisible"
+      :with-header="false"
+      direction="ltr"
+      size="50%">
+      <h3 style="margin:10px">{{dialogData.title}}</h3>
+      <component :is="dialogData.type" :dialogData="dialogData" @cancelDialog="closeDialog" style="margin:10px" />
+    </el-drawer> -->
+    
     <div class="clearfix" />
 
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>

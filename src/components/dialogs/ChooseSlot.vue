@@ -27,9 +27,9 @@
         <div class="slot">
           <el-col v-for="slot in otherSlotTypes" :key="slot.id" :span="6" class="slot-item">
             <el-popover
-              placement="right-end"
+              placement="top"
               title="Slot Preview"
-              width="top"
+              width="400"
               trigger="click">
               <img :src="imageServer + 'preview-images/slots/' + slot.type + '.png'" alt="">
               <div v-if="isPageType(slot)" class="slot-content"
@@ -48,9 +48,9 @@
         <div class="slot">
           <el-col v-for="slot in SlotTypes" :key="slot.id" :span="6" class="slot-item">
             <el-popover
-              placement="right-end"
+              placement="top"
               title="Slot Preview"
-              width="top"
+              width="400"
               trigger="click">
               <img :src="imageServer + 'preview-images/slots/' + slot.type + '.png'" alt="">
               <div v-if="isPageType(slot)" class="slot-content"
