@@ -596,4 +596,31 @@ html {
 
 .tox-notifications-container {display: none !important;}
 
+.code-container {
+  > .textbox-container {
+    min-width: 350px;
+
+    > div {
+      max-width: 100% !important;
+
+      .el-card__body {
+        button {
+          @media screen and (max-width: 1200px) {
+            display: block;
+            width: 100%;
+            margin: 7px 0;
+          }
+        }
+      }
+    }
+  }
+
+  > .canvas-code {
+  max-width: calc(100% - 370px);
+
+    > .canvas-code {
+      max-width: 100%;
+    }
+  }
+}
 </style>
