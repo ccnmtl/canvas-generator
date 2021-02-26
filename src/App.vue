@@ -30,7 +30,7 @@
       <el-col :span="6">
         <div class="uk-float-right uk-padding-small">
           <a href="#" v-loading.fullscreen.lock="loading" @click="openDialog">
-            <el-button type="primary" style="display: inline-block;">Course Info: <i class="fas fa-cog"></i></el-button>
+            <el-button type="primary" style="display: inline-block;">Course Settings: <i class="fas fa-cog"></i></el-button>
           </a>
 
           <!-- New Dropdown, not yet designed
@@ -93,7 +93,7 @@
     </div>
 
     <!-- COURSE INFO DIALOG -->
-    <el-dialog title="Course Info"
+    <el-dialog title="Course Settings"
                :visible.sync="dialogFormVisible"
                style="width: 80%; margin:auto;">
       <div class="left">

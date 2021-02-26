@@ -5,7 +5,7 @@
       <p class="simple-list-item" v-for="item in data.items" :key="item[data.idField]">
         {{ item[data.labelField] }}
         <template v-if="data.type == 'instructor-ta'">
-          (<a :href="'mailto:' + item[data.emailField]">{{ item[data.emailField] }}</a>)
+          <span v-if='item[data.emailField]'>(<a :href="'mailto:' + item[data.emailField]">{{ item[data.emailField] }}</a>) </span>
           <br />
           {{ item[data.officeField] }}
         </template>

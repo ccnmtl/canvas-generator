@@ -3,10 +3,10 @@
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center uk-grid-match" uk-grid>
       <div>
         <div class="uk-background-primary uk-padding uk-light">
-          <h1>IMPORT/EXPORT COURSEBUILDER</h1>
+          <h1>EXPORT/IMPORT COURSEBUILDER</h1>
           <hr>
           <p>
-          If you have completed your class or want to save the data you have previously submitted into the coursebuilder, click the export button to
+          If you have finished building your class or want to save the data you have previously submitted into the coursebuilder, click the export button to
           save a ".json" file that you can import at a later date (using the import section below).
           </p>
           <button
