@@ -315,7 +315,7 @@ export default {
       }
     },
 
-  addAssignment: ({ commit, getters }, { index, data = {} }) => {
+  addAssignment: ({ commit, getters, state }, { index, data = {} }) => {
       let dAssignment = _.cloneDeep(getters.getDAssignment)
       let assignment = {...dAssignment, ...data}
       assignment.title = "Assigment " + (state.weeks[index].assignments.length + 1)
@@ -324,7 +324,7 @@ export default {
       commit('addAssignment', { assignment, index })
     },
 
-  addDiscussion: ({ commit, getters }, { index, data = {} }) => {
+  addDiscussion: ({ commit, getters, state }, { index, data = {} }) => {
       let dDiscussion = _.cloneDeep(getters.getDDiscussion)
       let discussion = {...dDiscussion, ...data}
       discussion.title = "Discussion " + (state.weeks[index].discussions.length + 1)

@@ -42,12 +42,12 @@
             <el-input type="textarea" autosize :value="weeks[userInput.weekNumber - 1].title"
             @input="updateWeek(userInput.weekNumber - 1,'title', $event)"> </el-input>
           </div>
-
+<!-- 
           <div class="code-input center uk-margin-small-top">
             <label for="text-area">Description</label>
             <el-input type="textarea" autosize :value="weeks[userInput.weekNumber - 1].description"
             @input="updateWeek(userInput.weekNumber - 1,'description', $event)"> </el-input>
-          </div>
+          </div> -->
           <div class="center">
             <label >Date
             <el-date-picker

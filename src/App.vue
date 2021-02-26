@@ -408,6 +408,7 @@ export default {
   beforeMount() {
     
     if (this.weeks.length < 1) {
+      console.log("building new weeks")
       for (let i = 1; i <= 12; i++) {
         let tempWeek = {}
         tempWeek.title = "Lecture " + i
