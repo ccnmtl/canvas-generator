@@ -131,8 +131,7 @@ export default {
 
       formData.append("imageWidth", this.data.width)
       formData.append("imageHeight", this.data.height)
-
-      this.$http.post("http://ec2-34-229-16-148.compute-1.amazonaws.com:3000/image", formData).then(
+      this.$http.post("https://images.columbiacoursebuilder.org/image", formData).then(
         response => {
           let imageData = JSON.parse(response.bodyText)
 
@@ -146,6 +145,14 @@ export default {
           }
 
           else this.data.imgSrc = imageData.imageUrls[0]
+
+          this.$store.dispatch("updateSlotData", {
+          item: this.dialogData.slotData,
+          data: {
+            imgSrc: imageData.imageUrls[0],
+            width: this.data.width, height: this.data.height
+            }
+          })
         },
         response => {
           console.log(response)

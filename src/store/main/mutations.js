@@ -56,11 +56,12 @@ export default {
     })
   },
   updateSlotData: (state, slot) => {
+    let item = slot.item || slot
     const actualSlot = _.findIndex(state.slots, {
-      'sid': slot.item.sid,
-      'rid': slot.item.rid,
-      'cid': slot.item.cid,
-      'colid': slot.item.colid,
+      'sid': item.sid,
+      'rid': item.rid,
+      'cid': item.cid,
+      'colid': item.colid,
     })
     Vue.set(state.slots[actualSlot], 'data', slot.data)
   },
