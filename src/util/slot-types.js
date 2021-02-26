@@ -47,7 +47,7 @@ export default {
           colspan: 4,
           visible: true,
           defaultData: {
-            "imgSrc": "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/OGH_LogoWide.png",
+            "imgSrc": "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/campus.jpg",
             "width": "480",
             "height": "270"
           }
