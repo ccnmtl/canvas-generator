@@ -6,7 +6,7 @@
                  icon="el-icon-edit"
                  circle
                  v-if="showEdit">
-        <span class="smaller">Slot Data</span>
+        <span class="smaller">Edit Data</span>
       </el-button>
       <el-button @click="showDeleteSlot"
                  type="danger"
