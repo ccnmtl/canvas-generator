@@ -69,6 +69,7 @@ export default {
             ['banner-col']
           ],
         },
+        
         weeklyActivityListIntro: {
           id: 7,
           name: "Activity List Intro",
@@ -98,8 +99,49 @@ export default {
             ['instructor-expanded-list']
           ]
         },
+        titleBannerRow: {
+          id: 6,
+          name: "Title Banner",
+          type: "title-banner-row",
+          icon: "picture",
+          sort: -2,
+          array: [
+            [this.simpleBannerCol({ banner: { getter: { title: 'info.title' } } })]
+          ],
+        },
       }
     },
+    defaultContainerRows(){ 
+    return {
+      activity: [
+        'title-banner-row',
+        [this.activityIntroCol()],
+        [['activity-video-list-slot']],
+        ['case-list'],
+        [['activity-item-list-slot']],
+      ],
+      syllabus: [
+        'title-banner-row',
+        [['instructor-list-slot']],
+        [['spacer-slot']],
+        'date-time-row',
+        [this.syllabusComponentCol({title: {data: {title: 'Course Description'}}})],
+        [this.syllabusComponentCol({title: {data: {title: 'Course Objectives'}}})],
+        [this.syllabusComponentCol({title: {data: {title: 'Weekly Schedule'}}})],
+        [['activity-table-slot']],
+      ],
+      home: [
+        'home-banner-row',
+        [['image-slot'], 'home-sidebar'],
+        'home-instructors-row',
+        'date-time-row',
+      ],
+      'activities-list': [
+        'title-banner-row',
+        'weekly-activity-list-intro'
+      ]
+    }
+    }
   },
   mixins: [columnTypes],
   data() {
@@ -202,6 +244,5 @@ export default {
     this.updateRowTypes(this.rowTypes)
     this.updateColTypes(this.colTypes)
     this.updateSlotTypes(this.slotTypes)
-
   }
 }

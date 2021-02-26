@@ -90,13 +90,13 @@ export default {
   },
   getWeekPropGetter: (state, getters) => (prop, id) => {
     return {
-      func: getters.getWeekPropByID,
+      func: 'getWeekPropByID',
       props: [prop, id]
     }
   },
   getSelectedWeekPropGetter: (state, getters) => (prop) => {
     return {
-      func: getters.getSelectedWeekProp,
+      func: 'getSelectedWeekProp',
       props: [prop]
     }
   },
@@ -111,7 +111,7 @@ export default {
   },
   getWeekItemPropGetter: (state, getters) => (prop, type, id) => {
     return {
-      func: getters.getWeekItemPropByID,
+      func: 'getWeekItemPropByID',
       props: [prop, type, id]
     }
   },

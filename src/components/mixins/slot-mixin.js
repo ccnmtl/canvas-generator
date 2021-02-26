@@ -33,7 +33,8 @@ export default {
             this.setters[key] = val
           }
           else {
-            let actualGetter = val.func(...val.props)
+            let getterFunc = self.$store.getters[val.func]
+            let actualGetter = getterFunc(...val.props)
             res[key] = actualGetter.get
             this.setters[key] = actualGetter.set
           }

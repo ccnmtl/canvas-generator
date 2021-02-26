@@ -123,31 +123,66 @@ export default {
   methods: {
     saveChoice() {
       let actualColType 
+      let cid = this.dialogData.cid
+      let rid = this.dialogData.rid
 
       for (const [name, col] of Object.entries(this.ColTypes)){
         if (col.id == this.selectedCol) actualColType = col
       }
 
-      if(actualColType.type === 'blank-col') {
-        this.$store.dispatch('addColumn', {
-          cid: this.dialogData.cid,
-          rid: this.dialogData.rid
-        })
-        this.$store.dispatch("setDialogVisibility", false)
+      if(this.dialogData.action == 'new'){
+        console.log('new')
+        this.$store.dispatch('addRow', { cid }).then( newRow => {
+            this.$store.dispatch('addColumn', {
+              cid,
+              rid: newRow.rid
+            }).then( newCol => {
+              if(actualColType.type === 'blank-col'){
+                console.log('blank')
+                this.$store.dispatch("setDialogData", {
+                title: 'Choose Slot',
+                type: 'choose-slot',
+                colid: newCol.colid,
+                space: 12,
+                cid,
+                rid,
+                })
+              }
+              else {
+                this.$store.dispatch('createSlotsFromArray', {
+                  rid: newRow.rid,
+                  colid: newCol.colid,          
+                  slots: actualColType.array,
+                })
+                this.$store.dispatch("setDialogVisibility", false)
+              }
+            })
+          })
+      }
+      else if(actualColType.type === 'blank-col') {
+        this.$store.dispatch('addColumn', { cid, rid }).then( newCol => {
+            this.$store.dispatch("setDialogData", {
+            title: 'Choose Slot',
+            type: 'choose-slot',
+            colid: newCol.colid,
+            space: 12,
+            cid,
+            rid,
+            })
+          })
       }
       else if(this.dialogData.action == 'append'){
         this.$store.dispatch('createSlotsFromArray', {
-          rid: this.dialogData.rid,
+          rid,
           colid: this.dialogData.colid,          
           slots: actualColType.array,
         })
         this.$store.dispatch("setDialogVisibility", false)
-        
       }
       else {
         //const res = new CC(actualColType.type, this.dialogData.cid)
         this.$store.dispatch('createColumnsFromArray', {
-          rid: this.dialogData.rid,
+          rid,
           colid: this.dialogData.colid,          
           columns: [actualColType.array],
         })

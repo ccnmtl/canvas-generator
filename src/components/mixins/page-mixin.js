@@ -84,6 +84,9 @@ export default {
       console.log(code)
       return code.innerHTML.replace(/\bdata-v-\S+"/gi, "")
     },
+    asArray(obj) {
+      return Object.keys(obj).map((key) => [key, obj[key]])
+    },
     // Parses the URL so that it always has a trailing backslash
     parseUrl(url) {
       url = url.replace(/\/?(\?|#|$)/, '/$1')

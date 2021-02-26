@@ -38,6 +38,8 @@
       </div>
 
       <button data-hidden v-if="!previewing" class="new-row" @click="chooseRow">Add new Row</button>
+      <button data-hidden v-if="!previewing" class="new-row" @click="chooseCol">Add new Column</button>
+      <button data-hidden v-if="!previewing" class="new-row" @click="chooseSlot">Add new Slot</button>
       <!-- <button data-hidden class="new-row" @click="getHTMLCode">get HTML</button> -->
     </div>
 
@@ -98,6 +100,24 @@ export default {
       this.$store.dispatch("setDialogData", {
         title: 'Choose Row Type',
         type: 'choose-row',
+        cid: this.cid,
+      })
+      this.$store.dispatch("setDialogVisibility", true)
+    },
+    chooseCol(){
+      this.$store.dispatch("setDialogData", {
+        title: 'Choose Column Type',
+        type: 'choose-col',
+        action: 'new',
+        cid: this.cid,
+      })
+      this.$store.dispatch("setDialogVisibility", true)
+    },
+    chooseSlot(){
+      this.$store.dispatch("setDialogData", {
+        title: 'Choose Slot Type',
+        type: 'choose-slot',
+        action: 'new',
         cid: this.cid,
       })
       this.$store.dispatch("setDialogVisibility", true)
@@ -212,7 +232,7 @@ export default {
   }
 
   .new-row {
-    width: 100%;
+    width: 33%;
     border: dashed 1px #AAA;
     color: #555;
     padding: 7px 0;

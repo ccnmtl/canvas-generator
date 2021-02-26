@@ -151,7 +151,6 @@ export default {
         }
       },
       homeLayout: [
-        'banner-row',
       ],
     }
   },
@@ -297,10 +296,10 @@ export default {
   },
   beforeMount(){
     // add banner to top of Weekly List Element
-    this.$store.dispatch('createRowsFromArray', {
-      cid: 'activities-list',
-      rows: ['banner-row', 'weekly-activity-list-intro']
-    })
+    // this.$store.dispatch('createRowsFromArray', {
+    //   cid: 'activities-list',
+    //   rows: ['banner-row', 'weekly-activity-list-intro']
+    // })
 
   },
   components: {
