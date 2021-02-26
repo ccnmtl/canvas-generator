@@ -48,35 +48,6 @@ export default {
     }
   },
   computed: {
-    getterData: function () {
-      const self = this
-      if(!this.slotItem.getter) return null
-
-      if(typeof this.slotItem.getter !== 'string') {
-        const res = {}
-        const getters = this.asArray(this.slotItem.getter)
-
-        getters.forEach(getter => {
-          let key = getter[0]
-          let val = getter[1]
-
-          if (typeof val == 'string') {
-            res[key] = self.$store.getters.getFromGetter(val)
-            this.setters[key] = val
-          }
-          else {
-            let actualGetter = val.func(...val.props)
-            res[key] = actualGetter.get
-            this.setters[key] = actualGetter.set
-          }
-        })
-        return res
-      }
-      else {
-        this.setters[this.defaultGetter] = `${this.slotItem.getter}`
-        return this.$store.getters.getFromGetter(this.slotItem.getter)
-      }
-    }
   },
   watch: {
 
