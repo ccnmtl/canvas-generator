@@ -101,15 +101,15 @@ export default {
   },
   methods: {
     saveChoice() {
-      this.$store.dispatch("updateSlotData", {
-        item: this.dialogData.slotData,
-        data: {
-          imgSrc: this.data.imgSrc,
-          width: this.data.width,
-          height: this.data.height,
-          forceDimensions: true
-          }
-        })
+      // this.$store.dispatch("updateSlotData", {
+      //   item: this.dialogData.slotData,
+      //   data: {
+      //     imgSrc: this.data.imgSrc,
+      //     width: this.data.width,
+      //     height: this.data.height,
+      //     forceDimensions: true
+      //     }
+      //   })
       this.$store.dispatch("setDialogVisibility", false)
     },
     setImage() {
@@ -144,15 +144,19 @@ export default {
             })
           }
 
-          else this.data.imgSrc = imageData.imageUrls[0]
+          else {
+            this.data.imgSrc = imageData.imageUrls[0]
 
-          this.$store.dispatch("updateSlotData", {
-          item: this.dialogData.slotData,
-          data: {
-            imgSrc: imageData.imageUrls[0],
-            width: this.data.width, height: this.data.height
-            }
-          })
+            this.$store.dispatch("updateSlotData", {
+            item: this.dialogData.slotData,
+            data: {
+              imgSrc: imageData.imageUrls[0],
+              width: this.data.width, height: this.data.height
+              }
+            })
+          }
+
+
         },
         response => {
           console.log(response)

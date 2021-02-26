@@ -7,7 +7,7 @@
         :sid="'image-' + this.sid"
         class="STV1_SyllabusPhoto"
         :slotData='{imgSrc: data.imgSrc, width: 200, height:200, }'
-        :slotItem='{data:{imgSrc: data.imgSrc, width: 200, height:200}}'
+        :slotItem='{data:{imgSrc: data.imgSrc, width: 200, height:200}, setters:{imgSrc: imageSetter}}'
         />        
         </div>
         <p>{{ data.type }}:</p>
@@ -36,6 +36,8 @@
 import Vue from 'vue'
 import slotMixin from '../mixins/slot-mixin.js'
 import ImageSlot from './ImageSlot'
+import _ from 'lodash'
+
 
 export default {
   name: "ProfessorTaSlot",
@@ -54,6 +56,23 @@ export default {
     getterData: function () {
       if(!this.slotItem.getter) return null
       return this.$store.getters.getFromGetter(this.slotItem.getter)
+    },
+    imageSetter: function() {
+      let index
+      switch (this.data.type){
+         case "Professor":
+           index = _.findIndex(this.info.profs, {id: this.data.id})
+           return `info.profs[${index}].imgSrc`
+           break;
+          case 'Teaching Assistant':
+            index = _.findIndex(this.info.tas, {id: this.data.id})
+            return `info.tas[${index}].imgSrc`
+            break;
+          default:
+            return 0
+      }
+       
+
     }
   },
   watch: {

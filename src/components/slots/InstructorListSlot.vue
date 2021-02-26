@@ -5,7 +5,7 @@
                :key="item.id"
                :sid="'professor-ta-slot-' + item.id"
                :slotData="item"
-               :slotItem="item"/>
+               :slotItem="slotItem"/>
   </div>
 </template>
 

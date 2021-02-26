@@ -7,8 +7,7 @@ export default {
     return {
       data: {
       },
-      setters: { 
-      },
+      setters: {},
     }
   },
   computed: {
@@ -55,6 +54,14 @@ export default {
           if (!this.slotItem.getter || !this.slotItem.getter[prop] && !(prop == this.defaultGetter && typeof this.slotItem.getter == 'string'))
           this.data[prop] = newVal[prop]
         })
+      },
+      immediate: true
+    },
+    slotItem: {
+      handler(newVal) {
+        if (newVal.setters){
+          this.setters = {...this.setters, ...newVal.setters}
+        }
       },
       immediate: true
     },
