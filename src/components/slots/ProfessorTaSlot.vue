@@ -2,9 +2,12 @@
   <div :id="sid" class="professor-ta-slot">
     <div class="pad-box-mini border border-tl">
       <div class="STV1_ProfileBG color-columbia-blue" :style="{background:getTheme.primary}">
+      <!-- <img :src="data.imgSrc" class="STV1_SyllabusPhoto"> -->
       <image-slot 
         :sid="'image-' + this.sid"
-        :slotData='{imgSrc: data.imgSrc, forceDimensions: true, }'
+        class="STV1_SyllabusPhoto"
+        :slotData='{imgSrc: data.imgSrc, width: 200, height:200, }'
+        :slotItem='{data:{imgSrc: data.imgSrc, width: 200, height:200}}'
         />        
         </div>
         <p>{{ data.type }}:</p>
