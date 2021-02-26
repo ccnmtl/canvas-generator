@@ -216,6 +216,12 @@ export default {
     transform: translate(88%, 0%);
   }
 
+  @media screen and (max-width: 1350px) {
+    .preview-text {
+      display:none;
+    }
+  }
+
   .drop-zone{
     transition: all 0.43s;
     height: 0;

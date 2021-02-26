@@ -614,7 +614,7 @@ html {
 
       .el-card__body {
         button {
-          @media screen and (max-width: 1200px) {
+          @media screen and (max-width: 900px) {
             display: block;
             width: 100%;
             margin: 7px 0;

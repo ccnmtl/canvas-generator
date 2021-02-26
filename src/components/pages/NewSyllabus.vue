@@ -2,10 +2,10 @@
   <div class="activity-page">
     <div class="code-container">
       <div class="textbox-container">
-        <el-card class="card box-card">
-            <el-button type="primary" @click="addProf">Add Professor</el-button>
-            <el-button type="primary" @click="addTA">Add TA</el-button>
-            <el-button type="danger" @click="clearTeachers">Clear</el-button>
+        <el-card class="card box-card uk-text-center">
+            <el-button type="primary" class="top-button" @click="addProf">Add Professor</el-button>
+            <el-button type="primary" class="top-button" @click="addTA">Add TA</el-button>
+            <el-button type="danger" class="top-button" @click="clearTeachers">Clear</el-button>
         </el-card>
 
         <el-card class="card box-card" v-if="selected.list">
@@ -313,6 +313,9 @@ export default {
   align-self: flex-start;
 }
 
+
+
+
 .code-container {
   transition: all 0.5s ease;
   display: block;
@@ -335,6 +338,12 @@ export default {
   .canvas-code {
     display: inline-block;
   }
+}
+
+.top-button{
+  margin-left: -5px;
+  margin-right: -5px;
+
 }
 
 .footer {
