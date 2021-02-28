@@ -2,7 +2,7 @@
   <div class="dialog-inner">
 
     <el-tabs type="border-card">
-      <el-tab-pane :label="dialogData.cid.toUpperCase() + ' ROWS'">
+      <el-tab-pane :label="dialogData.cid.toUpperCase() + ' ROWS'" v-if="Object.keys(pageRowTypes).length > 1">
         <div class="row">
           <el-col v-for="row in pageRowTypes" :key="row.id" :span="6" class="row-item">
             <el-popover
@@ -23,7 +23,7 @@
           </el-col>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="OTHER ROWS">
+      <el-tab-pane label="OTHER ROWS" v-if="Object.keys(pageRowTypes).length > 1">
         <div class="row">
           <el-col v-for="row in otherRowTypes" :key="row.id" :span="6" class="row-item">
             <el-popover

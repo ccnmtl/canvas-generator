@@ -23,7 +23,7 @@
           </el-col>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="OTHER SLOTS">
+      <el-tab-pane label="OTHER SLOTS" v-if="false">
         <div class="slot">
           <el-col v-for="slot in otherSlotTypes" :key="slot.id" :span="6" class="slot-item">
             <el-popover
@@ -44,7 +44,7 @@
           </el-col>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="All SLOTS">
+      <el-tab-pane label="All SLOTS" v-if="false">
         <div class="slot">
           <el-col v-for="slot in SlotTypes" :key="slot.id" :span="6" class="slot-item">
             <el-popover

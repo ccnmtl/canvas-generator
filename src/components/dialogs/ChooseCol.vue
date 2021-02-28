@@ -2,7 +2,7 @@
   <div class="dialog-inner">
 
     <el-tabs type="border-card">
-      <el-tab-pane :label="dialogData.cid.toUpperCase() + ' COLUMNS'">
+      <el-tab-pane :label="dialogData.cid.toUpperCase() + ' COLUMNS'" v-if="Object.keys(pageColTypes).length > 1">
         <div class="col">
           <el-col v-for="col in pageColTypes" :key="col.id" :span="6" class="col-item">
             <el-popover
@@ -23,7 +23,7 @@
           </el-col>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="OTHER COLUMNS">
+      <el-tab-pane label="OTHER COLUMNS " v-if="Object.keys(pageColTypes).length > 1">
         <div class="col">
           <el-col v-for="col in otherColTypes" :key="col.id" :span="6" class="col-item">
             <el-popover
