@@ -34,7 +34,8 @@ export default {
         output = "https://www.youtube.com/embed/" + split[1]
       } else if (parts[2].includes("panopto")) {
         let split = link.split("=")
-        output = 'https://columbia.hosted.panopto.com/Panopto/Pages/Embed.aspx?id='  + split[1] + '&showbrand=false'
+        let root = link.split('Pages/')[0]
+        output = root + 'Pages/Embed.aspx?id='  + split[1] + '&showbrand=false'
       } else {
         output = link
       }
