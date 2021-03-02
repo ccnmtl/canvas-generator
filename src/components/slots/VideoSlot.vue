@@ -32,6 +32,9 @@ export default {
       } else if (parts[2].includes("youtube")) {
         let split = link.split("=")
         output = "https://www.youtube.com/embed/" + split[1]
+      } else if (parts[2].includes("panopto")) {
+        let split = link.split("=")
+        output = 'https://columbia.hosted.panopto.com/Panopto/Pages/Embed.aspx?id='  + split[1] + '&showbrand=false'
       } else {
         output = link
       }
