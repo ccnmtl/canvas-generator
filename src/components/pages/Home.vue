@@ -135,13 +135,23 @@
     <div class="uk-grid-collapse uk-child-width-expand@s" uk-grid>
         <div class="">
         <div id="home-code" class="show-content user_content clearfix enhanced ic-Layout-contentMain canvas-code">
-          <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]" style="postition: relative">
+          <!-- <div :class="['pad-box-mega','STV1_Banner', info.wideBanner ? theme.wide : theme.banner]" style="postition: relative">
             <img  v-if="theme.logo" :src="theme.logo" style="margin-top: -10px; margin-left: 10px" />
             <img  style="float: right; height: 100px; margin-top: 10px;" v-if="theme.rightLogo" :src="theme.rightLogo"/> 
             <div v-if="!theme.logo"> <br> </div>
             <p>{{info.title.toUpperCase()}}</p>
             <p class="STV1_CourseCode">{{info.semester}}</p>
+          </div> -->
+
+          <div class="pad-box-mega STV1_Banner" style="clear: left; position: relative; z-index: 1; background:none;">
+          <img style="position: absolute; z-index: -1; right: 5px; top: 5px;" src="https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/STV1_Banner.jpg" alt="" width="1090">
+          <img  v-if="theme.logo" :src="theme.logo" style="margin-top: -10px; margin-left: 10px" />
+          <img  style="float: right; height: 100px; margin-top: 10px;" v-if="theme.rightLogo" :src="theme.rightLogo"/> 
+          <div v-if="!theme.logo"> <br> </div>
+          <p>{{info.title.toUpperCase()}}</p>
+          <p class="STV1_CourseCode">{{info.semester}}</p>
           </div>
+
           <div class="content-box">
             <div class="grid-row">
               <div class="col-xs-6">
