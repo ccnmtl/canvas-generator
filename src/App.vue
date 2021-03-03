@@ -377,9 +377,12 @@ export default {
       e.preventDefault();
       this.currentVersion = 0
       this.$store.dispatch('setCurrentVersion', 0)
-      this.$store.dispatch('deleteCourseVersion', {
-        course,
-        version
+      this.$store.dispatch('setSavedStateVersion', { uuid: this.$store.getters.getSavedStates[course].uuid, version: 0 })
+      .then(() => {
+        this.$store.dispatch('deleteCourseVersion', {
+          course,
+          version
+        })
       })
     },
     chooseCourse() {
