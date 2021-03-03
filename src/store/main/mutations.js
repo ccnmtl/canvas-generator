@@ -265,4 +265,10 @@ export default {
   setRenderedComponents: (state, value) => {
     state.componentsRendered = value
   },
+  setDefaultState: (state) => {
+    state.defaultState = _.cloneDeep(state)
+  },
+  deleteCourseVersion: (state, payload) => {
+    state.savedStates[payload.course].versions.splice(payload.version, 1)
+  },
 }

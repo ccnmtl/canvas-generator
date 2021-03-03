@@ -23,6 +23,10 @@ export default {
       commit('setConfig', Config.data())
     },
 
+    setDefaultState: ({ commit }) => {
+      commit('setDefaultState')
+    },
+
     //Slot Actions
     addRow: ({ commit, state }, row) => {
       if(!row.rid) row.rid = uuid.v1()
@@ -358,16 +362,24 @@ export default {
     setSettingsVisibility: ({ commit }, visibility) => {
       commit('setSettingsVisibility', visibility)
     },
-    addSavedState: ({ commit, state }) => {
+    addSavedState: ({ commit, state }, type) => {
       const newState = {
         uuid: uuid.v1(),
         version: 0,
         versions: [{}]
       }
 
-      SavedFields.forEach(field => {
-        newState.versions[0][field] = JSON.stringify(state[field])
-      })
+      if(type === 'default') {
+        SavedFields.forEach(field => {
+          newState.versions[0][field] = JSON.stringify(state.defaultState[field])
+        })
+      }
+
+      else {
+        SavedFields.forEach(field => {
+          newState.versions[0][field] = JSON.stringify(state[field])
+        })
+      }
 
       commit('addSavedState', newState)
       return newState.uuid
@@ -444,5 +456,8 @@ export default {
     },
     setDragType({ commit }, type) {
       commit('setDragType', type)
+    },
+    deleteCourseVersion({ commit }, payload) {
+      commit('deleteCourseVersion', payload)
     },
 }

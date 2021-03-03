@@ -1,14 +1,14 @@
 <template>
-  <div :id="sid" class="professor-ta-slot">
+  <div :id="sid" class="professor-ta-slot" style="display: inline-block; width: 49%;">
     <div class="pad-box-mini border border-tl">
       <div class="STV1_ProfileBG color-columbia-blue" :style="{background:getTheme.primary}">
       <!-- <img :src="data.imgSrc" class="STV1_SyllabusPhoto"> -->
-      <image-slot 
+      <image-slot
         :sid="'image-' + this.sid"
         class="STV1_SyllabusPhoto"
         :slotData='{imgSrc: data.imgSrc, width: 200, height:200, }'
         :slotItem='{data:{imgSrc: data.imgSrc, width: 200, height:200}, setters:{imgSrc: imageSetter}}'
-        />        
+        />
         </div>
         <p>{{ data.type }}:</p>
         <p>
@@ -19,13 +19,13 @@
           <span @dblclick="setEditing('email')" v-if="editing !== 'email' || !(data.email)" > (<a @click="doNothing" :href="'mailto:' + data.email" v-if="data.email">{{ data.email }}</a>) </span>
           <span data-hidden v-else>
             <input ref="email" @blur="finishEditing('email')" v-model="data.email" />
-          </span>          
+          </span>
           <br>
           <!-- Office Hours:  -->
           <span @dblclick="setEditing('office')" v-if="editing !== 'office' || !(data.office)" > {{ data.office }} </span>
           <span data-hidden v-else>
             <input ref="office" @blur="finishEditing('office')" v-model="data.office" />
-          </span>                     
+          </span>
         </p>
       </div>
   </div>
@@ -45,7 +45,7 @@ export default {
   mixins: [slotMixin],
   components: {
     ImageSlot
-  },  
+  },
   data() {
     return {
       editing: null,
@@ -71,7 +71,7 @@ export default {
           default:
             return 0
       }
-       
+
 
     }
   },

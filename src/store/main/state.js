@@ -5,6 +5,7 @@ import defaults from '../components/defaults'
 export default {
 
   //DEFAULTS AND THEME ALSO INJECTED HERE THROUGH MODULES
+  defaultState: null,
 
   //GENERAL COURSE INFO
   info: _.cloneDeep(defaults.state.infoDefault),

@@ -161,17 +161,20 @@
 
       <div class="courses">
         <div class="course"
-             v-for="course in $store.getters.getSavedStates"
+             v-for="(course, index) in $store.getters.getSavedStates"
              :key="course.uuid"
              :class="{ active: course.uuid == currentCourse }"
              @click="currentCourse = course.uuid">
-          <h3>{{ JSON.parse(course.versions[course.version].info).title }}</h3>
+          <h3>
+            {{ JSON.parse(course.versions[course.version].info).title }}
+            <a v-if="$store.getters.getSavedStates.length > 1" class="delete-course">Delete</a>
+          </h3>
           <small>{{ course.uuid }}</small>
           <div class="course-versions">
             <div v-for="(version, i) in course.versions" :key="i">
               <input v-model="course.version" :value="i" type="radio" class="course-version form-check-input" :id="course.uuid + '-' + i">
               <label class="form-check-label" :for="course.uuid + '-' + i">
-                Version {{ i + 1 }}
+                Version {{ i + 1 }} <a v-if="course.versions.length > 1" @click="deleteVersion(index, i, $event)" class="delete-version">Delete</a>
               </label>
             </div>
             <a class="add-version" @click="addVersion(course)">Add Version</a>
@@ -219,7 +222,7 @@
       <h3 style="margin:10px">{{dialogData.title}}</h3>
       <component :is="dialogData.type" :dialogData="dialogData" @cancelDialog="closeDialog" style="margin:10px" />
     </el-drawer> -->
-    
+
     <div class="clearfix" />
 
     <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
@@ -344,11 +347,40 @@ export default {
           }, 500)
         })
       }
+      else {
+        const version = this.currentVersion
+        this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
+        .then(() => {
+          self.$store.dispatch('setInfoField', {
+            field: 'title',
+            value: self.newCourseName
+          })
+          setTimeout(() => {
+            self.$store.dispatch('addSavedState', 'default')
+            .then(current => {
+              self.$store.dispatch('setCurrentCourse', current)
+              self.$store.dispatch('setCurrentVersion', 0)
+              self.currentCourse = current
+              self.currentVersion = 0
+              self.newCourseName = ''
+            })
+          }, 500)
+        })
+      }
     },
     addVersion(course) {
       const version = this.currentVersion
       this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
       this.$store.dispatch('addNewVersion', course.uuid)
+    },
+    deleteVersion(course, version, e) {
+      e.preventDefault();
+      this.currentVersion = 0
+      this.$store.dispatch('setCurrentVersion', 0)
+      this.$store.dispatch('deleteCourseVersion', {
+        course,
+        version
+      })
     },
     chooseCourse() {
       const version = _.find(this.getSavedStates, { uuid: this.currentCourse }).version
@@ -373,7 +405,7 @@ export default {
   },
   mixins: [RowTypes, saveState, PageMixin],
   computed: {
-    ...mapGetters([ 'isSettingsVisible', 'getCurrentCourse', 'getCurrentVersion', 'getSavedStates', 'getWeeks' ]),
+    ...mapGetters([ 'isSettingsVisible', 'getCurrentCourse', 'getCurrentVersion', 'getSavedStates', 'getWeeks', 'getDefaultState' ]),
     loading() {
       return this.$store.getters.loading
     },
@@ -417,7 +449,10 @@ export default {
     }
   },
   beforeMount() {
-    
+    if(this.getDefaultState === null) {
+      this.$store.dispatch('setDefaultState')
+    }
+
     if (this.weeks.length < 1) {
       console.log("building new weeks")
       for (let i = 1; i <= 12; i++) {
@@ -471,7 +506,7 @@ export default {
       setTimeout(() => {
         this.$store.dispatch('setRenderedComponents', true)
       }, 1000)
-      
+
     }
   }
 
@@ -583,12 +618,24 @@ html {
       }
     }
 
+    .delete-course {
+        float: right;
+        font-size: 20px;
+        margin-top: -7px;
+        color: #ea2121;
+    }
+
     .course-versions {
       margin-top: 12px;
 
       label {
         font-weight: normal;
         vertical-align: middle;
+
+        .delete-version {
+          margin-left: 20px;
+          color: red;
+        }
       }
     }
   }

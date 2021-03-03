@@ -1,5 +1,5 @@
 <template>
-  <div :id="sid" class="row list-slot" style="display: flex;">
+  <div :id="sid" class="row list-slot" style="padding-left: 10px">
     <professor-ta-slot class="col-md-6"
                v-for="item in itemList"
                :key="item.id"

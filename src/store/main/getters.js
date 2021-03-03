@@ -8,6 +8,7 @@ export default {
   loading: state => state.loading,
   getWeeks: state => state.weeks,
   getImageServer: state => state.imageServer,
+  getDefaultState: state => state.defaultState,
   areComponentsRendered: state => state.componentsRendered,
   getSelectedWeekID: state => state.selectedWeekID,
   getStudents: state => state.weeks,

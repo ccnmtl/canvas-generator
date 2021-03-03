@@ -36,7 +36,7 @@
           </button>
       </router-link>
     </div>
-    
+
     <div class="row" style="display: flex; margin: 0 -15px">
       <draggable style="width: 100%; display: flex" :disabled="!isDndMode || getDragType !== 'columns'" v-model="sortedColumns" group="columns" @start="drag=true" @end="drag=false">
         <column-component v-for="column in sortedColumns"
@@ -133,7 +133,7 @@ export default {
     },
     setSelectedWeek(){
       this.$store.dispatch('setStateField', {
-        field: 'selectedWeekID', 
+        field: 'selectedWeekID',
         value: this.row.data.weekID
       })
     }

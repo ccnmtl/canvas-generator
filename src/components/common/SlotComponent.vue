@@ -104,7 +104,7 @@ export default {
     showEdit() {
       return this.type === 'banner-slot'
           || this.type === 'activity-video-list-slot'
-    }
+    },
   },
   methods: {
     showDeleteSlot() {

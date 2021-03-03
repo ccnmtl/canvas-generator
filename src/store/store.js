@@ -24,5 +24,5 @@ export default new Vuex.Store({
     theme,
     cases
   },
-  plugins: [createPersistedState()]
+  plugins: []//[createPersistedState()]
 });
