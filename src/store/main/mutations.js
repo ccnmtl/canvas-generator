@@ -271,4 +271,7 @@ export default {
   deleteCourseVersion: (state, payload) => {
     state.savedStates[payload.course].versions.splice(payload.version, 1)
   },
+  deleteCourse: (state, index) => {
+    state.savedStates.splice(index, 1)
+  },
 }

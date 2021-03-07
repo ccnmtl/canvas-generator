@@ -460,4 +460,8 @@ export default {
     deleteCourseVersion({ commit }, payload) {
       commit('deleteCourseVersion', payload)
     },
+    deleteCourse({ commit }, index) {
+      console.log(index)
+      commit('deleteCourse', index)
+    },
 }

@@ -167,7 +167,7 @@
              @click="currentCourse = course.uuid">
           <h3>
             {{ JSON.parse(course.versions[course.version].info).title }}
-            <a v-if="$store.getters.getSavedStates.length > 1" class="delete-course">Delete</a>
+            <a v-if="$store.getters.getSavedStates.length > 1" @click="deleteCourse(index)" class="delete-course">Delete</a>
           </h3>
           <small>{{ course.uuid }}</small>
           <div class="course-versions">
@@ -351,10 +351,6 @@ export default {
         const version = this.currentVersion
         this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
         .then(() => {
-          self.$store.dispatch('setInfoField', {
-            field: 'title',
-            value: self.newCourseName
-          })
           setTimeout(() => {
             self.$store.dispatch('addSavedState', 'default')
             .then(current => {
@@ -383,6 +379,16 @@ export default {
           course,
           version
         })
+      })
+    },
+    deleteCourse(index) {
+      let current = index
+      this.currentVersion = 0
+      this.currentCourse = this.$store.getters.getSavedStates[0].uuid
+      this.$store.dispatch('setCurrentCourse', this.$store.getters.getSavedStates[0].uuid)
+      this.$store.dispatch('setSavedStateVersion', { uuid: this.$store.getters.getSavedStates[0].uuid, version: 0 })
+      .then(() => {
+        this.$store.dispatch('deleteCourse', current)
       })
     },
     chooseCourse() {
