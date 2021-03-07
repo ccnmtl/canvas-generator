@@ -185,7 +185,7 @@
       <div class="add-new">
         <label>Add new course</label>
         <input class="form-control" v-model="newCourseName" placeholder="New course name" />
-        <el-button type="primary" :disabled="!newCourseName" @click="addNewCourse('default')">Save from default</el-button>
+        <el-button type="primary" @click="addNewCourse('default')">Save from default</el-button>
         <el-button type="primary" :disabled="!newCourseName" @click="addNewCourse('current')">Save from current state</el-button>
       </div>
 
