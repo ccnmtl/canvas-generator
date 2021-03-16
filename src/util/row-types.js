@@ -201,7 +201,8 @@ export default {
     activityRowByID(id){
       let imageCol = this.activityImageCol({
           data: {
-            linkID: id
+            linkID: id,
+            alt: this.getWeekPropByID('title', id).get
           },
           getter: {
           imgSrc: this.getWeekPropGetter('imgSrc', id) // this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + (this.getWeekIndexByID(id)+1) + ".png",

@@ -21,7 +21,7 @@
               </label>
             </transition>
             <div class="row">
-                <label> Width: <el-input ref="width" style="width:80px; margin-right: 20px" v-model="data.width" /></label>
+                <label> Width: <el-input ref="width" style="width:80px; margin-right: 30px" v-model="data.width" /></label>
                 <label> Height: <el-input ref="height" style="width:80px" v-model="data.height" /></label>
             </div>
             <label>
@@ -39,6 +39,8 @@
 
 
       <hr>
+
+          <label> Modify Alt Text <el-input ref="alt" v-model="data.alt" /></label>
 
 
 
@@ -101,15 +103,16 @@ export default {
   },
   methods: {
     saveChoice() {
-      // this.$store.dispatch("updateSlotData", {
-      //   item: this.dialogData.slotData,
-      //   data: {
-      //     imgSrc: this.data.imgSrc,
-      //     width: this.data.width,
-      //     height: this.data.height,
-      //     forceDimensions: true
-      //     }
-      //   })
+      this.$store.dispatch("updateSlotData", {
+        item: this.dialogData.slotData,
+        data: {
+          imgSrc: this.data.imgSrc,
+          width: this.data.width,
+          height: this.data.height,
+          alt: this.data.alt,
+          forceDimensions: true
+          }
+        })
       this.$store.dispatch("setDialogVisibility", false)
     },
     setImage() {

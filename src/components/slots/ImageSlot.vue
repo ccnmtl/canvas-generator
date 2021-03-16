@@ -1,8 +1,9 @@
 <template>
   <div :id="sid" class="col" style="align-items: center; justify-content: center;">
     <a :href="createLink(data.link)" @click="doNothing" :class="{'has-pointer': !data.link && !data.linkID}">
-      <img :src="data.imgSrc"  :style="[data.forceDimensions ? {width: data.width + 'px', height: data.height + 'px'} : {}]" alt="" @dblclick="openUploadDialog()" />
+      <img :src="data.imgSrc" :alt="data.alt" :style="[data.forceDimensions ? {width: data.width + 'px', height: data.height + 'px'} : {}]" @dblclick="openUploadDialog()" />
     </a>
+    
   </div>
 </template>
 
