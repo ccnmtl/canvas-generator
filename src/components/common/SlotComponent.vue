@@ -103,6 +103,7 @@ export default {
     },
     showEdit() {
       return this.type === 'banner-slot'
+          || this.type === 'video-slot'
           || this.type === 'activity-video-list-slot'
     },
   },

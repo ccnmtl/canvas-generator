@@ -463,5 +463,6 @@ export default {
     deleteCourse({ commit }, index) {
       console.log(index)
       commit('deleteCourse', index)
+      return index;
     },
 }

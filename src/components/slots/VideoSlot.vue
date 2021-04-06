@@ -14,7 +14,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: "VideoSlot",
   props: [ "sid", "slotData", "slotItem", "width" ],
-  mixins: [slotMixin], 
+  mixins: [slotMixin],
   data() {
     return {
       editing: null,
@@ -25,7 +25,7 @@ export default {
   computed: {
     videoLink() {
       let output
-      let link = this.data.videoSrc
+      let link = this.slotData.videoSrc
       let parts = link.split("/")
       if (parts[2].includes("vimeo.com") && !parts[2].includes("player.vimeo.com")) {
         output = "https://player.vimeo.com/video/" + parts[3]

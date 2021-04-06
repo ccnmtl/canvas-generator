@@ -262,6 +262,7 @@ import DeleteColumn from './components/dialogs/DeleteColumn.vue'
 // Dialog Data Types
 import SlotDataBannerSlot from './components/dialogs/data/BannerSlot.vue'
 import SlotDataImageSlot from './components/dialogs/data/ImageSlot.vue'
+import SlotDataVideoSlot from './components/dialogs/data/VideoSlot.vue'
 import SlotDataActivityVideoListSlot from './components/dialogs/data/ActivityVideoListSlot.vue'
 
 import moment from "moment"
@@ -278,6 +279,7 @@ export default {
     DeleteRow,
     DeleteColumn,
     SlotDataImageSlot,
+    SlotDataVideoSlot,
     SlotDataBannerSlot,
     ContainerComponent,
     SlotDataActivityVideoListSlot
@@ -383,12 +385,12 @@ export default {
     },
     deleteCourse(index) {
       let current = index
-      this.currentVersion = 0
-      this.currentCourse = this.$store.getters.getSavedStates[0].uuid
-      this.$store.dispatch('setCurrentCourse', this.$store.getters.getSavedStates[0].uuid)
-      this.$store.dispatch('setSavedStateVersion', { uuid: this.$store.getters.getSavedStates[0].uuid, version: 0 })
+      this.$store.dispatch('deleteCourse', current)
       .then(() => {
-        this.$store.dispatch('deleteCourse', current)
+        this.currentCourse = this.$store.getters.getSavedStates[0].uuid
+        this.currentVersion = 0
+        this.$store.dispatch('setCurrentCourse', this.$store.getters.getSavedStates[0].uuid)
+        this.$store.dispatch('setSavedStateVersion', { uuid: this.$store.getters.getSavedStates[0].uuid, version: 0 })
       })
     },
     chooseCourse() {
