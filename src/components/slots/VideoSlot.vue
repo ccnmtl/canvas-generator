@@ -25,7 +25,7 @@ export default {
   computed: {
     videoLink() {
       let output
-      let link = this.slotData.videoSrc
+      let link = this.slotData.videoSrc || this.data.videoSrc
       let parts = link.split("/")
       if (parts[2].includes("vimeo.com") && !parts[2].includes("player.vimeo.com")) {
         output = "https://player.vimeo.com/video/" + parts[3]
