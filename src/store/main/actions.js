@@ -263,7 +263,7 @@ export default {
       if (typeof(data) == "number"){
         let index = data
         if (index > 15 && state.info.classType.dateType == "Week") index = 15
-
+        dWeek.id = uuid.v1()
         dWeek.imgSrc = state.imageServer + state.info.classType.dateType.toLowerCase() + index + ".png"
         dWeek.date = moment()
         dWeek.title = "Lecture " + index
