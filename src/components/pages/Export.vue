@@ -92,7 +92,13 @@
     </div>
 
     <container-component v-show="false" cid="home" ref="home"/>
-    <container-component v-show="false" cid="activity" ref="activity"/>
+
+    <container-component :cid="`activity-${act.id}`"
+      v-for="act in weeks"
+      :key="act.id"
+      :defaultRows="defRows"
+      v-show="false" />
+
     <container-component v-show="false" cid="syllabus" ref="syllabus"/>
     <container-component v-show="false" cid="activities-list" ref="list"/>
 
