@@ -96,6 +96,7 @@
     <container-component :cid="`activity-${act.id}`"
       v-for="act in weeks"
       :key="act.id"
+      :ref="`activity-${act.id}`"
       :defaultRows="defRows"
       v-show="false" />
 
@@ -335,7 +336,7 @@ export default {
               let code
               this.setStateField({field: 'selectedWeekID', value: this.weeks[(i-1)].id}).then( (res) => {
                 console.log(res)
-                code = this.$refs.activity.returnCode()
+                code = this.$refs[`activity-${this.weeks[(i-1)].id}`].returnCode()
 
                 zip.file(
                   "wiki_content/session-" + i + ".html",

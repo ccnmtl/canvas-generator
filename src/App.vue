@@ -505,6 +505,13 @@ export default {
 
       this.weeks.forEach ((week, index) => {
         this.$store.dispatch('createRowsFromArray', {
+          cid: 'activity-' + week.id,
+          rows: containers['activity']
+        })
+
+        console.log('Built activity-' + week.id);
+
+        this.$store.dispatch('createRowsFromArray', {
           cid: 'activities-list',
           rows: this.activityRowByID(week.id),
           type: 'activity-row',
@@ -520,9 +527,6 @@ export default {
 
     }
   }
-
-
-
 }
 </script>
 
