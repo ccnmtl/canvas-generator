@@ -239,18 +239,22 @@ export default {
     },
 
     addDiscussion() {
+      let manifestID = "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1)
       let tempDisc = {
-        link: "%24CANVAS_OBJECT_REFERENCE%24/discussion_topics/" + "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1),
+        link: "$CANVAS_OBJECT_REFERENCE$/discussion_topics/" + manifestID,
         due: moment(this.weeks[this.selected].date).add(7, "d"),
+        manifestID
       }
       console.log(tempDisc)
       this.$store.dispatch("addDiscussion", {index:this.selected, data: tempDisc})
     },
 
     addAssignment() {
+      let manifestID = "ccb-session-" + (this.selected + 1) + "-assignment-" + (this.weeks[this.selected].assignments.length + 1)
       let tempAssign = {
-        link: "%24CANVAS_OBJECT_REFERENCE%24/assignments/" + "ccb-session-" + (this.selected + 1) + "-disccusion-" + (this.weeks[this.selected].discussions.length + 1),
+        link: "$CANVAS_OBJECT_REFERENCE$/assignments/" + manifestID,
         due: moment(this.weeks[this.selected].date).add(7, "d"),
+        manifestID
       }
       this.$store.dispatch("addAssignment", {index:this.selected, data: tempAssign})
     },

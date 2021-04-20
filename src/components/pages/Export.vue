@@ -274,8 +274,8 @@ export default {
                   addResource({
                     xml: manifest,
                     type: "discussion",
-                    iden: discussion.id,
-                    meta: discussion.id + "-meta"
+                    iden: discussion.manifestID,
+                    meta: discussion.manifestID + "-meta"
                   })
 
                   let discussionTemplate = this.readLocalXML("../../static/files/xml-templates/discussion.xml")
@@ -288,25 +288,25 @@ export default {
 
                   discussionTitle.innerHTML = discussionMetaTitle.innerHTML =
                     "Session " + (weekIndex + 1) + " - Discussion " + (discussionIndex + 1)
-                  discussionTopicMeta.setAttribute("identifier", discussion.id + "-meta")
-                  discussionTopicID.innerHTML = discussion.id
+                  discussionTopicMeta.setAttribute("identifier", discussion.manifestID + "-meta")
+                  discussionTopicID.innerHTML = discussion.manifestID
 
                   let discussionString = serializer.serializeToString(discussionTemplate)
                   let discussionMetaString = serializer.serializeToString(discussionMetaTemplate)
-                  zip.file(discussion.id + ".xml", discussionString)
-                  zip.file(discussion.id + "-meta" + ".xml", discussionMetaString)
+                  zip.file(discussion.manifestID + ".xml", discussionString)
+                  zip.file(discussion.manifestID + "-meta" + ".xml", discussionMetaString)
                 })
 
                 week.assignments.forEach((assignment, assignmentIndex) => {
                   addResource({
                     xml: manifest,
                     type: "assignment",
-                    iden: assignment.id
+                    iden: assignment.manifestID
                   })
 
                   let assignmentHTML = document.implementation.createHTMLDocument()
                   assignmentHTML.title = "Session " + (weekIndex + 1) + " - Assignment " + (assignmentIndex + 1)
-                  zip.file(assignment.id + "/" + assignment.id + ".html", assignmentHTML.documentElement.innerHTML)
+                  zip.file(assignment.manifestID + "/" + assignment.manifestID + ".html", assignmentHTML.documentElement.innerHTML)
 
                   let assignmentSettings = this.readLocalXML("../../static/files/xml-templates/assignment_settings.xml")
                   let assignmentTag = assignmentSettings.getElementsByTagName("assignment")[0]
@@ -318,13 +318,13 @@ export default {
                   console.log(assignmentUnlock)
                   console.log(moment(week.date).format())
 
-                  assignmentTag.setAttribute("identifier", assignment.id)
+                  assignmentTag.setAttribute("identifier", assignment.manifestID)
                   assignmentTitle.innerHTML = "Session " + (weekIndex + 1) + " - Assignment " + (assignmentIndex + 1)
                   assignmentDue.innerHTML = assignmentLock.innerHTML = moment(assignment.due).format()
                   assignmentUnlock.innerHTML = moment(week.date).format()
 
                   let assignmentSettingsString = serializer.serializeToString(assignmentSettings)
-                  zip.file(assignment.id + "/assignment_settings.xml", assignmentSettingsString)
+                  zip.file(assignment.manifestID + "/assignment_settings.xml", assignmentSettingsString)
                 })
               })
 
