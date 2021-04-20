@@ -114,7 +114,7 @@
       <container-component :cid="`activity-${act.id}`"
         v-for="(act, i) in weeks"
         :key="act.id"
-        :defaultRows="defRows"
+        :defaultRows="activityDefaultRowsByID(act.id)"
         v-show="i === selected" />
     </div>
     </div>

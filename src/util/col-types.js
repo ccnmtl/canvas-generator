@@ -404,6 +404,29 @@ export default {
       column[2] = _.merge(column[2], options.content)
       return column
     },
+    activityIntroColByID(id){
+      let column = _.cloneDeep(this.colTypes.activityListIntro.array)
+
+      let options = {
+        title: {
+          getter: {
+            title: this.getWeekPropGetter('title', id)
+          }
+        },
+        content : {
+          data:{
+            editorType: 'Tiny'
+          },
+          getter: {
+            content: this.getWeekPropGetter('body', id)
+          }
+        }
+      }
+
+      column[0] = _.merge(column[0], options.title)
+      column[2] = _.merge(column[2], options.content)
+      return column
+    },
 
     findCol(objKey, objValue){
       for (const [name, col] of Object.entries(this.colTypes)){
