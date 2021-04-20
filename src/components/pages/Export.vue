@@ -349,9 +349,11 @@ export default {
               let title = "<title>Session " + i + "</title>"
               let iden = '<meta name="identifier" content="ccb-session' + i + '"/>'
               let code
-              this.setStateField({field: 'selectedWeekID', value: this.weeks[(i-1)].id}).then( (res) => {
-                console.log(res)
-                code = this.$refs[`activity-${this.weeks[(i-1)].id}`].returnCode()
+              let activityID = this.weeks[(i-1)].id
+
+              this.setStateField({field: 'selectedWeekID', value: activityID}).then( (res) => {
+                console.log('id', `activity-${activityID}`)
+                code = this.$refs[`activity-${activityID}`][0].returnCode()
 
                 zip.file(
                   "wiki_content/session-" + i + ".html",
