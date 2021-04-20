@@ -48,6 +48,13 @@
                 inactive-color="#ff4949">
               </el-switch>
             </el-form-item>
+            <el-form-item label="Use Students Page" prop="useStudents">
+              <el-switch
+                v-model="ruleForm.useStudents"
+                active-color="#13ce66"
+                inactive-color="#ff4949">
+              </el-switch>
+            </el-form-item>
           </el-form>
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">Cancel</el-button>
@@ -98,7 +105,7 @@ export default {
         classType: this.$store.getters.getInfo.classType,
         isBlended: this.$store.getters.getInfo.isBlended,
         useZoom: this.$store.getters.getInfo.useZoom,
-
+        useStudents: this.$store.getters.getInfo.useStudents,
         theme: this.$store.getters.getTheme
       },
       rules: {
@@ -131,6 +138,7 @@ export default {
           this.updateProp("classType", this.ruleForm.classType)
           this.updateProp("isBlended", this.ruleForm.isBlended)
           this.updateProp("useZoom", this.ruleForm.useZoom)
+          this.updateProp("useStudents", this.ruleForm.useStudents)
 
           this.theme = this.ruleForm.theme
           this.dialogFormVisible = false
