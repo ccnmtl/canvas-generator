@@ -172,12 +172,6 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
 	margin-top: 10px;
 }
 
-/* Makes Home Page banner wide by default */
-#right-side-wrapper {
-	position: absolute;
-    right: -300px;
-}
-
 
 /* ----------------- 2017 SIPA GLOBAL THEME STYLES (STV1) ------------------- */
 
@@ -621,6 +615,12 @@ background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/le
 		.user_content table:not([cellpadding]) td, .mceContentBody table:not([cellpadding]) td {
 			padding: 10px;
 		}
+
+		/* Makes Home Page banner wide by default */
+		/* #right-side-wrapper {
+			position: absolute;
+					right: -300px;
+		} */
 
 	/* VIDEO EMBEDDING & RESPONSIVENESS */
 

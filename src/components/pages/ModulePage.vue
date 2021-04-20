@@ -111,11 +111,7 @@
     </el-card>
     </div>
     <div class="canvas-code">
-      <container-component :cid="`activity-${act.id}`"
-        v-for="(act, i) in weeks"
-        :key="act.id"
-        :defaultRows="defRows"
-        v-show="i === selected" />
+      <container-component cid="activity" :defaultRows="defRows"/>
     </div>
     </div>
   </div>
@@ -126,7 +122,7 @@
 import { mapGetters } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import ContainerComponent from '../common/ContainerComponent.vue'
-import PageMixin from "../../components/mixins/page-mixin"
+import PageMixin from "../mixins/page-mixin"
 import RowTypes from '../../util/row-types.js'
 import WeeklyCodeModule from "../weekly/WeeklyCodeModule"
 import WeeklyVideo from "../weekly/WeeklyVideo"
@@ -274,7 +270,7 @@ export default {
     this.weeks.forEach(week => {
       if (!week.cases) week.cases = []
     })
-    // this.updateCode("week-code")
+    this.updateCode("week-code")
   }
 }
 </script>
