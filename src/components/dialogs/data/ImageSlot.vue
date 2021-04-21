@@ -14,10 +14,10 @@
 
             <transition name="fade" mode="out-in">
               <label key="computer" v-if="source === 'computer'">Upload New Image:
-                <input @change="setImage" class="form-control" ref="image" name="image" id="image-file" type="file">
+                <input class="form-control" name="image" id="dialog-file" type="file">
               </label>
               <label key="url" v-else>Select from URL:
-                <input v-model="newImage" class="form-control" name="image" id="image-link" placeholder="Image URL">
+                <input v-model="newImage" class="form-control" name="image" id="dialog-link" placeholder="Image URL">
               </label>
             </transition>
             <div class="row">
@@ -127,13 +127,15 @@ export default {
         formData.append("imageUrl", this.newImage)
       } else {
         console.log("uploading file...")
-        var imagefile = document.querySelector("#image-file")
+        var imagefile = document.querySelector("#dialog-file")
+        console.log(imagefile.files)
         if (imagefile.files.length == 0) return
         formData.append("image", imagefile.files[0])
       }
 
       formData.append("imageWidth", this.data.width)
       formData.append("imageHeight", this.data.height)
+      console.log(formData)
       this.$http.post("https://images.columbiacoursebuilder.org/image", formData).then(
         response => {
           let imageData = JSON.parse(response.bodyText)
