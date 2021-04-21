@@ -24,7 +24,7 @@
         </label>
         <hr>
       </div>
-      <el-button type="primary" @click="addNew">Add New Video</el-button>
+      <!-- <el-button type="primary" @click="addNew">Add New Video</el-button> -->
     </div>
 
     <footer>
