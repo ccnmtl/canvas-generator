@@ -24,7 +24,7 @@
         }"
       />
       
-      <ckeditor v-if="editorType == 'CK'" :editor="editor" v-model="data.content" :config="editorConfig"></ckeditor>
+      <!-- <ckeditor v-if="editorType == 'CK'" :editor="editor" v-model="data.content" :config="editorConfig"></ckeditor> -->
 
       <!-- <el-select v-model="editorType" placeholder="Select">
         <el-option
@@ -50,7 +50,7 @@
 <script>
 
 import { quillEditor } from "vue-quill-editor"
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // import ImageInsert from '@ckeditor/ckeditor5-image/src/imageinsert';
 import TinyEditor from '@tinymce/tinymce-vue'
 
@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       editing: null,
-      editor: ClassicEditor,
+      // editor: ClassicEditor,
       editorConfig: {
         // plugins: [ImageInsert]
       },
