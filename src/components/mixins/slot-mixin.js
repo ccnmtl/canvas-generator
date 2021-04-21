@@ -11,7 +11,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getInfo", 'getTheme']),
+    ...mapGetters(["getInfo", 'getTheme',]),
     info() {
       return this.getInfo
     },
@@ -103,7 +103,7 @@ export default {
       this.editing = field
 
       setTimeout(() => {
-        this.$refs[field].focus()
+        // if (this.$refs[field]) this.$refs[field].focus()
       }, 200)
     },
     finishEditing(field) {
@@ -117,6 +117,10 @@ export default {
         // else {
         //   this.$store.dispatch("updateSpecificInfo", { key: field, value: this.data[field] })
         // }
+        this.$store.dispatch("updateSlotData", {
+        item: this.slotItem,
+        data: this.data
+        })
         this.editing = null
       }
     },
