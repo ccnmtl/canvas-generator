@@ -103,15 +103,18 @@ export default {
   },
   methods: {
     saveChoice() {
+      console.log(this.dialogData)
+      let newData = {
+      imgSrc: this.data.imgSrc,
+      width: this.data.width,
+      height: this.data.height,
+      alt: this.data.alt,
+      // forceDimensions: false
+      }
+
       this.$store.dispatch("updateSlotData", {
         item: this.dialogData.slotData,
-        data: {
-          imgSrc: this.data.imgSrc,
-          width: this.data.width,
-          height: this.data.height,
-          alt: this.data.alt,
-          forceDimensions: true
-          }
+        data: {...this.dialogData.slotData.data, ...newData}
         })
       this.$store.dispatch("setDialogVisibility", false)
     },
