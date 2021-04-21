@@ -2,7 +2,7 @@
   <div class="dialog-inner">
 
     <el-tabs type="border-card">
-      <el-tab-pane :label="dialogData.cid.toUpperCase() + ' SLOTS'">
+      <el-tab-pane :label="pageTitle.toUpperCase() + ' SLOTS'">
         <div class="slot">
           <el-col v-for="slot in pageSlotTypes" :key="slot.id" :span="6" class="slot-item">
             <el-popover
@@ -119,7 +119,12 @@ export default {
       return _.pickBy(this.SlotTypes, (slot, key) => {
         return !this.isPageType(slot)
       })
-    }    
+    },
+    pageTitle(){
+      let pageTitle = this.dialogData.cid
+      if (this.dialogData.cid.includes('activity-')) pageTitle = 'activity'
+      return pageTitle
+    }   
 
   },
   methods: {
@@ -165,7 +170,7 @@ export default {
         }
       },
     isPageType(slot){
-      return _.includes(slot.pages, this.dialogData.cid) || slot.pages == "*"
+      return _.includes(slot.pages, this.pageTitle) || slot.pages == "*"
     }    
   }
 }

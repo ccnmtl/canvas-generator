@@ -2,7 +2,7 @@
   <div class="dialog-inner">
 
     <el-tabs type="border-card">
-      <el-tab-pane :label="dialogData.cid.toUpperCase() + ' COLUMNS'" v-if="Object.keys(pageColTypes).length > 1">
+      <el-tab-pane :label="pageTitle.toUpperCase() + ' COLUMNS'" v-if="Object.keys(pageColTypes).length > 1">
         <div class="col">
           <el-col v-for="col in pageColTypes" :key="col.id" :span="6" class="col-item">
             <el-popover
@@ -118,6 +118,11 @@ export default {
       return _.pickBy(this.ColTypes, (col, key) => {
         return !this.isPageType(col)
       })
+    },
+    pageTitle(){
+      let pageTitle = this.dialogData.cid
+      if (this.dialogData.cid.includes('activity-')) pageTitle = 'activity'
+      return pageTitle
     }
   },
   methods: {
@@ -190,7 +195,7 @@ export default {
       }
     },
     isPageType(col){
-      return _.includes(col.pages, this.dialogData.cid) || col.pages == "*"
+      return _.includes(col.pages, this.pageTitle) || col.pages == "*"
     }
   },
 
