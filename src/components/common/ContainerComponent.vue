@@ -56,7 +56,7 @@ import { mapGetters } from "vuex"
 
 import RowComponent from "./RowComponent.vue"
 // import RowTypes from '../../util/row-types.json'
-import RowTypesMixin from '../../util/row-types.js'
+// import RowTypesMixin from '../../util/row-types.js'
 import draggable from 'vuedraggable'
 
 export default {
@@ -64,7 +64,6 @@ export default {
     RowComponent,
     draggable
   },
-  mixins: [RowTypesMixin],
   props: [ "cid", "defaultRows" ],
   data() {
     return {

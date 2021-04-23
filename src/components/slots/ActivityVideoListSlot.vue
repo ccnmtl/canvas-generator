@@ -6,7 +6,7 @@
     <div v-if="!getInfo.isBlended" class="grid-row top-xs">
       <div class="col-xs-4">
         <div class="styleguide-section__grid-demo-element">
-          <video-slot 
+          <video-slot
           :slotData="{width: 300, height: 150}"
           :slotItem="{getter: {videoSrc: getWeekItemPropGetter('source', 'videos', video.id)}}"/>
         </div>
@@ -16,7 +16,7 @@
           <span class="STV1_Welcome" @dblclick="setEditing('title1')" v-if="editing !== 'title1'" > VIDEO: {{video.title}} </span>
           <span data-hidden v-else>
             <input ref="title1" @blur="finishEditing('title')" v-model="data[video.id].title" />
-          </span> 
+          </span>
           <br>
           <div v-html="video.description" v-if="editing !== 'description1'" @dblclick="setEditing('description1')" />
           <div data-hidden v-else>
@@ -34,20 +34,20 @@
     <div v-if="getInfo.isBlended" class="grid-row top-xs">
       <div class="col-xs-6">
         <div class="styleguide-section__grid-demo-element">
-          <video-slot 
+          <video-slot
           :slotData="{}"
           :slotItem="{getter: {videoSrc: getWeekItemPropGetter('source', 'videos', video.id)}}"/>
         </div>
       </div>
 
       <div class="col-xs-6">
-        <blockquote :style="{borderLeft: '4px solid' + primary}" style="height: 300px; font-weight: normal; font-size: 16px; font-style: inherit;">
+        <blockquote :style="{borderLeft: '4px solid' + primary}" style="min-height: 300px; font-weight: normal; font-size: 16px; font-style: inherit;">
         <div class="styleguide-section__grid-demo-element">
-          <div :style="{background: primary, fontSize: '14px', padding: '12px', color: '#FFFFFF'}" 
+          <div :style="{background: primary, fontSize: '14px', padding: '12px', color: '#FFFFFF'}"
           @dblclick="setEditing(video.id + 'title')" v-if="editing !== video.id + 'title'" >{{video.title}}</div>
           <span data-hidden v-else>
             <input ref="title" @blur="finishEditing('title', video.id)" v-model='data[video.id].title' />
-          </span> 
+          </span>
           <br>
           <div v-html="video.description" v-if="editing !== video.id + 'description'" @dblclick="setEditing(video.id +'description')" />
           <div data-hidden v-else>
@@ -55,7 +55,7 @@
                         :value="video.description"
                         v-model="data[video.id].description"
                         :config="editorOption" />
-          <button class="btn btn-success" @click="finishEditing('description', video.id)">
+          <button style="margin-top: 12px" class="btn btn-success" @click="finishEditing('description', video.id)">
             Save changes
           </button>
           </div>
@@ -67,7 +67,7 @@
 </div>
 </div>
 
-  
+
 </template>
 
 <script>
@@ -95,7 +95,7 @@ export default {
   mixins: [slotMixin],
   components: {
     VideoSlot, TitleSlot, ContentSlot, quillEditor
-  },  
+  },
   data() {
     return {
       editing: null,
@@ -127,9 +127,9 @@ export default {
         this.$store.dispatch("updateSlotDataWithSetter", {
           setter: this.getWeekItemPropByID(field, 'videos', id).set,
           data: this.data[id][field]
-        }) 
+        })
         this.editing = null
-      
+
     },
   }
 }

@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
+import _throttle from 'lodash/throttle';
 
 import defaults from './components/defaults';
 import theme from './components/theme';
 import cases from './components/cases';
+
 
 // import Vuex elements
 import state from './main/state';
@@ -24,5 +26,11 @@ export default new Vuex.Store({
     theme,
     cases
   },
-  plugins: []//[createPersistedState()]
+  plugins: [
+    createPersistedState({
+      setState: _throttle((key, state, storage) => {
+        storage.setItem(key, JSON.stringify(state));
+      }, 100),
+    }),
+  ]
 });

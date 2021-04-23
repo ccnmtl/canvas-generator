@@ -21,8 +21,8 @@
               </label>
             </transition>
             <div class="row">
-                <label> Width: <el-input ref="width" style="width:80px; margin-right: 30px" v-model="data.width" /></label>
-                <label> Height: <el-input ref="height" style="width:80px" v-model="data.height" /></label>
+                <label> Width: <el-input ref="width" style="width: 70px; margin-right: 20px" v-model="data.width" /></label>
+                <label> Height: <el-input ref="height" style="width: 70px" v-model="data.height" /></label>
             </div>
             <label>
               <input type="submit" class="el-button el-button--primary" value="Upload">
@@ -181,7 +181,7 @@ export default {
   text-align: center;
   padding: 0 12px;
   margin-bottom: 18px;
-  max-height: calc(52vh - 124px);
+  max-height: calc(80vh - 124px);
   overflow: auto;
 
   > label, form > label {

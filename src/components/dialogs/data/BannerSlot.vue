@@ -80,7 +80,7 @@ export default {
         return _.pickBy(this.defaultOptions, (theme, key) => {
           return _.includes(this.Config.themes.visible, theme.option)
         })
-      } 
+      }
     }
   },
   methods: {
@@ -97,7 +97,7 @@ export default {
   text-align: center;
   padding: 0 12px;
   margin-bottom: 18px;
-  max-height: calc(52vh - 124px);
+  max-height: calc(80vh - 124px);
   overflow: auto;
 
   label {

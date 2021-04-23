@@ -80,7 +80,7 @@ export default {
   props: [
     'dialogData'
   ],
-  mixins: [slotTypes],   
+  mixins: [slotTypes],
   name: 'ConfigSlot',
   data() {
     return {
@@ -200,7 +200,7 @@ export default {
 
 .dialog-inner {
     .dialog-data {
-        max-height: calc(52vh - 95px);
+        max-height: calc(80vh - 95px);
         overflow: auto;
         margin-top: -25px;
         padding-bottom: 7px;

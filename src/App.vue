@@ -209,6 +209,7 @@
       :title="dialogData.title"
       :visible.sync="dialogVisible"
       v-if="dialogVisible"
+      top="7vh"
       width="50%">
         <component :is="dialogData.type" :dialogData="dialogData" @cancelDialog="closeDialog" />
     </el-dialog>
@@ -672,9 +673,21 @@ html {
   opacity: 0;
 }
 
+.el-dialog {
+  margin-bottom: 0 !important;
+}
+
 .el-dialog__body {
-  max-height: 52vh;
+  max-height: 80vh;
   overflow: auto;
+}
+
+.quill-editor {
+    z-index: 99;
+}
+
+.ql-editor p {
+  margin-top: 20px !important;
 }
 
 .tox-notifications-container {display: none !important;}
