@@ -12,11 +12,11 @@
           <ul class="bcTrail center">
             <li><router-link class="router" to="/home">Home</router-link></li>
             <!-- <li><router-link class="router" to="/home-old">Home#</router-link></li> -->
+            <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
             <li><router-link class="router" to="/activities">Activity List</router-link></li>
             <!-- <li><router-link class="router" to="/activities-old">Activities List#</router-link></li> -->
             <li><router-link class="router" to="/activity">Activity</router-link></li>
             <!-- <li><router-link class="router" to="/weekly-old">Activity#</router-link></li> -->
-            <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
             <!-- <li><router-link class="router" to="/syllabus-old">Syllabus#</router-link></li> -->
             <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program">Program Overview</router-link></li>
             <li v-show="info.useStudents"><router-link class="router" to="/studentlist">Students List</router-link></li>
