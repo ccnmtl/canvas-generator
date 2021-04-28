@@ -112,15 +112,17 @@ export default {
           this.$store.dispatch("updateSlotDataWithSetter", {
             setter: this.setters[field],
             data: this.data[field]
-          }) 
+          })
         }
         // else {
         //   this.$store.dispatch("updateSpecificInfo", { key: field, value: this.data[field] })
         // }
-        this.$store.dispatch("updateSlotData", {
-        item: this.slotItem,
-        data: this.data
-        })
+        else {
+          this.$store.dispatch("updateSlotData", {
+            item: this.slotItem,
+            data: this.data
+          })
+        }
         this.editing = null
       }
     },
