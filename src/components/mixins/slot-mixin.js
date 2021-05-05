@@ -106,8 +106,32 @@ export default {
         // if (this.$refs[field]) this.$refs[field].focus()
       }, 200)
     },
-    finishEditing(field) {
-      if (this.data[field]) {
+    cleanSetter(setter) {
+      setter = setter.replaceAll('].', '.').replaceAll(']', '').replaceAll('[', '.')
+      let items = setter.split('.')
+      let base = this.data
+      let last
+
+      items.forEach((item, i, arr) => {
+        if(i === arr.length - 1) last = item
+        else base = base[item]
+      })
+
+      return base[last]
+    },
+    finishEditing(field, setter = null) {
+      if (field.search('.fromGetter')) {
+        const fl = field.replace('.fromGetter', '')
+        const st = this.cleanSetter(setter);
+
+        this.$store.dispatch("updateSlotDataWithSetter", {
+          setter: fl,
+          data: st
+        });
+
+        this.editing = null
+      }
+      else if (this.data[field]) {
         if (this.setters[field]){
           this.$store.dispatch("updateSlotDataWithSetter", {
             setter: this.setters[field],

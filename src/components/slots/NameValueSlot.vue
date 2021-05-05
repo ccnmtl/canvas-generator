@@ -1,11 +1,11 @@
 <template>
   <div :id="sid" class="col name-value-slot">
-    <a :href="createLink(data.link)" @click="doNothing" 
+    <a :href="createLink(data.link)" @click="doNothing"
     :style="(!data.link && !data.linkID) ? 'cursor: context-menu;color: black; text-decoration: none;' : 'color: black; text-decoration: none;'">
     <span :style="data.nameStyle">{{ data.name}}:</span>
     <span v-for="n in data.breakSize" :key="n"> <br> </span>
     <span v-if="data.type == 'date'">
-      <span @dblclick="setEditing('value')" v-if="editing !== 'value'" > {{ formatWeek(data.value) }} </span>
+      <span data-dbclick @dblclick="setEditing('value')" v-if="editing !== 'value'" > {{ formatWeek(data.value) }} </span>
       <span data-hidden v-else>
         <el-date-picker
           ref="value"
@@ -17,7 +17,7 @@
       </span>
     </span>
     <span v-else>
-      <span @dblclick="setEditing('value')" v-if="editing !== 'value'" > {{ data.value }} </span>
+      <span data-dbclick @dblclick="setEditing('value')" v-if="editing !== 'value'" > {{ data.value }} </span>
       <span data-hidden v-else>
         <input ref="value" @blur="finishEditing('value')" v-model="data.value" />
       </span>
@@ -35,13 +35,13 @@ import slotMixin from '../mixins/slot-mixin.js'
 export default {
   name: "NameValueSlot",
   props: [ "sid", "slotData", "slotItem", "width" ],
-  mixins: [slotMixin],  
+  mixins: [slotMixin],
   data() {
     return {
       editing: null,
       data: {
       },
-      setters: { 
+      setters: {
       },
       defaultGetter: 'value',
       editableProps: ['name', 'type', 'value', 'nameStyle']
@@ -70,7 +70,7 @@ export default {
 .has-pointer {
   color: black;
   cursor: context-menu;
-  text-decoration: none; 
+  text-decoration: none;
 }
 
 button {

@@ -6,7 +6,7 @@
         <div class="data-item">
           <strong>Data Source: </strong>
           <span v-if="getter !== null">
-            <span @dblclick="showEditGetter" v-show="!editGetter">{{ getter ? getter : 'Unassigned' }}</span>
+            <span data-dbclick @dblclick="showEditGetter" v-show="!editGetter">{{ getter ? getter : 'Unassigned' }}</span>
             <span v-show="editGetter">
               <input class="form-control" ref="getter ? getter : 'Unassigned'" style="display: inline-block; width: 50%" v-model="getter" @blur="editGetter = false" />
             </span>

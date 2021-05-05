@@ -6,13 +6,13 @@
         <img v-if="theme.rightLogo" :src="theme.rightLogo" style="float: right; height: 100px; margin-top: 10px;" />
 
         <p>
-          <span @dblclick="setEditing('title')" v-if="editing !== 'title'">{{ data.title.toUpperCase() }}</span>
+          <span data-dbclick @dblclick="setEditing('title')" v-if="editing !== 'title'">{{ data.title.toUpperCase() }}</span>
           <span data-hidden v-else>
             <input ref="title" @blur="finishEditing('title')" v-model="data.title" />
           </span>
         </p>
         <p class="STV1_CourseCode">
-          <span @dblclick="setEditing('semester')" v-if="editing !== 'semester'">{{ data.semester }}</span>
+          <span data-dbclick @dblclick="setEditing('semester')" v-if="editing !== 'semester'">{{ data.semester }}</span>
           <span data-hidden v-else>
             <input ref="semester" @blur="finishEditing('semester')" v-model="data.semester" />
           </span>
@@ -22,7 +22,7 @@
       <div v-else >
         <div :class="['STV1_SlimBanner', theme.slim]" style="postition: relative">
          <p>
-           <span @dblclick="setEditing('title')" v-if="editing !== 'title'">{{ data.title.toUpperCase() }}</span>
+           <span data-dbclick @dblclick="setEditing('title')" v-if="editing !== 'title'">{{ data.title.toUpperCase() }}</span>
            <span data-hidden v-else>
              <input ref="title" @blur="finishEditing('title')" v-model="data.title" />
            </span>

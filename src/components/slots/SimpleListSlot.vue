@@ -1,13 +1,32 @@
 <template>
   <div :id="sid" class="col simple-list-slot" v-if="data.items.length > 0">
-    <h5>{{ data.title }}</h5>
+    <h5>{{ slotItem.defaultData.title }}</h5>
+
     <div class="simple-list">
-      <p class="simple-list-item" v-for="item in data.items" :key="item[data.idField]">
-        {{ item[data.labelField] }}
+      <p class="simple-list-item" v-for="(item, i) in data.items" :key="item[data.idField]">
+        <span data-dbclick @dblclick="setEditing('name')" v-if="editing !== 'name'" >{{ item[data.labelField] }}</span>
+        <span data-hidden v-else>
+          <input ref="name"
+                 @blur="finishEditing(slotItem.getter + '['+i+'].fromGetter', 'items['+i+']')"
+                 v-model="item[data.labelField]">
+        </span>
         <template v-if="data.type == 'instructor-ta'">
-          <span v-if='item[data.emailField]'>(<a :href="'mailto:' + item[data.emailField]">{{ item[data.emailField] }}</a>) </span>
+          <!-- Email:  -->
+          <span data-dbclick @dblclick="setEditing('email')" v-if="editing !== 'email'">(<a @click="doNothing" :href="'mailto:' + item[data.emailField]" v-if="item[data.emailField]">{{ item[data.emailField] }}</a>)</span>
+          <span data-hidden v-else>
+            <input ref="email"
+                   @blur="finishEditing(slotItem.getter + '['+i+'].fromGetter', 'items['+i+']')"
+                   v-model="item[data.emailField]">
+          </span>
           <br />
-          {{ item[data.officeField] }}
+
+          <!-- Office Hours:  -->
+          <span data-dbclick @dblclick="setEditing('office')" v-if="editing !== 'office'" >{{ item[data.officeField] }}</span>
+          <span data-hidden v-else>
+            <input ref="office"
+                   @blur="finishEditing(slotItem.getter + '['+i+'].fromGetter', 'items['+i+']')"
+                   v-model="item[data.officeField]">
+          </span>
         </template>
       </p>
     </div>

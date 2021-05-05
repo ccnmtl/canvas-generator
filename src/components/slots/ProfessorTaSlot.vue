@@ -12,17 +12,17 @@
         </div>
         <p>{{ data.type }}:</p>
         <p>
-          <span @dblclick="setEditing('name')" v-if="editing !== 'name' || !(data.name)" > {{ data.name }} </span>
+          <span data-dbclick @dblclick="setEditing('name')" v-if="editing !== 'name'" >{{ data.name }}</span>
           <span data-hidden v-else>
             <input ref="name" @blur="finishEditing('name')" v-model="data.name" />
           </span>
-          <span @dblclick="setEditing('email')" v-if="editing !== 'email' || !(data.email)" > (<a @click="doNothing" :href="'mailto:' + data.email" v-if="data.email">{{ data.email }}</a>) </span>
+          <span data-dbclick @dblclick="setEditing('email')" v-if="editing !== 'email'">(<a @click="doNothing" :href="'mailto:' + data.email" v-if="data.email">{{ data.email }}</a>) </span>
           <span data-hidden v-else>
             <input ref="email" @blur="finishEditing('email')" v-model="data.email" />
           </span>
           <br>
           <!-- Office Hours:  -->
-          <span @dblclick="setEditing('office')" v-if="editing !== 'office' || !(data.office)" > {{ data.office }} </span>
+          <span data-dbclick @dblclick="setEditing('office')" v-if="editing !== 'office'" > {{ data.office }} </span>
           <span data-hidden v-else>
             <input ref="office" @blur="finishEditing('office')" v-model="data.office" />
           </span>

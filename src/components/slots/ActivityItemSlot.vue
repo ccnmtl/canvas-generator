@@ -4,14 +4,14 @@
           <div class="ig-type-icon" aria-hidden="true"><i :class="iconType"></i></div>
           <div class="ig-info">
             <a class="ig-title" :href="data.link" @click="doNothing" :data-api-endpoint="data.link" :data-api-returntype="data.type">
-              <span @dblclick="setEditing('title')" v-if="editing !== 'title'" > {{data.title}} </span>
+              <span data-dbclick @dblclick="setEditing('title')" v-if="editing !== 'title'" > {{data.title}} </span>
               <span data-hidden v-else>
                 <input ref="title" @blur="finishEditing('title')" v-model="data.title" />
-              </span> 
+              </span>
             </a>
             <div class="ig-details">
                 <div class="ig-details__item">
-                <name-value-slot 
+                <name-value-slot
                   :sid="'name-value-' + this.sid"
                   :slotData='{type: "date", name: "Due", value: data.due ,nameStyle: {"font-weight": "bold"}}'
                   :slotItem='{
@@ -44,7 +44,7 @@ export default {
   components: {
     NameValueSlot,
     TitleSlot
-  },  
+  },
   data() {
     return {
       editing: null,
@@ -71,7 +71,7 @@ export default {
         this.$store.dispatch("updateSlotDataWithSetter", {
           setter: this.getWeekItemPropByID(field, this.data.type + 's', this.data.id).set,
           data: this.data[field]
-        }) 
+        })
         this.editing = null
       }
     },
