@@ -126,7 +126,7 @@
             inactive-color="#ff4949">
           </el-switch>
         </p> -->
-         <p>
+         <!-- <p>
           <label for="select" style="min-width: 150px">Use Zoom</label>
           <el-switch
             :value="info.useZoom"
@@ -134,7 +134,7 @@
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
-        </p>
+        </p> -->
         <p>
           <label for="select" style="min-width: 150px">Use Student Pages</label>
           <el-switch

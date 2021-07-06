@@ -10,7 +10,7 @@ export default {
       url: "",
       semester: "U6411 // SPRING 2020",
       isBlended: true,
-      useZoom: true,
+      useZoom: false,
       useStudents: false,
       zoomLink: "http://www.zoom.us",
 

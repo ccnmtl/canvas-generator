@@ -41,13 +41,13 @@
                 inactive-color="#ff4949">
               </el-switch>
             </el-form-item> -->
-            <el-form-item label="Use Zoom" prop="useZoom">
+            <!-- <el-form-item label="Use Zoom" prop="useZoom">
               <el-switch
                 v-model="ruleForm.useZoom"
                 active-color="#13ce66"
                 inactive-color="#ff4949">
               </el-switch>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="Use Students Page" prop="useStudents">
               <el-switch
                 v-model="ruleForm.useStudents"
@@ -137,7 +137,7 @@ export default {
           this.updateProp("url", this.ruleForm.url)
           this.updateProp("classType", this.ruleForm.classType)
           this.updateProp("isBlended", this.ruleForm.isBlended)
-          this.updateProp("useZoom", this.ruleForm.useZoom)
+          // this.updateProp("useZoom", this.ruleForm.useZoom)
           this.updateProp("useStudents", this.ruleForm.useStudents)
 
           this.theme = this.ruleForm.theme
