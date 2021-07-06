@@ -120,7 +120,7 @@ export default {
       return base[last]
     },
     finishEditing(field, setter = null) {
-      if (field.search('.fromGetter')) {
+      if (field.includes('.fromGetter')) {
         const fl = field.replace('.fromGetter', '')
         const st = this.cleanSetter(setter);
 
