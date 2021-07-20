@@ -2,7 +2,7 @@
   <div :id="sid"  >
       <div v-if="useWideBanner" :class="['pad-box-mega','STV1_Banner', data.wideBanner ? theme.wide : theme.banner]" style="postition: relative" >
 
-        <img v-if="theme.logo" :src="theme.logo" style="margin-top: -10px; margin-left: 10px" @dblclick="openUploadDialog()" />
+        <img v-if="theme.logo" :src="theme.logo" style="margin-top: -10px; margin-left: 10px; height:40px" @dblclick="openUploadDialog()" />
         <img v-if="theme.rightLogo" :src="theme.rightLogo" style="float: right; height: 100px; margin-top: 10px;" />
 
         <p>

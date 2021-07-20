@@ -2,16 +2,16 @@ const IMAGE_SERVER = "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-imag
 
 export default {
   state: {
-    theme: { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SipaLogo2.png", primary: "#008EE2" },
+    theme: { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SIPA_Logo_hq.png", primary: "#008EE2" },
     themeOptions: [
       // { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SipaLogo2.png", primary: "#008EE2" },
-      { option: "Columbia", banner: 'CU01', slim: 'CU01_Slim', wide: 'STV1_BannerBlue', logo: IMAGE_SERVER + "CU_Default_Logo.png", primary: "#008EE2" },
-      { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SipaLogo2.png", primary: "#008EE2" },
+      { option: "Columbia", banner: 'CU01', slim: 'CU01_Slim', wide: 'STV1_BannerBlue', logo: IMAGE_SERVER + "Columbia_Logo_hq.png", primary: "#008EE2" },
+      { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SIPA_Logo_hq.png", primary: "#008EE2" },
       { option: "Social Work", banner: 'SSW', slim: 'SSW_Slim', logo: IMAGE_SERVER + "SSW_logo.png", primary: "#008EE2" },
       { option: "Mailman", banner: 'MM', slim: 'MM_Slim', logo: IMAGE_SERVER + "MM_logo2.png", primary: "#008EE2" },
-      { option: "Journalism", banner: 'Banner_Journalism', slim: 'Banner_Journalism_Slim', logo: IMAGE_SERVER + "journalism_logo.png", primary: "#008EE2" },
-      { option: "Climate", banner: 'Banner_Climate', slim: 'Banner_Climate_Slim', logo: IMAGE_SERVER + "climate_logo.png", primary: "#008EE2" },
-      { option: "Engineering", banner: 'Banner_Engineering', slim: 'Banner_Engineering_Slim', logo: IMAGE_SERVER + "engineering_logo.png", primary: "#008EE2" },
+      { option: "Journalism", banner: 'Banner_Journalism', slim: 'Banner_Journalism_Slim', logo: IMAGE_SERVER + "journalism_logo_hq.png", primary: "#008EE2" },
+      { option: "Climate", banner: 'Banner_Climate', slim: 'Banner_Climate_Slim', logo: IMAGE_SERVER + "climate_logo_hq.png", primary: "#008EE2" },
+      { option: "Engineering", banner: 'Banner_Engineering', slim: 'Banner_Engineering_Slim', logo: IMAGE_SERVER + "engineering_logo_hq.png", primary: "#008EE2" },
       { option: "Istari", banner: 'Banner_Istari', slim: 'Banner_Istari_Slim', logo: IMAGE_SERVER + "Istari_Logo.png", primary: "#1F1347" },
       { option: "Acountability Lab", banner: 'Banner_AL', slim: 'Banner_AL_Slim', logo: IMAGE_SERVER + "AL_Logo.png", primary: "#671E20" },
       { option: "Center for Open Data Enterprise", banner: 'Banner_CODE', slim: 'Banner_CODE_Slim', logo: IMAGE_SERVER + "Code_Logo.png", primary: "#0F084E" },
