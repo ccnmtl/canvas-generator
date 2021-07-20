@@ -683,7 +683,7 @@ html {
 }
 
 .quill-editor {
-    z-index: 99;
+    // z-index: 99;
 }
 
 .ql-editor p {

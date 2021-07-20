@@ -102,6 +102,9 @@ export default {
   padding: 16px;
   color: #333;
 }
+.ql-picker-options{
+  z-index: 100;
+}
 
 button {
   margin-top: 16px;
