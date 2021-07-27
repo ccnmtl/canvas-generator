@@ -28,7 +28,7 @@ export default new Router({
     },
     {
       path: '/home-old',
-      name: 'Home Template',
+      name: 'Old Home Template',
       component: Home
     },
     {
@@ -53,7 +53,7 @@ export default new Router({
     },
     {
       path: '/syllabus',
-      name: 'New Syllabus Template',
+      name: 'Syllabus Template',
       component: NewSyllabus
     },
     {

@@ -1,6 +1,6 @@
 <template>
   <div :id="sid" class="col simple-list-slot" v-if="data.items.length > 0">
-    <h5>{{ slotItem.defaultData.title }}</h5>
+    <h5>{{ data.title }}</h5>
 
     <div class="simple-list">
       <p class="simple-list-item" v-for="(item, i) in data.items" :key="item[data.idField]">

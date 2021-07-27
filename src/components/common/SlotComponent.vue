@@ -6,7 +6,7 @@
                  icon="el-icon-edit"
                  circle
                  v-if="showEdit">
-        <span class="smaller">Edit Data</span>
+        <span class="smaller">Edit</span>
       </el-button>
       <el-button @click="showDeleteSlot"
                  type="danger"
@@ -20,7 +20,7 @@
                  type="success"
                  icon="el-icon-edit"
                  circle>
-        <span class="smaller">Slot Data</span>
+        <span class="smaller">Edit</span>
       </el-button>
     </div>
     <component :is="type"

@@ -28,11 +28,16 @@
           <div class="col-xs-8">
             <div class="styleguide-section__grid-demo-element">
               <div v-if="caseStudy.name.length < 30" class="welcome" style="height:50px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}}
-              <el-button @click="removeCase(caseStudy)" size="small" type="danger" style="float: right;">Remove Case</el-button>
-              <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right; margin-right: 5px">Add Case</el-button></div>
+              <div style="float: right; margin-right: 5px">
+              <el-button @click="addCase(caseStudy)" size="small" type="success" style="margin-right: -10px">Add Case</el-button>
+              <el-button @click="removeCase(caseStudy)" size="small" type="danger" >Remove Case</el-button>
+              </div></div>
               <div v-else class="welcome" style="height:75px;"><i class="icon-search"></i>&nbsp;{{caseStudy.name}}
-              <el-button @click="removeCase(caseStudy)" size="small" type="danger" style="float: right; margin-top: 5px">Remove Case</el-button>
-              <el-button @click="addCase(caseStudy)" size="small" type="success" style="float: right; margin-top: 5px; margin-right: 5px">Add Case</el-button></div>
+              <div style="float: right; margin-right: 5px">
+                <el-button @click="addCase(caseStudy)" size="small" type="success" style="margin-right: -10px">Add Case</el-button>
+                <el-button @click="removeCase(caseStudy)" size="small" type="danger" >Remove Case</el-button>
+                </div>
+              </div>
               <p>{{caseStudy.shortDescription}}</p>
             </div>
           </div>
