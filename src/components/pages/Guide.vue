@@ -12,8 +12,6 @@
                   <hr style="width: 70%; margin-left: auto; margin-right: auto;">
                   <div class="uk-margin-medium-bottom uk-margin-auto-left uk-margin-auto-right">
                     <a href="./static/files/CourseBuilderQuickstart.pdf" download><el-button type="success" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Quick Start Guide</el-button></a>
-                    <a href="./static/files/CourseBuilderTips.pdf" download><el-button type="success" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Class Build Tips</el-button></a>
-
                     <!-- <el-button type="primary" style="display: inline-block; margin-right: 20px;" uk-toggle="target: #modal-media-video"><i class="fas fa-video"></i> Watch the Demo Video</el-button> -->
                     <!-- <a href="./static/files/weekly-template.imscc" download><el-button type="success" style="display: inline-block; margin-right: 20px;"><i class="fas fa-download"></i> Weekly Course</el-button></a> -->
                     <!-- <a href="./static/files/executive-template.imscc" download><el-button type="success" style="display: inline-block;"><i class="fas fa-download"></i> Executive Training</el-button></a> -->
