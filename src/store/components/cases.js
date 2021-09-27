@@ -67,7 +67,33 @@ export default {
                         aditionalInterviews: ["https://player.vimeo.com/video/207167145", "https://player.vimeo.com/video/207167266", "https://player.vimeo.com/video/207167325"],
                         shortDescription: "The Democratic Republic of the Congo and Rwanda in central Africa are two countries that have been torn apart by civil war and conflict. Twenty-two years after the genocide that killed over 800,000, Rwanda has emerged with a vibrant economy, while in neighboring DRC's civil war continues to undermine development. Is aid the solution, or part of the problem?",
                         description: "The Democratic Republic of the Congo and Rwanda in central Africa are two countries that have been torn apart by civil war and conflict. Twenty-two years after the genocide that killed over 800,000, Rwanda has emerged with a vibrant economy, while in neighboring DRC's civil war continues to undermine development. How have international aid efforts and investments helped or hurt these regions? Is aid the solution, or part of the problem? How do new investment focused efforts differ from traditional aid? Featuring interviews with Howard G. Buffett, Rwandan President Kagame and other leading officials."
-                    }]
+                    },
+                    {
+                        name: "Measuring Impact: Metrics for Global Change",
+                        id: 21,
+                        thumbnail: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/Measurement+Impact+thumbnail.jpg",
+                        writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/Measuring Impact_Final_Case - Final_Version 9.23.pdf",
+                        videoCase: "https://player.vimeo.com/video/576912313?title=0&byline=0&portrait=0",
+                        originalDocuments: "",
+                        transcripts: "",
+                        aditionalInterviews: [],
+                        shortDescription: '',
+                        description: 'This case examines the effort to universalize and quantify the practice of social impact investing. As they watched the field grow to more than $1 trillion over the past decade, investors set out to answer a key question: how do we measure the social good delivered by an investment?'
+                    },
+                    {
+                        name: "Doing Well by Doing Good: An Introduction to Impact Investing",
+                        id: 22,
+                        thumbnail: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/Measurement+Impact+thumbnail.jpg",
+                        writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/Doing Well by Doing Good - Columbia Case Study.pdf",
+                        videoCase: "https://player.vimeo.com/video/389339371?title=0&byline=0&portrait=0",
+                        originalDocuments: "",
+                        transcripts: "",
+                        aditionalInterviews: [],
+                        shortDescription: '',
+                        description: 'In collaboration with Worldview Global Impact (WGI), a New York-based NGO that promotes sustainability initiatives, the Picker Center is producing a new series of case studies that will examine this important global strategy from a variety of perspectives.'
+                    },                                        
+                ]
+                    
             },
             {
                 category: "Sustainability & Agriculture",
@@ -100,7 +126,7 @@ export default {
                         name: "Private Rainforest Reserves",
                         id: 8,
                         thumbnail: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/private+rainforest.jpg",
-                        writtenCase: "",
+                        writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/Private Rainforest Reserves.pdf",
                         videoCase: "https://player.vimeo.com/video/334077041?title=0&byline=0&portrait=0",
                         originalDocuments: "",
                         transcripts: "",
@@ -112,7 +138,7 @@ export default {
                         name: "ACToday",
                         id: 9,
                         thumbnail: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/ACToday.jpg",
-                        writtenCase: "",
+                        writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/ACToday SIPA Case Study- FINAL 3.21.2019 (1).pdf",
                         videoCase: "https://player.vimeo.com/video/348636321?title=0&byline=0&portrait=0",
                         originalDocuments: "",
                         transcripts: "",
@@ -124,8 +150,8 @@ export default {
                         name: "Off-Grid Solar",
                         id: 10,
                         thumbnail: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/solar.png",
-                        writtenCase: "https://player.vimeo.com/video/334077748?title=0&byline=0&portrait=0",
-                        videoCase: "",
+                        writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/Uganda Solar Enterprise.pdf",
+                        videoCase: "https://player.vimeo.com/video/334077748?title=0&byline=0&portrait=0",
                         originalDocuments: "",
                         transcripts: "",
                         aditionalInterviews: [],
@@ -168,7 +194,7 @@ export default {
                         name: "Internet in a Box",
                         id: 13,
                         thumbnail: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/internet+in+a+box.jpg",
-                        writtenCase: "",
+                        writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/Internet In a Box.pdf",
                         videoCase: "https://player.vimeo.com/video/334076843?title=0&byline=0&portrait=0",
                         originalDocuments: "",
                         transcripts: "",
@@ -215,7 +241,56 @@ export default {
                         aditionalInterviews: [],
                         shortDescription: 'This spring 2019 Capstone travels to Nepal, to conduct field research regarding new UN protocols designed to include youth in humanitarian crises planning. It follows the team as they discuss the response to Nepal’s 2015 earthquake, and how to best integrate young people into plans for future crises response.',
                         description: ''
-                    },]
+                    },
+                    {
+                        name: "SONY Cyber Attack",
+                        id: 17,
+                        thumbnail: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/youth+and+crisis.jpg",
+                        writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/Sony - Written Case.pdf",
+                        videoCase: "https://player.vimeo.com/video/540751476?title=0&byline=0&portrait=0",
+                        originalDocuments: "",
+                        transcripts: "",
+                        aditionalInterviews: [],
+                        shortDescription: '',
+                        description: 'This case examines how cyber weapons enable authoritarian states to stifle political opposition beyond their borders. In 2014, the major American film company Sony Pictures Entertainment experienced an attack on its global network and saw sensitive data leaked online after one of its comedy films took aim at North Korean leader Kim Jong-Un.'
+                    },
+                    {
+                        name: "NotPetya Cyber Attack",
+                        id: 18,
+                        thumbnail: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/youth+and+crisis.jpg",
+                        writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/NotPetya Final.pdf",
+                        videoCase: "https://player.vimeo.com/video/502841672?title=0&byline=0&portrait=0",
+                        originalDocuments: "",
+                        transcripts: "",
+                        aditionalInterviews: [],
+                        shortDescription: '',
+                        description: 'This case examines the vulnerabilities of private actors to geopolitical conflict in the era of cyberwarfare. In 2017, global trade went into a tailspin as Danish shipping giant A.P. Møller – Maersk fell victim to an act of cyberwarfare attributed to Russia, which was seeking to inflict punishment on its regional adversary, Ukraine.'
+                    },
+                    {
+                        name: "Target Cyber Attack",
+                        id: 19,
+                        thumbnail: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/youth+and+crisis.jpg",
+                        writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/Target Final.pdf",
+                        videoCase: "https://player.vimeo.com/video/502843596?title=0&byline=0&portrait=0",
+                        originalDocuments: "",
+                        transcripts: "",
+                        aditionalInterviews: [],
+                        shortDescription: '',
+                        description: 'This case examines the role that interconnectivity plays in corporate cybersecurity. In 2013, the American retailer Target suffered a major cyber breach after criminal hackers entered the digital systems of one of its vendors, ultimately exposing the personally identifiable information of 70 million Target customers.'
+                    },
+                    {
+                        name: "Operational Collaboration",
+                        id: 20,
+                        thumbnail: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/youth+and+crisis.jpg",
+                        writtenCase: "https://cu-coursebuilder.s3.amazonaws.com/static/cases/Ops Collab Written Case.pdf",
+                        videoCase: "https://player.vimeo.com/video/551728232?title=0&byline=0&portrait=0",
+                        originalDocuments: "",
+                        transcripts: "",
+                        aditionalInterviews: [],
+                        shortDescription: '',
+                        description: 'This case examines the growing theory and practice of operational collaboration in American cybersecurity operations. Amid a growing number of threats to critical infrastructure in the U.S., there is a rising call for public and private actors in cyberspace to move beyond the limited cooperation of the past and better combine forces to secure strategic American assets.'
+                    },                                                                                
+                ]
             }
 
         ]
