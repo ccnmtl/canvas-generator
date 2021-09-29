@@ -123,6 +123,7 @@ import saveFile from "../../util/save-file"
 import PageMixin from "../../components/mixins/page-mixin"
 import JSZip from "jszip"
 import JSZipUtils from "jszip-utils"
+import validator from "validator"
 
 import weekView from "../render/weekView"
 import studentView from "../render/studentView"
@@ -177,7 +178,15 @@ export default {
     exportIMSCC() {
       let serializer = new XMLSerializer()
       let footer = "</body> </html>"
+
+      //Clean Data
       this.updateProp("url", this.parseUrl(this.info.url))
+      this.info.tas.forEach((ta, index) => {
+        if (!validator.isEmail(ta.email)) this.updateUser(this.info.tas[index],'email', 'invalidemail@pleasereplace.com')
+      })
+      this.info.profs.forEach((prof, index) => {
+        if (!validator.isEmail(prof.email)) this.updateUser(this.info.profs[index],'email', 'invalidemail@pleasereplace.com')
+      })
 
       JSZipUtils.getBinaryContent("static/files/clean-course.imscc", (err, data) => {
         if (err) {

@@ -152,8 +152,8 @@ export default {
       ]
     },
     invalidEmails() {
-      let invalidEmails = this.info.tas.filter (ta => !validator.isEmail(ta.email))
-      invalidEmails += this.info.profs.filter (prof => !validator.isEmail(prof.email))
+      let invalidEmails = this.info.tas.filter (ta => !validator.isEmail(ta.email) || ta.email == "invalidemail@pleasereplace.com")
+      invalidEmails += this.info.profs.filter (prof => !validator.isEmail(prof.email) || prof.email == "invalidemail@pleasereplace.com")
       console.log(invalidEmails)
       return invalidEmails.length > 0
     }
