@@ -47,6 +47,7 @@
               v-show="info.title.length > 35 && !info.wideBanner">
             </el-alert>
 
+
             <el-input style="width: 220px;" v-popover:titlepop placeholder="Please input your Course Title" :value="info.title" @input="updateProp('title', $event)"></el-input>
 
             <el-input title="This is your Course ID" style="width: 200px;" :value="info.semester" @input="updateProp('semester', $event)" v-tippy="{delay: [1000,200]}"></el-input>
@@ -55,6 +56,11 @@
           </li>
 
           <li class="uk-text-center">
+            <el-alert
+              title="An instructor email is not formatted correctly. Please change to the format of example@domain.com"
+              type="error" class="alert" effect="dark" :closable="false" center show-icon
+              v-show="invalidEmails">
+            </el-alert>
             <div v-for="prof in info.profs" :key="prof.id">
             <el-input autosize :value="prof.name" style="width: 150px;" @input="updateUser(prof, 'name', $event)"></el-input>
             <el-input autosize :value="prof.email" style="width: 250px;" @input="updateUser(prof, 'email', $event)"></el-input>
@@ -135,6 +141,12 @@ export default {
     checkTitle() {
       if (this.info.title.length < 1 || this.info.url.length < 1) return false
       return validator.isURL(this.info.url)
+    },
+    invalidEmails() {
+      let invalidEmails = this.info.tas.filter (ta => !validator.isEmail(ta.email))
+      invalidEmails += this.info.profs.filter (prof => !validator.isEmail(prof.email))
+      console.log(invalidEmails)
+      return invalidEmails.length > 0
     },
     weeklyUrl() {
       let ending = "pages/activities"

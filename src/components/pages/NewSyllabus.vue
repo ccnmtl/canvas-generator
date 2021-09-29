@@ -43,7 +43,11 @@
 
           <div v-show="iEditable" v-if="selected.list.length > 0" class="center">
             <el-input style="width: 200px; float:left" class="e-input" :value="info[selected.list][selected.index].name" @input="updateUser(info[selected.list][selected.index],'name', $event)"> </el-input>
-
+            <el-alert
+              title="An instructor email is not formatted correctly. Please change to the format of example@domain.com"
+              type="error" class="alert" effect="dark" :closable="false" center show-icon
+              v-show="invalidEmails">
+            </el-alert>
             <el-input class="e-input" v-if="selected.list" :value="info[selected.list][selected.index].email" @input="updateUser(info[selected.list][selected.index],'email', $event)"> </el-input>
             <el-input class="e-input" v-if="selected.list" type="textarea" autosize :value="info[selected.list][selected.index].office" @input="updateUser(info[selected.list][selected.index],'office', $event)"> </el-input>
             <button type="button" name="button" class="uk-button-small uk-button-primary" @click="updateSwitch">{{userInput.uploadSwitchText}}</button> <br> <br>
@@ -112,6 +116,7 @@ import ContainerComponent from '../common/ContainerComponent.vue'
 import PageMixin from "../../components/mixins/page-mixin"
 import RowTypes from '../../util/row-types.js'
 import { mapActions } from "vuex"
+import validator from "validator"
 
 
 export default {
@@ -145,6 +150,12 @@ export default {
         [this.syllabusComponentCol({title: {data: {title: 'Weekly Schedule'}}})],
         [['activity-table-slot']],
       ]
+    },
+    invalidEmails() {
+      let invalidEmails = this.info.tas.filter (ta => !validator.isEmail(ta.email))
+      invalidEmails += this.info.profs.filter (prof => !validator.isEmail(prof.email))
+      console.log(invalidEmails)
+      return invalidEmails.length > 0
     }
   },
   watch: {
@@ -220,14 +231,17 @@ export default {
 
       let { list, index } = this.selected
       let user = this.info[list][index]
-
-      if (index == 0) {
+      
+      if (this.info[list].length == 1) {
         if (list == "profs") {
+          console.log('first prof')
           return
         }
         this.selected = { index: 0, list: "profs", key: this.info.profs[0].id }
       } else {
-        this.selected = { index: index - 1, list, key: this.info[list][index - 1].id }
+        let newIndex = Math.abs(index - 1)
+        let firstIndex = index - 1 == -1 ? 0 : newIndex
+        this.selected = { index: firstIndex, list, key: this.info[list][newIndex].id }
       }
 
       if (list == "profs") this.deleteProf(user)
