@@ -78,7 +78,7 @@ export default new Router({
     },
     {
       path: '/activities-old',
-      name: 'Activities',
+      name: 'Old Activities',
       component: WeeklyList
     },
     {
