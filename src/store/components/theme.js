@@ -2,10 +2,11 @@ const IMAGE_SERVER = "https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-imag
 
 export default {
   state: {
-    theme: { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SIPA_Logo_hq.png", primary: "#008EE2" },
+    theme: { option: "Columbia", banner: 'MM', slim: 'MM_Slim', logo: IMAGE_SERVER + "Columbia_Logo_hq.png", primary: "#008EE2" },
     themeOptions: [
       // { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SipaLogo2.png", primary: "#008EE2" },
-      { option: "Columbia", banner: 'CU01', slim: 'CU01_Slim', wide: 'STV1_BannerBlue', logo: IMAGE_SERVER + "Columbia_Logo_hq.png", primary: "#008EE2" },
+      { option: "Columbia", banner: 'MM', slim: 'MM_Slim', logo: IMAGE_SERVER + "Columbia_Logo_hq.png", primary: "#008EE2" },
+      // { option: "Columbia", banner: 'CU01', slim: 'CU01_Slim', wide: 'STV1_BannerBlue', logo: IMAGE_SERVER + "Columbia_Logo_hq.png", primary: "#008EE2" },
       { option: "SIPA", banner: 'SIPA', wide: 'WIDE', slim: 'SIPA_Slim', logo: IMAGE_SERVER + "SIPA_Logo_hq.png", primary: "#008EE2" },
       { option: "Social Work", banner: 'SSW', slim: 'SSW_Slim', logo: IMAGE_SERVER + "SSW_logo.png", primary: "#008EE2" },
       { option: "Mailman", banner: 'MM', slim: 'MM_Slim', logo: IMAGE_SERVER + "MM_logo2.png", primary: "#008EE2" },
