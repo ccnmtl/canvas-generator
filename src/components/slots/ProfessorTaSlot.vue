@@ -16,7 +16,11 @@
           <span data-hidden v-else>
             <input ref="name" @blur="finishEditing('name')" v-model="data.name" />
           </span>
-          <span data-dbclick @dblclick="setEditing('email')" v-if="editing !== 'email'">(<a @click="doNothing" :href="'mailto:' + data.email" v-if="data.email">{{ data.email }}</a>) </span>
+          <span v-if="data.email">
+            <span data-dbclick @dblclick="setEditing('email')" v-if="editing !== 'email'">
+              (<a @click="doNothing" :href="'mailto:' + data.email" v-if="data.email">{{ data.email }}</a>)
+            </span>
+          </span>
           <span data-hidden v-else>
             <input ref="email" @blur="finishEditing('email')" v-model="data.email" />
           </span>
