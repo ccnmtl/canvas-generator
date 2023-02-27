@@ -75,11 +75,12 @@
               </div>
             </span>
           </li>
-          </li>
 
           <li class="uk-text-center">
             <el-input autosize style="width: 400px;" :value="info.meetings" @input="updateProp('meetings', $event)"></el-input>
-            <el-input autosize style="width: 400px;" :value="info.discussions" @input="updateProp('discussions', $event)"></el-input> <br>
+            <el-input autosize style="width: 400px; " :value="info.discussions" @input="updateProp('discussions', $event)"></el-input>
+            <el-button type="danger" style="margin-left: 15px" @click="hideMeetings"> Hide Meetings</el-button>
+            <br>
           </li>
 
           <li class="uk-text-center">
@@ -136,6 +137,11 @@ export default {
   },
   mixins: [RowTypes, PageMixin],
   methods: {
+    hideMeetings(){
+      console.log('test')
+      this.updateProp('meetings', 'hidden')
+      this.updateProp('discussions', 'hidden')
+    },
   },
   computed: {
     checkTitle() {
