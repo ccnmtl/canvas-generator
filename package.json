@@ -17,7 +17,6 @@
     "bootstrap-vue": "^2.21.2",
     "css-loader": "^0.26.4",
     "element-ui": "^2.14.1",
-    "fs": "0.0.1-security",
     "fs-extra": "^5.0.0",
     "is-mergeable-object": "^1.1.0",
     "jszip": "^3.1.5",
