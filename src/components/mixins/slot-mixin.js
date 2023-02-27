@@ -154,7 +154,7 @@ export default {
       return moment(date).format("dddd, MMMM Do")
     },
     createLink(link){
-      if (this.data.linkID) link = '/pages/session-' + ( this.$store.getters.getWeekIndexByID(this.data.linkID) + 1)
+      if (this.data.linkID) link = '/pages/' + ( this.$store.getters.getWeekByID(this.data.linkID).title.replace(/\./g,'-dot-').replace(/\s+/g, '-').toLowerCase())
       if (!link) return null
       return this.info.url + link
     },

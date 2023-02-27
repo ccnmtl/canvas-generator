@@ -436,25 +436,27 @@ export default {
                 })
               })
             }
-
+            
             let renderWeek = (i) => {
-              let title = "<title>Session " + i + "</title>"
+              let title = "<title>" + this.weeks[(i-1)].title + "</title>"
               let iden = '<meta name="identifier" content="ccb-session' + i + '"/>'
               let code
               let activityID = this.weeks[(i-1)].id
+
+              let convertedTitle = this.weeks[(i-1)].title.replace(/\./g,'-dot-').replace(/\s+/g, '-').toLowerCase()
 
               this.setStateField({field: 'selectedWeekID', value: activityID}).then( (res) => {
                 console.log('id', `activity-${activityID}`)
                 code = this.$refs[`activity-${activityID}`][0].returnCode()
 
                 zip.file(
-                  "wiki_content/session-" + i + ".html",
+                  "wiki_content/" + convertedTitle + ".html",
                   headings.top + title + iden + headings.bottom + code + footer
                 )
                 addResource({
                   xml: manifest,
                   iden: "ccb-session-" + i,
-                  link: "wiki_content/pages/session-" + i
+                  link: "wiki_content/pages/" + convertedTitle
                 })
                 console.log(code)
                 if (i+1 <= this.weeks.length) renderWeek(i+1)
