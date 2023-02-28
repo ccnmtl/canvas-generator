@@ -418,6 +418,17 @@ export default {
       this.$store.dispatch('setCurrentVersion', version)
       this.currentVersion = version
       this.showingCourses = false
+      let newCourse = _.find(this.getSavedStates, { uuid: this.currentCourse })
+      let newCourseInfo = JSON.parse(newCourse.versions[newCourse.version].info)
+      if (newCourseInfo.title === ''){
+        setTimeout(() => {
+            location.reload
+          }, 300)
+        this.$store.dispatch('createRowsFromArray', {
+                cid: 'activities-list',
+                rows: this.defaultContainerRows['activities-list']
+              })
+      }
     },
     getSaveStateConfig() {
       return {
@@ -512,6 +523,7 @@ export default {
       let containers = this.defaultContainerRows
       let keys = Object.keys(containers)
       keys.forEach(key => {
+        console.log(key)
         this.$store.dispatch('createRowsFromArray', {
           cid: key,
           rows: containers[key]
