@@ -197,29 +197,45 @@ export default {
 
       JSZip.loadAsync(file)
             .then(zip => {
-              console.log(zip)
               zip
               .file("imsmanifest.xml")
               .async("string")
               .then(data => {
                 let parser = new DOMParser()
                 let manifest = parser.parseFromString(data, "text/xml")
+
                 let org = manifest.querySelector('manifest > organizations > organization > item')
                 let items = Array.from(org.getElementsByTagName('item'))
                 let modules = items.filter(elem => elem.children.length > 1)
                 let moduleList = []
+
+                let resources = manifest.querySelector('manifest > resources')
+                let resourcesItems = Array.from(resources.getElementsByTagName('resource'))
+
                 modules.forEach( module => {
-                  let titleList = Array.from(module.getElementsByTagName('title')).filter(title => title.parentNode.getAttribute('identifierref'))
+                  const resourceRefs = []
+                  let moduleMainTitle = ''
+                  Array.from(module.getElementsByTagName('title')).forEach((title, index) => {
+                    if (index === 0) moduleMainTitle = title.innerHTML
+                    const idRef = title.parentNode.getAttribute('identifierref')
+                    if (idRef) {
+                      const foundResource = resourcesItems.find(res => res.getAttribute('identifier') === idRef)
+                      if (foundResource && foundResource.getAttribute('href') && foundResource.getAttribute('href').includes('wiki_content/')) {
+                        resourceRefs.push(foundResource.getAttribute('href'))
+                      }
+                    }
+                  })
+
                   let moduleTitles = []
-                  for (let i=1; i<titleList.length; i++){
-                    let wikiTitle = 'wiki_content/' + titleList[i].innerHTML.replace(/\./g,'-dot-').replace(/\s+/g, '-').toLowerCase() + '.html';
+                  for (let i=0; i<resourceRefs.length; i++){
+                    let wikiTitle = resourceRefs[i];
                     let nonPageStrings = ['quiz', 'discussion', 'assignment']
                     if(!nonPageStrings.some(el => wikiTitle.includes(el))) {
                       moduleTitles.push(wikiTitle)
                     }
                   }
                   let tempModule = {
-                    title: titleList[0].innerHTML,
+                    title: moduleMainTitle,
                     sessions: moduleTitles
                   }
                   moduleList.push(tempModule)
