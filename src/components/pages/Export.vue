@@ -209,7 +209,7 @@ export default {
                 let modules = items.filter(elem => elem.children.length > 1)
                 let moduleList = []
                 modules.forEach( module => {
-                  let titleList = module.getElementsByTagName('title')
+                  let titleList = Array.from(module.getElementsByTagName('title')).filter(title => title.parentNode.getAttribute('identifierref'))
                   let moduleTitles = []
                   for (let i=1; i<titleList.length; i++){
                     let wikiTitle = 'wiki_content/' + titleList[i].innerHTML.replace(/\./g,'-dot-').replace(/\s+/g, '-').toLowerCase() + '.html';
