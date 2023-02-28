@@ -107,10 +107,10 @@
     <zoom v-show="false" ref="zoom" />
     <!-- <syllabus v-show="false" ref="syllabus" /> -->
     <!-- <list v-show="false" ref="list" /> -->
-    <div v-for="n in (weeks.length)" :key="n">
+    <div v-for="n in (weeks.length)" :key="`week-${n}`">
       <week-view v-show="false" :idx="n-1" :ref="'week'+ n" />
     </div>
-    <div v-for="n in (info.students.length)" :key="n">
+    <div v-for="n in (info.students.length)" :key="`student-${n}`">
       <student-view v-show="false" :idx="n-1" :ref="'student'+ n" />
     </div>
     <students-list v-show="false" ref="studentsList" />
@@ -139,7 +139,7 @@ import moment from "moment"
 import { mapActions } from 'vuex'
 
 import ContainerComponent from '../common/ContainerComponent.vue'
-
+import RowTypes from '../../util/row-types'
 
 export default {
   name: "Export",
@@ -154,9 +154,18 @@ export default {
     }
   },
   computed: {
+    defRows(){
+      return [
+        [this.simpleBannerCol({banner: {getter: {title: 'info.title'}}})],
+        [this.activityIntroCol()],
+        [['activity-video-list-slot']],
+        ['case-list'],
+        [['activity-item-list-slot']],
+      ]
+    },
   },
   components: { home, syllabus, weekView, list, zoom, studentView, studentsList, ContainerComponent },
-  mixins: [PageMixin],
+  mixins: [RowTypes, PageMixin],
   mounted() {
     let manifest = this.readLocalXML("../../static/files/Clean Course/course_settings/course_settings.xml")
     console.log(manifest)
@@ -188,6 +197,7 @@ export default {
 
       JSZip.loadAsync(file)
             .then(zip => {
+              console.log(zip)
               zip
               .file("imsmanifest.xml")
               .async("string")
