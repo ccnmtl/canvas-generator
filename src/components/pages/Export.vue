@@ -299,8 +299,6 @@ export default {
                         data.description += `<p></p><p><a href="${pageFiles[0].href}" rel="noopener noreferrer" target="_blank">Download Handout</a></p>`
                       }
 
-                      console.log(data)
-
                       this.$store.dispatch("addVideo", {index, data})
                     })
                     this.$router.push({ path: "/activities" })
