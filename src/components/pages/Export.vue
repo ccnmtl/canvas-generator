@@ -265,16 +265,22 @@ export default {
                   let videoFrames = Array.from(pageHtml.getElementsByTagName('iframe'))
 
                   let pageTitle = pageHtml.getElementsByTagName('title')[0].innerHTML
-                  console.log(videoFrames)
+                  let pageFiles = pageHtml.querySelectorAll('.instructure_file_link')
                   if (videoFrames) {
                     videoFrames.forEach(video => {
                       let data = {
                         source: video.src,
                         title: pageTitle,
-                        description: "This video lecture covers topics in " + pageTitle.replace(/[0-9]*\.?[0-9]*/, '').replace(/^ +/gm, '') + '. Please watch the entire lecture before moving on to the next video.'
+                        description: "This video lecture covers topics in " + pageTitle.replace(/[0-9]*\.?[0-9]*/, '').replace(/^ +/gm, '') + 
+                        '. Please watch the entire lecture before moving on to the next video.'
                       }
+                      if (pageFiles.length > 0) {
+                        data.description += `<p></p><p><a href="${pageFiles[0].href}" rel="noopener noreferrer" target="_blank">Download Handout</a></p>`
+                      }
+
                       this.$store.dispatch("addVideo", {index, data})
                     })
+                    this.$router.push({ path: "/activities" })
                   }
               }, (err) => {
                 console.error(err)
