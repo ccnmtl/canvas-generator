@@ -44,7 +44,7 @@ export default {
       else if (referenceConditions.some(el => parts[2].includes(el))) {
         let source = this.info.url
         if (this.info.url.length < 5) source = 'https://courseworks2.columbia.edu/courses/176681'
-        output = source + link.replace(/[^$]*/i,'')
+        output = source + link.replace(/[^$]*/i,'').replace('$CANVAS_COURSE_REFERENCE$','')
         console.log(output)
       }
       else {
