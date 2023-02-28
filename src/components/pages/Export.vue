@@ -150,7 +150,8 @@ export default {
       importModuleList: [],
       hasPacakgeImportData: false,
       fullscreenLoading: false,
-      exportData: {}
+      exportData: {},
+      courseId: ''
     }
   },
   computed: {
@@ -197,6 +198,15 @@ export default {
 
       JSZip.loadAsync(file)
             .then(zip => {
+              zip
+              .file("course_settings/context.xml")
+              .async("string")
+              .then(data => {
+                let parser = new DOMParser()
+                let contextInfo = parser.parseFromString(data, "text/xml")
+                this.courseId = contextInfo.querySelector('context_info > course_id').innerHTML
+              })
+
               zip
               .file("imsmanifest.xml")
               .async("string")
@@ -255,7 +265,6 @@ export default {
             console.log(module.title)
             this.updateWeek(index, 'title', module.title)
             module.sessions.forEach( session => {
-              console.log(session)
               zip
                 .file(session)
                 .async("string")
@@ -268,15 +277,29 @@ export default {
                   let pageFiles = pageHtml.querySelectorAll('.instructure_file_link')
                   if (videoFrames) {
                     videoFrames.forEach(video => {
+
+                      // If the video source starts with $CANVAS_COURSE_REFERENCE$ the browser will take it as
+                      // a static file, but it's a video from courserworks2. So we need to replace the link
+                      let videoSource = video.src
+                      if (videoSource.includes('http://localhost:8080/$CANVAS_COURSE_REFERENCE$'))
+                        videoSource = videoSource
+                          .replace(
+                            'http://localhost:8080/$CANVAS_COURSE_REFERENCE$',
+                            `https://courseworks2.columbia.edu/courses/${this.courseId}`
+                          )
+
                       let data = {
-                        source: video.src,
+                        source: videoSource,
                         title: pageTitle,
                         description: "This video lecture covers topics in " + pageTitle.replace(/[0-9]*\.?[0-9]*/, '').replace(/^ +/gm, '') + 
                         '. Please watch the entire lecture before moving on to the next video.'
                       }
+
                       if (pageFiles.length > 0) {
                         data.description += `<p></p><p><a href="${pageFiles[0].href}" rel="noopener noreferrer" target="_blank">Download Handout</a></p>`
                       }
+
+                      console.log(data)
 
                       this.$store.dispatch("addVideo", {index, data})
                     })
