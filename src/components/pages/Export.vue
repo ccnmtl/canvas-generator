@@ -263,13 +263,15 @@ export default {
                   let parser = new DOMParser()
                   let pageHtml = parser.parseFromString(data, "text/html")
                   let videoFrames = Array.from(pageHtml.getElementsByTagName('iframe'))
+
+                  let pageTitle = pageHtml.getElementsByTagName('title')[0].innerHTML
                   console.log(videoFrames)
                   if (videoFrames) {
                     videoFrames.forEach(video => {
                       let data = {
                         source: video.src,
-                        title: video.title,
-                        description: "This video covers topics in " + video.title
+                        title: pageTitle,
+                        description: "This video lecture covers topics in " + pageTitle.replace(/[0-9]*\.?[0-9]*/, '').replace(/^ +/gm, '') + '. Please watch the entire lecture before moving on to the next video.'
                       }
                       this.$store.dispatch("addVideo", {index, data})
                     })
