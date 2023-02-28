@@ -42,7 +42,10 @@ export default {
         output = root + 'Pages/Embed.aspx?id='  + split[1] + '&showbrand=false'
       } 
       else if (referenceConditions.some(el => parts[2].includes(el))) {
-        output = link.replace(/[^$]*/i,'').replace('$CANVAS_COURSE_REFERENCE$',this.info.url)
+        let source = this.info.url
+        if (this.info.url.length < 5) source = 'https://courseworks2.columbia.edu/courses/176681'
+        output = source + link.replace(/[^$]*/i,'').replace('$CANVAS_COURSE_REFERENCE$','')
+        console.log(output)
       }
       else {
         output = link
