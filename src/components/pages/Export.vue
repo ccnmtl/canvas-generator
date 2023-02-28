@@ -275,7 +275,7 @@ export default {
                         '. Please watch the entire lecture before moving on to the next video.'
                       }
                       if (pageFiles.length > 0) {
-                        data.description += `<p></p><p><a href="${pageFiles[0].href}" rel="noopener noreferrer" target="_blank">Download Handout</a></p>`
+                        data.description += `<p></p><p><a href="${this.info.url + pageFiles[0].href}" rel="noopener noreferrer" target="_blank">Download Handout</a></p>`
                       }
 
                       this.$store.dispatch("addVideo", {index, data})
