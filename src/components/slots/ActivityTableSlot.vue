@@ -5,7 +5,7 @@
         <tr>
           <!-- Column Labels -->
           <!-- If you add a label here for an additional column, that column must be added to all rows as well -->
-          <th>Week</th>
+          <th>Module</th>
           <th v-if="info.useDates">Date</th>
           <th>Topic</th>
         </tr>
