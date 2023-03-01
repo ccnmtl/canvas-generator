@@ -60,7 +60,7 @@ export default {
                 buttons: [
                   {
                     label: "Course Overview",
-                    to: "/assignments/course-overview"
+                    to: "/pages/course-overview"
                   },
                   {
                     label: "Modules Overview",
