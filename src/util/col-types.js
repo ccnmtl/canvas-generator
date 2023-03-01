@@ -59,12 +59,12 @@ export default {
               data: {
                 buttons: [
                   {
-                    label: "Course Syllabus",
-                    to: "/assignments/syllabus"
+                    label: "Course Overview",
+                    to: "/assignments/course-overview"
                   },
                   {
-                    label: "Activities",
-                    to: "/pages/activities"
+                    label: "Modules Overview",
+                    to: "/pages/modules-overview"
                   }
                 ]
               }
@@ -200,7 +200,7 @@ export default {
               type: "name-value-slot",
               classes: ["STV1_Welcome"],
               data: {
-                name: "Session",
+                name: "Module",
                 value: 'Title'
               },
             },
@@ -258,7 +258,7 @@ export default {
               type: "title-slot",
               data: {
                 type: 'h3',
-                title: 'ACTIVITIES'
+                title: 'Modules Overview'
               },
               classes: ['ic-image-text-combo__text']
             },
@@ -271,7 +271,7 @@ export default {
             {
               type: "content-slot",
               data: {
-                content: "Welcome to the activities page! Below you'll find an overview of all the sessions in this course, each covering a distinct topic. Clicking on a session will take you to a page where you can review the activities related to that session."
+                content: "Welcome to the modules overview page! Below you'll find an overview of all the modules in this course, each covering a distinct topic. Clicking on a module will take you to a page where you can review the activities related to that module."
               },
               styles: {
               }

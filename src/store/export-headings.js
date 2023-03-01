@@ -24,7 +24,7 @@ export default {
   <html>
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>Activities</title>
+  <title>Modules Overview</title>
   <meta name="identifier" content="ccb-weekly-list"/>
   <meta name="editing_roles" content="teachers"/>
   <meta name="workflow_state" content="active"/>
