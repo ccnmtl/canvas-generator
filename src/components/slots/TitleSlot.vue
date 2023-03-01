@@ -1,8 +1,12 @@
 <template>
   <div :id="sid" ref="slotcontainer" class="col">
-    <div :class="data.type" v-if="editing !== 'title'" @dblclick="setEditing('title')">
+    <!-- <div :class="data.type" v-if="editing !== 'title'" @dblclick="setEditing('title')">
       {{ data.title }}
-    </div>
+    </div> -->
+
+    <component :is="data.type" v-if="editing !== 'title'" @dblclick="setEditing('title')">
+      {{ data.title }}
+    </component>
     <span data-hidden v-else>
       <input ref="title" v-model="data.title" :class="'font-' + data.type" />
       <select v-model="data.type" :class="'font-' + data.type">
