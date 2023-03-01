@@ -214,7 +214,7 @@ export default {
             linkID: id
           },
           getter: {
-            value: this.getWeekPropGetter('title', id) // {func: this.getWeekPropByID, props: ['title', id]}
+            title: this.getWeekPropGetter('title', id) // {func: this.getWeekPropByID, props: ['title', id]}
           },
         },
         content: {

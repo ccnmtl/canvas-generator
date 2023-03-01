@@ -197,11 +197,14 @@ export default {
           array: [
             {
               width: 8,
-              type: "name-value-slot",
+              type: "title-slot",
               classes: ["STV1_Welcome"],
               data: {
-                name: "Module",
-                value: 'Title'
+                type: 'h5',
+                title: 'Modules Overview'
+              },
+              styles: {
+                "font-weight": "bold"
               },
             },
             {
