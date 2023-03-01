@@ -199,7 +199,7 @@ export default {
     console.log(manifest)
   },
   methods: {
-    ...mapActions(['updateInfo','updateTheme','updateWeeks']),
+    ...mapActions(['updateInfo','updateTheme','updateWeeks', 'sliceWeek']),
 
     onImportFileChange(changeEvent) {
       let file = changeEvent.target.files[0]
@@ -218,14 +218,39 @@ export default {
     performPackageExport(){
       this.updateProp("url", this.parseUrl(this.info.url))
 
+      function processCode(code, url ){
+        let output = code.replaceAll(url + '$IMS-CC-FILEBASE$', '$IMS-CC-FILEBASE$')
+        output = output.replaceAll(url,'$CANVAS_COURSE_REFERENCE$/')
+        return output
+      }
+      let footer = "</body> </html>"
+
+
       JSZip.loadAsync(this.packageImportData)
         .then(zip => {
+          //Remove old Sessions
           this.importModuleList.forEach( (module, index) => {
             module.sessions.forEach( session => {
               zip.remove(session)
             })
           })
 
+          //Add Home Page, Syllabus, And List Page
+          zip.file("wiki_content/home.html", headings.home + processCode(this.$refs.home.returnCode(), this.info.url) + footer)
+          zip.file(
+            "course_settings/syllabus.html",
+            headings.syllabus + processCode(this.$refs.syllabus.returnCode(), this.info.url) + footer
+          )
+          zip.file("wiki_content/modules-overview.html", headings.list + processCode(this.$refs.list.returnCode(), this.info.url) + footer)
+
+          //Add Redirect
+          let weekly_redirect_url = '<lticm:property name="url">$CANVAS_COURSE_REFERENCE$/pages/modules-overview</lticm:property>'
+          zip.file(
+            "ccb-weekly-redirect.xml",
+            headings.weekly_redirect_top + weekly_redirect_url + headings.redirect_bottom
+          )
+
+          //Add Week Pages
           let renderPackageWeek = (i) => {
               let footer = "</body> </html>"
               let title = "<title>" + this.weeks[(i-1)].title + "</title>"
@@ -239,12 +264,9 @@ export default {
                 console.log('id', `activity-${activityID}`)
                 code = this.$refs[`activity-${activityID}`][0].returnCode()
 
-                code = code.replaceAll(this.info.url + '$IMS-CC-FILEBASE$', '$IMS-CC-FILEBASE$')
-                code = code.replaceAll(this.info.url,'$CANVAS_COURSE_REFERENCE$/')
-
                 zip.file(
                   "wiki_content/" + convertedTitle + ".html",
-                  headings.top + title + iden + headings.bottom + code + footer
+                  headings.top + title + iden + headings.bottom + processCode(code, this.info.url) + footer
                 )
                 console.log(convertedTitle)
                 if (i+1 <= this.weeks.length) renderPackageWeek(i+1)
@@ -365,6 +387,7 @@ export default {
     performPackageImport() {
       JSZip.loadAsync(this.packageImportData)
         .then(zip => {
+          this.sliceWeek(this.importModuleList.length)
           this.importModuleList.forEach( (module, index) => {
             console.log(module.title)
             this.updateWeek(index, 'title', module.title)
