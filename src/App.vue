@@ -422,7 +422,7 @@ export default {
       let newCourseInfo = JSON.parse(newCourse.versions[newCourse.version].info)
       if (newCourseInfo.title === ''){
         setTimeout(() => {
-            location.reload
+            location.reload()
           }, 300)
         this.$store.dispatch('createRowsFromArray', {
                 cid: 'activities-list',
