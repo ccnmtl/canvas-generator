@@ -216,6 +216,8 @@ export default {
       reader.readAsText(file)
     },
     performPackageExport(){
+      this.updateProp("url", this.parseUrl(this.info.url))
+
       JSZip.loadAsync(this.packageImportData)
         .then(zip => {
           this.importModuleList.forEach( (module, index) => {
@@ -305,14 +307,33 @@ export default {
 
                 modules.forEach( module => {
                   const resourceRefs = []
+                  let moduleDiscussions = []
+                  let moduleAssignments = []
+                  let moduleQuizes = []
+
                   let moduleMainTitle = ''
                   Array.from(module.getElementsByTagName('title')).forEach((title, index) => {
                     if (index === 0) moduleMainTitle = title.innerHTML
                     const idRef = title.parentNode.getAttribute('identifierref')
                     if (idRef) {
                       const foundResource = resourcesItems.find(res => res.getAttribute('identifier') === idRef)
-                      if (foundResource && foundResource.getAttribute('href') && foundResource.getAttribute('href').includes('wiki_content/')) {
-                        resourceRefs.push(foundResource.getAttribute('href'))
+                      console.log(foundResource)
+                      if (foundResource && foundResource.getAttribute('href')) {
+                        if (foundResource.getAttribute('href').includes('wiki_content/')){
+                          resourceRefs.push(foundResource.getAttribute('href'))
+                        }
+                        else if (foundResource.getAttribute('type') === 'associatedcontent/imscc_xmlv1p1/learning-application-resource') {
+                        moduleAssignments.push({
+                          id: idRef,
+                          link: foundResource.getAttribute('href')
+                        })
+                      }
+                      }
+                      else if (foundResource && foundResource.getAttribute('type') === 'imsqti_xmlv1p2/imscc_xmlv1p1/assessment') {
+                        moduleQuizes.push(idRef)
+                      }
+                      else if (foundResource && foundResource.getAttribute('type') === 'imsdt_xmlv1p1') {
+                        moduleDiscussions.push(idRef)
                       }
                     }
                   })
@@ -327,7 +348,9 @@ export default {
                   }
                   let tempModule = {
                     title: moduleMainTitle,
-                    sessions: moduleTitles
+                    sessions: moduleTitles,
+                    moduleDiscussions, moduleAssignments, moduleQuizes
+                    
                   }
                   moduleList.push(tempModule)
                 })
@@ -366,7 +389,7 @@ export default {
                         videoSource = videoSource
                           .replace(
                             `${window.location.origin}/$CANVAS_COURSE_REFERENCE$`,
-                            `${this.info.url}${this.courseId}`
+                            `${this.info.url}`
                           )
 
                       let data = {
