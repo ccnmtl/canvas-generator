@@ -223,7 +223,7 @@ export default {
               zip.remove(session)
             })
           })
-          
+
           let renderPackageWeek = (i) => {
               let footer = "</body> </html>"
               let title = "<title>" + this.weeks[(i-1)].title + "</title>"
@@ -236,12 +236,10 @@ export default {
               this.setStateField({field: 'selectedWeekID', value: activityID}).then( (res) => {
                 console.log('id', `activity-${activityID}`)
                 code = this.$refs[`activity-${activityID}`][0].returnCode()
-                console.log(this.info.url)
-                console.log(typeof this.info.url === 'string')
-                console.log(typeof code === 'string')
 
-                code.replace(this.info.url,'$CANVAS_COURSE_REFERENCE$')
-                console.log(code)
+                code = code.replaceAll(this.info.url + '$IMS-CC-FILEBASE$', '$IMS-CC-FILEBASE$')
+                code = code.replaceAll(this.info.url,'$CANVAS_COURSE_REFERENCE$/')
+
                 zip.file(
                   "wiki_content/" + convertedTitle + ".html",
                   headings.top + title + iden + headings.bottom + code + footer
@@ -364,11 +362,11 @@ export default {
                       // If the video source starts with $CANVAS_COURSE_REFERENCE$ the browser will take it as
                       // a static file, but it's a video from courserworks2. So we need to replace the link
                       let videoSource = video.src
-                      if (videoSource.includes('http://localhost:8080/$CANVAS_COURSE_REFERENCE$'))
+                      if (videoSource.includes(`${window.location.origin}/$CANVAS_COURSE_REFERENCE$`))
                         videoSource = videoSource
                           .replace(
-                            'http://localhost:8080/$CANVAS_COURSE_REFERENCE$',
-                            `https://courseworks2.columbia.edu/courses/${this.courseId}`
+                            `${window.location.origin}/$CANVAS_COURSE_REFERENCE$`,
+                            `${this.info.url}${this.courseId}`
                           )
 
                       let data = {
