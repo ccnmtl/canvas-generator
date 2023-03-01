@@ -87,7 +87,9 @@
             name="button"
             @click="exportIMSCC"
           >Export Canvas Package</button>
+
         </div>
+          
       </div>
     </div>
 
@@ -205,6 +207,8 @@ export default {
                 let parser = new DOMParser()
                 let contextInfo = parser.parseFromString(data, "text/xml")
                 this.courseId = contextInfo.querySelector('context_info > course_id').innerHTML
+                console.log(`https://courseworks2.columbia.edu/courses/${this.courseId}/`)
+                this.updateProp(url, `https://courseworks2.columbia.edu/courses/${this.courseId}/`)
               })
 
               zip
@@ -296,7 +300,7 @@ export default {
                       }
 
                       if (pageFiles.length > 0) {
-                        data.description += `<p></p><p><a href="${this.info.url + pageFiles[0].href}" rel="noopener noreferrer" target="_blank">Download Handout</a></p>`
+                        data.description += `<p></p><p><a href="${this.info.url + pageFiles[0].href.replace(/[^$]*/i,'')}" rel="noopener noreferrer" target="_blank">Download Handout</a></p>`
                       }
 
                       this.$store.dispatch("addVideo", {index, data})
