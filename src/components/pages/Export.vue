@@ -88,6 +88,31 @@
             @click="exportIMSCC"
           >Export Canvas Package</button>
 
+          <br>
+          <hr>
+          <div class="uk-box-shadow-large uk-padding-small uk-padding-remove-bottom">
+                    <h4>Select an ".imscc" file from a canvas course export</h4>
+                      <form>
+                      <button
+                        class="uk-button uk-button-default"
+                        v-if="importModuleList.length > 0"
+                        @click.prevent="performPackageExport"
+                      >Export</button>
+                      <div class="uk-margin" uk-margin>
+                        <input
+                          style="display:inline-block;"
+                          class="uk-padding"
+                          type="file"
+                          accept=".imscc"
+                          name="import-file"
+                          @change="onImportPacakgeFileChange"
+                        />
+                        <!-- <input style="display:inline-block;" class="uk-padding" type="file" name="import-file2" @change="onImportFileChange2" /> -->
+                        <br />
+                        <br />
+                      </div>
+                    </form>
+              </div>
         </div>
           
       </div>
@@ -190,7 +215,60 @@ export default {
 
       reader.readAsText(file)
     },
+    performPackageExport(){
+      JSZip.loadAsync(this.packageImportData)
+        .then(zip => {
+          this.importModuleList.forEach( (module, index) => {
+            module.sessions.forEach( session => {
+              zip.remove(session)
+            })
+          })
+          
+          let renderPackageWeek = (i) => {
+              let footer = "</body> </html>"
+              let title = "<title>" + this.weeks[(i-1)].title + "</title>"
+              let iden = '<meta name="identifier" content="ccb-session' + i + '"/>'
+              let code
+              let activityID = this.weeks[(i-1)].id
 
+              let convertedTitle = this.weeks[(i-1)].title.replace(/\./g,'-dot-').replace(/\s+/g, '-').toLowerCase()
+
+              this.setStateField({field: 'selectedWeekID', value: activityID}).then( (res) => {
+                console.log('id', `activity-${activityID}`)
+                code = this.$refs[`activity-${activityID}`][0].returnCode()
+                console.log(this.info.url)
+                console.log(typeof this.info.url === 'string')
+                console.log(typeof code === 'string')
+
+                code.replace(this.info.url,'$CANVAS_COURSE_REFERENCE$')
+                console.log(code)
+                zip.file(
+                  "wiki_content/" + convertedTitle + ".html",
+                  headings.top + title + iden + headings.bottom + code + footer
+                )
+                console.log(convertedTitle)
+                if (i+1 <= this.weeks.length) renderPackageWeek(i+1)
+                else returnIMSCC()
+              })
+            }
+
+            renderPackageWeek(1)
+
+            let returnIMSCC = () => {
+              let today = new Date()
+              let date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
+              let time = today.getHours() + "-" + today.getMinutes()
+              let dateTime = date + " " + time
+
+              zip.generateAsync({ type: "blob" }).then(blob => {
+                saveFile({
+                  name: this.info.title + " (" + dateTime + ").imscc",
+                  data: blob
+                })
+              })
+            }
+        })
+    },
     onImportPacakgeFileChange(changeEvent) {
       let file = changeEvent.target.files[0]
       if (!file) {
@@ -208,7 +286,8 @@ export default {
                 let contextInfo = parser.parseFromString(data, "text/xml")
                 this.courseId = contextInfo.querySelector('context_info > course_id').innerHTML
                 console.log(`https://courseworks2.columbia.edu/courses/${this.courseId}/`)
-                this.updateProp(url, `https://courseworks2.columbia.edu/courses/${this.courseId}/`)
+                this.updateProp('url', `https://courseworks2.columbia.edu/courses/${this.courseId}/`)
+                console.log(this.info.url)
               })
 
               zip
