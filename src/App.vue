@@ -419,10 +419,12 @@ export default {
       this.$store.dispatch('chooseSavedState', { uuid: this.currentCourse, version: version })
       this.$store.dispatch('setCurrentCourse', this.currentCourse)
       this.$store.dispatch('setCurrentVersion', version)
+
       this.currentVersion = version
       this.showingCourses = false
       let newCourse = _.find(this.getSavedStates, { uuid: this.currentCourse })
       let newCourseInfo = JSON.parse(newCourse.versions[newCourse.version].info)
+
       if ( this.newCourseType === 'default'){
         this.$store.dispatch('createRowsFromArray', {
                 cid: 'activities-list',
@@ -430,10 +432,15 @@ export default {
               })
         this.newCourseType = 'null'
       }
+      else {
+        this.setStateField({field: 'selectedWeekID', value: this.getWeeks[0].id})
+
+      }
       setTimeout(() => {
             this.dialogFormVisible = false
+            console.log('reloading')
             location.reload()
-          }, 300)
+          }, 400)
     },
     getSaveStateConfig() {
       return {
@@ -497,6 +504,8 @@ export default {
     if(this.getDefaultState === null) {
       this.$store.dispatch('setDefaultState')
     }
+
+
 
     if (this.weeks.length < 1) {
       console.log("building new weeks")
