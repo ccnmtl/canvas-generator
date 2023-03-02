@@ -307,6 +307,7 @@ export default {
       showingCourses: false,
       newCourseName: '',
       currentCourse: null,
+      newCourseType: null,
       currentVersion: null,
       pages: null
     }
@@ -379,8 +380,10 @@ export default {
               self.currentCourse = current
               self.currentVersion = 0
               self.newCourseName = ''
+              self.newCourseType = 'default'
+              console.log(self.newCourseType)
             })
-          }, 500)
+          }, 300)
         })
       }
     },
@@ -420,7 +423,7 @@ export default {
       this.showingCourses = false
       let newCourse = _.find(this.getSavedStates, { uuid: this.currentCourse })
       let newCourseInfo = JSON.parse(newCourse.versions[newCourse.version].info)
-      if (newCourseInfo.title === ''){
+      if ( this.newCourseType === 'default'){
         setTimeout(() => {
             location.reload()
           }, 300)
@@ -428,6 +431,7 @@ export default {
                 cid: 'activities-list',
                 rows: this.defaultContainerRows['activities-list']
               })
+        this.newCourseType = 'null'
       }
     },
     getSaveStateConfig() {
