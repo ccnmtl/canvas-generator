@@ -231,6 +231,7 @@ export default {
           //Remove old Sessions
           this.importModuleList.forEach( (module, index) => {
             module.sessions.forEach( session => {
+              if (session.includes('faq')) return
               zip.remove(session)
             })
           })
@@ -391,6 +392,15 @@ export default {
           this.importModuleList.forEach( (module, index) => {
             console.log(module.title)
             this.updateWeek(index, 'title', module.title)
+            this.updateWeek(index, 'date', 'hidden')
+
+            module.moduleAssignments.forEach ( assignment => {
+              this.$store.dispatch("addAssignment", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/assignments/' + assignment.id, manifestID: assignment.id, due:'hidden'}})
+            })
+            module.moduleDiscussions.forEach ( discussion => {
+              this.$store.dispatch("addDiscussion", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/discussion_topics/' + discussion, manifestID: discussion, due:'hidden'}})
+            })
+            
             module.sessions.forEach( session => {
               zip
                 .file(session)
