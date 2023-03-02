@@ -308,9 +308,7 @@ export default {
                 let parser = new DOMParser()
                 let contextInfo = parser.parseFromString(data, "text/xml")
                 this.courseId = contextInfo.querySelector('context_info > course_id').innerHTML
-                console.log(`https://courseworks2.columbia.edu/courses/${this.courseId}/`)
                 this.updateProp('url', `https://courseworks2.columbia.edu/courses/${this.courseId}/`)
-                console.log(this.info.url)
               })
 
               zip
@@ -340,7 +338,6 @@ export default {
                     const idRef = title.parentNode.getAttribute('identifierref')
                     if (idRef) {
                       const foundResource = resourcesItems.find(res => res.getAttribute('identifier') === idRef)
-                      console.log(foundResource)
                       if (foundResource && foundResource.getAttribute('href')) {
                         if (foundResource.getAttribute('href').includes('wiki_content/')){
                           resourceRefs.push(foundResource.getAttribute('href'))
@@ -395,10 +392,12 @@ export default {
             this.updateWeek(index, 'date', 'hidden')
 
             module.moduleAssignments.forEach ( assignment => {
-              this.$store.dispatch("addAssignment", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/assignments/' + assignment.id, manifestID: assignment.id, due:'hidden'}})
+              this.$store.dispatch("addAssignment", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/assignments/' + assignment.id, 
+              manifestID: assignment.id, due:'hidden'}})
             })
             module.moduleDiscussions.forEach ( discussion => {
-              this.$store.dispatch("addDiscussion", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/discussion_topics/' + discussion, manifestID: discussion, due:'hidden'}})
+              this.$store.dispatch("addDiscussion", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/discussion_topics/' + discussion, 
+              manifestID: discussion, due:'hidden'}})
             })
             
             module.sessions.forEach( session => {
@@ -412,6 +411,8 @@ export default {
 
                   let pageTitle = pageHtml.getElementsByTagName('title')[0].innerHTML
                   let pageFiles = pageHtml.querySelectorAll('.instructure_file_link')
+                  console.log(pageHtml)
+                  console.log(pageFiles)
                   if (videoFrames) {
                     videoFrames.forEach(video => {
 
@@ -438,12 +439,21 @@ export default {
 
                       this.$store.dispatch("addVideo", {index, data})
                     })
-                    this.$router.push({ path: "/activities" })
                   }
+                    if (pageFiles.length > 0 && videoFrames.length < 1) {
+                        console.log('Adding File: ', pageFiles[0].title)
+                        let description = this.weeks[index].body += `<p></p><p><a href="${this.info.url + pageFiles[0].href.replace(/[^$]*/i,'')}" rel="noopener noreferrer" target="_blank">Download Handout: ${pageFiles[0].title}</a></p>`
+                        this.updateWeek(index, 'body', description)
+                      }
+                    
+                  
               }, (err) => {
                 console.error(err)
               })
             })
+
+            this.$router.push({ path: "/activities" })
+
           })
         })
     },
