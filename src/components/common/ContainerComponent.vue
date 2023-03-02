@@ -23,6 +23,9 @@
             <!-- <el-option label="Slots" value="slots" /> -->
           </el-select>
         </div>
+        <el-button type="danger" @click="undoDelete" v-if="getLastAffectedRow" class="btn btn-primary">
+          Undo Delete Row
+        </el-button>
         <el-button type="primary" @click="enterEditMode" v-if="previewing" class="btn btn-primary">Enter Advanced Editor</el-button>
         <el-button type="primary" @click="exitEditMode" v-else class="btn btn-secondary">Exit Advanced Editor</el-button>
         <el-button type="success" @click="getHTMLCode()">Copy the Code</el-button>
@@ -52,7 +55,7 @@
 <script>
 
 import _ from "lodash"
-import { mapGetters } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 
 import RowComponent from "./RowComponent.vue"
 // import RowTypes from '../../util/row-types.json'
@@ -75,7 +78,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([ 'getDraggedRow', 'isDndMode', 'getDragType' ]),
+    ...mapGetters([ 'getDraggedRow', 'isDndMode', 'getDragType', 'getLastAffectedRow', 'getStashedWeek' ]),
     rows: function() {
       return this.$store.getters.getRowsByCID[this.cid]
     },
@@ -92,6 +95,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions([ 'restoreDeletedRow', 'restoreStashedWeek', 'clearStashedWeek', 'clearLastAffectedRow' ]),
     addRow() {
       this.$store.dispatch("addRow", { cid: this.cid })
     },
@@ -179,7 +183,14 @@ export default {
     },
     updateDragType(type) {
       this.$store.dispatch('setDragType', type)
-    }
+    },
+    undoDelete() {
+      if (this.getStashedWeek) this.restoreStashedWeek()
+      this.restoreDeletedRow()
+
+      if (this.getStashedWeek) this.clearStashedWeek()
+      this.clearLastAffectedRow()
+    },
   },
   beforeMount() {
     const self = this

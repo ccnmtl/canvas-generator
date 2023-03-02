@@ -172,7 +172,16 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['deleteRow', 'deleteRows',"addWeek", "sliceWeek", "updateWeeks", "updateInfo"]),
+    ...mapActions([
+      'deleteRow',
+      'deleteRows',
+      "addWeek",
+      "sliceWeek",
+      "updateWeeks",
+      "updateInfo",
+      'clearLastAffectedRow',
+      'clearStashedWeek'
+    ]),
     updateSwitch() {
       this.userInput.isFile = !this.userInput.isFile
       this.userInput.uploadSwitchText = this.userInput.isFile
@@ -314,6 +323,10 @@ export default {
     //   rows: ['banner-row', 'weekly-activity-list-intro']
     // })
 
+  },
+  beforeDestroy() {
+    this.clearLastAffectedRow()
+    this.clearStashedWeek()
   },
   components: {
     ContainerComponent

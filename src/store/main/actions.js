@@ -40,6 +40,12 @@ export default {
     deleteRows: ({ commit }, arr) => {
       commit('deleteRows', arr)
     },
+    clearLastAffectedRow: ({ commit }) => {
+      commit('clearLastAffectedRow')
+    },
+    restoreDeletedRow: ({ commit }) => {
+      commit('restoreDeletedRow')
+    },
     addColumn: ({ commit, state }, column) => {
       if(!column.colid) column.colid = uuid.v1()
       if(!column.sort) column.sort = state.columns.length
@@ -289,6 +295,14 @@ export default {
     },
     updateWeeks: ({ commit }, week) => {
       commit('updateWeeks', week)
+    },
+
+    // Stashed Week
+    clearStashedWeek: ({ commit }) => {
+      commit('clearStashedWeek')
+    },
+    restoreStashedWeek: ({ commit }) => {
+      commit('restoreStashedWeek')
     },
 
     //Week Element Actions

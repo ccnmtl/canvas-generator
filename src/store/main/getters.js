@@ -19,6 +19,8 @@ export default {
   getSavedStates: state => state.savedStates,
   getCurrentCourse: state => state.currentCourse,
   getCurrentVersion: state => state.currentVersion,
+  getLastAffectedRow: state => state.lastAffectedRow,
+  getStashedWeek: state => state.stashedWeek,
   getRowsByCID: state => {
     const res = {}
 

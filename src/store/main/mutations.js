@@ -11,6 +11,15 @@ export default {
     state.rows.push(row)
   },
   deleteRow: (state, rid) => {
+    if (state.rows.filter(row => row.rid === rid).length)
+      state.lastAffectedRow = {
+        row: state.rows.filter(row => row.rid === rid)[0],
+        columns: state.columns.filter(col => col.rid === rid),
+        slots : state.slots.filter(slot => slot.rid === rid)
+      }
+
+    console.log(state.lastAffectedRow)
+
     state.rows = state.rows.filter((row) => {
       return row.rid !== rid
     })
@@ -34,6 +43,18 @@ export default {
       })
     })
 
+  },
+  clearLastAffectedRow: (state) => {
+    console.log('clear')
+    state.lastAffectedRow = undefined
+  },
+  restoreDeletedRow: (state) => {
+    if (!state.lastAffectedRow) return
+    state.rows.push(state.lastAffectedRow.row)
+    if(state.lastAffectedRow.columns && state.lastAffectedRow.columns.length)
+      state.columns.push(...state.lastAffectedRow.columns)
+    if(state.lastAffectedRow.slots && state.lastAffectedRow.slots.length)
+      state.slots.push(...state.lastAffectedRow.slots)
   },
   addColumn: (state, column) => {
     state.columns.push(column)
@@ -130,6 +151,7 @@ export default {
     state.weeks.push(week)
   },
   deleteWeek: (state, week) => {
+    state.stashedWeek = week
     state.weeks = state.weeks.filter((item) => {
       return item.id !== week.id
     })
@@ -144,6 +166,16 @@ export default {
   },
   updateWeeks: (state, payload) => {
     state.weeks = payload
+  },
+
+  // Stashed Week
+  clearStashedWeek: (state) => {
+    state.stashedWeek = undefined
+  },
+  restoreStashedWeek: (state) => {
+    if (state.stashedWeek && !state.weeks.some(w => w.id === state.stashedWeek.id))
+      state.weeks.push(state.stashedWeek)
+    else if (!state.stashedWeek) console.error('Stashed Week is null or undefined.')
   },
 
   //Week Element Mutations
