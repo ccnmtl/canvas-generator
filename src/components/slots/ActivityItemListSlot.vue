@@ -43,9 +43,9 @@ export default {
       if (this.data.type == "all") {
         let discussions = this.getWeekPropByID('discussions', this.data.weekID).get
         let assignments = this.getWeekPropByID('assignments', this.data.weekID).get
-        let quizes = this.getWeekPropByID('quizes', this.data.weekID).get
+        let quizs = this.getWeekPropByID('quizs', this.data.weekID).get
 
-        return discussions.concat(assignments.concat(quizes))
+        return discussions.concat(assignments.concat(quizs))
       }
       else {
         let list = this.getWeekPropByID(this.data.type + 's', this.data.weekID)

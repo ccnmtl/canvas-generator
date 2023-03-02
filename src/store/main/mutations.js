@@ -166,7 +166,7 @@ export default {
   },
 
   addQuiz: (state, { quiz, index }) => {
-    state.weeks[index].quizes.push(quiz)
+    state.weeks[index].quizs.push(quiz)
   },
 
   addDiscussion: (state, {discussion, index}) => {

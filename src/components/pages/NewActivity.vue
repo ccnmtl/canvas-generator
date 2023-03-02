@@ -110,12 +110,12 @@
 
        <weekly-code-module
         class="code-module"
-        :content="weeks[selected].quizes"
-        property='quizes'
+        :content="weeks[selected].quizs"
+        property='quizs'
         :idx="selected"
         :fn="addQuiz"
         :inputs="['due']"
-        @clearArr="updateWeek(selected,'quizes', [])">
+        @clearArr="updateWeek(selected,'quizs', [])">
         Quiz
       </weekly-code-module>
 
@@ -184,7 +184,7 @@ export default {
       videos: [],
       discussions: [],
       assignments: [],
-      quizes:[],
+      quizs:[],
       outputCode: "",
       // editor: ClassicEditor,
       editorConfig: {},
@@ -281,7 +281,7 @@ export default {
       this.$store.dispatch("addAssignment", {index:this.selected, data: tempAssign})
     },
     addQuiz() {
-      let manifestID = "ccb-session-" + (this.selected + 1) + "-quiz-" + (this.weeks[this.selected].quizes.length + 1)
+      let manifestID = "ccb-session-" + (this.selected + 1) + "-quiz-" + (this.weeks[this.selected].quizs.length + 1)
       let currentDate = this.weeks[this.selected].date
       let due = currentDate === 'hidden' ? 'hidden' : moment(currentDate).add(7, "d")
       let tempQuiz = {
@@ -295,7 +295,7 @@ export default {
     setToDefault() {
       console.log("resetting data...")
       let dWeek = _.cloneDeep(this.$store.getters.getDWeek)
-      let props = ["description", "title", "body", "required", "videos", "discussions", "assignments", "quizes","cases"]
+      let props = ["description", "title", "body", "required", "videos", "discussions", "assignments", "quizs","cases"]
 
       props.forEach(prop => {
         this.updateWeek(this.selected, prop, dWeek[prop])

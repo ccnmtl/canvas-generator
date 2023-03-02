@@ -331,7 +331,7 @@ export default {
   addQuiz: ({ commit, getters, state }, { index, data = {} }) => {
     let dQuiz = _.cloneDeep(getters.getDQuiz)
     let quiz = {...dQuiz, ...data}
-    quiz.title = "Quiz " + (state.weeks[index].quizes.length + 1)
+    quiz.title = "Quiz " + (state.weeks[index].quizs.length + 1)
     quiz.id = uuid.v1()
     if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
     commit('addQuiz', { quiz, index })

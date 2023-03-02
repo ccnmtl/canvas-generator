@@ -80,7 +80,7 @@ export default {
       videos: [],
       discussions: [],
       assignments: [],
-      quizes: [],
+      quizs: [],
       cases: [],
       secondTitle: "",
     },
