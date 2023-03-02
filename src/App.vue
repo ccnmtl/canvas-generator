@@ -423,6 +423,7 @@ export default {
       this.showingCourses = false
       let newCourse = _.find(this.getSavedStates, { uuid: this.currentCourse })
       let newCourseInfo = JSON.parse(newCourse.versions[newCourse.version].info)
+      this.setStateField({field: 'selectedWeekID', value: this.getWeeks[0].id})
       if ( this.newCourseType === 'default'){
         this.$store.dispatch('createRowsFromArray', {
                 cid: 'activities-list',
