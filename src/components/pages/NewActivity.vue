@@ -76,6 +76,7 @@
 
       <!-- This is a seperate component to handle adding new Acitivity Page elements abstractly. For more information check the WeeklyCodeModule.vue file. -->
       <weekly-code-module
+        v-if="weeks[selected].videos"
         class="code-module"
         :content="weeks[selected].videos"
         property='videos'
