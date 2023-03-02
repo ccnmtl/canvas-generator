@@ -206,7 +206,9 @@ export default {
   computed: {
     ...mapGetters(["getInfo", "getDWeek", "getWeeks", "getCases"]),
     selected(){
-      return this.getWeekIndexByID(this.getSelectedWeekID)
+      let output = this.getWeekIndexByID(this.getSelectedWeekID)
+      if (output < 0) output = 0
+      return output
     },
     defRows(){
       return [
