@@ -10,19 +10,19 @@
       <!-- Breadcrumb navigation bar -->
       <el-col :span="12" style="padding: 10px;">
           <ul class="bcTrail center">
-            <li><router-link class="router" to="/home">Home</router-link></li>
+            <li><router-link class="router" to="/home" @click="clearStashedDeletes">Home</router-link></li>
             <!-- <li><router-link class="router" to="/home-old">Home#</router-link></li> -->
-            <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
-            <li><router-link class="router" to="/activities">Activity List</router-link></li>
+            <li><router-link class="router" to="/syllabus" @click="clearStashedDeletes">Syllabus</router-link></li>
+            <li><router-link class="router" to="/activities" @click="clearStashedDeletes">Activity List</router-link></li>
             <!-- <li><router-link class="router" to="/activities-old">Activities List#</router-link></li> -->
-            <li><router-link class="router" to="/activity">Activity</router-link></li>
+            <li><router-link class="router" to="/activity" @click="clearStashedDeletes">Activity</router-link></li>
             <!-- <li><router-link class="router" to="/weekly-old">Activity#</router-link></li> -->
             <!-- <li><router-link class="router" to="/syllabus-old">Syllabus#</router-link></li> -->
-            <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program">Program Overview</router-link></li>
-            <li v-show="info.useStudents"><router-link class="router" to="/studentlist">Students List</router-link></li>
-            <li v-show="info.useStudents"><router-link class="router" to="/student" >Student</router-link></li>
+            <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program" @click="clearStashedDeletes">Program Overview</router-link></li>
+            <li v-show="info.useStudents"><router-link class="router" to="/studentlist" @click="clearStashedDeletes">Students List</router-link></li>
+            <li v-show="info.useStudents"><router-link class="router" to="/student" @click="clearStashedDeletes" >Student</router-link></li>
             <!-- <li v-show="info.useZoom"><router-link class="router"  to="/zoom">Zoom</router-link></li> -->
-            <li><router-link class="router" to="/export">Export</router-link></li>
+            <li><router-link class="router" to="/export" @click="clearStashedDeletes">Export</router-link></li>
           </ul>
       </el-col>
 
@@ -75,18 +75,18 @@
         <ul class="uk-nav uk-nav-default">
           <li class="uk-nav-header"><router-link class="router" to="/guide">USER GUIDE</router-link></li>
           <li class="uk-nav-header">TEMPLATES</li>
-          <li><router-link class="router" to="/home">Home Page</router-link></li>
-          <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
-          <li v-show="info.classType.option == 'Executive Training'"><router-link class="router" to="/program">Program Overview</router-link></li>
-          <li><router-link class="router" to="/activities">Activites</router-link></li>
-          <li ><router-link class="router" to="/activity">Individual Activity</router-link></li>
-          <li v-show="info.useZoom"><router-link class="router"  to="/zoom">Zoom</router-link></li>
+          <li><router-link class="router" to="/home" @click="clearStashedDeletes">Home Page</router-link></li>
+          <li><router-link class="router" to="/syllabus" @click="clearStashedDeletes">Syllabus</router-link></li>
+          <li v-show="info.classType.option == 'Executive Training'" @click="clearStashedDeletes"><router-link class="router" to="/program">Program Overview</router-link></li>
+          <li><router-link class="router" to="/activities" @click="clearStashedDeletes">Activites</router-link></li>
+          <li ><router-link class="router" to="/activity" @click="clearStashedDeletes">Individual Activity</router-link></li>
+          <li v-show="info.useZoom"><router-link class="router"  to="/zoom" @click="clearStashedDeletes">Zoom</router-link></li>
 
-          <li class="uk-nav-header"><router-link class="router" to="/export">Export/Import Data</router-link></li>
-          <li class="uk-nav-header"><router-link class="router" to="/credits">CREDITS</router-link></li>
+          <li class="uk-nav-header"><router-link class="router" to="/export" @click="clearStashedDeletes">Export/Import Data</router-link></li>
+          <li class="uk-nav-header"><router-link class="router" to="/credits" @click="clearStashedDeletes">CREDITS</router-link></li>
           <li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
-          <li><router-link to="/">Course Builder Home</router-link></li>
-          <li><a href="https://courseworks2.columbia.edu/" target="_blank">Canvas Website</a></li>
+          <li><router-link to="/" @click="clearStashedDeletes">Course Builder Home</router-link></li>
+          <li><a href="https://courseworks2.columbia.edu/" target="_blank" @click="clearStashedDeletes">Canvas Website</a></li>
           <li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
         </ul>
         </div>
@@ -335,8 +335,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["updateWeek", "addWeek", "sliceWeek", "updateWeeks", "updateInfo", "addTA",
-                  "addProf", "addStudent","setStateField"]),
+    ...mapActions([
+      "updateWeek",
+      "addWeek",
+      "sliceWeek",
+      "updateWeeks",
+      "updateInfo",
+      "addTA",
+      "addProf",
+      "addStudent",
+      "setStateField",
+      'clearLastAffectedRow',
+      'clearStashedWeek'
+    ]),
+    clearStashedDeletes() {
+      this.clearLastAffectedRow()
+      this.clearStashedWeek()
+    },
     showAllCourses(){
       const version = this.currentVersion
       this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
