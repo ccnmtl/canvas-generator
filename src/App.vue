@@ -424,15 +424,16 @@ export default {
       let newCourse = _.find(this.getSavedStates, { uuid: this.currentCourse })
       let newCourseInfo = JSON.parse(newCourse.versions[newCourse.version].info)
       if ( this.newCourseType === 'default'){
-        setTimeout(() => {
-            location.reload()
-          }, 300)
         this.$store.dispatch('createRowsFromArray', {
                 cid: 'activities-list',
                 rows: this.defaultContainerRows['activities-list']
               })
         this.newCourseType = 'null'
       }
+      setTimeout(() => {
+            this.dialogFormVisible = false
+            location.reload()
+          }, 300)
     },
     getSaveStateConfig() {
       return {
