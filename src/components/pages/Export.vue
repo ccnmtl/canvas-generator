@@ -231,7 +231,8 @@ export default {
           //Remove old Sessions
           this.importModuleList.forEach( (module, index) => {
             module.sessions.forEach( session => {
-              if (session.includes('faq')) return
+              let nonDeleteStrings = ['faq', 'discussion', 'assignment', 'project']
+              if (nonDeleteStrings.some(el => session.includes(el))) return
               zip.remove(session)
             })
           })
@@ -400,7 +401,7 @@ export default {
               manifestID: discussion, due:'hidden'}})
             })
             
-            module.sessions.forEach( session => {
+            module.sessions.forEach( (session, sessionIndex) => {
               zip
                 .file(session)
                 .async("string")
@@ -411,7 +412,13 @@ export default {
 
                   let pageTitle = pageHtml.getElementsByTagName('title')[0].innerHTML
                   let pageFiles = pageHtml.querySelectorAll('.instructure_file_link')
+                  let pageBody = pageHtml.body.innerHTML
+
+                  let nonBodyStrings = ['FAQ', 'PROJECT', 'ASSIGNMENT']
+
                   console.log(pageHtml)
+                  console.log(pageBody)
+
                   console.log(pageFiles)
                   if (videoFrames) {
                     videoFrames.forEach(video => {
@@ -440,10 +447,15 @@ export default {
                       this.$store.dispatch("addVideo", {index, data})
                     })
                   }
-                    if (pageFiles.length > 0 && videoFrames.length < 1) {
-                        console.log('Adding File: ', pageFiles[0].title)
-                        let description = this.weeks[index].body += `<p></p><p><a href="${this.info.url + pageFiles[0].href.replace(/[^$]*/i,'')}" rel="noopener noreferrer" target="_blank">Download Handout: ${pageFiles[0].title}</a></p>`
-                        this.updateWeek(index, 'body', description)
+                    if (videoFrames.length < 1 && !nonBodyStrings.some(el => pageTitle.toUpperCase().includes(el))) {
+                      let pageText = this.weeks[index].body + '<p></p>' + pageBody
+                      this.updateWeek(index, 'body', pageText)
+
+                      if (pageFiles.length > 0 && pageTitle.includes){
+                        // console.log('Adding File: ', pageFiles[0].title)
+                        // let description = this.weeks[index].body += `<p></p><p><a href="${this.info.url + pageFiles[0].href.replace(/[^$]*/i,'')}" rel="noopener noreferrer" target="_blank">Download Handout: ${pageFiles[0].title}</a></p>`
+                        // this.updateWeek(index, 'body', description)
+                      }
                       }
                     
                   
