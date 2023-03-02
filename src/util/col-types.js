@@ -28,16 +28,18 @@ export default {
           icon: "picture",
           array: [
             {
-              type: "name-value-slot",
+              type: "title-slot",
               data: {
-                name: "WELCOME TO",
-                nameStyle: ""
+                title: "Welcome To The Course",
+                prepend: "Welcome To ",
+                type: "h4"
               },
-              getter: 'info.title',
+              getter: {
+                title: "info.title",
+              },
               classes: ["STV1_Welcome"],
               styles: {
-                "text-transform": "uppercase",
-                "font-size": "14px !important",
+                "font-size": "18px !important",
                 margin: "0px"
               }
             },

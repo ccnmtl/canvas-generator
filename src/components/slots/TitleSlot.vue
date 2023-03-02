@@ -5,7 +5,7 @@
     </div> -->
 
     <component :is="data.type" v-if="editing !== 'title'" @dblclick="setEditing('title')">
-      {{ data.title }}
+      {{data.prepend + data.title }}
     </component>
     <span data-hidden v-else>
       <input ref="title" v-model="data.title" :class="'font-' + data.type" />
@@ -29,6 +29,12 @@
 import Vue from 'vue'
 import slotMixin from '../mixins/slot-mixin.js'
 
+let defaultVals = {
+        title: 'Default Title',
+        type: 'h1',
+        prepend: ''
+      }
+
 export default {
   name: "TitleSlot",
   props: [ "sid", "slotData", "slotItem", "width" ],
@@ -36,10 +42,7 @@ export default {
   data() {
     return {
       editing: null,
-      data: this.slotData ? this.slotData : {
-        title: 'Default Title',
-        type: 'h1'
-      }
+      data: this.slotData ? {...defaultVals  ,...this.slotData} : defaultVals
     }
   },
   computed: {

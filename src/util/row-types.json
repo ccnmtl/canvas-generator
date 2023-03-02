@@ -40,12 +40,11 @@
           {
             "type": "title-slot",
             "data": {
-              "title": "Welcome to",
+              "title": "Welcome To",
               "type": "custom"
             },
             "classes": ["STV1_Welcome"],
             "styles": {
-              "text-transform": "uppercase",
               "font-size": "14px !important",
               "margin": "0px"
             }
