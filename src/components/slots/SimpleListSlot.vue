@@ -12,7 +12,7 @@
         </span>
         <template v-if="data.type == 'instructor-ta'">
           <!-- Email:  -->
-          <span data-dbclick @dblclick="setEditing('email')" v-if="editing !== 'email'">(<a @click="doNothing" :href="'mailto:' + item[data.emailField]" v-if="item[data.emailField]">{{ item[data.emailField] }}</a>)</span>
+          <span data-dbclick @dblclick="setEditing('email')" v-if="editing !== 'email' && item[email]">(<a @click="doNothing" :href="'mailto:' + item[data.emailField]" v-if="item[data.emailField]">{{ item[data.emailField] }}</a>)</span>
           <span data-hidden v-else>
             <input ref="email"
                    @blur="finishEditing(slotItem.getter + '['+i+'].fromGetter', 'items['+i+']')"
