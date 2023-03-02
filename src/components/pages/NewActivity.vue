@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 import { quillEditor } from "vue-quill-editor"
 import ContainerComponent from '../common/ContainerComponent.vue'
 import PageMixin from "../../components/mixins/page-mixin"
@@ -243,7 +243,10 @@ export default {
   },
   mixins: [RowTypes, PageMixin],
   methods: {
-
+    ...mapActions([,
+      'clearLastAffectedRow',
+      'clearStashedWeek'
+    ]),
     addCase(caseStudy) {
       let index = this.selected
       this.$store.dispatch("addCase", {index, caseStudy})
@@ -315,6 +318,10 @@ export default {
       if (!week.cases) week.cases = []
     })
     // this.updateCode("week-code")
+  },
+  beforeDestroy() {
+    this.clearLastAffectedRow()
+    this.clearStashedWeek()
   }
 }
 </script>
