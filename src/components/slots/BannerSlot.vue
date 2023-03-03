@@ -1,6 +1,6 @@
 <template>
   <div :id="sid"  >
-      <div v-if="useWideBanner" :class="['pad-box-mega','STV1_Banner', data.wideBanner ? theme.wide : theme.banner]" style="postition: relative" >
+      <div v-if="useWideBanner" title="Course Banner Image" :class="['pad-box-mega','STV1_Banner', data.wideBanner ? theme.wide : theme.banner]" style="postition: relative" >
 
         <img v-if="theme.logo" :src="theme.logo" style="margin-top: -10px; margin-left: 10px; height:40px" @dblclick="openUploadDialog()" />
         <img v-if="theme.rightLogo" :src="theme.rightLogo" style="float: right; height: 100px; margin-top: 10px;" />
@@ -20,7 +20,7 @@
       </div>
 
       <div v-else >
-        <div :class="['STV1_SlimBanner', theme.slim]" style="postition: relative">
+        <div title="Course Banner Image" :class="['STV1_SlimBanner', theme.slim]" style="postition: relative">
          <p>
            <span data-dbclick @dblclick="setEditing('title')" v-if="editing !== 'title'">{{ data.title.toUpperCase() }}</span>
            <span data-hidden v-else>
