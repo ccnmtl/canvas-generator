@@ -6,8 +6,9 @@
           <h1>EXPORT/IMPORT COURSEBUILDER</h1>
           <hr>
           <p>
-          If you have finished building your class or want to save the data you have previously submitted into the coursebuilder, click the export button to
-          save a ".json" file that you can import at a later date (using the import section below).
+          If you have finished building your class or want to save the data you have previously submitted into the coursebuilder, click the "Export Coursebuilder Data" button to
+          save a ".json" file that you can import at a later date (using the import section below).  If you have completed your class and would like to import it directly into Canvas as an ".imscc" file, use the "Export Canvas Package" button below
+  to generate an export of your class.
           </p>
           <button
             class="uk-button-large uk-button-default"
@@ -16,6 +17,13 @@
             @click="exportJSON"
           >Export Coursebuilder Data
           </button>
+          <button
+            class="uk-button-large uk-button-default"
+            type="button"
+            name="button"
+            style="margin-left: 10px"
+            @click="exportIMSCC"
+          >Export Canvas Package</button>
           <hr>
           <p>
             If you have previously saved an export file from this version of Coursebuilder you can use the input below to import all of the data into this
@@ -44,36 +52,16 @@
                         <br />
                       </div>
                     </form>
+                    <hr>
               </div>
-               <div class="uk-box-shadow-large uk-padding-small uk-padding-remove-bottom">
-                    <h4>Select an ".imscc" file from a canvas course export</h4>
-                      <form>
-                      <button
-                        class="uk-button uk-button-default"
-                        v-if="importModuleList.length > 0"
-                        @click.prevent="performPackageImport"
-                      >File read successfully! Click here to confirm import.</button>
-                      <div class="uk-margin" uk-margin>
-                        <input
-                          style="display:inline-block;"
-                          class="uk-padding"
-                          type="file"
-                          accept=".imscc"
-                          name="import-file"
-                          @change="onImportPacakgeFileChange"
-                        />
-                        <!-- <input style="display:inline-block;" class="uk-padding" type="file" name="import-file2" @change="onImportFileChange2" /> -->
-                        <br />
-                        <br />
-                      </div>
-                    </form>
-              </div>
+
+
 
         </div>
       </div>
       <div>
         <div class="uk-background-secondary uk-padding uk-light">
-          <h1>EXPORT CANVAS</h1>
+          <h1>EXPORT/IMPORT CANVAS</h1>
            <hr>
 
           <p>
@@ -81,23 +69,22 @@
             to generate an export of your class.
           </p>
 
-          <button
-            class="uk-button-large uk-button-default"
-            type="button"
-            name="button"
-            @click="exportIMSCC"
-          >Export Canvas Package</button>
 
-          <br>
           <hr>
           <div class="uk-box-shadow-large uk-padding-small uk-padding-remove-bottom">
                     <h4>Select an ".imscc" file from a canvas course export</h4>
                       <form>
+                        <button
+                        class="uk-button uk-button-default"
+                        v-if="importModuleList.length > 0"
+                        @click.prevent="performPackageImport"
+                      >File read successfully! Click here to confirm import.</button>
+                      <br> <hr>
                       <button
                         class="uk-button uk-button-default"
                         v-if="importModuleList.length > 0"
                         @click.prevent="performPackageExport"
-                      >Export</button>
+                      >Click Here to export canvas package with new data</button>
                       <div class="uk-margin" uk-margin>
                         <input
                           style="display:inline-block;"
