@@ -62,11 +62,11 @@ export default {
                 buttons: [
                   {
                     label: "Course Overview",
-                    to: "course-overview"
+                    to: "/pages/course-overview"
                   },
                   {
                     label: "Modules Overview",
-                    to: "modules-overview"
+                    to: "/pages/modules-overview"
                   }
                 ]
               }
