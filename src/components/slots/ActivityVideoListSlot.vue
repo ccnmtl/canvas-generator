@@ -58,6 +58,9 @@
           <button style="margin-top: 12px" class="btn btn-success" @click="finishEditing('description', video.id)">
             Save changes
           </button>
+          <button class="btn" style="margin-top: 12px" @click="removeTimecode(video.id)">
+            Remove Timecode
+          </button>
           </div>
         </div>
         </blockquote>
@@ -131,6 +134,9 @@ export default {
         this.editing = null
 
     },
+    removeTimecode(videoID){
+    this.data[videoID].description = this.data[videoID].description.replaceAll(/<[^>]*>/g, "").replaceAll(/\d{1,2}:\d{2}/g, " ").trim()
+  }
   }
 }
 </script>
