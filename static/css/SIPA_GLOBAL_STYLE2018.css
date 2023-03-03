@@ -253,12 +253,12 @@
 }
 
 .Banner_Engineering {
-	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/engineering_thick.png') no-repeat center center;
+	background: url('https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/Engineering_Banner_new.png') no-repeat center center;
 	background-color: #008ee2;
 }
 
 .Banner_Engineering_Slim {
-	background: url('https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/engineering_thick.png') no-repeat center center;
+	background: url('https://sipa-canvas.s3.us-east-2.amazonaws.com/canvas-images/Engineering_Banner_new.png') no-repeat center center;
 	background-color: #008ee2;
 }
 
