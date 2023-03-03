@@ -62,11 +62,11 @@ export default {
                 buttons: [
                   {
                     label: "Course Overview",
-                    to: "/pages/course-overview"
+                    to: "course-overview"
                   },
                   {
                     label: "Modules Overview",
-                    to: "/pages/modules-overview"
+                    to: "modules-overview"
                   }
                 ]
               }
@@ -276,7 +276,7 @@ export default {
             {
               type: "content-slot",
               data: {
-                content: "Welcome to the modules overview page! Below you'll find an overview of all the modules in this course, each covering a distinct topic. Clicking on a module will take you to a page where you can review the activities related to that module."
+                content: "Welcome to the modules overview page! Below you'll find an overview of all the modules in this course, each covering a distinct topic. Clicking on a module will take you to a page where you can review the activities related to that module. Please follow the modules, in sequence, beginning with the Course Overview. Each module includes videos and learning assessments to make you reflect on the material learned. Upon completing all modules, you will earn a certificate to prove that you have mastered the material and are ready to apply the skills professionally and personally."
               },
               styles: {
               }

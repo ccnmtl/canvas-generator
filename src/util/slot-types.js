@@ -49,7 +49,7 @@ export default {
           defaultData: {
             "imgSrc": "https://s3.us-east-2.amazonaws.com/sipa-canvas/canvas-images/campus.jpg",
             "width": "480",
-            "height": "270",
+            "height": "350",
             alt: "Course Home Image"
           }
         },
@@ -62,7 +62,12 @@ export default {
           colspan: 4,
           visible: true,
           defaultData: {
-            content: "Here you’ll find course materials and a range of tools to help you get the most out of the class. Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
+            content: `Congratulations on signing up for a self-paced course with unlimited attempts for graded assessments. 
+            These lessons are an excellent opportunity to improve your self-reflection, connect with classmates, and enhance your knowledge 
+            and aptitudes with material created by the faculty at Columbia University. 
+            <p></p> To begin, click on the Modules Overview to review the modules presented in this course. 
+            `
+            //content: "Here you’ll find course materials and a range of tools to help you get the most out of the class. Please begin by reading the course syllabus, where you’ll find information about the structure of the class, and an outline of what will be expected of you over the course of the semester."
           }
         },
         spacerSlot: {
