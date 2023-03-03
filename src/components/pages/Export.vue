@@ -296,7 +296,8 @@ export default {
                 let parser = new DOMParser()
                 let contextInfo = parser.parseFromString(data, "text/xml")
                 this.courseId = contextInfo.querySelector('context_info > course_id').innerHTML
-                this.updateProp('url', `https://courseworks2.columbia.edu/courses/${this.courseId}/`)
+                this.courseTitle = contextInfo.querySelector('context_info > course_name').innerHTML
+                if (this.courseTitle.includes('Migration')) this.courseTitle = this.courseTitle.replace('Migration', '')
               })
 
               zip
@@ -371,6 +372,8 @@ export default {
     },
 
     performPackageImport() {
+      this.updateProp('url', `https://courseworks2.columbia.edu/courses/${this.courseId}/`)
+      this.updateProp('title', this.courseTitle)
       JSZip.loadAsync(this.packageImportData)
         .then(zip => {
           this.sliceWeek(this.importModuleList.length)
@@ -382,6 +385,20 @@ export default {
             module.moduleAssignments.forEach ( assignment => {
               this.$store.dispatch("addAssignment", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/assignments/' + assignment.id, 
               manifestID: assignment.id, due:'hidden'}})
+            })
+            module.moduleQuizes.forEach ( quiz => {
+              zip
+                .file(quiz + '/assessment_meta.xml')
+                .async("string")
+                .then(data => {
+                  let parser = new DOMParser()
+                  let quizInfo = parser.parseFromString(data, "text/xml")
+                  let quizID = quizInfo.querySelector('quiz > assignment').getAttribute('identifier')
+                  this.$store.dispatch("addQuiz", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/assignments/' + quizID, 
+                  manifestID: quiz, due:'hidden'}})
+
+                })
+
             })
             module.moduleDiscussions.forEach ( discussion => {
               this.$store.dispatch("addDiscussion", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/discussion_topics/' + discussion, 
