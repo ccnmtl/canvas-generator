@@ -154,7 +154,6 @@ import { mapActions } from 'vuex'
 
 import ContainerComponent from '../common/ContainerComponent.vue'
 import RowTypes from '../../util/row-types'
-import out from "jszip/lib/object"
 
 export default {
   name: "Export",
@@ -244,32 +243,46 @@ export default {
           let manifestString = ''
           let serializer = new XMLSerializer()
 
-          zip
-              .file("imsmanifest.xml")
-              .async("string")
-              .then(data => {
-                let parser = new DOMParser()
-                let manifest = parser.parseFromString(data, "text/xml")
-                let redirect  = manifest.createElement("resource")
-                redirect.setAttribute("type", "imsbasiclti_xmlv1p0")
-                redirect.setAttribute("href", 'ccb-weekly-redirect.xml')
-                let xmlResources = manifest.getElementsByTagName('resources')[0]
-                xmlResources.appendChild(redirect)
-                manifestString = serializer.serializeToString(manifest)
-                zip.file("imsmanifest.xml", manifestString)
-              })
+          // zip
+          //     .file("imsmanifest.xml")
+          //     .async("string")
+          //     .then(data => {
+          //       console.log('chanigng manifest')
+          //       let parser = new DOMParser()
+          //       let manifest = parser.parseFromString(data, "text/xml")
 
-          if (manifestString !== '') zip.file("imsmanifest.xml", manifestString)
+          //       let redirect  = manifest.createElement("resource")
+          //       redirect.setAttribute("type", "imsbasiclti_xmlv1p0")
+          //       redirect.setAttribute('identifier', 'ccb-weekly-redirect')
 
-          zip
-              .file("imsmanifest.xml")
-              .async("string")
-              .then(data => {
-                let parser = new DOMParser()
-                let manifest = parser.parseFromString(data, "text/xml")
-                console.log(manifest)
+          //       let redirectFile = manifest.createElement('file')
+          //       redirectFile.setAttribute("href", 'ccb-weekly-redirect.xml')
 
-              })
+          //       let xmlResources = manifest.getElementsByTagName('resources')[0]
+          //       xmlResources.appendChild(redirect)
+
+
+          //       manifestString = serializer.serializeToString(manifest)
+          //       changeManifestFile(manifestString )
+          //     })
+          // //     })
+
+          // let changeManifestFile = function(manifest){
+          //   zip.file("imsmanifest.xml", manifest)
+          // }
+
+          //   zip.remove("imsmanifest.xml")
+          //   console.log(manifestString)
+
+          // zip
+          //     .file("imsmanifest.xml")
+          //     .async("string")
+          //     .then(data => {
+          //       let parser = new DOMParser()
+          //       let manifest = parser.parseFromString(data, "text/xml")
+          //       console.log(manifest)
+ 
+          //     })
 
 
           //Add Week Pages
