@@ -238,6 +238,32 @@ export default {
             "ccb-weekly-redirect.xml",
             headings.weekly_redirect_top + weekly_redirect_url + headings.redirect_bottom
           )
+          let manifestString = ''
+          zip
+              .file("imsmanifest.xml")
+              .async("string")
+              .then(data => {
+                let parser = new DOMParser()
+                let manifest = parser.parseFromString(data, "text/xml")
+                let redirect  = manifest.createElement("resource")
+                redirect.setAttribute("type", "imsbasiclti_xmlv1p0")
+                redirect.setAttribute("href", ccb-weekly-redirect.xml)
+
+                manifestString = serializer.serializeToString(manifest)
+              })
+
+          if (manifestString !== '') zip.file("imsmanifest.xml", manifestString)
+
+          zip
+              .file("imsmanifest.xml")
+              .async("string")
+              .then(data => {
+                let parser = new DOMParser()
+                let manifest = parser.parseFromString(data, "text/xml")
+                console.log(manifest)
+
+              })
+
 
           //Add Week Pages
           let renderPackageWeek = (i) => {
