@@ -154,6 +154,7 @@ import { mapActions } from 'vuex'
 
 import ContainerComponent from '../common/ContainerComponent.vue'
 import RowTypes from '../../util/row-types'
+import out from "jszip/lib/object"
 
 export default {
   name: "Export",
@@ -208,6 +209,8 @@ export default {
       function processCode(code, url ){
         let output = code.replaceAll(url + '$IMS-CC-FILEBASE$', '$IMS-CC-FILEBASE$')
         output = output.replaceAll(url,'$CANVAS_COURSE_REFERENCE$/')
+        output = output.replaceAll('http://www.placeholderurl.org', '$CANVAS_COURSE_REFERENCE$/')
+
         return output
       }
       let footer = "</body> </html>"
@@ -239,6 +242,8 @@ export default {
             headings.weekly_redirect_top + weekly_redirect_url + headings.redirect_bottom
           )
           let manifestString = ''
+          let serializer = new XMLSerializer()
+
           zip
               .file("imsmanifest.xml")
               .async("string")
@@ -247,9 +252,11 @@ export default {
                 let manifest = parser.parseFromString(data, "text/xml")
                 let redirect  = manifest.createElement("resource")
                 redirect.setAttribute("type", "imsbasiclti_xmlv1p0")
-                redirect.setAttribute("href", ccb-weekly-redirect.xml)
-
+                redirect.setAttribute("href", 'ccb-weekly-redirect.xml')
+                let xmlResources = manifest.getElementsByTagName('resources')[0]
+                xmlResources.appendChild(redirect)
                 manifestString = serializer.serializeToString(manifest)
+                zip.file("imsmanifest.xml", manifestString)
               })
 
           if (manifestString !== '') zip.file("imsmanifest.xml", manifestString)
@@ -456,12 +463,11 @@ export default {
                       // If the video source starts with $CANVAS_COURSE_REFERENCE$ the browser will take it as
                       // a static file, but it's a video from courserworks2. So we need to replace the link
                       let videoSource = video.src
-                      if (videoSource.includes(`${window.location.origin}/$CANVAS_COURSE_REFERENCE$`))
-                        videoSource = videoSource
-                          .replace(
-                            `${window.location.origin}/$CANVAS_COURSE_REFERENCE$`,
-                            `${this.info.url}`
-                          )
+                      // if (videoSource.includes(`$CANVAS_COURSE_REFERENCE$`))
+                      //   videoSource = videoSource
+                      //     .replace(
+                      //       '$CANVAS_COURSE_REFERENCE$', 'http://www.placeholderurl.org') // `${this.info.url}`
+
 
                       let data = {
                         source: videoSource,
