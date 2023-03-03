@@ -23,9 +23,9 @@
             <!-- <el-option label="Slots" value="slots" /> -->
           </el-select>
         </div>
-        <el-button type="danger" @click="undoDelete" v-if="getLastAffectedRow" class="btn btn-primary">
+        <!-- <el-button type="danger" @click="undoDelete" v-if="getLastAffectedRow" class="btn btn-primary">
           Undo Delete Row
-        </el-button>
+        </el-button> -->
         <el-button type="primary" @click="enterEditMode" v-if="previewing" class="btn btn-primary">Enter Advanced Editor</el-button>
         <el-button type="primary" @click="exitEditMode" v-else class="btn btn-secondary">Exit Advanced Editor</el-button>
         <el-button type="success" @click="getHTMLCode()">Copy the Code</el-button>
