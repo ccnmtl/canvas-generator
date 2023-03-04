@@ -49,6 +49,26 @@
     </div>
   </div>
 
+  
+    
+  <el-dialog
+      title="Import Coursebuilder Code"
+      :visible.sync="ImportCodeVisible"
+      v-if="ImportCodeVisible"
+      top="7vh"
+      width="50%">
+      <el-input
+        type="textarea"
+        :rows="10"
+        placeholder="Paste Code Here"
+        v-model="importCode" />
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="ImportCodeVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="performCodeImport">Import</el-button>
+      </span>
+    </el-dialog>
+
 
     <div class="textbox-container">
       <el-card class="card box-card">
@@ -126,6 +146,10 @@
       </a>
         <el-button  @click="updateWeek(selected,'cases', [])" class="center" size="large" type="danger" style=""> Clear Cases <i class="fas fa-trash"></i></el-button>
       </div>
+      <hr>
+      <div class="uk-text-center">
+        <el-button  @click='ImportCodeVisible = true' type="success" class="center" size="large" style=" margin-right: 10px"> Import Code <i class="fas fa-info-circle"></i></el-button>
+      </div>
     </el-card>
     </div>
     <div class="canvas-code">
@@ -180,6 +204,8 @@ export default {
         required:
           '<span ><p><strong>Lecture Slides:</strong></p><p><strong>Download PDF:&nbsp;</strong><a href="https://courseworks2.columbia.edu/courses/29191/files/1032282/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">GFS Week 6 Africa (February 21, 2017) Final.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></p><p><strong>Required Readings / Viewings:</strong></p><ul><li>Sanchez, P.A. (2002) Soil fertility and hunger in Africa.&nbsp;<em>Science&nbsp;</em><strong>295</strong>: 2019-2020.</li><li>Download PDF:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/929036/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">Soil_Fertility_and_Hunger_in_Africa_2002.pdf<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li><li><strong>Familiarize yourself with the work of the Alliance for an African Green Revolution (AGRA):&nbsp;</strong><a href="http://www.agra.org/" target="_blank" style="color: rgb(0, 142, 226);">http://www.agra.org/&nbsp;(Links to an external site.)</a></li></ul><p><strong>Supplementary Resources</strong></p><ul><li>Listen: --“African Land Fertile Ground for Crops and Investors.” NPR. June 15, 2012.&nbsp;<a href="http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors" target="_blank" style="color: rgb(0, 142, 226);">http://www.npr.org/2012/06/15/155095598/african-land-fertile-ground-for-crops-and-investors&nbsp;(Links to an external site.)</a></li><li>Download mp3:&nbsp;<a href="https://courseworks2.columbia.edu/courses/29191/files/1009373/download?wrap=1" target="_blank" style="color: rgb(0, 142, 226);">20120615_atc_06.mp3<strong><img src="https://courseworks2.columbia.edu/images/preview.png" alt="Preview the document"><img src="https://courseworks2.columbia.edu/images/popout.png" alt="View in a new window"></strong></a></li></ul></span>'
       },
+      ImportCodeVisible: false,
+      importCode: "",
       videoEditable: false,
       showEditor: false,
       videos: [],
@@ -255,6 +281,29 @@ export default {
     removeCase(caseStudy) {
       let index = this.selected
       this.$store.dispatch("removeCase", {index, caseStudy})
+    },
+    performCodeImport() {
+
+      let sessionPage = new DOMParser().parseFromString(this.importCode, "text/html");
+      let index = this.selected
+
+      let sessionTitle = sessionPage.getElementsByTagName('h3')[0].innerHTML
+      if (sessionTitle) this.updateWeek(index, 'title', sessionTitle)
+
+      let sessionBody = sessionPage.querySelectorAll('.content-slot')[0].innerHTML
+      this.updateWeek(index, 'body', sessionBody)
+
+      let sessionVideos = sessionPage.querySelectorAll('.grid-row')
+
+      this.updateWeek(this.selected,'videos', [])
+      sessionVideos.forEach( video => {
+        let source = video.querySelector('iframe').getAttribute('src')
+        let title = video.getElementsByTagName('h3')[0].innerHTML.replace('&amp;', '&')
+        let description = video.getElementsByTagName('blockquote')[0].getElementsByTagName('div')[1].innerHTML
+
+        this.$store.dispatch("addVideo", {index, data: {source, title, description}})
+      })
+
     },
 
     addVideo() {
