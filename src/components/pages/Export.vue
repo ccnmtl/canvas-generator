@@ -76,9 +76,14 @@
                       <form>
                         <button
                         class="uk-button uk-button-default"
-                        v-if="importModuleList.length > 0"
+                        v-if="importModuleList.length > 0 && !isCourseBuilder"
                         @click.prevent="performPackageImport"
-                      >File read successfully! Click here to confirm import.</button>
+                      >Canvas file read successfully! Click here to confirm import.</button>
+                      <button
+                        class="uk-button uk-button-default"
+                        v-if="isCourseBuilder"
+                        @click.prevent="performCBPackageImport"
+                      >Coursebuilder imscc read successfully! Click here to confirm import.</button>
                       <br> <hr>
                       <button
                         class="uk-button uk-button-default"
@@ -162,6 +167,7 @@ export default {
       hasImportData: false,
       packageImportData: {},
       importModuleList: [],
+      isCourseBuilder: false,
       hasPacakgeImportData: false,
       fullscreenLoading: false,
       exportData: {},
@@ -240,6 +246,7 @@ export default {
             "ccb-weekly-redirect.xml",
             headings.weekly_redirect_top + weekly_redirect_url + headings.redirect_bottom
           )
+
           let manifestString = ''
           let serializer = new XMLSerializer()
 
@@ -412,11 +419,71 @@ export default {
                 console.log(moduleList)
                 this.importModuleList = moduleList
               })
+
+              let zipEntries = []
+
+              zip.forEach(function (relativePath, zipEntry) { 
+                zipEntries.push(zipEntry)
+                });
+
+              if(!zipEntries.includes('wiki_content/home.html')) this.isCourseBuilder = false
+
+              zip
+              .file("wiki_content/home.html")
+              .async("string")
+              .then(data => {
+                let parser = new DOMParser()
+                let home = parser.parseFromString(data, "text/html")
+                let homeBanner = home.querySelectorAll('.STV1_Banner')[0]
+                if (homeBanner) this.isCourseBuilder = true
+                else {
+                  this.isCourseBuilder = false
+                }
+              }, (err) => {
+                this.isCourseBuilder = false
+                console.log(err)
+              })
+
             })
       this.packageImportData = file
       this.hasPackageImportData = !!this.packageImportData
     },
+    performCBPackageImport() {
+      JSZip.loadAsync(this.packageImportData)
+        .then(zip => { 
+          this.sliceWeek(this.importModuleList.length)
+          this.importModuleList.forEach( (module, index) => {
+            this.updateWeek(index, 'title', module.title)
+            this.updateWeek(index, 'date', 'hidden')
 
+              zip
+                .file(module.sessions[0])
+                .async("string")
+                .then(data => {
+                  let parser = new DOMParser()
+                  let sessionPage = parser.parseFromString(data, "text/html")
+                  let sessionTitle = sessionPage.getElementsByTagName('h3')[0].innerHTML
+                  // if (sessionTitle) this.updateWeek(index, 'title', sesstionTitle)
+
+                  let sessionBody = sessionPage.querySelectorAll('.content-slot')[0].innerHTML
+                  this.updateWeek(index, 'body', sessionBody)
+
+                  let sessionVideos = sessionPage.querySelectorAll('.grid-row')
+
+                  console.log(sessionVideos)
+
+                  sessionVideos.forEach( video => {
+                    let source = video.querySelector('iframe').getAttribute('src')
+                    let title = video.getElementsByTagName('h3')[0].innerHTML.replace('&amp;', '&')
+                    let description = video.getElementsByTagName('blockquote')[0].getElementsByTagName('div')[1].innerHTML
+
+                    this.$store.dispatch("addVideo", {index, data: {source, title, description}})
+                  })
+                })
+            })
+
+        })
+    },
     performPackageImport() {
       this.updateProp('url', `https://courseworks2.columbia.edu/courses/${this.courseId}/`)
       this.updateProp('title', this.courseTitle)
