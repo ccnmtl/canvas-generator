@@ -3,7 +3,8 @@
     <!-- <div :class="data.type" v-if="editing !== 'title'" @dblclick="setEditing('title')">
       {{ data.title }}
     </div> -->
-
+    <a :href="createLink(data.link)" @click="doNothing"
+    :style="(!data.link && !data.linkID) ? 'cursor: context-menu;color: black; text-decoration: none;' : 'color: black; text-decoration: none;'">
     <component :is="data.type" v-if="editing !== 'title'" @dblclick="setEditing('title')">
       {{data.prepend + data.title }}
     </component>
@@ -22,6 +23,7 @@
         Save changes
       </button>
     </span>
+    </a>
   </div>
 </template>
 
