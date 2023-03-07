@@ -33,7 +33,7 @@ export default {
       let referenceConditions = ['localhost', 'coursebuilder']
       if (parts[2].includes("vimeo.com") && !parts[2].includes("player.vimeo.com")) {
         output = "https://player.vimeo.com/video/" + parts[3]
-      } else if (parts[2].includes("youtube")) {
+      } else if (parts[2].includes("youtube") && !parts[3].includes('embed')) {
         let split = link.split("=")
         output = "https://www.youtube.com/embed/" + split[1]
       } else if (parts[2].includes("panopto")) {
