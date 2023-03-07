@@ -336,7 +336,7 @@ export default {
   addAssignment: ({ commit, getters, state }, { index, data = {} }) => {
       let dAssignment = _.cloneDeep(getters.getDAssignment)
       let assignment = {...dAssignment, ...data}
-      assignment.title = "Assignment " + (state.weeks[index].assignments.length + 1)
+      assignment.title = data.title || "Assignment " + (state.weeks[index].assignments.length + 1)
       assignment.id = uuid.v1()
       if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
       commit('addAssignment', { assignment, index })
@@ -345,7 +345,7 @@ export default {
   addQuiz: ({ commit, getters, state }, { index, data = {} }) => {
     let dQuiz = _.cloneDeep(getters.getDQuiz)
     let quiz = {...dQuiz, ...data}
-    quiz.title = "Quiz " + (state.weeks[index].quizs.length + 1)
+    quiz.title = data.title || "Quiz " + (state.weeks[index].quizs.length + 1)
     quiz.id = uuid.v1()
     if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
     commit('addQuiz', { quiz, index })
@@ -354,7 +354,7 @@ export default {
   addDiscussion: ({ commit, getters, state }, { index, data = {} }) => {
       let dDiscussion = _.cloneDeep(getters.getDDiscussion)
       let discussion = {...dDiscussion, ...data}
-      discussion.title = "Discussion " + (state.weeks[index].discussions.length + 1)
+      discussion.title =  data.title || "Discussion " + (state.weeks[index].discussions.length + 1)
       discussion.id = uuid.v1()
       if (index.length > 2) index = getters.getWeekIndexByID(getters.getSelectedWeekID)
       commit('addDiscussion', {discussion, index})

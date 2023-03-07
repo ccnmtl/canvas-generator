@@ -387,15 +387,16 @@ export default {
                         else if (foundResource.getAttribute('type') === 'associatedcontent/imscc_xmlv1p1/learning-application-resource') {
                         moduleAssignments.push({
                           id: idRef,
-                          link: foundResource.getAttribute('href')
+                          link: foundResource.getAttribute('href'),
+                          title:  title.innerHTML
                         })
                       }
                       }
                       else if (foundResource && foundResource.getAttribute('type') === 'imsqti_xmlv1p2/imscc_xmlv1p1/assessment') {
-                        moduleQuizes.push(idRef)
+                        moduleQuizes.push({idRef, title: title.innerHTML})
                       }
                       else if (foundResource && foundResource.getAttribute('type') === 'imsdt_xmlv1p1') {
-                        moduleDiscussions.push(idRef)
+                        moduleDiscussions.push({idRef, title: title.innerHTML})
                       }
                     }
                   })
@@ -497,25 +498,26 @@ export default {
 
             module.moduleAssignments.forEach ( assignment => {
               this.$store.dispatch("addAssignment", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/assignments/' + assignment.id, 
-              manifestID: assignment.id, due:'hidden'}})
+              manifestID: assignment.id, due:'hidden', title: assignment.title}})
             })
             module.moduleQuizes.forEach ( quiz => {
               zip
-                .file(quiz + '/assessment_meta.xml')
+                .file(quiz.idRef + '/assessment_meta.xml')
                 .async("string")
                 .then(data => {
                   let parser = new DOMParser()
                   let quizInfo = parser.parseFromString(data, "text/xml")
                   let quizID = quizInfo.querySelector('quiz > assignment').getAttribute('identifier')
+                  let quizTitle =  quizInfo.querySelector('quiz > title').innerHTML
                   this.$store.dispatch("addQuiz", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/assignments/' + quizID, 
-                  manifestID: quiz, due:'hidden'}})
+                  manifestID: quiz.idRef, title: quizTitle, due:'hidden'}})
 
                 })
 
             })
             module.moduleDiscussions.forEach ( discussion => {
-              this.$store.dispatch("addDiscussion", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/discussion_topics/' + discussion, 
-              manifestID: discussion, due:'hidden'}})
+              this.$store.dispatch("addDiscussion", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/discussion_topics/' + discussion.idRef, 
+              manifestID: discussion.idRef, title: discussion.title, due:'hidden'}})
             })
             
             module.sessions.forEach( (session, sessionIndex) => {
@@ -564,7 +566,7 @@ export default {
                     })
                   }
                     if (videoFrames.length < 1 && !nonBodyStrings.some(el => pageTitle.toUpperCase().includes(el))) {
-                      let pageText = this.weeks[index].body + '<p></p>' + pageBody
+                      let pageText = this.weeks[index].body + `<h4> ${pageTitle} </h4>`+ '<p></p>' + pageBody
                       this.updateWeek(index, 'body', pageText)
 
                       if (pageFiles.length > 0 && pageTitle.includes){
