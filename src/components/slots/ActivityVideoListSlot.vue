@@ -73,6 +73,17 @@
         </blockquote>
       </div>
      </div>
+     <div v-if="video.quiz" class="item-group-condensed">
+        <ul id="cond_group_1" class="ig-list">
+          <li>
+            <activity-item-slot
+            :slotData="{title: video.title + ' Quiz', type: 'quiz', link: video.quiz, due: 'hidden'}"
+            :slotItem="{}"/>
+          </li>
+        </ul>
+     </div>
+
+
     </div>
   </transition>
 </div>
@@ -87,6 +98,7 @@ import slotMixin from '../mixins/slot-mixin.js'
 import VideoSlot from './VideoSlot'
 import TitleSlot from './TitleSlot'
 import ContentSlot from './ContentSlot'
+import ActivityItemSlot from './ActivityItemSlot'
 import { quillEditor } from "vue-quill-editor"
 
 
@@ -105,7 +117,7 @@ export default {
   props: [ "sid", "slotData", "slotItem", "width" ],
   mixins: [slotMixin],
   components: {
-    VideoSlot, TitleSlot, ContentSlot, quillEditor
+    VideoSlot, TitleSlot, ContentSlot, quillEditor, ActivityItemSlot
   },
   data() {
     return {

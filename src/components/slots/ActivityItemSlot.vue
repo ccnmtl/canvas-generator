@@ -12,6 +12,7 @@
             <div class="ig-details">
                 <div class="ig-details__item">
                 <name-value-slot
+                  v-if="data.due !== 'hidden'"
                   :sid="'name-value-' + this.sid"
                   :slotData='{type: "date", name: "Due", value: data.due ,nameStyle: {"font-weight": "bold"}}'
                   :slotItem='{

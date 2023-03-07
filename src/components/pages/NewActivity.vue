@@ -102,7 +102,7 @@
         property='videos'
         :idx="selected"
         :fn="addVideo"
-        :inputs="['title','description', 'source', 'header']"
+        :inputs="['title','description', 'source', 'header','quiz']"
         @clearArr="updateWeek(selected,'videos', [])">
         Video
       </weekly-code-module>
