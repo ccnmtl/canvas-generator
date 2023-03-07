@@ -31,7 +31,14 @@
       </div>
     </div>
 
-    <div v-if="getInfo.isBlended" class="grid-row top-xs">
+
+
+    <div v-if="getInfo.isBlended" >
+      <div v-if="video.header" title="Video Header Image" class="STV1_SlimBanner Banner_Engineering_Slim">
+              <p>{{video.header}}</p>
+     </div>
+     <br>
+     <div class="grid-row top-xs">
       <div class="col-xs-6">
         <div class="styleguide-section__grid-demo-element">
           <video-slot
@@ -65,6 +72,7 @@
         </div>
         </blockquote>
       </div>
+     </div>
     </div>
   </transition>
 </div>
