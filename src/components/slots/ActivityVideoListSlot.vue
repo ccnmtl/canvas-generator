@@ -161,34 +161,24 @@ export default {
     removeTimecode(videoID){
     this.data[videoID].description = this.data[videoID].description.replaceAll(/<[^>]*>/g, "").replaceAll(/\d{1,2}:\d{2}/g, " ").trim()
   },
-  summarizeGPT(videoID){
-    // make axios call to https://cb-openai-proxy.netlify.app/openai with body {text: this.data[videoID].description}
+  async summarizeGPT(videoID){
+    // make post call to https://cb-openai-proxy.netlify.app/openai with body {text: this.data[videoID].description}
     let promptText = this.data[videoID].description.replaceAll(/<[^>]*>/g, "").replaceAll(/\d{1,2}:\d{2}/g, " ").trim()
     console.log('prompt', promptText)
 
-    let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'https://cb-openai-proxy.netlify.app/openai',
-        headers: {
-      'Content-Type': 'application/json',
-      "Access-Control-Allow-Origin": "*",
-      },
-        data: JSON.stringify({prompt: promptText})
-    };
+    const request = new Request(
+        "https://cb-openai-proxy.netlify.app/openai",
+        {
+          method: "POST",
+          mode: "cors",
+          cache: "default",
+          body: JSON.stringify({prompt: promptText})
+        }
+      );
+      const res = await fetch(request);
+      const data = await res.json();
+      this.data[videoID].description = data.completion.content
 
-    console.log(config.data)
-    axios(config)
-    .then(response => {
-      console.log(response)
-      this.data[videoID].description = response.completion.content
-    })
-    .catch(function (error) {
-    console.log(error.toJSON());
-  })
-
-  // const result = await axios.post('https://cb-openai-proxy.netlify.app/openai', {prompt: promptText})
-  // console.log(result)
   }
   }
 }
