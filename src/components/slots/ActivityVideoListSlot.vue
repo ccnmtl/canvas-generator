@@ -68,6 +68,9 @@
           <button class="btn" style="margin-top: 12px" @click="removeTimecode(video.id)">
             Remove Timecode
           </button>
+          <button class="btn btn-danger" style="margin-top: 12px" @click="summarizeGPT(video.id)">
+            Summarize
+          </button>
           </div>
         </div>
         </blockquote>
@@ -100,6 +103,7 @@ import TitleSlot from './TitleSlot'
 import ContentSlot from './ContentSlot'
 import ActivityItemSlot from './ActivityItemSlot'
 import { quillEditor } from "vue-quill-editor"
+import axios from 'axios'
 
 
 import { mapActions, mapGetters } from 'vuex'
@@ -156,6 +160,35 @@ export default {
     },
     removeTimecode(videoID){
     this.data[videoID].description = this.data[videoID].description.replaceAll(/<[^>]*>/g, "").replaceAll(/\d{1,2}:\d{2}/g, " ").trim()
+  },
+  summarizeGPT(videoID){
+    // make axios call to https://cb-openai-proxy.netlify.app/openai with body {text: this.data[videoID].description}
+    let promptText = this.data[videoID].description.replaceAll(/<[^>]*>/g, "").replaceAll(/\d{1,2}:\d{2}/g, " ").trim()
+    console.log('prompt', promptText)
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://cb-openai-proxy.netlify.app/openai',
+        headers: {
+      'Content-Type': 'application/json',
+      "Access-Control-Allow-Origin": "*",
+      },
+        data: JSON.stringify({prompt: promptText})
+    };
+
+    console.log(config.data)
+    axios(config)
+    .then(response => {
+      console.log(response)
+      this.data[videoID].description = response.completion.content
+    })
+    .catch(function (error) {
+    console.log(error.toJSON());
+  })
+
+  // const result = await axios.post('https://cb-openai-proxy.netlify.app/openai', {prompt: promptText})
+  // console.log(result)
   }
   }
 }
