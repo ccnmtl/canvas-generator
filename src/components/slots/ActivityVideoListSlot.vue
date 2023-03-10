@@ -71,6 +71,9 @@
           <button class="btn btn-danger" style="margin-top: 12px" @click="summarizeGPT(video.id)">
             Summarize
           </button>
+          <button class="btn btn-danger" style="margin-top: 12px" @click="summarizeGPTVideo(video.id)">
+            Summarize From Video
+          </button>
           </div>
         </div>
         </blockquote>
@@ -179,7 +182,37 @@ export default {
       const data = await res.json();
       this.data[videoID].description = data.completion.content
 
+  },
+  async summarizeGPTVideo(videoID){
+    let youtubeID = this.data[videoID].source.split('/')[4]
+    console.log('youtubeID', youtubeID)
+
+    const response  = await fetch(`https://cb-youtube-captions.netlify.app/captions?videoId=${youtubeID}}`)
+    console.log(response)
+    let res = await response.json()
+    console.log(res)
+    let promptText = res.transcript.substring(0, 2000)
+    console.log('prompt: ', promptText)
+    this.data[videoID].description = await summarize(promptText)
+
+    async function summarize(promptItem) {
+      console.log('summarizing...')
+      const request = new Request(
+        "https://cb-openai-proxy.netlify.app/openai",
+        {
+          method: "POST",
+          mode: "cors",
+          cache: "default",
+          body: JSON.stringify({prompt: promptItem})
+        }
+      );
+      const res = await fetch(request);
+      const data = await res.json();
+      console.log(data)
+      return data.completion.content
+    }
   }
+
   }
 }
 </script>
