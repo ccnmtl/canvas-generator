@@ -1,8 +1,10 @@
 <template>
 <div>
+  <button data-hidden class="btn btn-danger" style="margin-top: 12px; display: none;" @click="summarizeAll">
+            Summarize All Vieos From Links
+      </button>
   <div class="content-box" v-for="video in itemList" :key="video.id">
     <transition name="fade">
-
     <div v-if="!getInfo.isBlended" class="grid-row top-xs">
       <div class="col-xs-4">
         <div class="styleguide-section__grid-demo-element">
@@ -211,6 +213,12 @@ export default {
       console.log(data)
       return data.completion.content
     }
+  },
+  summarizeAll(){
+    this.itemList.forEach( video => {
+      this.setEditing(video.id +'description')
+      this.summarizeGPTVideo(video.id)
+    })
   }
 
   }
