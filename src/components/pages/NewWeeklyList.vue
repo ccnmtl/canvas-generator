@@ -71,6 +71,7 @@
               <input type="submit" class="uk-button uk-button-primary" value="Submit Image">
             </form>
             <button class="uk-button uk-button-danger uk-margin-small-top" @click="setDefaultImage(userInput.weekNumber - 1)">Reset Image</button>
+            <button class="uk-button uk-button-danger uk-margin-small-top" @click="summarizeModuleGPT(userInput.weekNumber - 1)">Summarize</button>
 
           </div>
         </div>
@@ -182,6 +183,29 @@ export default {
       'clearLastAffectedRow',
       'clearStashedWeek'
     ]),
+    async summarizeModuleGPT(index){
+
+    let promptText = ''
+
+    this.weeks[index].videos.forEach( (video, i) => {
+      promptText += video.description
+    })
+    console.log('prompt', promptText)
+
+    const request = new Request(
+        "https://cb-openai-proxy.netlify.app/openai",
+        {
+          method: "POST",
+          mode: "cors",
+          cache: "default",
+          body: JSON.stringify({prompt: promptText})
+        }
+      );
+      const res = await fetch(request);
+      const data = await res.json();
+      this.updateWeek(index, "description", data.completion.content)
+
+  },
     updateSwitch() {
       this.userInput.isFile = !this.userInput.isFile
       this.userInput.uploadSwitchText = this.userInput.isFile
