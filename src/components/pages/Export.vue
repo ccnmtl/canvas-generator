@@ -138,6 +138,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import saveFile from "../../util/save-file"
 import PageMixin from "../../components/mixins/page-mixin"
 import JSZip from "jszip"
@@ -167,6 +168,7 @@ export default {
       hasImportData: false,
       packageImportData: {},
       importModuleList: [],
+      preserveSessions: [],
       isCourseBuilder: false,
       hasPacakgeImportData: false,
       fullscreenLoading: false,
@@ -227,7 +229,7 @@ export default {
           this.importModuleList.forEach( (module, index) => {
             module.sessions.forEach( session => {
               let nonDeleteStrings = ['faq', 'discussion', 'assignment', 'project']
-              if (nonDeleteStrings.some(el => session.includes(el))) return
+              if (nonDeleteStrings.some(el => session.includes(el)) || this.preserveSessions.includes(session)) return
               zip.remove(session)
             })
           })
@@ -436,7 +438,12 @@ export default {
                 let parser = new DOMParser()
                 let home = parser.parseFromString(data, "text/html")
                 let homeBanner = home.querySelectorAll('.STV1_Banner')[0]
+                let oldHomeBanner = home.querySelectorAll('.sipaEPMbanner')[0]
                 if (homeBanner) this.isCourseBuilder = true
+                else if (oldHomeBanner) {
+                  this.isCourseBuilder = true
+                  this.isOldCourseBuilder = true
+                }
                 else {
                   this.isCourseBuilder = false
                 }
@@ -452,8 +459,17 @@ export default {
     performCBPackageImport() {
       JSZip.loadAsync(this.packageImportData)
         .then(zip => { 
-          this.sliceWeek(this.importModuleList.length)
-          this.importModuleList.forEach( (module, index) => {
+
+          if (this.isOldCourseBuilder) {
+
+            zip.forEach((relativePath, zipEntry) => {
+
+            })
+
+          }
+          else {
+            this.sliceWeek(this.importModuleList.length)
+            this.importModuleList.forEach( (module, index) => {
             this.updateWeek(index, 'title', module.title)
             this.updateWeek(index, 'date', 'hidden')
 
@@ -482,10 +498,12 @@ export default {
                   })
                 })
             })
-
+          }
         })
     },
     performPackageImport() {
+      this.preserveSessions = []
+
       this.updateProp('url', `https://courseworks2.columbia.edu/courses/${this.courseId}/`)
       this.updateProp('title', this.courseTitle)
       JSZip.loadAsync(this.packageImportData)
@@ -521,6 +539,7 @@ export default {
             })
             
             module.sessions.forEach( (session, sessionIndex) => {
+              let lastVideoIndex = 0
               zip
                 .file(session)
                 .async("string")
@@ -566,8 +585,19 @@ export default {
                     })
                   }
                     if (videoFrames.length < 1 && !nonBodyStrings.some(el => pageTitle.toUpperCase().includes(el))) {
-                      let pageText = this.weeks[index].body + `<h4> ${pageTitle} </h4>`+ '<p></p>' + pageBody
-                      this.updateWeek(index, 'body', pageText)
+                      if (pageBody.length < 1000) {
+                        let pageText = this.weeks[index].body + `<h4> ${pageTitle} </h4>`+ '<p></p>' + pageBody
+                        this.updateWeek(index, 'body', pageText)
+                      }
+                      else {
+                        lastVideoIndex = this.weeks[index].videos.length - 1
+                        let prop = _.cloneDeep(this.$store.getters.getWeeks[index].videos)
+                        if (!prop[lastVideoIndex].pages) prop[lastVideoIndex].pages = ''
+                        prop[lastVideoIndex].pages += this.info.url + '/pages/' + session.slice(13)  +  ','
+                        this.updateWeek(index, 'videos', prop)
+                        this.preserveSessions.push(session)
+                      }
+
 
                       if (pageFiles.length > 0 && pageTitle.includes){
                         // console.log('Adding File: ', pageFiles[0].title)
