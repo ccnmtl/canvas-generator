@@ -525,7 +525,10 @@ export default {
                 .then(data => {
                   let parser = new DOMParser()
                   let quizInfo = parser.parseFromString(data, "text/xml")
-                  let quizID = quizInfo.querySelector('quiz > assignment').getAttribute('identifier')
+                  let quizID = ''
+                  let assignmentObject = quizInfo.querySelector('quiz > assignment')
+                  if  (assignmentObject) quizID = assignmentObject.getAttribute('identifier')
+                  else quizID = quizInfo.querySelector('quiz > assignment_group_identifierref').innerHTML
                   let quizTitle =  quizInfo.querySelector('quiz > title').innerHTML
                   this.$store.dispatch("addQuiz", {index, data: {link: '$CANVAS_OBJECT_REFERENCE$/assignments/' + quizID, 
                   manifestID: quiz.idRef, title: quizTitle, due:'hidden'}})
@@ -554,10 +557,6 @@ export default {
 
                   let nonBodyStrings = ['FAQ', 'PROJECT', 'ASSIGNMENT']
 
-                  console.log(pageHtml)
-                  console.log(pageBody)
-
-                  console.log(pageFiles)
                   if (videoFrames) {
                     videoFrames.forEach(video => {
 
@@ -585,7 +584,7 @@ export default {
                     })
                   }
                     if (videoFrames.length < 1 && !nonBodyStrings.some(el => pageTitle.toUpperCase().includes(el))) {
-                      if (pageBody.length < 1000) {
+                      if (pageBody.length < 2000) {
                         let pageText = this.weeks[index].body + `<h4> ${pageTitle} </h4>`+ '<p></p>' + pageBody
                         this.updateWeek(index, 'body', pageText)
                       }
