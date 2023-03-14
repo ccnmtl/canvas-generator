@@ -81,11 +81,11 @@
         </blockquote>
       </div>
      </div>
-     <div v-if="video.quiz" class="item-group-condensed">
-        <ul id="cond_group_1" class="ig-list">
+     <div v-if="video.pages" class="item-group-condensed">
+        <ul id="cond_group_1" class="ig-list" v-for="item in splitActivityItems(video)">
           <li>
             <activity-item-slot
-            :slotData="{title: video.title + ' Quiz', type: 'quiz', link: video.quiz, due: 'hidden'}"
+            :slotData="{title: capitalize(item.title), type: item.type, link: item.link, due: 'hidden'}"
             :slotItem="{}"/>
           </li>
         </ul>
@@ -150,11 +150,32 @@ export default {
           this.data[video.id] = video
         })
         return videos
-      }
+      },
   },
   watch: {
   },
   methods: {
+    splitActivityItems: function(video){
+        let activityList = video.pages.split(',')
+        let finalList = []
+        activityList.forEach( item => {
+          let link = item.replace(/\.html/g, '')
+          let type = 'quiz'
+          let title = video.title + ' Quiz'
+          if (item.includes('pages')){
+            type = 'document'
+            title = item.split('pages/')[1].replaceAll('-dot-', '.').replaceAll('-', ' ').replace(/(?<=\d) +(?=\d)/g, '.').replace(/\.html/g, '')
+          }
+          if (item.includes('discussion')){
+            type = 'disucssion'
+            title = video.title + ' Discussion'
+          }
+          if (item.length > 2)
+          finalList.push({link, type, due: 'hidden', title})
+        })
+        return finalList
+    },
+
     finishEditing(field, id) {
         this.$store.dispatch("updateSlotDataWithSetter", {
           setter: this.getWeekItemPropByID(field, 'videos', id).set,
@@ -163,6 +184,10 @@ export default {
         this.editing = null
 
     },
+    capitalize(str) {
+    return str.toLowerCase().replace(/\w{3,}/g, (match) =>
+    match.replace(/\w/, (m) => m.toUpperCase()));
+  },
     removeTimecode(videoID){
     this.data[videoID].description = this.data[videoID].description.replaceAll(/<[^>]*>/g, "").replaceAll(/\d{1,2}:\d{2}/g, " ").trim()
   },
