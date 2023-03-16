@@ -170,6 +170,7 @@ export default {
       importModuleList: [],
       preserveSessions: [],
       isCourseBuilder: false,
+      isOldCourseBuilder: false,
       hasPacakgeImportData: false,
       fullscreenLoading: false,
       exportData: {},
@@ -217,7 +218,10 @@ export default {
         let output = code.replaceAll(url + '$IMS-CC-FILEBASE$', '$IMS-CC-FILEBASE$')
         output = output.replaceAll(url,'$CANVAS_COURSE_REFERENCE$/')
         output = output.replaceAll('http://www.placeholderurl.org', '$CANVAS_COURSE_REFERENCE$/')
-
+        output = output.replaceAll('https://columbiacoursebuilder.org/', '')
+        output = output.replaceAll('https://www.columbiacoursebuilder.org/', '')
+        output = output.replaceAll(/v\/5\.0b\d+/g, '')
+        output = output.replaceAll(/^(?:localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::\d+)?$/g, '')
         return output
       }
       let footer = "</body> </html>"
@@ -341,6 +345,8 @@ export default {
         return
       }
       this.packageImportData = file
+      this.preserveSessions = []
+
 
       JSZip.loadAsync(file)
             .then(zip => {
@@ -421,15 +427,47 @@ export default {
                 })
                 console.log(moduleList)
                 this.importModuleList = moduleList
+
+
+                moduleList.forEach( module => {
+                  module.sessions.forEach( (session, sessionIndex) => {
+                  zip
+                    .file(session)
+                    .async("string")
+                    .then(data => {
+                      let parser = new DOMParser()
+                      let pageHtml = parser.parseFromString(data, "text/html")
+                      let videoFrames = Array.from(pageHtml.getElementsByTagName('iframe'))
+
+                      let pageTitle = pageHtml.getElementsByTagName('title')[0].innerHTML
+                      let pageBody = pageHtml.body.innerHTML
+
+                      let nonBodyStrings = ['FAQ', 'PROJECT', 'ASSIGNMENT', 'OVERVIEW']
+                      if (videoFrames.length < 1 && !nonBodyStrings.some(el => pageTitle.toUpperCase().includes(el))) {
+                        if (!pageBody.length < 2000)  this.preserveSessions.push(session)          
+                      }        
+                }, (err) => {
+                  console.error(err)
+                })
+                })
+
+              })
               })
 
               let zipEntries = []
 
               zip.forEach(function (relativePath, zipEntry) { 
-                zipEntries.push(zipEntry)
+                zipEntries.push(zipEntry.name)
                 });
 
               if(!zipEntries.includes('wiki_content/home.html')) this.isCourseBuilder = false
+              console.log(zipEntries)
+              if(zipEntries.includes('wiki_content/front-page.html')) {
+                this.isOldCourseBuilder = true
+                this.isCourseBuilder = true
+                console.log('old course builder')
+              }
+
 
               zip
               .file("wiki_content/home.html")
@@ -440,10 +478,6 @@ export default {
                 let homeBanner = home.querySelectorAll('.STV1_Banner')[0]
                 let oldHomeBanner = home.querySelectorAll('.sipaEPMbanner')[0]
                 if (homeBanner) this.isCourseBuilder = true
-                else if (oldHomeBanner) {
-                  this.isCourseBuilder = true
-                  this.isOldCourseBuilder = true
-                }
                 else {
                   this.isCourseBuilder = false
                 }
@@ -461,9 +495,50 @@ export default {
         .then(zip => { 
 
           if (this.isOldCourseBuilder) {
+            this.addWeek(13)
+            this.addWeek(14)
 
-            zip.forEach((relativePath, zipEntry) => {
+            zip
+                .file('wiki_content/weekly-activities.html')
+                .async("string")
+                .then(data => {
+                  let parser = new DOMParser()
+                  let activitiesPage = parser.parseFromString(data, "text/html")
+                  let pageImages = activitiesPage.getElementsByTagName('img')
+                  let pageTitles = activitiesPage.getElementsByTagName('h4')
+                  let pageText = Array.from(activitiesPage.getElementsByTagName('p')) 
+                  console.log(pageText)
+                  // this.sliceWeek(this.pageText.length)
 
+                  pageText.forEach( (text, index) => {
+                    console.log(text.innerHTML)
+
+                    this.updateWeek(index, 'description', text.innerText)
+                    this.updateWeek(index, 'title', pageTitles[index].innerText)
+
+                    this.updateWeek(index, 'imgSrc', pageImages[index + 2].src)
+
+                    // var formData = new FormData()
+                    // formData.append("imageUrl", pageImages[index].src)
+                    // formData.append("imageWidth", '360')
+                    // formData.append("imageHeight", '150')
+
+                    // this.$http.post("https://images.columbiacoursebuilder.org/image", formData).then(
+                    //   response => {
+                    //     console.log("success")
+                    //     let imageData = JSON.parse(response.bodyText)
+
+                    //     this.updateWeek(index, 'imgSrc', imageData.imageUrls[0])
+                    //   },
+                    //   response => {
+                    //     console.log(response)
+                    //   }
+                    // )
+
+                    
+                  })
+    
+                  
             })
 
           }
