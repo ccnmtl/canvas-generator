@@ -105,6 +105,10 @@
 	text-decoration: none;
 }
 
+blockquote p {
+	font-weight: 500;
+}
+
 /* ----------------- OVERRIDING CANVAS DEFAULT STYLES ------------------- */
 
 .ig-published:not(.student-view) .ig-type-icon {

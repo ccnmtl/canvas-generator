@@ -159,7 +159,7 @@ export default {
         let activityList = video.pages.split(',')
         let finalList = []
         activityList.forEach( item => {
-          let link = item.replace(/\.html/g, '')
+          let link = item.replace(/\.html/g, '').replace('/$CANVAS_OBJECT_REFERENCE$/', this.info.url).replaceAll('https://columbiacoursebuilder.org/', '').replaceAll(/v\/5\.0b\d+/g, '')
           let type = 'quiz'
           let title = video.title + ' Quiz'
           if (item.includes('pages')){

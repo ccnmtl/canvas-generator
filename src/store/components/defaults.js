@@ -23,6 +23,9 @@ export default {
       weekDays: [0, 2, 4],
       weekOffset: 0,
 
+      //EXPORT VALUES
+      preserveSessions: [],
+
       //EXEC SESSION INFO
       multipleSessions: false,
       autoSessionTitle: true,
