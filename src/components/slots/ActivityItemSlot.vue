@@ -3,7 +3,7 @@
       <div class="ig-row__layout">
           <div class="ig-type-icon" aria-hidden="true"><i :class="iconType"></i></div>
           <div class="ig-info">
-            <a class="ig-title" :href="data.link" @click="doNothing" :data-api-endpoint="data.link" :data-api-returntype="data.type">
+            <a class="ig-title" :href="data.link" :target="data.target ? data.target : '_self'" @click="doNothing" :data-api-endpoint="data.link" :data-api-returntype="data.type">
               <span data-dbclick @dblclick="setEditing('title')" v-if="editing !== 'title'" > {{data.title}} </span>
               <span data-hidden v-else>
                 <input ref="title" @blur="finishEditing('title')" v-model="data.title" />

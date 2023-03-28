@@ -85,7 +85,7 @@
         <ul id="cond_group_1" class="ig-list" v-for="item in splitActivityItems(video)">
           <li>
             <activity-item-slot
-            :slotData="{title: capitalize(item.title), type: item.type, link: item.link, due: 'hidden'}"
+            :slotData="{title: capitalize(item.title), type: item.type, link: item.link, due: 'hidden', target: '_blank'}"
             :slotItem="{}"/>
           </li>
         </ul>
