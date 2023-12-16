@@ -10,3 +10,4 @@ static/files/CanvasCourseBuilderGuide.pdf
 *.mp4
 
 .vscode/settings.json
+debug.log

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" ref="app">
 
     <el-row>
       <!-- Off Canvas Menu Slide -->
@@ -10,20 +10,27 @@
       <!-- Breadcrumb navigation bar -->
       <el-col :span="12" style="padding: 10px;">
           <ul class="bcTrail center">
-            <li><router-link class="router" to="/home">Home</router-link></li>
-            <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
-            <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program">Program Overview</router-link></li>
-            <li><router-link class="router" to="/weeklylist">Weekly List</router-link></li>
-            <li><router-link class="router" to="/weekly">Individual Activity</router-link></li>
-            <li><router-link class="router" to="/export">Export</router-link></li>
+            <li><router-link class="router" to="/home" @click="clearStashedDeletes">Home</router-link></li>
+            <!-- <li><router-link class="router" to="/home-old">Home#</router-link></li> -->
+            <li><router-link class="router" to="/syllabus" @click="clearStashedDeletes">Syllabus</router-link></li>
+            <li><router-link class="router" to="/activities" @click="clearStashedDeletes">Activity List</router-link></li>
+            <!-- <li><router-link class="router" to="/activities-old">Activities List#</router-link></li> -->
+            <li><router-link class="router" to="/activity" @click="clearStashedDeletes">Activity</router-link></li>
+            <!-- <li><router-link class="router" to="/weekly-old">Activity#</router-link></li> -->
+            <!-- <li><router-link class="router" to="/syllabus-old">Syllabus#</router-link></li> -->
+            <li v-show="info.classType.option == 'Executive Training'"><router-link class="router"  to="/program" @click="clearStashedDeletes">Program Overview</router-link></li>
+            <li v-show="info.useStudents"><router-link class="router" to="/studentlist" @click="clearStashedDeletes">Students List</router-link></li>
+            <li v-show="info.useStudents"><router-link class="router" to="/student" @click="clearStashedDeletes" >Student</router-link></li>
+            <!-- <li v-show="info.useZoom"><router-link class="router"  to="/zoom">Zoom</router-link></li> -->
+            <li><router-link class="router" to="/export" @click="clearStashedDeletes">Export</router-link></li>
           </ul>
       </el-col>
 
       <!-- Top Right Dialog Buttons -->
       <el-col :span="6">
         <div class="uk-float-right uk-padding-small">
-          <a href="#" v-loading.fullscreen.lock="loading" @click="dialogFormVisible = true">
-            <el-button type="primary" style="display: inline-block;">Course Info: <i class="fas fa-cog"></i></el-button>
+          <a href="#" v-loading.fullscreen.lock="loading" @click="openDialog">
+            <el-button type="primary" style="display: inline-block;">Course Settings: <i class="fas fa-cog"></i></el-button>
           </a>
 
           <!-- New Dropdown, not yet designed
@@ -39,7 +46,7 @@
           </el-dropdown> -->
 
           <a href="#help-slide" uk-toggle>
-            <el-button type="warning" style="display: inline-block;"> Help <i class="fas fa-info-circle"></i></el-button>
+            <el-button type="warning" style="display: inline-block; margin-left: 10px;"> Help <i class="fas fa-info-circle"></i></el-button>
           </a>
         </div>
       </el-col>
@@ -65,48 +72,52 @@
     <!-- MENU CONTENT -->
     <div id="offcanvas-slide" uk-offcanvas>
         <div class="uk-offcanvas-bar uk-background">
-    		<ul class="uk-nav uk-nav-default">
+        <ul class="uk-nav uk-nav-default">
           <li class="uk-nav-header"><router-link class="router" to="/guide">USER GUIDE</router-link></li>
-          <li class="uk-nav-header uk-margin-remove"><router-link class="router" to="/home">GET STARTED</router-link></li>
-    			<li class="uk-nav-header">TEMPLATES</li>
-    			<li><router-link class="router" to="/home">Home Page</router-link></li>
-          <li><router-link class="router" to="/syllabus">Syllabus</router-link></li>
-          <li v-show="info.classType.option == 'Executive Training'"><router-link class="router" to="/program">Program Overview</router-link></li>
-          <li><router-link class="router" to="/weeklylist">Weekly Activites</router-link></li>
-          <li ><router-link class="router" to="/weekly">Individual Activity</router-link></li>
-          <li class="uk-nav-header"><router-link class="router" to="/export">Export/Import Data</router-link></li>
-          <li class="uk-nav-header"><router-link class="router" to="/credits">CREDITS</router-link></li>
-    			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
-    			<li><router-link to="/">Course Builder Home</router-link></li>
-    			<li><a href="https://courseworks2.columbia.edu/" target="_blank">Canvas Website</a></li>
-    			<li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
-    		</ul>
+          <li class="uk-nav-header">TEMPLATES</li>
+          <li><router-link class="router" to="/home" @click="clearStashedDeletes">Home Page</router-link></li>
+          <li><router-link class="router" to="/syllabus" @click="clearStashedDeletes">Syllabus</router-link></li>
+          <li v-show="info.classType.option == 'Executive Training'" @click="clearStashedDeletes"><router-link class="router" to="/program">Program Overview</router-link></li>
+          <li><router-link class="router" to="/activities" @click="clearStashedDeletes">Activites</router-link></li>
+          <li ><router-link class="router" to="/activity" @click="clearStashedDeletes">Individual Activity</router-link></li>
+          <li v-show="info.useZoom"><router-link class="router"  to="/zoom" @click="clearStashedDeletes">Zoom</router-link></li>
+
+          <li class="uk-nav-header"><router-link class="router" to="/export" @click="clearStashedDeletes">Export/Import Data</router-link></li>
+          <li class="uk-nav-header"><router-link class="router" to="/credits" @click="clearStashedDeletes">CREDITS</router-link></li>
+          <li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
+          <li><router-link to="/" @click="clearStashedDeletes">Course Builder Home</router-link></li>
+          <li><a href="https://courseworks2.columbia.edu/" target="_blank" @click="clearStashedDeletes">Canvas Website</a></li>
+          <li class="uk-nav-divider uk-margin-medium-top uk-margin-medium-bottom"></li>
+        </ul>
         </div>
     </div>
 
     <!-- COURSE INFO DIALOG -->
-    <el-dialog title="Course Info" :visible.sync="dialogFormVisible" style="width: 80%; margin:auto;">
+    <el-dialog title="Course Settings"
+               :visible.sync="dialogFormVisible"
+               style="width: 80%; margin:auto;">
       <div class="left">
         <p>
           <label for="coursetitle" style="min-width: 90px">Course Title</label>
-          <el-input name="coursetitle" style="width: 400px" placeholder="Please input" v-model="info.title" @input="updateProp('title', $event)"></el-input>
+          <el-input name="coursetitle" style="width: 400px" placeholder="Please input" :value="info.title" @input="updateProp('title', $event)"></el-input>
         </p>
         <p>
           <label for="courseurl" style="min-width: 90px">Course URL</label>
-          <el-input name="courseurl" style="width: 400px" placeholder="Please input" v-model="info.url" @input="updateProp('url', $event)"></el-input>
+          <el-input name="courseurl" style="width: 400px" placeholder="Please input" :value="info.url" @input="updateProp('url', $event)"></el-input>
         </p>
         <p>
-          <label for="select" style="min-width: 90px">Class Type</label>
-          <select style="display: inline-block; width:150px" v-model="info.classType" @input="updateProp('classType', $event)" name="Choose Banner" class="uk-select">
+        <!-- Course Type is currently not an option -->
+          <!-- <label for="select" style="min-width: 90px;">Course Type</label>
+          <select style="display: inline-block; width:150px; margin-right: 30px;" v-model="info.classType" @input="updateProp('classType', $event)" name="Choose Banner" class="uk-select">
             <option v-for="type in info.classOptions" :value="type">{{type.option}}</option>
-          </select>
+          </select> -->
 
-          <label style="margin-left: 30px; min-width: 60px;">School </label>
+          <label style="min-width: 60px;">Organization </label>
           <select style="display: inline-block; width:150px" v-model="theme" name="Choose Banner" class="uk-select">
-            <option v-for="theme in $store.getters.getThemeOptions" :value="theme">{{theme.option}}</option>
+            <option v-for="theme in $store.getters.getThemeOptions" :value="theme" :key="theme.option">{{theme.option}}</option>
           </select>
         </p>
-        <p>
+        <!-- <p>
           <label for="select" style="min-width: 110px">Blended Model</label>
           <el-switch
             v-model="info.isBlended"
@@ -114,20 +125,85 @@
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
-        </p>
-        <p>
-          <label for="select" style="min-width: 110px">Help Tooltips</label>
+        </p> -->
+         <!-- <p>
+          <label for="select" style="min-width: 150px">Use Zoom</label>
           <el-switch
-            v-model="info.usePops"
-            @input="updateProp('usePops', $event)"
+            :value="info.useZoom"
+            @input="updateProp('useZoom', $event)"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+        </p> -->
+        <p>
+          <label for="select" style="min-width: 150px">Use Student Pages</label>
+          <el-switch
+            v-model="info.useStudents"
+            @input="updateProp('useStudents', $event)"
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
         </p>
       </div>
+
+      <el-button @click="showAllCourses">Show all courses</el-button>
+      <el-button type='danger' @click="clearDialogVisible = true">Restore to Default</el-button>
+
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
         <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog
+      title="Are you sure?"
+      :visible.sync="clearDialogVisible"
+      width="40%">
+      <span>This will reset your course to the default values. This process is not reversible. Do you want to continue?</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="clearDialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="clearLocalStorage">Confirm</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- ALL COURSES DIALOG -->
+    <el-dialog title="All Courses"
+               :visible.sync="showingCourses"
+               style="width: 80%; margin:auto;">
+
+      <div class="courses">
+        <div class="course"
+             v-for="(course, index) in $store.getters.getSavedStates"
+             :key="course.uuid"
+             :class="{ active: course.uuid == currentCourse }"
+             @click="currentCourse = course.uuid">
+          <h3>
+            {{ JSON.parse(course.versions[course.version].info).title }}
+            <a v-if="$store.getters.getSavedStates.length > 1" @click="deleteCourse(index)" class="delete-course">Delete</a>
+          </h3>
+          <small>{{ course.uuid }}</small>
+          <div class="course-versions">
+            <div v-for="(version, i) in course.versions" :key="i">
+              <input v-model="course.version" :value="i" type="radio" class="course-version form-check-input" :id="course.uuid + '-' + i">
+              <label class="form-check-label" :for="course.uuid + '-' + i">
+                Version {{ i + 1 }} <a v-if="course.versions.length > 1" @click="deleteVersion(index, i, $event)" class="delete-version">Delete</a>
+              </label>
+            </div>
+            <a class="add-version" @click="addVersion(course)">Add Version</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="add-new">
+        <label>Add new course</label>
+        <input class="form-control" v-model="newCourseName" placeholder="New course name" />
+        <el-button type="primary" @click="addNewCourse('default')">Save from default</el-button>
+        <el-button type="primary" :disabled="!newCourseName" @click="addNewCourse('current')">Save from current state</el-button>
+      </div>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="showingCourses = false">Cancel</el-button>
+        <el-button type="primary" @click="chooseCourse">Choose</el-button>
       </span>
     </el-dialog>
 
@@ -141,75 +217,384 @@
       <router-view></router-view>
     </keep-alive>
 
+    <el-dialog
+      :title="dialogData.title"
+      :visible.sync="dialogVisible"
+      v-if="dialogVisible"
+      top="7vh"
+      width="50%">
+        <component :is="dialogData.type" :dialogData="dialogData" @cancelDialog="closeDialog" />
+    </el-dialog>
+
+    <!-- <el-drawer
+      :title="dialogData.title"
+      :visible.sync="dialogVisible"
+      :with-header="false"
+      direction="ltr"
+      size="50%">
+      <h3 style="margin:10px">{{dialogData.title}}</h3>
+      <component :is="dialogData.type" :dialogData="dialogData" @cancelDialog="closeDialog" style="margin:10px" />
+    </el-drawer> -->
+
+    <div class="clearfix" />
+
+    <div class="uk-grid-collapse uk-child-width-expand@s uk-text-left uk-margin-medium-top" uk-grid>
+        <div class="uk-background-muted uk-padding">
+        <p>Copyright © Columbia University. All rights reserved.</p>
+         </div>
+    </div>
+
+    <!-- <div id="render-components" v-if="!$store.getters.areComponentsRendered">
+      <container-component v-for="page in pages" :key="page.name" :cid="page.name" :defaultRows="page.rows" />
+    </div> -->
   </div>
 </template>
 
 <script>
-import { EventBus } from "./bus";
-import saveState from 'vue-save-state';
-import { mapGetters, mapMutations } from 'vuex'
-import help from './store/help'
-import mutations from './store/mutations'
+import _ from 'lodash'
+import saveState from "vue-save-state"
+import { mapGetters, mapActions } from "vuex"
+import help from "./store/help"
+import PageMixin from "./components/mixins/page-mixin"
+import RowTypes from './util/row-types'
+import ContainerComponent from './components/common/ContainerComponent.vue'
 
-var moment = require('moment');
+// Dialog Types
+import ConfigSlot from "./components/dialogs/ConfigSlot.vue"
+import ConfigSlotData from "./components/dialogs/ConfigSlotData.vue"
+
+import ChooseRow from "./components/dialogs/ChooseRow.vue"
+import ChooseSlot from "./components/dialogs/ChooseSlot.vue"
+import ChooseCol from "./components/dialogs/ChooseCol.vue"
+
+import DeleteSlot from "./components/dialogs/DeleteSlot.vue"
+import UploadImage from "./components/dialogs/UploadImage.vue"
+import DeleteRow from './components/dialogs/DeleteRow.vue'
+import DeleteColumn from './components/dialogs/DeleteColumn.vue'
+
+// Dialog Data Types
+import SlotDataBannerSlot from './components/dialogs/data/BannerSlot.vue'
+import SlotDataImageSlot from './components/dialogs/data/ImageSlot.vue'
+import SlotDataVideoSlot from './components/dialogs/data/VideoSlot.vue'
+import SlotDataActivityVideoListSlot from './components/dialogs/data/ActivityVideoListSlot.vue'
+
+import moment from "moment"
 
 export default {
+  components: {
+    ConfigSlot,
+    ConfigSlotData,
+    ChooseRow,
+    ChooseCol,
+    ChooseSlot,
+    DeleteSlot,
+    UploadImage,
+    DeleteRow,
+    DeleteColumn,
+    SlotDataImageSlot,
+    SlotDataVideoSlot,
+    SlotDataBannerSlot,
+    ContainerComponent,
+    SlotDataActivityVideoListSlot
+  },
   name: "app",
   data() {
     return {
       hasImportData: false,
       dialogFormVisible: false,
+      clearDialogVisible: false,
       exportData: {},
-    };
-  },
-  methods: {
-    ...mapMutations([
-      'addWeek', 'sliceWeek', 'updateWeeks', 'updateInfo'
-    ]),
-    getSaveStateConfig() {
-      return {
-          'cacheKey': 'App',
-      };
+      showingCourses: false,
+      newCourseName: '',
+      currentCourse: null,
+      newCourseType: null,
+      currentVersion: null,
+      pages: null
     }
   },
-  mixins: [saveState, mutations],
+  created() {
+    const self = this
+
+    if(!this.$store.getters.getConfig) {
+      this.$store.dispatch('setConfig')
+    }
+
+    if(self.getCurrentCourse == null) {
+      self.$store.dispatch('addSavedState')
+      .then(current => {
+        self.$store.dispatch('setCurrentCourse', current)
+        self.$store.dispatch('setCurrentVersion', 0)
+        self.currentCourse = current
+        self.currentVersion = 0
+      })
+    }
+
+    else {
+      self.currentCourse = self.getCurrentCourse
+      self.currentVersion = self.getCurrentVersion
+    }
+  },
+  methods: {
+    ...mapActions([
+      "updateWeek",
+      "addWeek",
+      "sliceWeek",
+      "updateWeeks",
+      "updateInfo",
+      "addTA",
+      "addProf",
+      "addStudent",
+      "setStateField",
+      'clearLastAffectedRow',
+      'clearStashedWeek'
+    ]),
+    clearStashedDeletes() {
+      this.clearLastAffectedRow()
+      this.clearStashedWeek()
+    },
+    showAllCourses(){
+      const version = this.currentVersion
+      this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
+      this.showingCourses = true
+    },
+    clearLocalStorage(){
+      localStorage.clear();
+      location.reload();
+    },
+    addNewCourse(from) {
+      const self = this
+      if(from === 'current') {
+        const version = this.currentVersion
+        this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
+        .then(() => {
+          self.$store.dispatch('setInfoField', {
+            field: 'title',
+            value: self.newCourseName
+          })
+          setTimeout(() => {
+            self.$store.dispatch('addSavedState')
+            .then(current => {
+              self.$store.dispatch('setCurrentCourse', current)
+              self.$store.dispatch('setCurrentVersion', 0)
+              self.currentCourse = current
+              self.currentVersion = 0
+              self.newCourseName = ''
+            })
+          }, 500)
+        })
+      }
+      else {
+        const version = this.currentVersion
+        this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
+        .then(() => {
+          setTimeout(() => {
+            self.$store.dispatch('addSavedState', 'default')
+            .then(current => {
+              self.$store.dispatch('setCurrentCourse', current)
+              self.$store.dispatch('setCurrentVersion', 0)
+              self.currentCourse = current
+              self.currentVersion = 0
+              self.newCourseName = ''
+              self.newCourseType = 'default'
+              console.log(self.newCourseType)
+            })
+          }, 300)
+        })
+      }
+    },
+    addVersion(course) {
+      const version = this.currentVersion
+      this.$store.dispatch('setSavedState', { uuid: this.getCurrentCourse, version: version })
+      this.$store.dispatch('addNewVersion', course.uuid)
+    },
+    deleteVersion(course, version, e) {
+      e.preventDefault();
+      this.currentVersion = 0
+      this.$store.dispatch('setCurrentVersion', 0)
+      this.$store.dispatch('setSavedStateVersion', { uuid: this.$store.getters.getSavedStates[course].uuid, version: 0 })
+      .then(() => {
+        this.$store.dispatch('deleteCourseVersion', {
+          course,
+          version
+        })
+      })
+    },
+    deleteCourse(index) {
+      let current = index
+      this.$store.dispatch('deleteCourse', current)
+      .then(() => {
+        this.currentCourse = this.$store.getters.getSavedStates[0].uuid
+        this.currentVersion = 0
+        this.$store.dispatch('setCurrentCourse', this.$store.getters.getSavedStates[0].uuid)
+        this.$store.dispatch('setSavedStateVersion', { uuid: this.$store.getters.getSavedStates[0].uuid, version: 0 })
+      })
+    },
+    chooseCourse() {
+      const version = _.find(this.getSavedStates, { uuid: this.currentCourse }).version
+      this.$store.dispatch('chooseSavedState', { uuid: this.currentCourse, version: version })
+      this.$store.dispatch('setCurrentCourse', this.currentCourse)
+      this.$store.dispatch('setCurrentVersion', version)
+
+      this.currentVersion = version
+      this.showingCourses = false
+      let newCourse = _.find(this.getSavedStates, { uuid: this.currentCourse })
+      let newCourseInfo = JSON.parse(newCourse.versions[newCourse.version].info)
+
+      if ( this.newCourseType === 'default'){
+        this.$store.dispatch('createRowsFromArray', {
+                cid: 'activities-list',
+                rows: this.defaultContainerRows['activities-list']
+              })
+        this.newCourseType = 'null'
+      }
+      else {
+        this.setStateField({field: 'selectedWeekID', value: this.getWeeks[0].id})
+
+      }
+      setTimeout(() => {
+            this.dialogFormVisible = false
+            console.log('reloading')
+            location.reload()
+          }, 400)
+    },
+    getSaveStateConfig() {
+      return {
+        cacheKey: "App"
+      }
+    },
+    closeDialog() {
+      this.$store.dispatch("setDialogVisibility", false)
+    },
+    openDialog(e) {
+      e.preventDefault();
+      this.dialogFormVisible = true
+    },
+  },
+  mixins: [RowTypes, saveState, PageMixin],
   computed: {
+    ...mapGetters([ 'isSettingsVisible', 'getCurrentCourse', 'getCurrentVersion', 'getSavedStates', 'getWeeks', 'getDefaultState' ]),
     loading() {
-      return this.$store.getters.loading;
+      return this.$store.getters.loading
     },
     helpInfo() {
       let path = this.$route.name
-      let body = help[path] || ''
-      body = '<h5>' + path + '</h5>' + body
-      return {body, exists: help[path]}
+      let body = help[path] || ""
+      body = "<h5>" + path + "</h5>" + body
+      return { body, exists: help[path] }
     },
+    dialogVisible: {
+      get: function() {
+        return this.$store.getters.isDialogVisible
+      },
+      set: function(newValue) {
+        this.$store.dispatch("setDialogVisibility", newValue)
+      }
+    },
+    dialogData() {
+      return this.$store.getters.getDialogData
+    },
+    defActivityRows(){
+      return [
+        [this.simpleBannerCol({banner: {getter: {title: 'info.title'}}})],
+        [this.activityIntroCol()],
+        [['activity-video-list-slot']],
+        ['case-list'],
+        [['activity-item-list-slot']],
+      ]
+    },
+    defSyllabusRows(){
+      return [
+        [this.simpleBannerCol({banner: {getter: {title: 'info.title'}}})],
+        [['instructor-list-slot']],
+        [['spacer-slot']],
+        'date-time-row',
+        [this.syllabusComponentCol({title: {data: {title: 'Course Description'}}})],
+        [this.syllabusComponentCol({title: {data: {title: 'Course Objectives'}}})],
+        [this.syllabusComponentCol({title: {data: {title: 'Weekly Schedule'}}})],
+        [['activity-table-slot']],
+      ]
+    }
   },
-  mounted() {
+  beforeMount() {
+    if(this.getDefaultState === null) {
+      this.$store.dispatch('setDefaultState')
+    }
 
-    if (this.weeks.length < 1){
-      let weeklyActivities = [];
 
-      for (let i = 1; i <= 12; i++ ){
-        let tempWeek = _.cloneDeep(this.$store.getters.dWeek)
-        tempWeek.imgSrc = this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + '.png'
+
+    if (this.weeks.length < 1) {
+      console.log("building new weeks")
+      for (let i = 1; i <= 12; i++) {
+        let tempWeek = {}
         tempWeek.title = "Lecture " + i
         tempWeek.secondTitle = "Lecture " + i + " II"
-
-
-        weeklyActivities.push(tempWeek);
+        tempWeek.imgSrc =
+          this.$store.state.imageServer + this.$store.state.info.classType.dateType.toLowerCase() + i + ".png"
+        tempWeek.date = moment().add((i-1), "w")
+        this.addWeek(tempWeek)
       }
+      this.setStateField({field: 'selectedWeekID', value: this.getWeeks[0].id})
+    }
+    if (this.info.students.length < 1) this.addStudent()
+    if (this.info.profs.length < 1) this.addProf()
+    // if (this.info.tas.length < 1) this.addTA()
 
-      weeklyActivities.forEach((week, index)=>{
-        week.date = moment().add(index, 'w')
+    if(!this.$store.getters.areComponentsRendered) {
+
+      this.updateRowTypes(this.rowTypes)
+      this.updateColTypes(this.colTypes)
+      this.updateSlotTypes(this.slotTypes)
+
+      console.log('building pages...')
+      this.pages = []
+      console.log(this.pages)
+
+      let containers = this.defaultContainerRows
+      let keys = Object.keys(containers)
+      keys.forEach(key => {
+        console.log(key)
+        this.$store.dispatch('createRowsFromArray', {
+          cid: key,
+          rows: containers[key]
+        })
+        console.log(key)
+
+        // this.pages.push({name: key, rows: containers[key]})
       })
 
-      this.updateWeeks(weeklyActivities)
+      this.weeks.forEach ((week, index) => {
+        this.$store.dispatch('createRowsFromArray', {
+          cid: 'activity-' + week.id,
+          rows: this.activityDefaultRowsByID(week.id) //containers['activity']
+        })
+
+        console.log('Built activity-' + week.id);
+
+        this.$store.dispatch('createRowsFromArray', {
+          cid: 'activities-list',
+          rows: this.activityRowByID(week.id),
+          type: 'activity-row',
+          data: {
+            weekID: week.id
+          }
+        })
+      })
+
+      setTimeout(() => {
+        this.$store.dispatch('setRenderedComponents', true)
+      }, 1000)
+
     }
   }
-};
+}
 </script>
 
-<style>
+<style lang="scss">
+
+#render-components {
+  display: none;
+}
+
 *,
 *::before,
 *::after {
@@ -218,6 +603,13 @@ export default {
 
 html {
   font-size: 100%;
+}
+
+.canvas-code {
+  width: 1015px;
+  margin: auto;
+  margin-bottom: auto;
+  align-self: flex-start;
 }
 
 .help-bar {
@@ -233,11 +625,6 @@ html {
   text-align: center;
 }
 
-.router {
-  /*margin: 30px;
-  font-size: 20px;*/
-}
-
 .nav-text {
   font-size: 25px;
   margin: 25px;
@@ -248,14 +635,14 @@ html {
 }
 
 .nav-button {
-  display:inline-block;
+  display: inline-block;
 }
 
-.bcTrail{
+.bcTrail {
   padding-top: 15px;
 }
 
-.bcTrail li{
+.bcTrail li {
   list-style: none;
   display: inline-block;
   padding-right: 5px;
@@ -263,18 +650,131 @@ html {
 }
 
 .bcTrail li::after {
-    content: " / ";
-    padding-left: 5px;
+  content: " / ";
+  padding-left: 5px;
 }
 
-.bcTrail li a{
+.bcTrail li a {
   text-decoration: none;
   color: #48576a;
 }
 
-.bcTrail li a:hover{
+.bcTrail li a:hover {
   text-decoration: none;
   color: #39f;
 }
 
+.courses {
+  overflow: auto;
+  max-height: 40vh;
+
+  .course {
+    border: 1px solid #CCC;
+    padding: 16px;
+    margin-bottom: 7px;
+    cursor: pointer;
+
+    h3 {
+      margin-bottom: 1px;
+    }
+
+    small {
+      color: #777;
+    }
+
+    &.active {
+      border-color: #409EFF;
+      background-color: #eff5fc;
+      cursor: default;
+
+      h3, small {
+        color: #409EFF;
+      }
+    }
+
+    .delete-course {
+        float: right;
+        font-size: 20px;
+        margin-top: -7px;
+        color: #ea2121;
+    }
+
+    .course-versions {
+      margin-top: 12px;
+
+      label {
+        font-weight: normal;
+        vertical-align: middle;
+
+        .delete-version {
+          margin-left: 20px;
+          color: red;
+        }
+      }
+    }
+  }
+}
+
+.add-new {
+  margin: 25px 0 7px;
+
+  button {
+    margin-top: 12px;
+    padding: 12px 25px;
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.el-dialog {
+  margin-bottom: 0 !important;
+}
+
+.el-dialog__body {
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.quill-editor {
+    // z-index: 99;
+}
+
+.ql-editor p {
+  margin-top: 20px !important;
+}
+
+.tox-notifications-container {display: none !important;}
+
+.code-container {
+  > .textbox-container {
+    min-width: 350px;
+
+    > div {
+      max-width: 100% !important;
+
+      .el-card__body {
+        button {
+          @media screen and (max-width: 900px) {
+            display: block;
+            width: 100%;
+            margin: 7px 0;
+          }
+        }
+      }
+    }
+  }
+
+  > .canvas-code {
+  max-width: calc(100% - 370px);
+
+    > .canvas-code {
+      max-width: 100%;
+    }
+  }
+}
 </style>

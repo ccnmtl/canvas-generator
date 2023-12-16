@@ -1,37 +1,50 @@
 <template lang="html">
   <div>
-    <div class="center">
-      <button type="button" class="add-weekly uk-button uk-button-primary" name="button" @click="fn">Add New <slot></slot></button>
-      <button type="button" class="add-weekly uk-button uk-button-danger"  name="button" @click="clear">Clear</button>
+    <div class='uk-text-center'>
+      <el-button size="large" type="primary" style="display: inline-block; margin-top: 5px;" @click="fn">Add New <slot></slot></el-button>
+      <el-button size="large" type="danger" style="display: inline-block; margin-top: 5px;" @click="clear">Clear</el-button>
     </div>
     <hr>
-    <transition name="fade">
     <div v-if="content.length > 0" >
 
-      <div class="center drop-down">
+      <div class="uk-text-center drop-down">
         <select v-model="index" class="uk-select uk-form-width-small">
           <option v-for="n in content.length" :value="n"><slot></slot> {{n}}</option>
         </select>
         <button type="button" name="button" class="uk-button-small uk-button-primary" @click="editable = !editable">{{ editable ? "Save" : "Edit" }}</button>
         <button v-show="editable" type="button" class="uk-button-small uk-button-danger center" name="button" @click="remove"> Delete</button>
       </div>
+      <transition name="fade">
 
       <div v-show="editable">
-        <div class="code-input center uk-margin-small-top" v-for = "input in inputs">
+        <div class="code-input uk-text-center uk-margin-small-top" v-for = "input in inputs">
           <label for="text-area">{{capitalize(input)}}</label>
-          <textarea :value="currentItem[input]" @input="modify(currentItem, input, $event)" id="text-area" class="uk-textarea" rows="2" cols="50"></textarea> <br>
+          <el-date-picker
+            v-if = "input == 'due'"
+            style="margin: 10px; margin-bottom:20px"
+            :value="currentItem[input]"
+            @input="modify(currentItem, input, $event, true)"
+            type="date"
+            placeholder="Pick start date">
+          </el-date-picker>
+
+          <textarea v-else :value="currentItem[input]" @input="modify(currentItem, input, $event)" id="text-area" class="uk-textarea" rows="2" cols="50"></textarea> <br>
         </div>
       </div>
+       </transition>
+      <hr>
+
 
     </div>
-    </transition>
+
+   
   </div>
 
 </template>
 
 <script>
-
-import mutations from '../../store/mutations'
+import PageMixin from "../../components/mixins/page-mixin"
+import _ from 'lodash'
 
 export default {
   data() {
@@ -41,33 +54,34 @@ export default {
     }
   },
   computed: {
-    currentItem(){
-      return this.content[this.index - 1];
+    currentItem() {
+      return this.content[this.index - 1]
     }
   },
   methods: {
-    clear(){
-      this.$emit('clearArr');
-      console.log('clearing...')
+    clear() {
+      this.$emit("clearArr")
+      console.log("clearing...")
     },
     capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  },
-    remove(){
-      this.content.splice(this.index - 1, 1);
+      return string.charAt(0).toUpperCase() + string.slice(1)
     },
-    modify(item, input, event){
+    remove() {
+      this.content.splice(this.index - 1, 1)
+    },
+    modify(item, input, event, isDate = false) {
+      console.log(event)
       // let week = _.cloneDeep(this.$store.getters.getWeeks()[this.selected])
       let prop = _.cloneDeep(this.$store.getters.getWeeks[this.idx][this.property])
-      prop[this.index - 1][input] = event.target.value
+      prop[this.index - 1][input] = isDate ? event : event.target.value
 
       console.log(prop[this.index - 1][input])
       console.log(this.property)
       this.updateWeek(this.idx, this.property, prop)
     }
   },
-  props: ['content', 'fn', 'inputs','property','idx'],
-  mixins: [mutations]
+  props: ["content", "fn", "inputs", "property", "idx"],
+  mixins: [PageMixin]
 }
 </script>
 
@@ -80,11 +94,23 @@ export default {
   margin-bottom: 10px;
 }
 
-textarea{
+textarea {
   margin-bottom: 10px;
   width: auto;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active in <2.1.8 */
+
+ {
+  opacity: 0;
+}
 </style>
 
 <!-- <div>

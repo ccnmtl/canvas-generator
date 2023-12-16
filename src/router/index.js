@@ -1,14 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Splash from 'components/Splash'
-import Home from 'components/Home'
-import Syllabus from 'components/Syllabus'
-import Program from 'components/ProgramOverview'
-import Weekly from 'components/Weekly'
-import WeeklyList from 'components/WeeklyList'
-import Export from 'components/Export'
-import Guide from 'components/Guide'
-import Credits from 'components/Credits'
+import Splash from 'components/pages/Splash'
+import Home from 'components/pages/Home'
+import NewHome from 'components/pages/NewHome'
+import NewActivity from 'components/pages/NewActivity'
+import NewSyllabus from 'components/pages/NewSyllabus'
+import NewWeeklyList from 'components/pages/NewWeeklyList'
+import Syllabus from 'components/pages/Syllabus'
+import Program from 'components/pages/ProgramOverview'
+import Weekly from 'components/pages/Weekly'
+import Zoom from 'components/pages/Zoom'
+import WeeklyList from 'components/pages/WeeklyList'
+import StudentsList from 'components/pages/StudentsList'
+import Student from 'components/pages/Student'
+import Export from 'components/pages/Export'
+import Guide from 'components/pages/Guide'
+import Credits from 'components/pages/Credits'
 
 Vue.use(Router)
 
@@ -20,17 +27,37 @@ export default new Router({
       component: Splash
     },
     {
-      path: '/home',
-      name: 'Home Template',
+      path: '/home-old',
+      name: 'Old Home Template',
       component: Home
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: NewHome
+    },
+    {
+      path: '/activity',
+      name: 'Activity',
+      component: NewActivity
+    },
+    {
+      path: '/activities',
+      name: 'Activities',
+      component: NewWeeklyList
+    },
+    {
+      path: '/syllabus-old',
+      name: 'Syllabus',
+      component: Syllabus
     },
     {
       path: '/syllabus',
       name: 'Syllabus Template',
-      component: Syllabus
+      component: NewSyllabus
     },
     {
-      path: '/weekly',
+      path: '/weekly-old',
       name: 'Weekly Activity',
       component: Weekly
     },
@@ -40,9 +67,24 @@ export default new Router({
       component: Program
     },
     {
-      path: '/weeklylist',
-      name: 'Weekly Activities List',
+      path: '/studentlist',
+      name: 'Student List',
+      component: StudentsList
+    },
+    {
+      path: '/student',
+      name: 'Student',
+      component: Student
+    },
+    {
+      path: '/activities-old',
+      name: 'Old Activities',
       component: WeeklyList
+    },
+    {
+      path: '/zoom',
+      name: 'Zoom',
+      component: Zoom
     },
     {
       path: '/export',

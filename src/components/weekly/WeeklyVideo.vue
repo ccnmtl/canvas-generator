@@ -30,9 +30,9 @@
         </div>
 
         <div class="col-xs-6">
-          <blockquote style="height: auto; border-left: 4px solid #008ee2; font-weight: normal; font-size: 16px;">
+          <blockquote :style="{borderLeft: '4px solid' + primary}" style="height: 300px; font-weight: normal; font-size: 16px; font-style: inherit;">
           <div class="styleguide-section__grid-demo-element">
-            <div class="STV1_WelcomeAlt">VIDEO: {{data.title}}</div>
+            <div :style="{background: primary, fontSize: '14px', padding: '12px', color: '#FFFFFF'}" >{{data.title}}</div>
             <p>{{data.description}}</p>
           </div>
           </blockquote>
@@ -45,34 +45,31 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
+      primary: this.$store.getters.getTheme.primary
     }
   },
-  props: ['data', 'index'],
+  props: ["data", "index"],
   computed: {
-    videoLink(){
-      let output;
-      let link = this.data.source;
-      let parts = link.split('/');
-      if (parts[2].includes('vimeo.com')){
-        output = 'https://player.vimeo.com/video/' + parts[3]
+    videoLink() {
+      let output
+      let link = this.data.source
+      let parts = link.split("/")
+      if (parts[2].includes("vimeo.com")) {
+        output = "https://player.vimeo.com/video/" + parts[3]
+      } else if (parts[2].includes("youtube")) {
+        let split = link.split("=")
+        output = "https://www.youtube.com/embed/" + split[1]
+      } else {
+        output = link
       }
-      else if (parts[2].includes('youtube')){
-        let split = link.split('=')
-        output = 'https://www.youtube.com/embed/' + split[1]
-      }
-      else {
-        output = link;
-      }
-      return output;
+      return output
     }
   }
 }
 </script>
 
 <style lang="css">
-
 </style>

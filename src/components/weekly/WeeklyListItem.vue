@@ -22,62 +22,62 @@
 </template>
 
 <script>
-var moment = require('moment');
+import { mapActions } from 'vuex'
+var moment = require("moment")
 
 export default {
-  data(){
-    return{
-    }
+  data() {
+    return {}
   },
   computed: {
+    ...mapActions(["updateInfo"]),
+
     info: {
-      get () {
+      get() {
         return this.$store.getters.getInfo
       },
-      set (payload) {
-        this.$store.commit('updateInfo', payload)
+      set(payload) {
+        this.updateInfo(payload)
       }
     },
-    dateType(){
+    dateType() {
       return this.info.classType.dateType
     },
-    url(){
-      return this.info.url.replace(/\/?(\?|#|$)/, '/$1')
+    url() {
+      return this.info.url.replace(/\/?(\?|#|$)/, "/$1")
     },
-    server(){
+    server() {
       return this.$store.state.imageServer
     }
-
   },
   methods: {
     resizeUrl(url) {
-
       // If using, put :src="resizeUrl(data.imgSrc)" above
 
-      let parts = url.split('/')
-      return 'https://i.scaley.io/350x160/' + parts.slice(2).join('/');
+      let parts = url.split("/")
+      return "https://i.scaley.io/350x160/" + parts.slice(2).join("/")
       // let parts = url.split('/')
       // parts[2] += '.rsz.io'
       // parts[parts.length - 1] += '?width=350&height=150&mode=crop'
       // return parts.join('/')
     },
-    formatWeek(date){
+    formatWeek(date) {
       return moment(date).format("dddd, MMMM Do")
-    },
+    }
   },
-  props: ['data', 'index', 'linked'],
-  mounted(){
-    setInterval( () => {
+  props: ["data", "index", "linked"],
+  mounted() {
+    setInterval(() => {
       // this.url = this.$store.state.info.url.replace(/\/?(\?|#|$)/, '/$1')
-    }, 1000);
+    }, 1000)
   }
 }
 </script>
 
 <style lang="css">
-  .crop {
-    /*width: 350px;
+.crop {
+  /*width: 350px;
     height: 150px;
     object-fit: cover;*/
-  }
+}
 </style>

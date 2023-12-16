@@ -689,7 +689,8 @@ body.Underline-All-Links__enabled .btn-link:hover, body.Underline-All-Links__ena
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
   margin-right: -12px;
-  margin-left: -12px
+  margin-left: -12px;
+  width: 100%;
 }
 
 .grid-row.reverse {
