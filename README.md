@@ -3,8 +3,19 @@
 > A Vue.js based interface for generating canvas html pages
 
 ## Build Setup
-
 You must have node installed to set up a local version of the site. Then follow the first two steps below to install the necessary packages and then serve the code locally.
+
+Node version `14.20.0`
+
+Sometimes, there could be issues with node gyp build so you'll need the correct Python versions
+Python version 3.11.3, 2.7.18 (You can use `pyenv local 3.11.3 2.7.18`)
+
+On Apple Silicon based, there could also be issues with axios after running `npm run dev`, and if it has any related issues that it complains for axios modules, downgrade axios in package.json to the following:
+```
+"axios": "^0.25.0"
+```
+Then run `npm install` again.
+
 
 ``` bash
 # install dependencies
